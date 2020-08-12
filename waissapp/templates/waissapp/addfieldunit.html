@@ -1,0 +1,31 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<div class="main-body">
+    <div class="django-form">
+        <form class="form-group" action="{% url 'waiss:addfieldunit' %}" method="post">
+            <br>
+            {% csrf_token %}
+            <h6><em>Input Field Unit Information</em></h6>
+            <div class="row">
+                <div class="col">
+                    {{ fieldunit_form.name|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ fieldunit_form.farm_name|as_crispy_field }}
+                </div>
+            </div>
+            <input type="submit" value="Save" class="btn btn-secondary btn-block">
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

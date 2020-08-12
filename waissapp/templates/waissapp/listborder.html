@@ -1,0 +1,69 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<style>
+    table {
+        width: 90%;
+        text-align: center;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #ddd;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    th{
+        border-top: 2px solid #ddd;
+        border-bottom: 2px solid #ddd;
+        padding: 5px;
+        background-color: rgb(240, 242, 245);
+    }
+    td {
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+
+<div class="main-body">
+    <div class="django-form">
+            <br>
+            <h6><em>Border Irrigation Systems</em></h6>
+            <table>
+                <thead>
+                    <tr>
+                        <th>System Name</th>
+                        <th>No. of Borders</th>
+                        <th>Border Width</th>
+                        <th>Unit Discharge (lps)</th>
+                        <th>Flow Rate per Border Strip (lps)</th>
+                        <th>Total Flow Rate (lps)</th>
+                        <th>Manning's Coefficient</th>
+                        <th>Slope (m/m)</th>
+                        <th>Application Efficiency (%)</th>
+                    </tr>
+                </thead>
+                {% for instance in border_list %}
+                <tbody>
+                    <tr> 
+                        <td>{{instance.border_name}}</td>
+                        <td>{{instance.num_of_border_strips}}</td>
+                        <td>{{instance.border_width}}</td>
+                        <td>{{instance.discharge}}</td>
+                        <td>{{instance.flow_rate_per_strip}}</td>
+                        <td>{{instance.total_flow_rate}}</td>
+                        <td>{{instance.mannings_coeff}}</td>
+                        <td>{{instance.area_slope}}</td>
+                        <td>{{instance.ea}}</td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

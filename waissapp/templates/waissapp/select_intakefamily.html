@@ -1,0 +1,46 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+    <div class="main-body">
+        <form action="django-form">
+            <br>
+            <h6><em>Check if the intake family data of your soil in the farm is in the database. 
+            <br>
+            Otherwise, add new intake family data here. <a href={% url 'waiss:intakefamily' %}><i class='far fa-edit'></i></a></em></h6>
+            <label for="selected-intake">Intake Family:</label>
+            <select class="custom-select" id="selected-intake" name="selected-intake" onchange="displayintake();">
+                <option selected disabled="true">--choose intake family--</option>
+                {% for result in IntakeFamily%}
+                <option>
+                    {{result.intakefamily}}
+                </option>
+                {% endfor%}
+            </select>
+            <input type="submit" value="select" onclick="displayintake()" class="btn btn-secondary">
+        </form>
+        <p><em>Display values here for <b><span id="displayintake"></span></b>.
+            <br>a:{{result.coeff_a}}
+            <br>b:{{.coeff_b}}
+            <br>c:{{.coeff_c}}
+            <br>f:{{.coeff_f}}
+            <br>g:{{.coeff_g}}
+        </em>
+        </p>
+        
+    </div>
+{% endblock %}
+
+{% block bottom_script_block %}
+<script>
+    function displayintake()
+    {
+        document.getElementById("displayintake").innerHTML = document.getElementById("selected-intake").value
+    }
+</script>
+{% endblock %}
+        

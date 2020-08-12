@@ -1,0 +1,38 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+    <div class="main-body">
+        <br>
+        <form class="form-group" action="{% url 'waiss:addsoil' %}" method="post">
+            <h6><em>Input soil information below.</em></h6>
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col">
+                    {{soil_form.soiltype|as_crispy_field}}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                  {{soil_form.fc|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-4">
+                  {{soil_form.pwp|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-4">
+                  {{soil_form.As|as_crispy_field}}
+                </div>
+            </div>
+            <input type="submit" value="Save" class="btn btn-secondary btn-block">
+        </form>
+        <br>
+    </div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+        

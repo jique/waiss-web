@@ -1,0 +1,43 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+    <div class="main-body">
+        <div class="about_sarai">
+            <h6>Wiser with WAISS: Introducing SARAI’s smart irrigation technology</h6>
+            <a class="partner_logo" href="https://sarai.ph/services/waiss" target="_blank" id="logo">
+                <img src={% static "theme/waiss_logo.png" %} width=60px height=60px>
+            </a>
+            <p>With Water Advisory for Irrigation Scheduling System or WAISS, farmers can apply the right amount of water to crops at the right time and in the right place.</p>
+            <p>It is project of the PCAARRD-funded SARAI Project 2.3: Smarter Technologies for Crop Water Management under Project Leader Dr. Roger A Luyun Jr. and Study Leader Dr. Ronaldo B. Saludes.</p>
+            <p>The team is composed by Agricultural and Biosystems Engineers Christian Martin Casedo, Ginalyn Robel Brazil, Jay Ann Lomod, Toni-An Mae Salcedo, Bryan Baltazar, and Jan Albert Atienza.</p>
+            <p>Read more on DOST-PCAARRD's&nbsp;<span><a href="http://www.pcaarrd.dost.gov.ph/home/portal/index.php/quick-information-dispatch/3449-wiser-with-waiss-introducing-sarai-s-smart-irrigation-technology">page</a></span>.</p>
+        </div>
+        <div class="about_sarai">
+            <h6>About Project SARAi</h6>
+            <a class="partner_logo" href="https://www.sarai.ph" target="_blank" id="logo">
+                <img src={% static "theme/sarai.png" %} width=80px height=50px>
+            </a>    
+            <p>Project SARAi aims to develop a national crop forecasting and monitoring system for nine priority crops: rice, corn, banana, coconut, coffee, cacao, sugarcane, tomato, and soybean. This project is funded by DOST-PCAARRD.</p>
+        </div>
+        <div class="about_partners">
+            <h6>Patner Institutions:</h6>
+            <a class="partner_logo" href="https://www.uplb.edu.ph" target="_blank" id="logo">
+                <img src={% static "theme/uplb-logo.png" %} width=43px height=40px>
+            </a>
+            <a class="partner_logo" href="https://www.pcaarrd.dost.gov.ph" target="_blank" id="logo">
+                <img src={% static "theme/dost-pcaarrd-logo.png" %} width=40px height=40px>
+            </a>
+            <a class="partner_logo" href="https://www.dost.gov.ph" target="_blank" id="logo">
+                <img src={% static "theme/dost-logo.png" %} width=40px height=40px>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+        

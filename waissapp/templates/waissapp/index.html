@@ -1,0 +1,126 @@
+<!DOCTYPE html> 
+{% load static %}
+{% load crispy_forms_tags %}
+
+<html>
+
+<head>
+    {% block meta_block %}
+    <meta charset=”utf-8”> 
+    <link rel="stylesheet" href={% static "theme/main.css" %}>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="icon" type="image/png" href={% static "theme/waiss_logo.png" %} />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    {% endblock %}
+
+    <title>
+        {% block title_block %}
+        Setup your farm
+        {% endblock %}
+    </title>
+    
+</head>
+
+<body>
+  {% block top_script_block %}
+  {% endblock %}
+
+    <div class="container">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">
+                  <span><img src={% static "theme/waiss_logo.png" %} width=80px height=80px></span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item active">
+                      <a class="nav-link" href={% url 'waiss:index' %}>Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" href={% url 'waiss:charts' %}>Charts <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" href={% url 'waiss:irrig-calculations' %}>Tabular Computations <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Database
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href={% url 'waiss:farmlist' %}>Farms</a>
+                        <a class="dropdown-item" href={% url 'waiss:personnellist' %}>Personnel</a>
+                        <a class="dropdown-item" href={% url 'waiss:select_crop' %}>Crops</a>
+                        <a class="dropdown-item" href={% url 'waiss:select_soil' %}>Soil type</a>
+                        <a class="dropdown-item" href={% url 'waiss:select_intakefamily' %}>Intake family</a>
+                        <a class="dropdown-item" href={% url 'waiss:select_eqn' %}>Calibration constants</a>
+                        <a class="dropdown-item" href={% url 'waiss:choose-irrigation-system-type' %}>Irrigation System Specifications</a>
+                        <a class="dropdown-item" href={% url 'waiss:fieldunitslist' %}>Field Units</a>
+                        <a class="dropdown-item" href={% url 'waiss:sensorlist' %}>Sensors</a>
+                        <a class="dropdown-item" href={% url 'waiss:fieldunitsettings' %}>Settings</a>
+                      </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Farm Setup
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href={% url 'waiss:farmaccount' %}>Farms</a>
+                        <a class="dropdown-item" href={% url 'waiss:advisorysettings' %}>Personnel</a>
+                        <a class="dropdown-item" href={% url 'waiss:cropinfo' %}>Crops</a>
+                        <a class="dropdown-item" href={% url 'waiss:addsoil' %}>Soil type</a>
+                        <a class="dropdown-item" href={% url 'waiss:intakefamily' %}>Intake family</a>
+                        <a class="dropdown-item" href={% url 'waiss:calib' %}>Calibration constants</a>
+                        <a class="dropdown-item" href={% url 'waiss:irriginfo' %}>Irrigation System Specifications</a>
+                        <a class="dropdown-item" href={% url 'waiss:addfieldunit' %}>Field Units</a>
+                        <a class="dropdown-item" href={% url 'waiss:addsensor' %}>Sensors</a>
+                        <a class="dropdown-item" href={% url 'waiss:fieldunitsettings' %}>Settings</a>
+                      </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href={% url 'waiss:about' %}>About</a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+        </header>
+
+    {% block main_block %}
+      <div class="main-body">
+        <h1>Setup your Farm!</h1>
+            <p>(1) Add new farm, field unit, and sensors in the database.
+              <br>(2) Check database for crop and soil parameters for the right values for your farm. If nothing corresponds to the characteristics of your farm, add new crop and/or new soil to the database.
+              <br>(3) Add new irrigation system and its specifications.
+              <br>(4) Add new preffered settings for the field unit and advisory.
+              <br>(5) In Farm Summary section, select all the parameters you've added to start calculation irrigation advisory!
+            </p>
+        <div>
+          <p>HELLO!</p
+        </div>
+        <div class=chart-mc-readings>
+          <p>Chart 1: chart-mc-readings</p>
+        </div>
+        <div class=chart-calculated-irrigation>
+          <p>Chart 2: chart-calculated-irrigation</p>
+        </div>
+    </div>
+    {% endblock %}
+
+    <footer>
+        <p>&copy; 2020 Project SARAi</p>
+    </footer>
+    
+    {% block bottom_script_block %}
+    {% endblock %}
+    
+</body>
+</html>
