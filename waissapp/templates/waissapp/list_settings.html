@@ -1,0 +1,65 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<div class="container-fluid">
+    <div class="heading"><h6>Field Unit Settings Database</h6></div>
+    <table class="table table-condensed table-hover table-responsive "> 
+        <thead>
+            <tr>
+                <th class="align-top">Setting Name</th>
+                <th class="align-top fit">Field Unit</th>
+                <th class="align-top fit">Farm</th>
+                <th class="align-top fit">Unique Security Key</th>
+                <th class="align-top">Power On</th>
+                <th class="align-top">With Irrigation</th>
+                <th class="align-top">Automatic Threshold</th>
+                <th class="align-top">Server Number</th>
+                <th class="align-top">Field Unit Number</th>
+                <th class="align-top">No. of Samples</th>
+                <th class="align-top">Sensor Integration Time</th>
+                <th class="align-top">Start Sending Time</th>
+                <th class="align-top">Stop Sending Time</th>
+                <th class="align-top">Sending Delay</th>
+                <th class="align-top">Clock Correction</th>
+                <th class="align-top fit">Actions</th>
+            </tr>
+        </thead>
+                {% for instance in settings_list %}
+        <tbody>
+            <tr> 
+                <td class="align-middle fit">{{instance.name}}</td>
+                <td class="align-middle fit">{{instance.fieldunit}}</td>
+                <td class="align-middle fit">{{instance.farm_name}}</td>
+                <td class="align-middle fit">{{instance.usk}}</td>
+                <td class="align-middle fit">{{instance.fieldunitstatus}}</td>
+                <td class="align-middle fit">{{instance.withirrigation}}</td>
+                <td class="align-middle fit">{{instance.automaticthreshold}}</td>
+                <td class="align-middle fit">{{instance.servernumber}}</td>
+                <td class="align-middle fit">{{instance.fieldunitnumber}}</td>
+                <td class="align-middle fit">{{instance.numberofsamples}}</td>
+                <td class="align-middle fit">{{instance.sensorintegrationtime}}</td>
+                <td class="align-middle fit">{{instance.timestart}}</td>
+                <td class="align-middle fit">{{instance.timestop}}</td>
+                <td class="align-middle fit">{{instance.delay}}</td>
+                <td class="align-middle fit">{{instance.clockcorrection}}</td>
+                <td class="fit">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_settings' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_settings' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+                {% endfor %}
+    </table> 
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

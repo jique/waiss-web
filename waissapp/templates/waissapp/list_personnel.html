@@ -1,0 +1,42 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<div class="container-fluid size90">
+    <div class="heading"><h5>Personnel Database</h5>
+    </div>
+    <table class="table table-condensed table-hover table-responsive ">
+        <thead>
+            <tr>
+                <th class="align-top  fit">Last Name</th>
+                <th class="align-top  fit">First Name</th>
+                <th class="align-top  fit">Mobile Number</th>
+                <th class="align-top  fit">Actions</th>
+            </tr>
+        </thead>
+            {% for instance in personnel_list %}
+        <tbody>
+            <tr> 
+                <td class="align-middle fit">{{instance.last_name}}</td>
+                <td class="align-middle fit">{{instance.first_name}}</td>
+                <td class="align-middle fit">{{instance.phone_number}}</td>
+                <td>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_personnel' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_personnel' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+            {% endfor %}
+    </table>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

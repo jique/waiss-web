@@ -1,0 +1,43 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<div class="container-fluid size90">
+    <div class="heading"><h5>Farm Database</h5>
+    </div>
+    <table class="table table-condensed table-hover table-responsive ">
+        <thead>
+            <tr>
+                <th class="align-top  fit">Farm Name</th>
+                <th class="align-top  fit">Location</th>
+                <th class="align-top  fit">Farm Manager</th>
+                <th class="align-top  fit">Actions</th>
+            </tr>
+        </thead>
+            {% for instance in farm_list %}
+        <tbody>
+            <tr> 
+                <td class="align-middle fit">{{instance.farm_name}}</td>                    
+                <td class="align-middle fit">{{instance.farm_location}}</td>
+                <td class="align-middle fit">{{instance.farm_manager}}</td>
+                <td class="fit">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_farm' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_farm' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+            {% endfor %}
+    </table>
+    <h6><em>Add new farm data here. <a href={% url 'waiss:add_farm' %}><i class='far fa-edit'></i></a></em></h6>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

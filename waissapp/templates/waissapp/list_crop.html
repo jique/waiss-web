@@ -6,59 +6,55 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="main-body">
-    <div class="form-group">
-            <br>
-            <h6><em>Crop Database</em></h6>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Crop</th>
-                        <th>Farm</th>
-                        <th>Field Unit</th>
-                        <th>Date Transplanted</th>
-                        <th>Growing Period (days)</th>
-                        <th>Management Allowable Depletion (MCv, %)</th>
-                        <th>Depletion Factor (%)</th>
-                        <th>Depth of Rootzone (m)</th>
-                        <th>Kc (ini)</th>
-                        <th>Kc (mid)</th>
-                        <th>Kc (end)</th>
-                        <th>Kc curve cutoff (1)</th>
-                        <th>Kc curve cutoff (2)</th>
-                        <th>Kc curve cutoff (3)</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+<div class="container-fluid">
+    <div class="heading"><h5>Crop Database</h5></div>
+    <table class="table table-condensed table-hover table-responsive ">
+        <thead>
+            <tr>
+                <th class="align-top">Crop</th>
+                <th class="align-top">Farm</th>
+                <th class="align-top">Field Unit</th>
+                <th class="align-top">Date Transplanted</th>
+                <th class="align-top">Growing Period (days)</th>
+                <th class="align-top">Management Allowable Depletion (MC<sub>v</sub> , %)</th>
+                <th class="align-top">Depletion Factor (%)</th>
+                <th class="align-top">Depth of Rootzone (m)</th>
+                <th class="align-top">K<sub>c(ini)</sub></th>
+                <th class="align-top">K<sub>c(mid)</sub></th>
+                <th class="align-top">K<sub>c(end)</sub></th>
+                <th class="align-top">K<sub>c</sub> curve cutoff (1)</th>
+                <th class="align-top">K<sub>c</sub> curve cutoff (2)</th>
+                <th class="align-top">K<sub>c</sub> curve cutoff (3)</th>
+                <th class="align-top">Actions</th>
+            </tr>
+        </thead>
                 {% for instance in crop_list %}
-                <tbody>
-                    <tr> 
-                        <td>{{instance.crop}}</td>
-                        <td>{{instance.farm_name}}</td>
-                        <td>{{instance.fieldunit}}</td>
-                        <td>{{instance.date_transplanted}}</td>
-                        <td>{{instance.growingperiod}}</td>
-                        <td>{{instance.mad}}</td>
-                        <td>{{instance.depletionfactor}}</td>
-                        <td>{{instance.drz}}</td>
-                        <td>{{instance.kc_ini}}</td>
-                        <td>{{instance.kc_mid}}</td>
-                        <td>{{instance.kc_end}}</td>
-                        <td>{{instance.kc_cc_1}}</td>
-                        <td>{{instance.kc_cc_2}}</td>
-                        <td>{{instance.kc_cc_3}}</td>
-
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href={% url 'waiss:edit_crop' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                                <a href={% url 'waiss:delete_crop' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+        <tbody>
+            <tr> 
+                <td class="align-middle fit">{{instance.crop}}</td>
+                <td class="align-middle" >{{instance.farm_name|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.fieldunit|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.date_transplanted|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.growingperiod|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.mad|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.depletionfactor|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.drz|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.kc_ini|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.kc_mid|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.kc_end|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.kc_cc_1|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.kc_cc_2|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.kc_cc_3|default_if_none:"-"}}</td>
+                <td>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_crop' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_crop' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
                 {% endfor %}
-            </table>
-    </div>
+    </table>
 </div>
 {% endblock %}
 

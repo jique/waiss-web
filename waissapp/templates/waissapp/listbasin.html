@@ -6,40 +6,41 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="main-body">
-    <div class="form-group">
-            <br>
-            <h6><em>Basin Irrigation Systems</em></h6>
-            <table>
-                <thead>
-                    <tr>
-                        <th>System Name</th>
-                        <th>Basin Length (m)</th>
-                        <th>Unit Discharge (lps)</th>
-                        <th>Application Efficiency (%)</th>
-                        <th>Efficiency-Advance Ratio (R)</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+<div class="container-fluid size90">
+    <div class="heading"><h5>Basin Irrigation Systems Database</h5></div>
+    <table class="table table-condensed table-hover table-responsive ">
+        <thead>
+            <tr>
+                <th class="align-top">System Name</th>
+                <th class="align-top">Farm</th>
+                <th class="align-top">Field Unit</th>
+                <th class="align-top fit">Basin Length (m)</th>
+                <th class="align-top fit">Unit Discharge (lps)</th>
+                <th class="align-top fit">Application Efficiency (%)</th>
+                <th class="align-top fit">Efficiency-Advance Ratio</th>
+                <th class="align-top fit">Actions</th>
+            </tr>
+        </thead>
                 {% for instance in basin_list %}
-                <tbody>
-                    <tr> 
-                        <td>{{instance.basin_name}}</td>
-                        <td>{{instance.basin_length}}</td>
-                        <td>{{instance.discharge}}</td>
-                        <td>{{instance.ea}}</td>
-                        <td>{{instance.eff_adv_ratio}}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href={% url 'waiss:edit_basin' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                                <a href={% url 'waiss:delete_basin' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+        <tbody>
+            <tr> 
+                <td class="align-middle fit">{{instance.basin_name}}</td>
+                <td class="align-middle fit">{{instance.farm_name|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.fieldunit|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.basin_length}}</td>
+                <td class="align-middle fit">{{instance.discharge}}</td>
+                <td class="align-middle fit">{{instance.ea}}</td>
+                <td class="align-middle fit">{{instance.eff_adv_ratio}}</td>
+                <td>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_basin' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_basin' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
                 {% endfor %}
-            </table>
-    </div>
+    </table>
 </div>
 {% endblock %}
 

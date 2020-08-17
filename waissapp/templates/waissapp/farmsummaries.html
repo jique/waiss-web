@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="main-body">
+<div class="container-fluid size90">
     <form class="form-group" action="{% url 'waiss:farmaccount' %}" method="post">
         <h4>Farm Details Summary</h4>
         {% csrf_token %}

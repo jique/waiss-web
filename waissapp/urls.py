@@ -5,28 +5,46 @@ app_name = 'waiss'
 
 urlpatterns = [
      path('', views.index, name='index'),
-     path('input-calibration-constants/', views.calib, name='calib'),
      path('about/', views.about, name='about'),
-     path('charts/', views.charts, name='charts'),
-     path('add-farm/', views.farm_account, name='farmaccount'),    
-     path('add-sensor/', views.add_sensor, name='addsensor'),
-     path('add-fieldunit/', views.add_fieldunit, name='addfieldunit'),
-     path('add-intakefamily/', views.add_intake, name='intakefamily'),
-     path('add-advisorysettings/',views.add_personnel, name='advisorysettings'),
-     
-     path('add-fieldunit-settings/', views.field_unit_settings, name='fieldunitsettings'),
-     path('select-irrig-type/', views.choose_irrig, name='irriginfo'),
-     path('select-irrig-type-database/', views.choose_irrig_database, name='choose-irrigation-system-type'),
+     path('charts/', views.charts, name='charts'), 
      path('show-irrig-calculations/', views.irrig_calculations, name='irrig-calculations'),
      path('show-farm-summary/', views.farm_summaries, name='farmsummaries'),
      
+     #FIELDUNIT_SETTINGS
+     path('add-settings/', views.add_settings, name='add_settings'),
+     path('show-settings-database/', views.list_settings, name='list_settings'),
+     path('edit_settings/<str:pk>/', views.editSettings, name='edit_settings'),
+     path('delete_settings/<str:pk>/', views.deleteSettings, name='delete_settings'),
      
-     path('show-calib-equations-database/',views.select_eqn, name='select_eqn'),
-     path('show_intakefamily/-database', views.select_intakefamily, name='select_intakefamily'),
-     path('show-fieldunit-database/', views.fieldunit_list_view, name='fieldunitslist'),
-     path('show-farm-database/', views.farm_list_view, name='farmlist'),
-     path('show-sensor-database/', views.sensor_list_view, name='sensorlist'),
-     path('show-personnel-database/', views.personnel_list_view, name='personnellist'),
+     #FIELDUNIT_PARAMETERS
+     path('show-fieldunit-database/', views.fieldunit_list_view, name='list_fieldunit'),
+     path('add-fieldunit/', views.add_fieldunit, name='add_fieldunit'),
+     path('edit_fieldunit/<str:pk>/', views.editFieldUnit, name='edit_fieldunit'),
+     path('delete_fieldunit/<str:pk>/', views.deleteFieldUnit, name='delete_fieldunit'),
+
+     #SENSOR_PARAMETERS
+     path('show-sensor-database/', views.sensor_list_view, name='list_sensor'),
+     path('add-sensor/', views.add_sensor, name='add_sensor'),
+     path('edit_sensor/<str:pk>/', views.editSensor, name='edit_sensor'),
+     path('delete_sensor/<str:pk>/', views.deleteSensor, name='delete_sensor'),
+
+     #CALIBRATION_PARAMETERS
+     path('add-calib/', views.add_calib, name='add_calib'),
+     path('show-calib-database/',views.list_calib, name='list_calib'),
+     path('edit_calib/<str:pk>/', views.editCalib, name='edit_calib'),
+     path('delete_calib/<str:pk>/', views.deleteCalib, name='delete_calib'),
+
+     #FARM_PARAMETERS
+     path('add-farm/', views.farm_account, name='add_farm'),   
+     path('show-farm-database/', views.farm_list_view, name='list_farm'),
+     path('edit_farm/<str:pk>/', views.editFarm, name='edit_farm'),
+     path('delete_farm/<str:pk>/', views.deleteFarm, name='delete_farm'),
+
+     #PERSONNEL_PARAMETERS
+     path('add-advisorysettings/',views.add_personnel, name='add_personnel'),
+     path('show-personnel-database/', views.personnel_list_view, name='list_personnel'),
+     path('edit_personnel/<str:pk>/', views.editPersonnel, name='edit_personnel'),
+     path('delete_personnel/<str:pk>/', views.deletePersonnel, name='delete_personnel'),
     
      #CROP_PARAMETERS
      path('show-crop-database/', views.list_crop, name='list_crop'),
@@ -40,6 +58,16 @@ urlpatterns = [
      path('edit_soil/<str:pk>/', views.editSoil, name='edit_soil'),
      path('delete_soil/<str:pk>/', views.deleteSoil, name='delete_soil'),
      
+     #INTAKE_FAMILY_PARAMETERS
+     path('add-intakefamily/', views.add_intakefamily, name='add_intakefamily'),
+     path('show-intakefamily-database/', views.list_intakefamily, name='list_intakefamily'),
+     path('edit_intakefamily/<str:pk>/', views.editIntakeFamily, name='edit_intakefamily'),
+     path('delete_intakefamily/<str:pk>/', views.deleteIntakeFamily, name='delete_intakefamily'),
+
+     
+     path('select-irrig-type/', views.choose_irrig, name='irriginfo'),
+     path('select-irrig-type-database/', views.choose_irrig_database, name='choose-irrigation-system-type'),
+
      #DRIP_PARAMETERS
      path('edit_drip/<str:pk>/', views.editDrip, name='edit_drip'),
      path('delete_drip/<str:pk>/', views.deleteDrip, name='delete_drip'),

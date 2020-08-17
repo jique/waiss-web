@@ -6,47 +6,31 @@
 {% endblock %}
 
 {% block main_block %}
-    <div class="main-body">
-        <br>
-        <form class="form-group" action="" method="post">
-            <h6><em>Update soil information below.</em></h6>
-            {% csrf_token %}
-            <div class="row">
-                <div class="col">
-                    {{soil_form.soiltype|as_crispy_field}}
-                </div>
-                <div class="col">
-                    {{soil_form.farm_name|as_crispy_field}}
-                </div>
-                <div class="col">
-                    {{soil_form.fieldunit|as_crispy_field}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                  {{soil_form.fc|as_crispy_field}}
-                </div>
-                <div class="col">
-                  {{soil_form.pwp|as_crispy_field}}
-                </div>
-                <div class="col">
-                  {{soil_form.As|as_crispy_field}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                  {{soil_form.source|as_crispy_field}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col"> 
-                    {{ soil_form.errors }}
-                </div>
-            </div>
-            <input type="submit" value="Submit" class="btn btn-secondary btn-block">
-        </form>
-        <br>
-    </div>
+<div class="container-fluid size90">
+    <br>
+    <form class="form-group" action="" method="post">
+        <h6><em>Update soil information below.</em></h6>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">{{soil_form.soiltype|as_crispy_field}}</div>
+            <div class="col">{{soil_form.farm_name|as_crispy_field}}</div>
+            <div class="col">{{soil_form.fieldunit|as_crispy_field}}</div>
+        </div>
+        <div class="row">
+            <div class="col">{{soil_form.fc|as_crispy_field}}</div>                
+            <div class="col">{{soil_form.pwp|as_crispy_field}}</div>
+            <div class="col">{{soil_form.As|as_crispy_field}}</div>
+        </div>
+        <div class="row">
+            <div class="col">{{soil_form.source|as_crispy_field}}</div>
+        </div>
+        <div class="row">
+            <div class="col">{{ soil_form.errors }}</div>
+        </div>
+        <input type="submit" value="Submit" class="btn btn-secondary btn-block">
+    </form>
+    <br>
+</div>
 {% endblock %}
 
 {% block bottom_script_block %}

@@ -6,9 +6,7 @@
 {% endblock %}
 
 {% block main_block %}
-
-<div class="main-body">
-    
+<div class="container-fluid size90">
     <form class="form-group" action="" method="post">
       <br>  
       <h6><em>Input Crop Information</em></h6>
@@ -69,8 +67,8 @@
                 {{crop_form.errors}}
             </div>
         </div>
+      <input type="submit" value="Submit" class="btn btn-secondary btn-block">
     </form>
-    <input type="submit" value="Submit" class="btn btn-secondary btn-block">
     <br>
 </div>
 {% endblock %}

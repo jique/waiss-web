@@ -6,50 +6,46 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="main-body">
-    <div class="django-form">
-         <br>
-            <h6><em>Field Units</em></h6>
-            <table>
-                <thead>
-                    <tr>
-                        <th>System Name</th>
-                        <th>Farm</th>
-                        <th>Field Unit</th>
-                        <th>Farm Area (sq.m)</th>
-                        <th>Irrigated Area at a Time (sq.m)</th>
-                        <th>No. of Sprinklers</th>
-                        <th>Sprinkler Spacing (m)</th>
-                        <th>Lateral Spacing (m)</th>
-                        <th>Sprinkler Discharge (lps)</th>
-                        <th>Application Effieciency (%)</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+<div class="container-fluid size90">
+    <div class="heading"><h5>Sprinkler Irrigation Systems Database</h5></div>
+    <table class="table table-condensed table-hover table-responsive ">
+        <thead>
+            <tr>
+                <th class="align-top">System Name</th>
+                <th class="align-top">Farm</th>
+                <th class="align-top">Field Unit</th>
+                <th class="align-top">Farm Area (m<sup>2</sup>)</th>
+                <th class="align-top">Irrigated Area at a Time (m<sup>2</sup>)</th>
+                <th class="align-top">No. of Sprinklers</th>
+                <th class="align-top">Sprinkler Spacing (m)</th>
+                <th class="align-top">Lateral Spacing (m)</th>
+                <th class="align-top">Sprinkler Discharge (lps)</th>
+                <th class="align-top">Application Efficiency (%)</th>
+                <th class="align-top">Actions</th>
+            </tr>
+        </thead>
                 {% for instance in sprinkler_list %}
-                <tbody>
-                    <tr> 
-                        <td>{{instance.name}}</td>
-                        <td>{{instance.farm_name}}</td>
-                        <td>{{instance.fieldunit}}</td>
-                        <td>{{instance.farm_area}}</td>
-                        <td>{{instance.area_irrigated_at_a_time}}</td>
-                        <td>{{instance.num_of_sprinklers}}</td>
-                        <td>{{instance.sprinkler_spacing}}</td>
-                        <td>{{instance.lateral_spacing}}</td>
-                        <td>{{instance.sprinkler_discharge}}</td>
-                        <td>{{instance.ea}}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href={% url 'waiss:edit_sprinkler' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                                <a href={% url 'waiss:delete_sprinkler' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+        <tbody>
+            <tr> 
+                <td class="align-middle fit">{{instance.name}}</td>
+                <td class="align-middle fit">{{instance.farm_name|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.fieldunit|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.farm_area}}</td>
+                <td class="align-middle fit">{{instance.area_irrigated_at_a_time}}</td>
+                <td class="align-middle fit">{{instance.num_of_sprinklers}}</td>
+                <td class="align-middle fit">{{instance.sprinkler_spacing}}</td>
+                <td class="align-middle fit">{{instance.lateral_spacing}}</td>
+                <td class="align-middle fit">{{instance.sprinkler_discharge}}</td>
+                <td class="align-middle fit">{{instance.ea}}</td>
+                <td class="fit">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_sprinkler' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_sprinkler' instance.id %} <button class="btn btn-danger">Delete</button></a>                        </div>
+                </td>
+            </tr>
+        </tbody>
                 {% endfor %}
-            </table>
-    </div>
+    </table>
 </div>
 {% endblock %}
 

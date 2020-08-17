@@ -6,9 +6,8 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="main-body">
-    <div class="django-form">
-        <form class="form-group" action="{% url 'waiss:addsensor' %}" method="post">
+<div class="container-fluid size90">
+        <form class="form-group" action="" method="post">
             <br>
             {% csrf_token %}
             <h6><em>Input Sensor Information</em></h6>
@@ -25,9 +24,8 @@
                     {{ sensor_form.depth|as_crispy_field }}
                 </div>
             </div>
-            <input type="submit" value="Save" class="btn btn-secondary btn-block">
+            <input type="submit" value="Submit" class="btn btn-secondary btn-block">
         </form>
-    </div>
 </div>
 {% endblock %}
 

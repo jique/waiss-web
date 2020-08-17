@@ -6,49 +6,49 @@
 {% endblock %}
 
 {% block main_block %}
-
-<div class="main-body">
-    <div class="django-form">
-            <br>
-            <h6><em>Border Irrigation Systems</em></h6>
-            <table>
-                <thead>
-                    <tr>
-                        <th>System Name</th>
-                        <th>No. of Borders</th>
-                        <th>Border Width</th>
-                        <th>Unit Discharge (lps)</th>
-                        <th>Flow Rate per Border Strip (lps)</th>
-                        <th>Total Flow Rate (lps)</th>
-                        <th>Manning's Coefficient</th>
-                        <th>Slope (m/m)</th>
-                        <th>Application Efficiency (%)</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+<div class="container-fluid size90">
+    <div class="heading"><h5>Border Irrigation Systems Database</h5></div>
+    <table class="table table-condensed table-hover table-responsive">
+        <thead>
+            <tr>
+                <th class="align-top">System Name</th>
+                <th class="align-top">Farm</th>
+                <th class="align-top">Field Unit</th>
+                <th class="align-top">No. of Borders</th>
+                <th class="align-top">Border Width</th>
+                <th class="align-top">Unit Discharge (lps)</th>
+                <th class="align-top">Discharge per Border Strip (lps)</th>
+                <th class="align-top">Total Discharge (lps)</th>
+                <th class="align-top">Manning's Coefficient</th>
+                <th class="align-top">Slope (m/m)</th>
+                <th class="align-top">Application Efficiency (%)</th>
+                <th class="align-top fit">Actions</th>
+            </tr>
+        </thead>
                 {% for instance in border_list %}
-                <tbody>
-                    <tr> 
-                        <td>{{instance.border_name}}</td>
-                        <td>{{instance.num_of_border_strips}}</td>
-                        <td>{{instance.border_width}}</td>
-                        <td>{{instance.discharge}}</td>
-                        <td>{{instance.flow_rate_per_strip}}</td>
-                        <td>{{instance.total_flow_rate}}</td>
-                        <td>{{instance.mannings_coeff}}</td>
-                        <td>{{instance.area_slope}}</td>
-                        <td>{{instance.ea}}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href={% url 'waiss:edit_border' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                                <a href={% url 'waiss:delete_border' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+        <tbody>
+            <tr> 
+                <td class="align-middle fit">{{instance.border_name}}</td>
+                <td class="align-middle fit">{{instance.farm_name|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.fieldunit|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.num_of_border_strips}}</td>
+                <td class="align-middle fit">{{instance.border_width}}</td>
+                <td class="align-middle fit">{{instance.discharge}}</td>
+                <td class="align-middle fit">{{instance.flow_rate_per_strip}}</td>
+                <td class="align-middle fit">{{instance.total_flow_rate}}</td>
+                <td class="align-middle fit">{{instance.mannings_coeff}}</td>
+                <td class="align-middle fit">{{instance.area_slope}}</td>
+                <td class="align-middle fit">{{instance.ea}}</td>
+                <td class="fit">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_border' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_border' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
                 {% endfor %}
-            </table>
-    </div>
+    </table>
 </div>
 {% endblock %}
 

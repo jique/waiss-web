@@ -6,8 +6,7 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="main-body">
-    <div class="django-form">
+<div class="container-fluid size90">
         <form class="form-group" action="{% url 'waiss:addsprinkler' %}" method="post">
             <br>
             <h6><em>Input sprinkler irrigation system information.</em></h6>
@@ -57,7 +56,6 @@
             </div>
             <input type="submit" value="Save" class="btn btn-secondary btn-block">
         </form>
-    </div>
 </div>
 {% endblock %}
 

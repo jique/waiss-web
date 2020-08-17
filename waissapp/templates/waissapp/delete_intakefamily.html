@@ -1,0 +1,20 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<div class="container-fluid size90">
+        <p>Are you sure you wanna delete "{{item}}"?</p>
+        <form class="form-group" action={% url 'waiss:delete_intakefamily' item.id %} method="post">
+            {% csrf_token %}
+            <a href="{% url 'waiss:list_intakefamily' %}">Cancel</a>
+            <input type="submit" name="Confirm">
+        </form>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}

@@ -10,10 +10,8 @@ from .forms import PersonnelForm, SoilForm, CalibForm, CropForm, FieldUnitSettin
 from django.views.generic.edit import UpdateView
 #from django.template import loader
 
-
-
-
-def add_intake(request):
+#INTAKE_FAMILY_PARAMETERS
+def add_intakefamily(request):
 	if request.method == 'POST':  # data sent by user
 		form = IntakeFamilyForm(request.POST)
 		if form.is_valid():
@@ -21,11 +19,39 @@ def add_intake(request):
 			return HttpResponse('Intake family information added to database')
 	else:  # display empty form
 		form = IntakeFamilyForm()
-	return render(request, 'waissapp/intakefamily.html', {'intakefamily_form': form})
+	return render(request, 'waissapp/add_intakefamily.html', {'intakefamily_form': form})
 
-def select_intakefamily(request):
-	list = IntakeFamily.objects.all()
-	return render(request, 'waissapp/select_intakefamily.html', {"IntakeFamily":list})
+def list_intakefamily(request):
+	queryset = IntakeFamily.objects.all()
+	context = {
+		"intakefamily_list":queryset,
+	}
+	return render(request, 'waissapp/list_intakefamily.html', context)
+
+def editIntakeFamily(request, pk):
+	para = IntakeFamily.objects.get(id=pk)
+	form = IntakeFamilyForm(instance=para)
+
+	if request.method == 'POST':  # data sent by user
+		form = IntakeFamilyForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/show-intakefamily-database/')
+
+	context = {
+		"intakefamily_form":form,
+	}
+	return render(request, 'waissapp/edit_intakefamily.html', context)
+
+def deleteIntakeFamily(request, pk):
+	para = IntakeFamily.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/show-intakefamily-database/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_intakefamily.html', context)
 
 def index(request):
 	return render(request, 'waissapp/index.html')
@@ -35,28 +61,6 @@ def about(request):
 
 def charts(request):
 	return render(request, 'waissapp/charts.html')
-
-#where to add new farm 
-def farm_account(request):
-
-	if request.method == 'POST':  # data sent by user
-		form = FarmForm(request.POST)
-		if form.is_valid():
-			form.save()
-			return redirect('/farmlist/')
-	else:  # display empty form
-		form = FarmForm()
-	return render(request, 'waissapp/farmaccount.html', {'farm_form': form})
-
-#where to see farm database
-def farm_list_view(request):
-	queryset = Farm.objects.all()
-
-	context = {
-		"farm_list":queryset,
-	}
-	return render(request, 'waissapp/farmlist.html', context)
-	#return render(request, 'waissapp/farmlist.html', locals())
 
 #where to see summary of each farms
 def farm_summaries(request):
@@ -69,7 +73,8 @@ def farm_summaries(request):
 		form = FarmSummariesForm()
 	return render(request, 'waissapp/farmsummaries.html', {'farmsummaries_form': form})
 
-def calib(request):
+#CALIB_PARAMETERS
+def add_calib(request):
 	if request.method == 'POST':  # data sent by user
 		form = CalibForm(request.POST)
 		if form.is_valid():
@@ -78,11 +83,39 @@ def calib(request):
 	else:  # display empty form
 		form = CalibForm()
 
-	return render(request, 'waissapp/calib.html', {'calib_form': form})
+	return render(request, 'waissapp/add_calib.html', {'calib_form': form})
 
-def select_eqn(request):
-	list = CalibrationConstant.objects.all()
-	return render(request, 'waissapp/select_calibeqn.html', {"CalibrationConstant":list})
+def list_calib(request):
+	queryset = CalibrationConstant.objects.all()
+	context = {
+		"calib_list":queryset,
+	}
+	return render(request, 'waissapp/list_calib.html', context)
+
+def editCalib(request, pk):
+	para = CalibrationConstant.objects.get(id=pk)
+	form = CalibForm(instance=para)
+
+	if request.method == 'POST':  # data sent by user
+		form = CalibForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/show-calib-database/')
+
+	context = {
+		"calib_form":form,
+	}
+	return render(request, 'waissapp/edit_calib.html', context)
+
+def deleteCalib(request, pk):
+	para = CalibrationConstant.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/show-calib-database/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_calib.html', context)
 
 #CROP_PARAMETERS
 def add_crop(request):
@@ -172,33 +205,56 @@ def deleteSoil(request, pk):
 	}
 	return render(request, 'waissapp/delete_soil.html', context)
 
-def soil_info(request):
-	return render(request, 'waissapp/soilinfo.html')
 
 def irrig_calculations(request):
 	return render(request, 'waissapp/irrig-calculations.html')
 
-#where to see field unit database
+#FIELDUNIT_PARAMETERS
+def add_fieldunit(request):
+    if request.method == 'POST':  # data sent by user
+        form = FieldUnitForm(request.POST)
+        if form.is_valid():
+            form.save()  # this will save info to database
+            return redirect('/list_fieldunit/')
+    else:  # display empty form
+        form = FieldUnitForm()
+
+    return render(request, 'waissapp/add_fieldunit.html', {'fieldunit_form': form})
+
 def fieldunit_list_view(request):
 	queryset = FieldUnit.objects.all()
 
 	context = {
 		"fieldunit_list":queryset,
 	}
-	return render(request, 'waissapp/fieldunitslist.html', context)
+	return render(request, 'waissapp/list_fieldunit.html', context)
 
-#where to add new field unit
-def add_fieldunit(request):
-    if request.method == 'POST':  # data sent by user
-        form = FieldUnitForm(request.POST)
-        if form.is_valid():
-            form.save()  # this will save info to database
-            return redirect('/fieldunitslist/')
-    else:  # display empty form
-        form = FieldUnitForm()
+def editFieldUnit(request, pk):
+	para = FieldUnit.objects.get(id=pk)
+	form = FieldUnitForm(instance=para)
 
-    return render(request, 'waissapp/addfieldunit.html', {'fieldunit_form': form})
+	if request.method == 'POST':  # data sent by user
+		form = FieldUnitForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/show-fieldunit-database/')
 
+	context = {
+		"fieldunit_form":form,
+	}
+	return render(request, 'waissapp/edit_fieldunit.html', context)
+
+def deleteFieldUnit(request, pk):
+	para = FieldUnit.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/show-fieldunit-database/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_fieldunit.html', context)
+
+#SENSOR_PARAMETERS
 def add_sensor(request):
     if request.method == 'POST':  # data sent by user
         form = SensorForm(request.POST)
@@ -208,7 +264,7 @@ def add_sensor(request):
     else:  # display empty form
         form = SensorForm()
 
-    return render(request, 'waissapp/addsensor.html', {'sensor_form': form})
+    return render(request, 'waissapp/add_sensor.html', {'sensor_form': form})
 
 def sensor_list_view(request):
 	queryset = SensorNumber.objects.all()
@@ -216,17 +272,32 @@ def sensor_list_view(request):
 	context = {
 		"sensor_list":queryset,
 	}
-	return render(request, 'waissapp/sensorlist.html', context)
+	return render(request, 'waissapp/list_sensor.html', context)
 
-def field_unit_settings(request):
+def editSensor(request, pk):
+	para = SensorNumber.objects.get(id=pk)
+	form = SensorForm(instance=para)
+
 	if request.method == 'POST':  # data sent by user
-		form = FieldUnitSettingsForm(request.POST)
+		form = SensorForm(request.POST, instance=para)
 		if form.is_valid():
 			form.save()  # this will save info to database
-			return HttpResponse('Crop information and constants added to database')
-	else:  # display empty form
-		form = FieldUnitSettingsForm()
-	return render(request, 'waissapp/fieldunitsettings.html', {'fieldunitsettings_form': form})
+			return redirect('/show-sensor-database/')
+
+	context = {
+		"sensor_form":form,
+	}
+	return render(request, 'waissapp/edit_sensor.html', context)
+
+def deleteSensor(request, pk):
+	para = SensorNumber.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/show-sensor-database/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_sensor.html', context)
 
 def add_basin(request):
     if request.method == 'POST':  # data sent by user
@@ -321,16 +392,106 @@ def choose_irrig_database(request):
 		form = irrigtypeForm()
 	return render(request, 'waissapp/choose-irrigation-system-type.html', {'irrig_form': form})
 
+#SETTINGS_PARAMETERS
+def add_settings(request):
+	if request.method == 'POST':  # data sent by user
+		form = FieldUnitSettingsForm(request.POST)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/show-settings-database/')
+	else:  # display empty form
+		form = FieldUnitSettingsForm()
+	return render(request, 'waissapp/add_settings.html', {'settings_form': form})
+
+def list_settings(request):
+	queryset = FieldUnitSettings.objects.all()
+
+	context = {
+		"settings_list":queryset,
+	}
+	return render(request, 'waissapp/list_settings.html', context)
+
+def editSettings(request, pk):
+	para = FieldUnitSettings.objects.get(id=pk)
+	form = FieldUnitSettingsForm(instance=para)
+
+	if request.method == 'POST':  # data sent by user
+		form = FieldUnitSettingsForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/show-settings-database/')
+
+	context = {
+		"settings_form":form,
+	}
+	return render(request, 'waissapp/edit_settings.html', context)
+
+def deleteSettings(request, pk):
+	para = FieldUnitSettings.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/show-settings-database/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_settings.html', context)
+
+#FARM_PARAMETERS
+def farm_account(request):
+
+	if request.method == 'POST':  # data sent by user
+		form = FarmForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('/list_farm/')
+	else:  # display empty form
+		form = FarmForm()
+	return render(request, 'waissapp/add_farm.html', {'farm_form': form})
+
+def farm_list_view(request):
+	queryset = Farm.objects.all()
+
+	context = {
+		"farm_list":queryset,
+	}
+	return render(request, 'waissapp/list_farm.html', context)
+
+def editFarm(request, pk):
+	para = Farm.objects.get(id=pk)
+	form = FarmForm(instance=para)
+
+	if request.method == 'POST':  # data sent by user
+		form = FarmForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/show-farm-database/')
+
+	context = {
+		"farm_form":form,
+	}
+	return render(request, 'waissapp/edit_farm.html', context)
+
+def deleteFarm(request, pk):
+	para = Farm.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/show-farm-database/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_farm.html', context)
+
+#PERSONNEL_PARAMETERS
 def add_personnel(request):
     if request.method == 'POST':  # data sent by user
         form = PersonnelForm(request.POST)
         if form.is_valid():
             form.save()  # this will save info to database
-            return redirect('/personnellist/')
+            return redirect('/list_personnel/')
     else:  # display empty form
         form = PersonnelForm()
 
-    return render(request, 'waissapp/advisorysettings.html', {'personnel_form': form})
+    return render(request, 'waissapp/add_personnel.html', {'personnel_form': form})
 
 def personnel_list_view(request):
 	queryset = Personnel.objects.all()
@@ -338,7 +499,32 @@ def personnel_list_view(request):
 	context = {
 		"personnel_list":queryset,
 	}
-	return render(request, 'waissapp/personnellist.html', context)
+	return render(request, 'waissapp/list_personnel.html', context)
+
+def editPersonnel(request, pk):
+	para = Personnel.objects.get(id=pk)
+	form = PersonnelForm(instance=para)
+
+	if request.method == 'POST':  # data sent by user
+		form = PersonnelForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/show-personnel-database/')
+
+	context = {
+		"personnel_form":form,
+	}
+	return render(request, 'waissapp/edit_personnel.html', context)
+
+def deletePersonnel(request, pk):
+	para = Personnel.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/show-personnel-database/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_personnel.html', context)
 
 def basin_list(request):
 	queryset = BasinPara.objects.all()

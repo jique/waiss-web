@@ -6,15 +6,13 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="main-body">
-    <div class="django-form">
+<div class="container-fluid size90">
         <p>Are you sure you wanna delete "{{item}}"?</p>
         <form class="form-group" action={% url 'waiss:delete_drip' item.id %} method="post">
             {% csrf_token %}
             <a href="{% url 'waiss:listdrip' %}">Cancel</a>
             <input type="submit" name="Confirm">
         </form>
-    </div>
 </div>
 {% endblock %}
 

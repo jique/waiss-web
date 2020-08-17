@@ -6,38 +6,39 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="main-body">
-    <div class="form-group">
-            <br>
-            <h6><em>Furrow Irrigation Systems</em></h6>
-            <table>
-                <thead>
-                    <tr>
-                        <th>System Name</th>
-                        <th>Open-Ended (Y/N)</th>
-                        <th>Unit Discharge (lps)</th>
-                        <th>Slope (m/m)</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+<div class="container-fluid size90">
+    <div class="heading"><h5>Furrow Irrigation Systems Database</h5></div>
+    <table class="table table-condensed table-hover table-responsive ">
+        <thead>
+            <tr>
+                <th class="align-top  fit">System Name</th>
+                <th class="align-top  fit">Farm</th>
+                <th class="align-top  fit">Field Unit</th>
+                <th class="align-top  fit">Open-Ended System</th>
+                <th class="align-top  fit">Unit Discharge (lps)</th>
+                <th class="align-top  fit">Slope (m/m)</th>
+                <th class="align-top  fit">Actions</th>
+            </tr>
+        </thead>
                 {% for instance in furrow_list %}
-                <tbody>
-                    <tr> 
-                        <td>{{instance.name}}</td>
-                        <td>{{instance.bln_furrow_type}}</td>
-                        <td>{{instance.discharge}}</td>
-                        <td>{{instance.area_slope}}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href={% url 'waiss:edit_furrow' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                                <a href={% url 'waiss:delete_furrow' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+        <tbody>
+            <tr> 
+                <td class="align-middle fit">{{instance.name}}</td>
+                <td class="align-middle fit">{{instance.farm_name|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.fieldunit|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.bln_furrow_type}}</td>
+                <td class="align-middle fit">{{instance.discharge}}</td>
+                <td class="align-middle fit">{{instance.area_slope}}</td>
+                <td>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_furrow' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_furrow' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
                 {% endfor %}
-            </table>
-    </div>
+    </table>
 </div>
 {% endblock %}
 

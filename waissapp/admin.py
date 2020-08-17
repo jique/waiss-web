@@ -67,7 +67,7 @@ class CropInline(admin.TabularInline):
 
 class CropAdmin(admin.ModelAdmin):
     list_display =('crop', 'depletionfactor', 'mad', 'growingperiod', 'drz', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3')
-    ordering = ["crop"]
+    ordering = ['crop',]
 
 class FieldUnitSettingsInline(admin.TabularInline):
     model = FieldUnitSettings

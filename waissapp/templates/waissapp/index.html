@@ -18,6 +18,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link href='https://fonts.googleapis.com/css?family=Josefin Sans' rel='stylesheet'>
     {% endblock %}
 
     <title>
@@ -29,35 +30,114 @@
 </head>
 
 <body>
-  {% block style_block%}
-  <style>
-    table {
-        width: 90%;
-        text-align: center;
-        margin-bottom: 10px;
-        border-bottom: 2px solid #ddd;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    th{
-        border-top: 2px solid #ddd;
-        border-bottom: 2px solid #ddd;
-        padding: 5px;
-        background-color: rgb(240, 242, 245);
-    }
-    td {
-        border-bottom: 1px solid #ddd;
-    }
-</style>
-  {% endblock%}
-  {% block top_script_block %}
-  {% endblock %}
 
-    <div class="container">
+{% block style_block%}
+<style>
+html {
+	background-color: #869960;
+}
+  
+.size90 {
+  width:90%;
+}
+  
+.heading{
+  text-align: center;
+  font-family: 'Josefin Sans';
+	font-weight: 700;
+  text-transform: uppercase;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+  
+footer {
+	text-align: center;
+	font-size: 85%;
+	color: #999;
+	padding-bottom: 20px;
+	padding-top: 20px;
+}
+  
+.group:before,
+.group:after {
+	content: "";
+	display: table;
+}
+  
+.group:after {
+	clear: both;
+}
+  
+.group {
+	zoom: 1;
+}
+  
+.navbar {
+  height: 50px;
+  min-height: 50px;
+  width: 100%;
+}
+	
+.navbar-brand {
+	padding: 0.15px;
+	height: 80px;
+	line-height: 80px;
+}
+	
+.navbar-toggle {
+	/* (80px - button height 34px) / 2 = 23px */
+	margin-top: 23px;
+	padding: 9px 10px !important;
+}
+	
+	@media (min-width: 768px) {
+	  .navbar-nav > li > a {
+		/* (80px - line-height of 27px) / 2 = 26.5px */
+		padding-top: 26.5px;
+		padding-bottom: 26.5px;
+		line-height: 27px;
+	}
+}
+  
+table {
+  width: 90%;
+  font-size: 90%;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+th{
+  border-top: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
+  background-color: rgb(240, 242, 245);
+}
+
+td {
+  border-bottom: 2px solid #ddd;
+}
+
+.table td.fit, 
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
+
+</style>
+{% endblock%}
+
+{% block top_script_block %}
+{% endblock %}
+
+    <div class="container-fluid">
         <header>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">
-                  <span><img src={% static "theme/waiss_logo.png" %} width=80px height=80px></span>
+                  <span><img src={% static "theme/waiss_logo.png" %} width=40px height=40px></span>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -78,16 +158,16 @@
                         Database
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href={% url 'waiss:farmlist' %}>Farms</a>
-                        <a class="dropdown-item" href={% url 'waiss:personnellist' %}>Personnel</a>
+                        <a class="dropdown-item" href={% url 'waiss:list_farm' %}>Farms</a>
+                        <a class="dropdown-item" href={% url 'waiss:list_personnel' %}>Personnel</a>
                         <a class="dropdown-item" href={% url 'waiss:list_crop' %}>Crops</a>
                         <a class="dropdown-item" href={% url 'waiss:list_soil' %}>Soil type</a>
-                        <a class="dropdown-item" href={% url 'waiss:select_intakefamily' %}>Intake family</a>
-                        <a class="dropdown-item" href={% url 'waiss:select_eqn' %}>Calibration constants</a>
+                        <a class="dropdown-item" href={% url 'waiss:list_intakefamily' %}>Intake family</a>
+                        <a class="dropdown-item" href={% url 'waiss:list_calib' %}>Calibration constants</a>
                         <a class="dropdown-item" href={% url 'waiss:choose-irrigation-system-type' %}>Irrigation System Specifications</a>
-                        <a class="dropdown-item" href={% url 'waiss:fieldunitslist' %}>Field Units</a>
-                        <a class="dropdown-item" href={% url 'waiss:sensorlist' %}>Sensors</a>
-                        <a class="dropdown-item" href={% url 'waiss:fieldunitsettings' %}>Settings</a>
+                        <a class="dropdown-item" href={% url 'waiss:list_fieldunit' %}>Field Units</a>
+                        <a class="dropdown-item" href={% url 'waiss:list_sensor' %}>Sensors</a>
+                        <a class="dropdown-item" href={% url 'waiss:list_settings' %}>Settings</a>
                       </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -95,16 +175,16 @@
                         Farm Setup
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href={% url 'waiss:farmaccount' %}>Farms</a>
-                        <a class="dropdown-item" href={% url 'waiss:advisorysettings' %}>Personnel</a>
+                        <a class="dropdown-item" href={% url 'waiss:add_farm' %}>Farms</a>
+                        <a class="dropdown-item" href={% url 'waiss:add_personnel' %}>Personnel</a>
                         <a class="dropdown-item" href={% url 'waiss:add_crop' %}>Crops</a>
                         <a class="dropdown-item" href={% url 'waiss:addsoil' %}>Soil type</a>
-                        <a class="dropdown-item" href={% url 'waiss:intakefamily' %}>Intake family</a>
-                        <a class="dropdown-item" href={% url 'waiss:calib' %}>Calibration constants</a>
+                        <a class="dropdown-item" href={% url 'waiss:add_intakefamily' %}>Intake family</a>
+                        <a class="dropdown-item" href={% url 'waiss:add_calib' %}>Calibration constants</a>
                         <a class="dropdown-item" href={% url 'waiss:irriginfo' %}>Irrigation System Specifications</a>
-                        <a class="dropdown-item" href={% url 'waiss:addfieldunit' %}>Field Units</a>
-                        <a class="dropdown-item" href={% url 'waiss:addsensor' %}>Sensors</a>
-                        <a class="dropdown-item" href={% url 'waiss:fieldunitsettings' %}>Settings</a>
+                        <a class="dropdown-item" href={% url 'waiss:add_fieldunit' %}>Field Units</a>
+                        <a class="dropdown-item" href={% url 'waiss:add_sensor' %}>Sensors</a>
+                        <a class="dropdown-item" href={% url 'waiss:add_settings' %}>Settings</a>
                       </div>
                     </li>
                     <li class="nav-item">

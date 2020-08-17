@@ -6,44 +6,41 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="main-body">
-    <div class="form-group">
-            <br>
-            <h6><em>Soil Database</em></h6>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Soil Name</th>
-                        <th>Farm</th>
-                        <th>Field Unit</th>
-                        <th>Field Capacity (MCv, %)</th>
-                        <th>Permanent Wilting Point (MCv, %)</th>
-                        <th>Permanent Wilting Point (MCv, %)</th>
-                        <th>Source</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+<div class="container-fluid size90">
+    <div class="heading"><h5>Soil Database</h5></div>
+    <table class="table table-condensed table-hover table-responsive ">
+        <thead>
+            <tr>
+                <th class="align-top">Soil Name</th>
+                <th class="align-top">Farm</th>
+                <th class="align-top">Field Unit</th>
+                <th class="align-top">Field Capacity (MCv, %)</th>
+                <th class="align-top">Permanent Wilting Point (MCv, %)</th>
+                <th class="align-top">Permanent Wilting Point (MCv, %)</th>
+                <th class="align-top">Source</th>
+                <th class="align-top">Actions</th>
+            </tr>
+        </thead>
                 {% for instance in soil_list %}
-                <tbody>
-                    <tr> 
-                        <td>{{instance.soiltype}}</td>
-                        <td>{{instance.farm_name}}</td>
-                        <td>{{instance.fieldunit}}</td>
-                        <td>{{instance.fc}}</td>
-                        <td>{{instance.pwp}}</td>
-                        <td>{{instance.As}}</td>
-                        <td>{{instance.source}}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href={% url 'waiss:edit_soil' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                                <a href={% url 'waiss:delete_soil' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+        <tbody>
+            <tr> 
+                <td class="align-middle fit">{{instance.soiltype}}</td>
+                <td class="align-middle fit">{{instance.farm_name|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.fieldunit|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.fc|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.pwp|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.As|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.source|default_if_none:"-"}}</td>
+                <td class="fit">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_soil' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_soil' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
                 {% endfor %}
-            </table>
-    </div>
+    </table>
 </div>
 {% endblock %}
 

@@ -1,0 +1,68 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<div class="container-fluid size90">
+    <br>
+    <h6><em>Field Unit Preffered Settings</em></h6>
+    <form class="form-group" action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">{{ settings_form.name|as_crispy_field}}</div>
+            <div class="col">{{ settings_form.farm_name|as_crispy_field}}</div>
+            <div class="col">{{ settings_form.fieldunit|as_crispy_field}}</div>
+            <div class="col">{{ settings_form.usk|as_crispy_field}}</div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ settings_form.fieldunitstatus|as_crispy_field}}
+            </div>
+            <div class="col">
+                {{ settings_form.withirrigation|as_crispy_field}}
+            </div>
+            <div class="col">
+                {{ settings_form.automaticthreshold|as_crispy_field}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ settings_form.servernumber|as_crispy_field}}
+            </div>
+            <div class="col">
+                {{ settings_form.fieldunitnumber|as_crispy_field}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ settings_form.numberofsamples|as_crispy_field}}
+            </div>
+            <div class="col">
+                {{ settings_form.sensorintegrationtime|as_crispy_field}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ settings_form.timestart|as_crispy_field}}
+            </div>
+            <div class="col">
+                {{ settings_form.timestop|as_crispy_field}}
+            </div>
+            <div class="col">
+                {{ settings_form.delay|as_crispy_field}}
+            </div>
+            <div class="col">
+                {{ settings_form.clockcorrection|as_crispy_field}}
+            </div>
+        </div>
+        <input type="submit" value="Submit" class="btn btn-secondary btn-block">
+    </form>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+        

@@ -11,6 +11,7 @@ class Personnel(models.Model):
     
     class Meta:
         verbose_name_plural = "Site: Personnel"
+        ordering = ('last_name',)
 
 #SITE VALUES
 class Farm(models.Model):
@@ -20,6 +21,7 @@ class Farm(models.Model):
 
     class Meta:
         verbose_name_plural = "Site: Farms"
+        ordering = ('farm_name',)
 
     def __str__(self):
         return self.farm_name
@@ -31,6 +33,7 @@ class FieldUnit(models.Model):
 
     class Meta:
         verbose_name_plural = "Site: Field Units"
+        ordering = ('name',)
     
     def __str__(self):
         return self.name
@@ -60,6 +63,8 @@ class MoistureContent(models.Model):
 class FieldUnitSettings(models.Model):
     farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, null=True)
     fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, null=True)
+    
+    name = models.CharField(max_length=30, verbose_name="Settings Name", null=True, blank=True)
     usk = models.CharField(verbose_name="Unique Security Key", max_length=8)
     fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", default=True)
     withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", default=True)
@@ -90,13 +95,14 @@ class Soil(models.Model):
 
     class Meta:
         verbose_name_plural = "Database: Soil"
+        ordering = ('soiltype',)
 
 class CalibrationConstant(models.Model):
     calib_name = models.CharField(max_length=25, verbose_name="Calibration Name", null=True, blank=True)
     farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm Name", null=True, blank=True)
     fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit Name", null=True, blank=True)
     sensor = models.ForeignKey (SensorNumber, on_delete=models.CASCADE, verbose_name="Sensor Name", null=True, blank=True)
-    soiltype = models.ForeignKey(Soil, on_delete=models.CASCADE, verbose_name="Soil Type", null=True, blank=True)
+    soil = models.ForeignKey(Soil, on_delete=models.CASCADE, verbose_name="Soil Type", null=True, blank=True)
     
 
     LINEAR = 'LIN'
@@ -124,11 +130,14 @@ class CalibrationConstant(models.Model):
         verbose_name="Calibration Equation Form"
     )
 
-    calib_coeff_a = models.DecimalField(max_digits=20, decimal_places=6, verbose_name="a", null=True, blank=True)
-    calib_coeff_b = models.DecimalField(max_digits=20, decimal_places=6, verbose_name="b", null=True, blank=True)
-    calib_coeff_c = models.DecimalField(max_digits=20, decimal_places=6, verbose_name="c", null=True, blank=True)
-    calib_coeff_d = models.DecimalField(max_digits=20, decimal_places=6, verbose_name="d", null=True, blank=True)
-    calib_coeff_m = models.DecimalField(max_digits=20, decimal_places=6, verbose_name="m", null=True, blank=True)
+    calib_coeff_a = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="a", null=True, blank=True)
+    calib_coeff_b = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="b", null=True, blank=True)
+    calib_coeff_c = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="c", null=True, blank=True)
+    calib_coeff_d = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="d", null=True, blank=True)
+    calib_coeff_m = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="m", null=True, blank=True)
+    date_tested = models.DateTimeField(verbose_name='Date Calibrated', null=True, blank=True)
+    tested_by = models.CharField(max_length=30, verbose_name="Tested By", null=True, blank=True)
+
     def __str__(self):
         return self.calib_name
         
@@ -139,6 +148,7 @@ class CalibrationConstant(models.Model):
 class IntakeFamily(models.Model):
     farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm Name", null=True, blank=True)
     fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit Name", null=True, blank=True)
+    soil = models.ForeignKey(Soil, on_delete=models.CASCADE, verbose_name="Soil", null=True, blank=True)
     
     intakefamily = models.CharField(max_length=20, unique=True)
     coeff_a = models.DecimalField(max_digits=5, decimal_places=4, verbose_name=" a", null=True)
@@ -146,6 +156,7 @@ class IntakeFamily(models.Model):
     coeff_c = models.DecimalField(max_digits=1, decimal_places=0, verbose_name=" c", null=True)
     coeff_f = models.DecimalField(max_digits=4, decimal_places=2, verbose_name=" f", null=True)
     coeff_g = models.DecimalField(max_digits=9, decimal_places=7, verbose_name=" g", null=True)
+    source = models.CharField(max_length=30, verbose_name="Data Source", null=True)
 
     def __str__(self):
         return self.intakefamily
@@ -176,6 +187,7 @@ class Crop(models.Model):
 
     class Meta:
         verbose_name_plural = "Database: Crop"
+        ordering = ('crop',)
 
 #DATABASE
 class BasinAppEff(models.Model):
