@@ -29,6 +29,27 @@
 </head>
 
 <body>
+  {% block style_block%}
+  <style>
+    table {
+        width: 90%;
+        text-align: center;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #ddd;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    th{
+        border-top: 2px solid #ddd;
+        border-bottom: 2px solid #ddd;
+        padding: 5px;
+        background-color: rgb(240, 242, 245);
+    }
+    td {
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+  {% endblock%}
   {% block top_script_block %}
   {% endblock %}
 
@@ -59,8 +80,8 @@
                       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href={% url 'waiss:farmlist' %}>Farms</a>
                         <a class="dropdown-item" href={% url 'waiss:personnellist' %}>Personnel</a>
-                        <a class="dropdown-item" href={% url 'waiss:select_crop' %}>Crops</a>
-                        <a class="dropdown-item" href={% url 'waiss:select_soil' %}>Soil type</a>
+                        <a class="dropdown-item" href={% url 'waiss:list_crop' %}>Crops</a>
+                        <a class="dropdown-item" href={% url 'waiss:list_soil' %}>Soil type</a>
                         <a class="dropdown-item" href={% url 'waiss:select_intakefamily' %}>Intake family</a>
                         <a class="dropdown-item" href={% url 'waiss:select_eqn' %}>Calibration constants</a>
                         <a class="dropdown-item" href={% url 'waiss:choose-irrigation-system-type' %}>Irrigation System Specifications</a>
@@ -76,7 +97,7 @@
                       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href={% url 'waiss:farmaccount' %}>Farms</a>
                         <a class="dropdown-item" href={% url 'waiss:advisorysettings' %}>Personnel</a>
-                        <a class="dropdown-item" href={% url 'waiss:cropinfo' %}>Crops</a>
+                        <a class="dropdown-item" href={% url 'waiss:add_crop' %}>Crops</a>
                         <a class="dropdown-item" href={% url 'waiss:addsoil' %}>Soil type</a>
                         <a class="dropdown-item" href={% url 'waiss:intakefamily' %}>Intake family</a>
                         <a class="dropdown-item" href={% url 'waiss:calib' %}>Calibration constants</a>

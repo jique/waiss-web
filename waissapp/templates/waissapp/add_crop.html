@@ -9,16 +9,22 @@
 
 <div class="main-body">
     
-    <form class="form-group" action="{% url 'waiss:cropinfo' %}" method="post">
+    <form class="form-group" action="{% url 'waiss:add_crop' %}" method="post">
       <br>  
-      <h5>Input Crop Information</h5>
+      <h6><em>Input Crop Information</em></h6>
         {% csrf_token %}
-        <div class="form-row">
+        <div class="row">
             <div class="col">
                 {{crop_form.crop|as_crispy_field}}
             </div>
+            <div class="col">
+              {{crop_form.farm_name|as_crispy_field}}
+          </div>
+          <div class="col">
+              {{crop_form.fieldunit|as_crispy_field}}
+          </div>
         </div>
-        <div class="form-row">
+        <div class="row">
             <div class="col"> 
             {{crop_form.drz|as_crispy_field}}
             </div>
@@ -29,7 +35,7 @@
               {{crop_form.growingperiod|as_crispy_field}}
             </div>
         </div>
-        <div class="form-row">
+        <div class="row">
             <div class="col">
               {{crop_form.mad|as_crispy_field}}
             </div>
@@ -37,7 +43,7 @@
               {{crop_form.depletionfactor|as_crispy_field}}
             </div>
         </div>
-        <div class="form-row">
+        <div class="row">
           <div class="col">
             {{crop_form.kc_ini|as_crispy_field}}
           </div>
@@ -48,7 +54,7 @@
             {{crop_form.kc_end|as_crispy_field}}
           </div>
         </div>
-        <div class="form-row">
+        <div class="row">
           <div class="col">
             {{crop_form.kc_cc_1|as_crispy_field}}
           </div>
@@ -59,6 +65,11 @@
             {{crop_form.kc_cc_3|as_crispy_field}}
           </div>
         </div>
+        <div class="row">
+          <div class="col"> 
+          {{crop_form.errors}}
+          </div>
+      </div>
     </form>
     <input type="submit" value="Save" class="btn btn-secondary btn-block">
     <br>

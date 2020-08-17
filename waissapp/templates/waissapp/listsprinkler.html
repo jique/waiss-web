@@ -6,26 +6,6 @@
 {% endblock %}
 
 {% block main_block %}
-<style>
-    table {
-        width: 90%;
-        text-align: center;
-        margin-bottom: 10px;
-        border-bottom: 2px solid #ddd;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    th{
-        border-top: 2px solid #ddd;
-        border-bottom: 2px solid #ddd;
-        padding: 5px;
-        background-color: rgb(240, 242, 245);
-    }
-    td {
-        border-bottom: 1px solid #ddd;
-    }
-</style>
-
 <div class="main-body">
     <div class="django-form">
          <br>
@@ -34,26 +14,37 @@
                 <thead>
                     <tr>
                         <th>System Name</th>
+                        <th>Farm</th>
+                        <th>Field Unit</th>
                         <th>Farm Area (sq.m)</th>
                         <th>Irrigated Area at a Time (sq.m)</th>
                         <th>No. of Sprinklers</th>
-                        <th>Lateral Spacing (m)</th>
                         <th>Sprinkler Spacing (m)</th>
-                        <th>Application Effieciency (%)</th>
+                        <th>Lateral Spacing (m)</th>
                         <th>Sprinkler Discharge (lps)</th>
+                        <th>Application Effieciency (%)</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 {% for instance in sprinkler_list %}
                 <tbody>
                     <tr> 
                         <td>{{instance.name}}</td>
+                        <td>{{instance.farm_name}}</td>
+                        <td>{{instance.fieldunit}}</td>
                         <td>{{instance.farm_area}}</td>
                         <td>{{instance.area_irrigated_at_a_time}}</td>
                         <td>{{instance.num_of_sprinklers}}</td>
-                        <td>{{instance.lateral_spacing}}</td>
                         <td>{{instance.sprinkler_spacing}}</td>
-                        <td>{{instance.ea}}</td>
+                        <td>{{instance.lateral_spacing}}</td>
                         <td>{{instance.sprinkler_discharge}}</td>
+                        <td>{{instance.ea}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href={% url 'waiss:edit_sprinkler' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                                <a href={% url 'waiss:delete_sprinkler' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
                 {% endfor %}

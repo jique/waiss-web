@@ -6,26 +6,6 @@
 {% endblock %}
 
 {% block main_block %}
-<style>
-    table {
-        width: 90%;
-        text-align: center;
-        margin-bottom: 10px;
-        border-bottom: 2px solid #ddd;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    th{
-        border-top: 2px solid #ddd;
-        border-bottom: 2px solid #ddd;
-        padding: 5px;
-        background-color: rgb(240, 242, 245);
-    }
-    td {
-        border-bottom: 1px solid #ddd;
-    }
-</style>
-
 <div class="main-body">
     <div class="form-group">
             <br>
@@ -37,7 +17,7 @@
                         <th>Open-Ended (Y/N)</th>
                         <th>Unit Discharge (lps)</th>
                         <th>Slope (m/m)</th>
-                        <th>Wetted Perimeter (m)</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 {% for instance in furrow_list %}
@@ -47,7 +27,12 @@
                         <td>{{instance.bln_furrow_type}}</td>
                         <td>{{instance.discharge}}</td>
                         <td>{{instance.area_slope}}</td>
-                        <td>{{instance.p_adjusted}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href={% url 'waiss:edit_furrow' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                                <a href={% url 'waiss:delete_furrow' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
                 {% endfor %}

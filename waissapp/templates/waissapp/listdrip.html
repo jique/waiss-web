@@ -6,26 +6,6 @@
 {% endblock %}
 
 {% block main_block %}
-<style>
-    table {
-        width: 90%;
-        text-align: center;
-        margin-bottom: 10px;
-        border-bottom: 2px solid #ddd;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    th{
-        border-top: 2px solid #ddd;
-        border-bottom: 2px solid #ddd;
-        padding: 5px;
-        background-color: rgb(240, 242, 245);
-    }
-    td {
-        border-bottom: 1px solid #ddd;
-    }
-</style>
-
 <div class="main-body">
     <div class="django-form">
             <br>
@@ -34,14 +14,17 @@
                 <thead>
                     <tr>
                         <th>System Name</th>
-                        <th>Single Lateral (Y/N)</th>
+                        <th>Field Unit</th>
+                        <th>Farm</th>
+                        <th>Single Lateral</th>
                         <th>No. of Emitters per Plant</th>
                         <th>Emitter Spacing (m)</th>
                         <th>Plant Spacing (m)</th>
                         <th>Row Spacing (m)</th>
-                        <th>Wetted Width/Diameter (m)</th>
+                        <th>Wetted Diameter (m)</th>
                         <th>Design Emission Uniformity</th>
                         <th>Irrigation Interval</th>
+                        <th>Actions</th>
 
                     </tr>
                 </thead>
@@ -49,14 +32,22 @@
                 <tbody>
                     <tr> 
                         <td>{{instance.name}}</td>
+                        <td>{{instance.farm_name}}</td>
+                        <td>{{instance.fieldunit}}</td>
                         <td>{{instance.bln_single_lateral}}</td>
                         <td>{{instance.emitters_per_plant}}</td>
                         <td>{{instance.emitter_spacing}}</td>
                         <td>{{instance.plant_spacing}}</td>
                         <td>{{instance.row_spacing}}</td>
-                        <td>{{instance.wetted_width}}</td>
+                        <td>{{instance.wetted_dia}}</td>
                         <td>{{instance.EU}}</td>
                         <td>{{instance.irrigation_interval}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href={% url 'waiss:edit_drip' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                                <a href={% url 'waiss:delete_drip' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
                 {% endfor %}

@@ -47,10 +47,10 @@ admin.site.register(FieldUnit, FieldUnitAdmin)
 
 class SoilInline(admin.TabularInline):
     model = Soil
-    list_display =('soiltype', 'fc', 'pwp', 'As')
+    list_display =('soiltype', 'fc', 'pwp', 'As', )
 
 class SoilAdmin(admin.ModelAdmin):
-    list_display = ('soiltype', 'fc', 'pwp', 'As')
+    list_display = ('soiltype', 'fc', 'pwp', 'As', 'source')
     ordering = ["soiltype"]
 
 class IntakeFamilyInline(admin.TabularInline):
@@ -159,7 +159,7 @@ class SprinklerParaAdmin(admin.ModelAdmin):
     list_display =('farm_name', 'fieldunit')
 
 class DripParaAdmin(admin.ModelAdmin):
-    list_display =('farm_name', 'fieldunit')
+    list_display =('farm_name', 'fieldunit', 'name', 'bln_single_lateral', 'emitters_per_plant', 'emitter_spacing', 'plant_spacing', 'row_spacing', 'wetted_dia', 'EU', 'irrigation_interval')
 
 admin.site.register(BasinPara, BasinParaAdmin)
 admin.site.register(BorderPara, BorderParaAdmin)

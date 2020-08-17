@@ -8,9 +8,9 @@
 {% block main_block %}
 <div class="main-body">
     <div class="django-form">
-        <form class="form-group" action="{% url 'waiss:addborder' %}" method="post">
+        <form class="form-group" action="" method="post">
             <br>
-            <h6><em>Input required information for you irrigation system.</em></h6>
+            <h6><em>Update the information of your irrigation system.</em></h6>
                 {% csrf_token %}
                 <div class="row">
                     <div class="col">
@@ -52,7 +52,7 @@
                         {{ border_form.errors }}
                     </div>
                 </div>
-                <input type="submit" value="Save" class="btn btn-secondary btn-block">
+                <input type="submit" value="Submit" class="btn btn-secondary btn-block">
         </form>
     </div>
 </div>

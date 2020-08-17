@@ -78,11 +78,13 @@ class FieldUnitSettings(models.Model):
 
 #DATABASE
 class Soil(models.Model):
-    soiltype = models.CharField(max_length=25, verbose_name="Soil Type", unique=True)
+    farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, null=True, blank=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, null=True, blank=True)
+    soiltype = models.CharField(max_length=25, verbose_name="Soil Type")
     fc = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Field Capacity, %", null=True)
     pwp = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Permanent Wilting Point, %", null=True)
     As = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Apparent Specific Density, %", null=True)
-
+    source = models.CharField(max_length=30, verbose_name="Data Source", null=True)
     def __str__(self):
         return self.soiltype
 
@@ -135,6 +137,9 @@ class CalibrationConstant(models.Model):
 
 #DATABASE
 class IntakeFamily(models.Model):
+    farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm Name", null=True, blank=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit Name", null=True, blank=True)
+    
     intakefamily = models.CharField(max_length=20, unique=True)
     coeff_a = models.DecimalField(max_digits=5, decimal_places=4, verbose_name=" a", null=True)
     coeff_b = models.DecimalField(max_digits=4, decimal_places=3, verbose_name=" b", null=True)
@@ -150,6 +155,9 @@ class IntakeFamily(models.Model):
 
 #DATABASE
 class Crop(models.Model):
+    farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm Name", null=True, blank=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit Name", null=True, blank=True)
+    
     crop = models.CharField(max_length=20, unique=True)
     date_transplanted = models.DateTimeField(verbose_name='Date Transplanted', null=True, blank=True)
     growingperiod = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Growing Period, days", null=True, blank=True)
@@ -314,8 +322,8 @@ class DripComp(models.Model):
         verbose_name_plural = "Computation: Drip"
 
 class BasinPara(models.Model):
-    farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, null=True, blank=True)
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, null=True, blank=True)
+    farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Farm")
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Field Unit")
 
     basin_name = models.CharField(max_length=30, verbose_name="System Name", null=True, blank=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Unit Discharge (lps)", null=True)
@@ -338,6 +346,8 @@ class BasinPara(models.Model):
     eff_adv_ratio = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="R", null=True)
     class Meta:
         verbose_name_plural = "Irrigation System: Basin"
+    def __str__(self):
+        return self.basin_name
 
 class BorderPara(models.Model):
     farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, null=True, blank=True)
@@ -369,6 +379,8 @@ class BorderPara(models.Model):
     
     class Meta:
         verbose_name_plural = "Irrigation System: Border"
+    def __str__(self):
+        return self.border_name
 
 class FurrowPara(models.Model):
     farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, null=True, blank=True)
@@ -378,14 +390,16 @@ class FurrowPara(models.Model):
     bln_furrow_type = models.BooleanField (verbose_name="It is an open-ended furrow.")
     discharge = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Unit Discharge (lps)", null=True)
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope", null=True)
-    p_adjusted = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="P adjusted (m)", null=True) #doublecheck details
-    
+    #p_adjusted = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="P adjusted (m)", null=True) #doublecheck details
+    #just insert in js computation
     class Meta:
         verbose_name_plural = "Irrigation System: Furrow"
+    def __str__(self):
+        return self.name
 
 class DripPara(models.Model):
-    farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, null=True, blank=True)
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field unit", null=True, blank=True)
+    farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Farm")
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Field Unit")
 
     name = models.CharField(max_length=30, verbose_name="System Name", null=True, blank=True)
     bln_single_lateral = models.BooleanField (verbose_name="Is a Single Straight Lateral type.")
@@ -393,20 +407,20 @@ class DripPara(models.Model):
     emitters_per_plant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="No. of Emitters per Plant", null=True)
     emitter_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Spacing (m)", null=True)
     #if bln_single_lateral is false
-    optimum_emitter_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Optimum Emitter Spacing (m)", help_text="This is only computed for non-single straight lateral system.", null=True)
-    #
     plant_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Plant spacing (m)", null=True)
     row_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Row spacing (m)", null=True)
     wetted_dia = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Wetted diameter (m)", null=True)
     #
-    EU = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Design Emission Uniformity", null=True)
+    EU = models.DecimalField(max_digits=3, decimal_places=3, verbose_name="Design Emission Uniformity", null=True)
     irrigation_interval = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Irrigation Interval (days)", null=True)
     class Meta:
         verbose_name_plural = "Irrigation System: Drip"
+    def __str__(self):
+        return self.name
 
 class SprinklerPara(models.Model):
-    farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, null=True, blank=True)
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field unit", null=True, blank=True)
+    farm_name = models.ForeignKey(Farm, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Farm")
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
     
     name = models.CharField(max_length=30, verbose_name="System Name", null=True, blank=True)
     farm_area = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Farm area (sq.m)", null=True)
@@ -416,15 +430,15 @@ class SprinklerPara(models.Model):
     num_of_sprinklers = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Number of sprinklers", null=True)
     ea = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Application Efficiency", null=True)
     #Is operating pressure known?
-    bln_operating_pressure = models.BooleanField (verbose_name="Is the operating pressure known?")
+    #bln_operating_pressure = models.BooleanField (verbose_name="Is the operating pressure known?")
     #If yes, then
-    operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True)
-    nozzle_dia = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Nozzle diameter (mm)", help_text="Fill-out only if operating pressure is known.", null=True)
-    discharge_coefficient = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Discharge Coefficient", help_text="Fill-out only if operating pressure is known.", null=True)
+    #operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True)
+    #nozzle_dia = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Nozzle diameter (mm)", help_text="Fill-out only if operating pressure is known.", null=True)
+    #discharge_coefficient = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Discharge Coefficient", help_text="Fill-out only if operating pressure is known.", null=True)
     #
     sprinkler_discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler Discharge (lps)", help_text="Fill-out if operating pressure is unknown.", null=True)
     class Meta:
         verbose_name_plural = "Irrigation System: Sprinkler"
-
-
+    def __str__(self):
+        return self.name
     

@@ -1,0 +1,67 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<div class="main-body">
+    <div class="form-group">
+            <br>
+            <h6><em>Crop Database</em></h6>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Crop</th>
+                        <th>Farm</th>
+                        <th>Field Unit</th>
+                        <th>Date Transplanted</th>
+                        <th>Growing Period (days)</th>
+                        <th>Management Allowable Depletion (MCv, %)</th>
+                        <th>Depletion Factor (%)</th>
+                        <th>Depth of Rootzone (m)</th>
+                        <th>Kc (ini)</th>
+                        <th>Kc (mid)</th>
+                        <th>Kc (end)</th>
+                        <th>Kc curve cutoff (1)</th>
+                        <th>Kc curve cutoff (2)</th>
+                        <th>Kc curve cutoff (3)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                {% for instance in crop_list %}
+                <tbody>
+                    <tr> 
+                        <td>{{instance.crop}}</td>
+                        <td>{{instance.farm_name}}</td>
+                        <td>{{instance.fieldunit}}</td>
+                        <td>{{instance.date_transplanted}}</td>
+                        <td>{{instance.growingperiod}}</td>
+                        <td>{{instance.mad}}</td>
+                        <td>{{instance.depletionfactor}}</td>
+                        <td>{{instance.drz}}</td>
+                        <td>{{instance.kc_ini}}</td>
+                        <td>{{instance.kc_mid}}</td>
+                        <td>{{instance.kc_end}}</td>
+                        <td>{{instance.kc_cc_1}}</td>
+                        <td>{{instance.kc_cc_2}}</td>
+                        <td>{{instance.kc_cc_3}}</td>
+
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href={% url 'waiss:edit_crop' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                                <a href={% url 'waiss:delete_crop' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

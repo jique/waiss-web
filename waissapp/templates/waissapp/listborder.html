@@ -6,25 +6,6 @@
 {% endblock %}
 
 {% block main_block %}
-<style>
-    table {
-        width: 90%;
-        text-align: center;
-        margin-bottom: 10px;
-        border-bottom: 2px solid #ddd;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    th{
-        border-top: 2px solid #ddd;
-        border-bottom: 2px solid #ddd;
-        padding: 5px;
-        background-color: rgb(240, 242, 245);
-    }
-    td {
-        border-bottom: 1px solid #ddd;
-    }
-</style>
 
 <div class="main-body">
     <div class="django-form">
@@ -42,6 +23,7 @@
                         <th>Manning's Coefficient</th>
                         <th>Slope (m/m)</th>
                         <th>Application Efficiency (%)</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 {% for instance in border_list %}
@@ -56,6 +38,12 @@
                         <td>{{instance.mannings_coeff}}</td>
                         <td>{{instance.area_slope}}</td>
                         <td>{{instance.ea}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href={% url 'waiss:edit_border' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                                <a href={% url 'waiss:delete_border' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
                 {% endfor %}

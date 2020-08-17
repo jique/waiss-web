@@ -8,7 +8,7 @@
 {% block main_block %}
 <div class="main-body">
     <div class="django-form">
-        <form class="form-group" action="{% url 'waiss:addsprinkler' %}" method="post">
+        <form class="form-group" action="" method="post">
             <br>
             <h6><em>Input sprinkler irrigation system information.</em></h6>
             {% csrf_token %}
@@ -30,6 +30,9 @@
                 <div class="col">
                     {{ sprinkler_form.area_irrigated_at_a_time|as_crispy_field }}
                 </div>
+                <div class="col">
+                    {{ sprinkler_form.num_of_sprinklers|as_crispy_field }}
+                </div>
             </div>
             <div class="row">
                 <div class="col">
@@ -37,9 +40,6 @@
                 </div>
                 <div class="col">
                     {{ sprinkler_form.sprinkler_spacing|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ sprinkler_form.num_of_sprinklers|as_crispy_field }}
                 </div>
             </div>
             <div class="row">
@@ -55,7 +55,7 @@
                     {{ sprinkler_form.errors }}
                 </div>
             </div>
-            <input type="submit" value="Save" class="btn btn-secondary btn-block">
+            <input type="submit" value="Submit" class="btn btn-secondary btn-block">
         </form>
     </div>
 </div>

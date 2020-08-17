@@ -1,0 +1,52 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<div class="main-body">
+    <div class="form-group">
+            <br>
+            <h6><em>Soil Database</em></h6>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Soil Name</th>
+                        <th>Farm</th>
+                        <th>Field Unit</th>
+                        <th>Field Capacity (MCv, %)</th>
+                        <th>Permanent Wilting Point (MCv, %)</th>
+                        <th>Permanent Wilting Point (MCv, %)</th>
+                        <th>Source</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                {% for instance in soil_list %}
+                <tbody>
+                    <tr> 
+                        <td>{{instance.soiltype}}</td>
+                        <td>{{instance.farm_name}}</td>
+                        <td>{{instance.fieldunit}}</td>
+                        <td>{{instance.fc}}</td>
+                        <td>{{instance.pwp}}</td>
+                        <td>{{instance.As}}</td>
+                        <td>{{instance.source}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href={% url 'waiss:edit_soil' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                                <a href={% url 'waiss:delete_soil' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    
