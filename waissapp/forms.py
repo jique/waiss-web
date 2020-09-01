@@ -1,6 +1,9 @@
 from django.forms import ModelForm
 from django import forms
 from .models import Personnel, Soil, Crop, FieldUnitSettings, CalibrationConstant, FarmSummaries, IntakeFamily, Farm, FieldUnit, SensorNumber, BasinComp, BorderComp, FurrowComp, SprinklerComp, DripComp, BasinPara, BorderPara, FurrowPara, SprinklerPara, DripPara
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+from bootstrap_datepicker.widgets import DatePicker
 
 class SoilForm(ModelForm):
     class Meta:
@@ -13,6 +16,12 @@ class IntakeFamilyForm(ModelForm):
         exclude = ()  # this says to include all fields from model to the form
 
 class CropForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CropForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-7'
+        self.helper.field_class = 'col-lg-5'
     class Meta:
         model = Crop
         exclude = ()  # this says to include all fields from model to the form
@@ -23,6 +32,9 @@ class FieldUnitForm(ModelForm):
         exclude = ()  # this says to include all fields from model to the form 
 
 class FieldUnitSettingsForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(FieldUnitSettingsForm, self).__init__(*args, **kwargs)
+        self.fields['timestart'].widget.attrs['class'] = 'datepicker'
     class Meta:
         model = FieldUnitSettings
         exclude = ()  # this says to include all fields from model to the form       
@@ -42,7 +54,13 @@ class FarmForm(ModelForm):
         model = Farm
         exclude = ()  # this says to include all fields from model to the form 
 
-class FarmSummariesForm(ModelForm):
+class FarmSummariesForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(FarmSummariesForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-5'
+        self.helper.field_class = 'col-lg-7' 
     class Meta:
         model = FarmSummaries
         exclude = ()  # this says to include all fields from model to the form

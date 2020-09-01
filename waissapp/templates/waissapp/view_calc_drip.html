@@ -1,0 +1,47 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dashboard <span></span></h1>
+</div>
+
+<div class="card-columns">
+
+    <div class="card">
+        <div class="card-header">Daily Advisory!</div>
+        <div class="card-body">
+            <p>Status: Irrigate/Not to Irrigate?
+            </p>
+            <p>Irrigate: How much?</p>
+            <p>Irrigate: How long?</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+          <h6 class="card-title">Trend of MCv of the farm</h6>
+          <p>Insert Chart Here</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-title">Summary of Farm Details</h6>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-title">Other advisories!</h6>
+            <p>(CROP) at flowering stage. Don't forget to add your fertilizer.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

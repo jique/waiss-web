@@ -6,35 +6,40 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="container-fluid">
-    <div class="heading"><h5>Calibration Equations Database</h5></div>
-    <table class="table table-condensed table-hover table-responsive ">
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Calibration Data</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th class="align-top fit">Calibration Name</th>
-                <th class="align-top fit">Farm</th>
-                <th class="align-top">Field Unit</th>
+                <th class="align-top fit">Actions</th>
                 <th class="align-top fit">Sensor</th>
-                <th class="align-top fit">Soil</th>
                 <th class="align-top">Equation Form</th>
-                <th class="align-top fit"> a</th>
-                <th class="align-top fit"> b</th>
-                <th class="align-top fit"> c</th>
-                <th class="align-top fit"> d</th>
-                <th class="align-top fit"> m</th>
+                <th class="align-top"> a</th>
+                <th class="align-top"> b</th>
+                <th class="align-top"> c</th>
+                <th class="align-top"> d</th>
+                <th class="align-top"> m</th>
                 <th class="align-top">Date Calibrated</th>
                 <th class="align-top">Calibrated By</th>
-                <th class="align-top fit">Actions</th>
             </tr>
         </thead>
                 {% for instance in calib_list %}
         <tbody>
             <tr> 
                 <td class="align-middle fit">{{instance.calib_name}}</td>
-                <td class="align-middle fit" >{{instance.farm_name|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.fieldunit|default_if_none:"-"}}</td>
+                <td class="fit">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_calib' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_calib' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
                 <td class="align-middle fit">{{instance.sensor|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.soil|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.calib_equation|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.calib_coeff_a|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.calib_coeff_b|default_if_none:"-"}}</td>
@@ -43,12 +48,6 @@
                 <td class="align-middle fit">{{instance.calib_coeff_m|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.date_tested|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.tested_by|default_if_none:"-"}}</td>
-                <td class="fit">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_calib' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_calib' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                    </div>
-                </td>
             </tr>
         </tbody>
                 {% endfor %}

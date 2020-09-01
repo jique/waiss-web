@@ -5,18 +5,23 @@
 {% endblock %}
             
 {% block main_block %}
-<div class="container-fluid size90">
-    <form class="form-group" action="{% url 'waiss:add_fieldunit' %}" method="post">
-        <br>
-        {% csrf_token %}
-        <h6><em>Input Field Unit Information</em></h6>
-        <div class="row">
-            <div class="col">{{ fieldunit_form.name|as_crispy_field }}                </div>
-            <div class="col">{{ fieldunit_form.farm_name|as_crispy_field }}</div>
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header py-3">I N P U T _ D A T A</div>
+            <div class="card-body">
+                <form class="form-group" action="{% url 'waiss:add_fieldunit' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col">{{ fieldunit_form.name|as_crispy_field }}</div>
+                        <div class="col">{{ fieldunit_form.farm_name|as_crispy_field }}</div>
+                    </div>
+                  <input type="submit" value="Submit" class="btn btn-secondary btn-block">
+                </form>
+            </div>
         </div>
-        <input type="submit" value="Submit" class="btn btn-secondary btn-block">
-    </form>
-</div> 
+    </div>
+</div>
 {% endblock %}
 
 {% block bottom_script_block %}

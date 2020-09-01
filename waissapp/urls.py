@@ -8,7 +8,18 @@ urlpatterns = [
      path('about/', views.about, name='about'),
      path('charts/', views.charts, name='charts'), 
      path('show-irrig-calculations/', views.irrig_calculations, name='irrig-calculations'),
-     path('show-farm-summary/', views.farm_summaries, name='farmsummaries'),
+     path('systems/', views.list_sys, name='list_farm_summaries'),
+     path('drip-calc/', views.list_drip_calc, name='list_drip_calc'),
+     path('view_calc_drip/<str:pk>/', views.view_calc_drip, name='view_calc_drip'),
+
+     #SYSTEMS
+     path('calculate-basin-system/', views.basin_calc, name='sys_basin'),
+     path('calculate-border-system/', views.border_calc, name='sys_border'),
+     path('calculate-furrow-system/', views.furrow_calc, name='sys_furrow'),
+     path('calculate-drip-system/', views.drip_calc, name='sys_drip'),
+     path('calculate-sprinkler-system/', views.sprinkler_calc, name='sys_sprinkler'),
+     path('edit_farmsummaries/<str:pk>/', views.edit_farmsummaries, name='edit_farmsummaries'),
+     path('delete_farmsummaries/<str:pk>/', views.delete_farmsummaries, name='delete_farmsummaries'),
      
      #FIELDUNIT_SETTINGS
      path('add-settings/', views.add_settings, name='add_settings'),

@@ -8,7 +8,19 @@ from django.urls import reverse
 from django import forms
 from .forms import PersonnelForm, SoilForm, CalibForm, CropForm, FieldUnitSettingsForm, FarmForm, IntakeFamilyForm, FarmSummariesForm, FieldUnitForm, SensorForm, BasinForm, BorderForm, FurrowForm, SprinklerForm, DripForm, irrigtypeForm, BasinParaForm, FurrowParaForm, BorderParaForm, DripParaForm, SprinklerParaForm
 from django.views.generic.edit import UpdateView
-#from django.template import loader
+from django.forms.models import formset_factory
+
+def index(request):
+	return render(request, 'waissapp/index.html')
+
+def about(request):
+	return render(request, 'waissapp/about.html')
+
+def charts(request):
+	return render(request, 'waissapp/charts.html')
+
+def irrig_calculations(request):
+	return render(request, 'waissapp/irrig-calculations.html')
 
 #INTAKE_FAMILY_PARAMETERS
 def add_intakefamily(request):
@@ -52,26 +64,7 @@ def deleteIntakeFamily(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_intakefamily.html', context)
-
-def index(request):
-	return render(request, 'waissapp/index.html')
-
-def about(request):
-	return render(request, 'waissapp/about.html')
-
-def charts(request):
-	return render(request, 'waissapp/charts.html')
-
-#where to see summary of each farms
-def farm_summaries(request):
-	if request.method == 'POST':  # data sent by user
-		form = FarmSummariesForm(request.POST)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return HttpResponse('Added to database')
-	else:  # display empty form
-		form = FarmSummariesForm()
-	return render(request, 'waissapp/farmsummaries.html', {'farmsummaries_form': form})
+#END#INTAKE_FAMILY_PARAMETERS
 
 #CALIB_PARAMETERS
 def add_calib(request):
@@ -116,6 +109,7 @@ def deleteCalib(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_calib.html', context)
+#END#CALIB_PARAMETERS
 
 #CROP_PARAMETERS
 def add_crop(request):
@@ -123,7 +117,7 @@ def add_crop(request):
 		form = CropForm(request.POST)
 		if form.is_valid():
 			form.save()  # this will save info to database
-			return HttpResponse('Crop information and constants added to database')
+			return redirect('/show-crop-database/')
 	else:  # display empty form
 		form = CropForm()
 	return render(request, 'waissapp/add_crop.html', {'crop_form': form})
@@ -159,6 +153,7 @@ def deleteCrop(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_crop.html', context)
+#END#CROP_PARAMETERS
 
 #SOIL_PARAMETERS
 def add_soil(request):
@@ -204,10 +199,7 @@ def deleteSoil(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_soil.html', context)
-
-
-def irrig_calculations(request):
-	return render(request, 'waissapp/irrig-calculations.html')
+#END#SOIL_PARAMETERS
 
 #FIELDUNIT_PARAMETERS
 def add_fieldunit(request):
@@ -253,6 +245,7 @@ def deleteFieldUnit(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_fieldunit.html', context)
+#END#FIELDUNIT_PARAMETERS
 
 #SENSOR_PARAMETERS
 def add_sensor(request):
@@ -298,99 +291,7 @@ def deleteSensor(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_sensor.html', context)
-
-def add_basin(request):
-    if request.method == 'POST':  # data sent by user
-        form = BasinParaForm(request.POST)
-        if form.is_valid():
-            form.save()  # this will save info to database
-            return redirect('/show-basin-database/')
-    else:  # display empty form
-        form = BasinParaForm()
-
-    return render(request, 'waissapp/addbasin.html', {'basin_form': form})
-
-def add_border(request):
-    if request.method == 'POST':  # data sent by user
-        form = BorderParaForm(request.POST)
-        if form.is_valid():
-            form.save()  # this will save info to database
-            return redirect('/show-border-database/')
-    else:  # display empty form
-        form = BorderParaForm()
-
-    return render(request, 'waissapp/addborder.html', {'border_form': form})
-
-def add_furrow(request):
-    if request.method == 'POST':  # data sent by user
-        form = FurrowParaForm(request.POST)
-        if form.is_valid():
-            form.save()  # this will save info to database
-            return redirect('/show-furrow-database/')
-    else:  # display empty form
-        form = FurrowParaForm()
-
-    return render(request, 'waissapp/addfurrow.html', {'furrow_form': form})
-
-def add_sprinkler(request):
-    if request.method == 'POST':  # data sent by user
-        form = SprinklerParaForm(request.POST)
-        if form.is_valid():
-            form.save()  # this will save info to database
-            return redirect('/show-sprinkler-database/')
-    else:  # display empty form
-        form = SprinklerParaForm()
-
-    return render(request, 'waissapp/addsprinkler.html', {'sprinkler_form': form})
-
-def add_drip(request):
-    if request.method == 'POST':  # data sent by user
-        form = DripParaForm(request.POST)
-        if form.is_valid():
-            form.save()  # this will save info to database
-            return redirect('/show-drip-database/')
-    else:  # display empty form
-        form = DripParaForm()
-
-    return render(request, 'waissapp/adddrip.html', {'drip_form': form})
-
-def choose_irrig(request):
-	if request.method == 'POST':
-		form = irrigtypeForm(request.POST)
-		if form.is_valid():
-			irrig_type = form.cleaned_data.get("farm_irrigation")
-			if irrig_type == "BASIN":
-				return redirect('/add-basin-system/')
-			elif irrig_type == "BORDER":
-				return redirect('/add-border-system/')
-			elif irrig_type == "FURROW":
-				return redirect('/add-furrow-system/')
-			elif irrig_type == "DRIP":
-				return redirect('/add-drip-system/')
-			elif irrig_type == "SPRINKLER":
-				return redirect('/add-sprinkler-system/')
-	else:  # display empty form
-		form = irrigtypeForm()
-	return render(request, 'waissapp/irriginfo.html', {'irrig_form': form})
-
-def choose_irrig_database(request):
-	if request.method == 'POST':
-		form = irrigtypeForm(request.POST)
-		if form.is_valid():
-			irrig_type = form.cleaned_data.get("farm_irrigation")
-			if irrig_type == "BASIN":
-				return redirect('/show-basin-database/')
-			elif irrig_type == "BORDER":
-				return redirect('/show-border-database/')
-			elif irrig_type == "FURROW":
-				return redirect('/show-furrow-database/')
-			elif irrig_type == "DRIP":
-				return redirect('/show-drip-database/')
-			elif irrig_type == "SPRINKLER":
-				return redirect('/show-sprinkler-database/')
-	else:  # display empty form
-		form = irrigtypeForm()
-	return render(request, 'waissapp/choose-irrigation-system-type.html', {'irrig_form': form})
+#END#SENSOR_PARAMETERS
 
 #SETTINGS_PARAMETERS
 def add_settings(request):
@@ -435,6 +336,7 @@ def deleteSettings(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_settings.html', context)
+#END#SETTINGS_PARAMETERS
 
 #FARM_PARAMETERS
 def farm_account(request):
@@ -443,7 +345,7 @@ def farm_account(request):
 		form = FarmForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect('/list_farm/')
+			return redirect('/show-farm-database/')
 	else:  # display empty form
 		form = FarmForm()
 	return render(request, 'waissapp/add_farm.html', {'farm_form': form})
@@ -480,6 +382,7 @@ def deleteFarm(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_farm.html', context)
+#END#FARM_PARAMETERS
 
 #PERSONNEL_PARAMETERS
 def add_personnel(request):
@@ -487,7 +390,7 @@ def add_personnel(request):
         form = PersonnelForm(request.POST)
         if form.is_valid():
             form.save()  # this will save info to database
-            return redirect('/list_personnel/')
+            return redirect('/show-personnel-database/')
     else:  # display empty form
         form = PersonnelForm()
 
@@ -525,6 +428,58 @@ def deletePersonnel(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_personnel.html', context)
+#END_OF_PERSONNEL_PARAMETERS
+
+#IRRIGATION_SYSTEM
+def choose_irrig(request):
+	if request.method == 'POST':
+		form = irrigtypeForm(request.POST)
+		if form.is_valid():
+			irrig_type = form.cleaned_data.get("farm_irrigation")
+			if irrig_type == "BASIN":
+				return redirect('/add-basin-system/')
+			elif irrig_type == "BORDER":
+				return redirect('/add-border-system/')
+			elif irrig_type == "FURROW":
+				return redirect('/add-furrow-system/')
+			elif irrig_type == "DRIP":
+				return redirect('/add-drip-system/')
+			elif irrig_type == "SPRINKLER":
+				return redirect('/add-sprinkler-system/')
+	else:  # display empty form
+		form = irrigtypeForm()
+	return render(request, 'waissapp/irriginfo.html', {'irrig_form': form})
+
+def choose_irrig_database(request):
+	if request.method == 'POST':
+		form = irrigtypeForm(request.POST)
+		if form.is_valid():
+			irrig_type = form.cleaned_data.get("farm_irrigation")
+			if irrig_type == "BASIN":
+				return redirect('/show-basin-database/')
+			elif irrig_type == "BORDER":
+				return redirect('/show-border-database/')
+			elif irrig_type == "FURROW":
+				return redirect('/show-furrow-database/')
+			elif irrig_type == "DRIP":
+				return redirect('/show-drip-database/')
+			elif irrig_type == "SPRINKLER":
+				return redirect('/show-sprinkler-database/')
+	else:  # display empty form
+		form = irrigtypeForm()
+	return render(request, 'waissapp/choose-irrigation-system-type.html', {'irrig_form': form})
+
+#BASIN_IRRIGATION_SYSTEM_PARAMETERS
+def add_basin(request):
+    if request.method == 'POST':  # data sent by user
+        form = BasinParaForm(request.POST)
+        if form.is_valid():
+            form.save()  # this will save info to database
+            return redirect('/show-basin-database/')
+    else:  # display empty form
+        form = BasinParaForm()
+
+    return render(request, 'waissapp/addbasin.html', {'basin_form': form})
 
 def basin_list(request):
 	queryset = BasinPara.objects.all()
@@ -534,6 +489,43 @@ def basin_list(request):
 	}
 	return render(request, 'waissapp/listbasin.html', context)
 
+def editBasin(request, pk):
+	para = BasinPara.objects.get(id=pk)
+	form = BasinParaForm(instance=para)
+
+	if request.method == 'POST':  # data sent by user
+		form = BasinParaForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/show-basin-database/')
+
+	context = {
+		"basin_form":form,
+	}
+	return render(request, 'waissapp/edit_basin.html', context)
+
+def deleteBasin(request, pk):
+	para = BasinPara.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/show-basin-database/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_basin.html', context)
+
+#BORDER_IRRIGATION
+def add_border(request):
+    if request.method == 'POST':  # data sent by user
+        form = BorderParaForm(request.POST)
+        if form.is_valid():
+            form.save()  # this will save info to database
+            return redirect('/show-border-database/')
+    else:  # display empty form
+        form = BorderParaForm()
+
+    return render(request, 'waissapp/addborder.html', {'border_form': form})
+
 def border_list(request):
 	queryset = BorderPara.objects.all()
 
@@ -541,6 +533,44 @@ def border_list(request):
 		"border_list":queryset,
 	}
 	return render(request, 'waissapp/listborder.html', context)
+
+def editBorder(request, pk):
+	para = BorderPara.objects.get(id=pk)
+	form = BorderParaForm(instance=para)
+
+	if request.method == 'POST':  # data sent by user
+		form = BorderParaForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/show-border-database/')
+
+	context = {
+		"border_form":form,
+	}
+	return render(request, 'waissapp/edit_border.html', context)
+
+def deleteBorder(request, pk):
+	para = BorderPara.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/show-border-database/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_border.html', context)
+#END_OF_BORDER_IRRIGATION
+
+#FURROW_IRRIGATION
+def add_furrow(request):
+    if request.method == 'POST':  # data sent by user
+        form = FurrowParaForm(request.POST)
+        if form.is_valid():
+            form.save()  # this will save info to database
+            return redirect('/show-furrow-database/')
+    else:  # display empty form
+        form = FurrowParaForm()
+
+    return render(request, 'waissapp/addfurrow.html', {'furrow_form': form})
 
 def furrow_list(request):
 	queryset = FurrowPara.objects.all()
@@ -550,13 +580,43 @@ def furrow_list(request):
 	}
 	return render(request, 'waissapp/listfurrow.html', context)
 
-def sprinkler_list(request):
-	queryset = SprinklerPara.objects.all()
+def editFurrow(request, pk):
+	para = FurrowPara.objects.get(id=pk)
+	form = FurrowParaForm(instance=para)
+
+	if request.method == 'POST':  # data sent by user
+		form = FurrowParaForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/show-furrow-database/')
 
 	context = {
-		"sprinkler_list":queryset,
+		"furrow_form":form,
 	}
-	return render(request, 'waissapp/listsprinkler.html', context)
+	return render(request, 'waissapp/edit_furrow.html', context)
+
+def deleteFurrow(request, pk):
+	para = FurrowPara.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/show-furrow-database/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_furrow.html', context)
+#END_OF_FURROW_IRRIGATION
+
+#DRIP_IRRIGATION
+def add_drip(request):
+    if request.method == 'POST':  # data sent by user
+        form = DripParaForm(request.POST)
+        if form.is_valid():
+            form.save()  # this will save info to database
+            return redirect('/show-drip-database/')
+    else:  # display empty form
+        form = DripParaForm()
+
+    return render(request, 'waissapp/adddrip.html', {'drip_form': form})
 
 def drip_list(request):
 	queryset = DripPara.objects.all()
@@ -590,7 +650,28 @@ def deleteDrip(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_drip.html', context)
-	
+#END_OF_DRIP_IRRIGATION
+
+#SPRINKLER_IRRIGATION
+def add_sprinkler(request):
+    if request.method == 'POST':  # data sent by user
+        form = SprinklerParaForm(request.POST)
+        if form.is_valid():
+            form.save()  # this will save info to database
+            return redirect('/show-sprinkler-database/')
+    else:  # display empty form
+        form = SprinklerParaForm()
+
+    return render(request, 'waissapp/addsprinkler.html', {'sprinkler_form': form})
+
+def sprinkler_list(request):
+	queryset = SprinklerPara.objects.all()
+
+	context = {
+		"sprinkler_list":queryset,
+	}
+	return render(request, 'waissapp/listsprinkler.html', context)
+
 def editSprinkler(request, pk):
 	para = SprinklerPara.objects.get(id=pk)
 	form = SprinklerParaForm(instance=para)
@@ -615,78 +696,143 @@ def deleteSprinkler(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_sprinkler.html', context)
+#END_OF_SPRINKLER_IRRIGATION
 
-def editBorder(request, pk):
-	para = BorderPara.objects.get(id=pk)
-	form = BorderParaForm(instance=para)
+#FARM_SUMMARIES for IRRIG_SYS
+def list_sys(request):
+	queryset = FarmSummaries.objects.all()
+	
+	context = {
+		"farm_summaries_list":queryset,
+	}
+	return render(request, 'waissapp/list_farm_summaries.html', context)
+
+def edit_farmsummaries(request, pk):
+	para = FarmSummaries.objects.get(id=pk)
+	form = FarmSummariesForm(instance=para)
 
 	if request.method == 'POST':  # data sent by user
-		form = BorderParaForm(request.POST, instance=para)
+		form = FarmSummariesForm(request.POST, instance=para)
 		if form.is_valid():
 			form.save()  # this will save info to database
-			return redirect('/show-border-database/')
+			return redirect('/show-systems/')
 
 	context = {
-		"border_form":form,
+		"farmsummaries_form":form,
 	}
-	return render(request, 'waissapp/edit_border.html', context)
+	return render(request, 'waissapp/edit_farmsummaries.html', context)
 
-def deleteBorder(request, pk):
-	para = BorderPara.objects.get(id=pk)
+def delete_farmsummaries(request, pk):
+	para = FarmSummaries.objects.get(id=pk)
 	if request.method == 'POST':
 		para.delete()
-		return redirect('/show-border-database/')
+		return redirect('/show-systems/')
 	context = {
 		"item":para	
 	}
-	return render(request, 'waissapp/delete_border.html', context)
+	return render(request, 'waissapp/delete_farmsummaries.html', context)
 
-def editFurrow(request, pk):
-	para = FurrowPara.objects.get(id=pk)
-	form = FurrowParaForm(instance=para)
-
+def basin_calc(request):
 	if request.method == 'POST':  # data sent by user
-		form = FurrowParaForm(request.POST, instance=para)
+		form = FarmSummariesForm(request.POST)
 		if form.is_valid():
 			form.save()  # this will save info to database
-			return redirect('/show-furrow-database/')
-
+	else:  # display empty form
+		form = FarmSummariesForm()
+	
 	context = {
-		"furrow_form":form,
+		"farmsummaries_form":form,
 	}
-	return render(request, 'waissapp/edit_furrow.html', context)
 
-def deleteFurrow(request, pk):
-	para = FurrowPara.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/show-furrow-database/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_furrow.html', context)
+	return render(request, 'waissapp/sys_basin.html', context)
 
-def editBasin(request, pk):
-	para = BasinPara.objects.get(id=pk)
-	form = BasinParaForm(instance=para)
-
+def border_calc(request):
 	if request.method == 'POST':  # data sent by user
-		form = BasinParaForm(request.POST, instance=para)
+		form = FarmSummariesForm(request.POST)
 		if form.is_valid():
 			form.save()  # this will save info to database
-			return redirect('/show-basin-database/')
+	else:  # display empty form
+		form = FarmSummariesForm()
 
 	context = {
-		"basin_form":form,
+		"farmsummaries_form":form,
 	}
-	return render(request, 'waissapp/edit_basin.html', context)
 
-def deleteBasin(request, pk):
-	para = BasinPara.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/show-basin-database/')
+	return render(request, 'waissapp/sys_border.html', context)
+
+def furrow_calc(request):
+	if request.method == 'POST':  # data sent by user
+		form = FarmSummariesForm(request.POST)
+		if form.is_valid():
+			form.save()  # this will save info to database
+	else:  # display empty form
+		form = FarmSummariesForm()
+	
 	context = {
-		"item":para	
+		"farmsummaries_form":form,
 	}
-	return render(request, 'waissapp/delete_basin.html', context)
+
+	return render(request, 'waissapp/sys_furrow.html', context)
+
+def drip_calc(request):
+	if request.method == 'POST':  # data sent by user
+		form = FarmSummariesForm(request.POST)
+		if form.is_valid():
+			form.save()  # this will save info to database
+	else:  # display empty form
+		form = FarmSummariesForm()
+	
+	context = {
+		"farmsummaries_form":form,
+	}
+
+	return render(request, 'waissapp/sys_drip.html', context)
+
+def sprinkler_calc(request):
+	if request.method == 'POST':  # data sent by user
+		form = FarmSummariesForm(request.POST)
+		if form.is_valid():
+			form.save()  # this will save info to database
+	else:  # display empty form
+		form = FarmSummariesForm()
+	
+	context = {
+		"farmsummaries_form":form,
+	}
+
+	return render(request, 'waissapp/sys_sprinkler.html', context)
+
+
+
+#END#FARM_SUMMARIES for IRRIG_SYS
+
+#COMPUTATION
+def list_drip_calc(request):
+	queryset = DripComp.objects.all()
+
+	context = {
+		"calc_list":queryset,
+	}
+	return render(request, 'waissapp/list_drip_calc.html', context)
+
+def view_calc_drip(request, pk):
+	latest_data = DripComp.objects.filter(id=pk).latest() #how to get latest computation data
+	system_data = latest_data.objects.all()
+	farm_summary =FarmSummaries.objects.all()
+	#parameters = FarmSummaries.objects.filter(id=pk).set_all() #how to get ID of the farm summaries
+	
+	#greenhouse_A = Greenhouse.objects.get(name="Pamana_A")
+	#date_transplanted = greenhouse_A.date_transplanted.date()
+	days_delta = datetime.now().date() - date_transplanted
+	delta_DAT = days_delta.days
+	date_Today = datetime.now().date()
+	local_time = timezone.localtime(latest_dataset.timestamp).time()
+	date_read = timezone.localtime(latest_dataset.timestamp).date()
+
+	context = {
+		"local_time": local_time,
+		"date_read": date_read,
+		"date_Today": date_Today,
+		"display_DAT" : delta_DAT,
+	}
+	return render(request, 'waissapp/view_calc_drip.html', context)

@@ -1,0 +1,66 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Farm Data</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th class="align-top  fit">System Name</th>
+                <th class="align-top  fit">Actions</th>
+                <th class="align-top  fit">Farm</th>
+                <th class="align-top  fit">Field Unit</th>
+                <th class="align-top  fit">Manager</th>
+                <th class="align-top  fit">Crop</th>
+                <th class="align-top  fit">Soil</th>
+                <th class="align-top  fit">Intake Family</th>
+                <th class="align-top  fit">Calibration</th>
+                <th class="align-top  fit">Basin</th>
+                <th class="align-top  fit">Border</th>
+                <th class="align-top  fit">Furrow</th>
+                <th class="align-top  fit">Sprinkler</th>
+                <th class="align-top  fit">Drip</th>
+            </tr>
+        </thead>
+            {% for instance in farm_summaries_list %}
+        <tbody>
+            <tr>  
+                <td class="align-middle fit">{{instance.name}}</td> 
+                <td class="fit">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_farmsummaries' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_farmsummaries' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>                   
+                <td class="align-middle fit">{{instance.farm_name}}</td>
+                <td class="align-middle fit">{{instance.fieldunit}}</td>                    
+                <td class="align-middle fit">{{instance.farm_manager}}</td>
+                <td class="align-middle fit">{{instance.crop}}</td>                    
+                <td class="align-middle fit">{{instance.soil}}</td>
+                <td class="align-middle fit">{{instance.intakefamily|default_if_none:"-"}}</td>                    
+                <td class="align-middle fit">{{instance.calib_eqn}}</td>
+                <td class="align-middle fit">{{instance.basin_sys|default_if_none:"x"}}</td>
+                <td class="align-middle fit">{{instance.border_sys|default_if_none:"x"}}</td>                    
+                <td class="align-middle fit">{{instance.furrow_sys|default_if_none:"x"}}</td>
+                <td class="align-middle fit">{{instance.sprinkler_sys|default_if_none:"x"}}</td>                    
+                <td class="align-middle fit">{{instance.drip_sys|default_if_none:"x"}}</td>
+                
+            </tr>
+        </tbody>
+            {% endfor %}
+    </table>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

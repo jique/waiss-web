@@ -5,31 +5,25 @@
 {% block top_script_block %}
 {% endblock %}
 
-{% block main_block %}      
-<div class="container-fluid size90">
-    <form class="form-group" action="" method="post">   
-            <br>
-            <h6><em>Personnel</em></h6>
-            <p><i>Add personnel and their their respective mobile numbers (11 digits) to where the irrigation advisories are to be sent.</i></p>
-            {% csrf_token %} 
-            <div class="row">
-                <div class="col">
-                    {{personnel_form.first_name|as_crispy_field}}
-                </div>
-                <div class="col">
-                    {{personnel_form.last_name|as_crispy_field}}
-                </div>
-                <div class="col">
-                    {{personnel_form.phone_number|as_crispy_field}}
-                </div>
+{% block main_block %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header py-3">I N P U T _ D A T A</div>
+            <div class="card-body">
+                <form class="form-group" action="" method="post">   
+                    <p><i>Add personnel and their their respective mobile numbers (11 digits) where the irrigation advisories are to be sent.</i></p>
+                    {% csrf_token %} 
+                    <div class="row">
+                        <div class="col">{{personnel_form.first_name|as_crispy_field}}</div>
+                        <div class="col">{{personnel_form.last_name|as_crispy_field}}</div>
+                        <div class="col">{{personnel_form.phone_number|as_crispy_field}}</div>
+                    </div>
+                    <input type="submit" value="Save" class="btn btn-secondary btn-block">
+                </form>
             </div>
-            <div class="row">
-                <div class="col"> 
-                    {{ personnel_form.errors }}
-                </div>
-            </div>
-            <input type="submit" value="Submit" class="btn btn-secondary btn-block">
-    </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

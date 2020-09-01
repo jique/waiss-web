@@ -6,56 +6,37 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="container-fluid size90">
-        <form class="form-group" action="{% url 'waiss:addsprinkler' %}" method="post">
-            <br>
-            <h6><em>Input sprinkler irrigation system information.</em></h6>
-            {% csrf_token %}
-            <div class="row">
-                <div class="col">
-                    {{ sprinkler_form.name|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ sprinkler_form.farm_name|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ sprinkler_form.fieldunit|as_crispy_field }}
-                </div>
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header py-3">I N P U T _ D A T A</div>
+            <div class="card-body">
+                <form class="form-group" action="{% url 'waiss:addsprinkler' %}" method="post">
+                {% csrf_token %}
+                    <div class="row">
+                        <div class="col">{{ sprinkler_form.name|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ sprinkler_form.farm_area|as_crispy_field }}</div>
+                        <div class="col">{{ sprinkler_form.area_irrigated_at_a_time|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ sprinkler_form.lateral_spacing|as_crispy_field }}</div>
+                        <div class="col">{{ sprinkler_form.sprinkler_spacing|as_crispy_field }}</div>
+                        <div class="col">{{ sprinkler_form.num_of_sprinklers|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ sprinkler_form.sprinkler_discharge|as_crispy_field }}</div>
+                        <div class="col">{{ sprinkler_form.ea|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ sprinkler_form.errors }}</div>
+                    </div>
+                    <input type="submit" value="Save" class="btn btn-secondary btn-block">
+                </form>
             </div>
-            <div class="row">
-                <div class="col">
-                    {{ sprinkler_form.farm_area|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ sprinkler_form.area_irrigated_at_a_time|as_crispy_field }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    {{ sprinkler_form.lateral_spacing|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ sprinkler_form.sprinkler_spacing|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ sprinkler_form.num_of_sprinklers|as_crispy_field }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    {{ sprinkler_form.sprinkler_discharge|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ sprinkler_form.ea|as_crispy_field }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col"> 
-                    {{ sprinkler_form.errors }}
-                </div>
-            </div>
-            <input type="submit" value="Save" class="btn btn-secondary btn-block">
-        </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

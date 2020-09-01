@@ -6,14 +6,29 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="container-fluid size90">
-    <form class="form-group" action="{% url 'waiss:farmaccount' %}" method="post">
-        <h4>Farm Details Summary</h4>
-        {% csrf_token %}
-        {{ farmsummaries_form.as_p }}
-        <input type="submit" value="Save new farm information">
-    </form>
-
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header py-3">S Y S T E M _ D A T A</div>
+            <div class="card-body">
+                <form class="form-group" action="{% url 'waiss:farmsummaries' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col">{{farmsummaries_form.name|as_crispy_field }}</div>
+                        <div class="col">{{farmsummaries_form.farm_name|as_crispy_field }}</div>
+                        <div class="col">{{farmsummaries_form.farm_manager|as_crispy_field }}</div>
+                        <div class="col">{{farmsummaries_form.fieldunit|as_crispy_field }}</div>
+                        <div class="col">{{farmsummaries_form.crop|as_crispy_field }}</div>
+                        <div class="col">{{farmsummaries_form.soil|as_crispy_field }}</div>
+                        <div class="col">{{farmsummaries_form.intakefamily|as_crispy_field }}</div>
+                        <div class="col">{{farmsummaries_form.calib_eqn|as_crispy_field }}</div>
+                        <div class="col">{{farmsummaries_form.basin_sys|as_crispy_field }}</div>
+                    </div>
+                    <input type="submit" value="Calculate" class="btn btn-secondary btn-block">
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

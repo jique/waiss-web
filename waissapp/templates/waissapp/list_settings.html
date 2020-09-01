@@ -6,14 +6,18 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="container-fluid">
-    <div class="heading"><h6>Field Unit Settings Database</h6></div>
-    <table class="table table-condensed table-hover table-responsive "> 
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Settings Data</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th class="align-top">Setting Name</th>
+                <th class="align-top fit">Actions</th>
                 <th class="align-top fit">Field Unit</th>
-                <th class="align-top fit">Farm</th>
                 <th class="align-top fit">Unique Security Key</th>
                 <th class="align-top">Power On</th>
                 <th class="align-top">With Irrigation</th>
@@ -26,15 +30,19 @@
                 <th class="align-top">Stop Sending Time</th>
                 <th class="align-top">Sending Delay</th>
                 <th class="align-top">Clock Correction</th>
-                <th class="align-top fit">Actions</th>
             </tr>
         </thead>
                 {% for instance in settings_list %}
         <tbody>
-            <tr> 
+            <tr>  
                 <td class="align-middle fit">{{instance.name}}</td>
+                <td class="fit">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_settings' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_settings' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
                 <td class="align-middle fit">{{instance.fieldunit}}</td>
-                <td class="align-middle fit">{{instance.farm_name}}</td>
                 <td class="align-middle fit">{{instance.usk}}</td>
                 <td class="align-middle fit">{{instance.fieldunitstatus}}</td>
                 <td class="align-middle fit">{{instance.withirrigation}}</td>
@@ -47,12 +55,7 @@
                 <td class="align-middle fit">{{instance.timestop}}</td>
                 <td class="align-middle fit">{{instance.delay}}</td>
                 <td class="align-middle fit">{{instance.clockcorrection}}</td>
-                <td class="fit">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_settings' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_settings' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                    </div>
-                </td>
+                
             </tr>
         </tbody>
                 {% endfor %}

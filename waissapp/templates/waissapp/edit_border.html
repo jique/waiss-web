@@ -6,53 +6,38 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="container-fluid size90">
-        <form class="form-group" action="" method="post">
-            <br>
-            <h6><em>Update the information of your irrigation system.</em></h6>
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header py-3">I N P U T _ D A T A</div>
+            <div class="card-body">
+                <form class="form-group" action="{% url 'waiss:addborder' %}" method="post">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="col">
-                        {{ border_form.border_name|as_crispy_field}}
+                    <div class="row">
+                        <div class="col">{{ border_form.border_name|as_crispy_field}}</div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        {{ border_form.border_width|as_crispy_field}}
+                    <div class="row">
+                        <div class="col">{{ border_form.border_width|as_crispy_field}}</div>
+                        <div class="col">{{ border_form.num_of_border_strips|as_crispy_field}}</div>
                     </div>
-                    <div class="col">
-                        {{ border_form.num_of_border_strips|as_crispy_field}}
+                    <div class="row">
+                        <div class="col">{{ border_form.discharge|as_crispy_field}}</div>
+                        <div class="col">{{ border_form.flow_rate_per_strip|as_crispy_field}}</div>
+                        <div class="col">{{ border_form.total_flow_rate|as_crispy_field}}</div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        {{ border_form.discharge|as_crispy_field}}
+                    <div class="row">
+                        <div class="col">{{ border_form.mannings_coeff|as_crispy_field}}</div>
+                        <div class="col">{{ border_form.area_slope|as_crispy_field}}</div>
+                        <div class="col">{{ border_form.ea|as_crispy_field}}</div>
                     </div>
-                    <div class="col">
-                        {{ border_form.flow_rate_per_strip|as_crispy_field}}
+                    <div class="row">
+                        <div class="col">{{ border_form.errors }}</div>
                     </div>
-                    <div class="col">
-                        {{ border_form.total_flow_rate|as_crispy_field}}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        {{ border_form.mannings_coeff|as_crispy_field}}
-                    </div>
-                    <div class="col">
-                        {{ border_form.area_slope|as_crispy_field}}
-                    </div>
-                    <div class="col">
-                        {{ border_form.ea|as_crispy_field}}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col"> 
-                        {{ border_form.errors }}
-                    </div>
-                </div>
-                <input type="submit" value="Submit" class="btn btn-secondary btn-block">
-        </form>
+                    <input type="submit" value="Save" class="btn btn-secondary btn-block">
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

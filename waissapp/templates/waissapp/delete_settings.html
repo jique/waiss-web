@@ -6,13 +6,21 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="container-fluid size90">
+<div class="row">
+    <div class="col-lg-6 mx-auto">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          C O N F I R M
+        </div>
+        <div class="card-body">
         <p>Are you sure you wanna delete "{{item}}"?</p>
         <form class="form-group" action={% url 'waiss:delete_settings' item.id %} method="post">
             {% csrf_token %}
             <a href="{% url 'waiss:list_settings' %}">Cancel</a>
             <input type="submit" name="Confirm">
         </form>
+</div></div>
+</div>
 </div>
 {% endblock %}
 

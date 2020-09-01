@@ -6,47 +6,32 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="container-fluid size90">
-        <br>
-        <form class="form-group" action="{% url 'waiss:addsoil' %}" method="post">
-            <h6><em>Input soil information below.</em></h6>
-            {% csrf_token %}
-            <div class="row">
-                <div class="col">
-                    {{soil_form.soiltype|as_crispy_field}}
+<div class="row">
+  <div class="col-lg-10 mx-auto">
+    <div class="card mb-4">
+      <div class="card-header py-3">I N P U T _ D A T A</div>
+        <div class="card-body"><br>
+            <form class="form-group" action="{% url 'waiss:addsoil' %}" method="post">
+                <div class="row">
+                    <div class="col">{{soil_form.soiltype|as_crispy_field}}</div>
                 </div>
-                <div class="col">
-                  {{soil_form.farm_name|as_crispy_field}}
-              </div>
-              <div class="col">
-                  {{soil_form.fieldunit|as_crispy_field}}
-              </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                  {{soil_form.fc|as_crispy_field}}
+                <div class="row">
+                    <div class="col">{{soil_form.fc|as_crispy_field}}</div>
+                    <div class="col">{{soil_form.pwp|as_crispy_field}}</div>
+                    <div class="col">{{soil_form.As|as_crispy_field}}</div>
                 </div>
-                <div class="col">
-                  {{soil_form.pwp|as_crispy_field}}
+                <div class="row">
+                    <div class="col">{{ soil_form.source|as_crispy_field }}</div>
                 </div>
-                <div class="col">
-                  {{soil_form.As|as_crispy_field}}
+                <div class="row">
+                    <div class="col">{{ soil_form.errors }}</div>
                 </div>
-            </div>
-            <div class="row">
-              <div class="col"> 
-                  {{ soil_form.source|as_crispy_field }}
-              </div>
-          </div>
-            <div class="row">
-              <div class="col"> 
-                  {{ soil_form.errors }}
-              </div>
-          </div>
-            <input type="submit" value="Save" class="btn btn-secondary btn-block">
-        </form>
-        <br>
+                <input type="submit" value="Save" class="btn btn-secondary btn-block">
+            </form>
+        </div>
     </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block bottom_script_block %}

@@ -6,18 +6,20 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="container-fluid">
-    <div class="heading"><h5>Crop Database</h5></div>
-    <table class="table table-condensed table-hover table-responsive ">
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Crop Data</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th class="align-top">Crop</th>
-                <th class="align-top">Farm</th>
-                <th class="align-top">Field Unit</th>
+                <th class="align-top">Actions</th>
                 <th class="align-top">Date Transplanted</th>
                 <th class="align-top">Growing Period (days)</th>
                 <th class="align-top">Management Allowable Depletion (MC<sub>v</sub> , %)</th>
-                <th class="align-top">Depletion Factor (%)</th>
                 <th class="align-top">Depth of Rootzone (m)</th>
                 <th class="align-top">K<sub>c(ini)</sub></th>
                 <th class="align-top">K<sub>c(mid)</sub></th>
@@ -25,19 +27,26 @@
                 <th class="align-top">K<sub>c</sub> curve cutoff (1)</th>
                 <th class="align-top">K<sub>c</sub> curve cutoff (2)</th>
                 <th class="align-top">K<sub>c</sub> curve cutoff (3)</th>
-                <th class="align-top">Actions</th>
+                <th class="align-top">Equation Form</sub></th>
+                <th class="align-top"> a</sub></th>
+                <th class="align-top"> b</th>
+                <th class="align-top"> c</th>
+                <th class="align-top">Root Depth during Transplanting (m)</th>
             </tr>
         </thead>
                 {% for instance in crop_list %}
         <tbody>
             <tr> 
                 <td class="align-middle fit">{{instance.crop}}</td>
-                <td class="align-middle" >{{instance.farm_name|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.fieldunit|default_if_none:"-"}}</td>
+                <td>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_crop' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                        <a href={% url 'waiss:delete_crop' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                    </div>
+                </td>
                 <td class="align-middle">{{instance.date_transplanted|default_if_none:"-"}}</td>
                 <td class="align-middle">{{instance.growingperiod|default_if_none:"-"}}</td>
                 <td class="align-middle">{{instance.mad|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.depletionfactor|default_if_none:"-"}}</td>
                 <td class="align-middle">{{instance.drz|default_if_none:"-"}}</td>
                 <td class="align-middle">{{instance.kc_ini|default_if_none:"-"}}</td>
                 <td class="align-middle">{{instance.kc_mid|default_if_none:"-"}}</td>
@@ -45,17 +54,21 @@
                 <td class="align-middle">{{instance.kc_cc_1|default_if_none:"-"}}</td>
                 <td class="align-middle">{{instance.kc_cc_2|default_if_none:"-"}}</td>
                 <td class="align-middle">{{instance.kc_cc_3|default_if_none:"-"}}</td>
-                <td>
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_crop' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_crop' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                    </div>
-                </td>
+                <td class="align-middle">{{instance.eqnform|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.root_a|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.root_b|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.root_c|default_if_none:"-"}}</td>
+                <td class="align-middle">{{instance.root_ini|default_if_none:"-"}}</td>
+                
             </tr>
         </tbody>
                 {% endfor %}
-    </table>
+        </table>
+    </div>
 </div>
+
+</div>
+  <!-- /.container-fluid -->
 {% endblock %}
 
 {% block bottom_script_block %}

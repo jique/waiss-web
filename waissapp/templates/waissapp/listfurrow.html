@@ -6,35 +6,35 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="container-fluid size90">
-    <div class="heading"><h5>Furrow Irrigation Systems Database</h5></div>
-    <table class="table table-condensed table-hover table-responsive ">
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Furrow Irrigation System Data</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th class="align-top  fit">System Name</th>
-                <th class="align-top  fit">Farm</th>
-                <th class="align-top  fit">Field Unit</th>
+                <th class="align-top  fit">Actions</th>
                 <th class="align-top  fit">Open-Ended System</th>
                 <th class="align-top  fit">Unit Discharge (lps)</th>
                 <th class="align-top  fit">Slope (m/m)</th>
-                <th class="align-top  fit">Actions</th>
             </tr>
         </thead>
                 {% for instance in furrow_list %}
         <tbody>
-            <tr> 
+            <tr>  
                 <td class="align-middle fit">{{instance.name}}</td>
-                <td class="align-middle fit">{{instance.farm_name|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.fieldunit|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.bln_furrow_type}}</td>
-                <td class="align-middle fit">{{instance.discharge}}</td>
-                <td class="align-middle fit">{{instance.area_slope}}</td>
                 <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                         <a href={% url 'waiss:edit_furrow' instance.id %} <button class="btn btn-info"> Edit</button></a>
                         <a href={% url 'waiss:delete_furrow' instance.id %} <button class="btn btn-danger">Delete</button></a>
                     </div>
                 </td>
+                <td class="align-middle fit">{{instance.bln_furrow_type}}</td>
+                <td class="align-middle fit">{{instance.discharge}}</td>
+                <td class="align-middle fit">{{instance.area_slope}}</td>
             </tr>
         </tbody>
                 {% endfor %}

@@ -6,41 +6,43 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="container-fluid size90">
-    <div class="heading"><h5>Soil Database</h5></div>
-    <table class="table table-condensed table-hover table-responsive ">
-        <thead>
-            <tr>
-                <th class="align-top">Soil Name</th>
-                <th class="align-top">Farm</th>
-                <th class="align-top">Field Unit</th>
-                <th class="align-top">Field Capacity (MCv, %)</th>
-                <th class="align-top">Permanent Wilting Point (MCv, %)</th>
-                <th class="align-top">Permanent Wilting Point (MCv, %)</th>
-                <th class="align-top">Source</th>
-                <th class="align-top">Actions</th>
-            </tr>
-        </thead>
-                {% for instance in soil_list %}
-        <tbody>
-            <tr> 
-                <td class="align-middle fit">{{instance.soiltype}}</td>
-                <td class="align-middle fit">{{instance.farm_name|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.fieldunit|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.fc|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.pwp|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.As|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.source|default_if_none:"-"}}</td>
-                <td class="fit">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_soil' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_soil' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-                {% endfor %}
-    </table>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Soil Data</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="align-top">Soil Name</th>
+                        <th class="align-top">Actions</th>
+                        <th class="align-top">Field Capacity (MCv, %)</th>
+                        <th class="align-top">Permanent Wilting Point (MCv, %)</th>
+                        <th class="align-top">Permanent Wilting Point (MCv, %)</th>
+                        <th class="align-top">Source</th>
+                    </tr>
+                </thead>
+                        {% for instance in soil_list %}
+                <tbody>
+                    <tr>  
+                        <td class="align-middle fit">{{instance.soiltype}}</td>
+                        <td class="fit">
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                <a href={% url 'waiss:edit_soil' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                                <a href={% url 'waiss:delete_soil' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                            </div>
+                        </td>
+                        <td class="align-middle fit">{{instance.fc|default_if_none:"-"}}</td>
+                        <td class="align-middle fit">{{instance.pwp|default_if_none:"-"}}</td>
+                        <td class="align-middle fit">{{instance.As|default_if_none:"-"}}</td>
+                        <td class="align-middle fit">{{instance.source|default_if_none:"-"}}</td>
+                    </tr>
+                </tbody>
+                    {% endfor %}
+            </table>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
