@@ -6,11 +6,20 @@
 {% endblock %}
 
 {% block main_block %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">WAISS</li>
+        <li class="breadcrumb-item"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Irrigation System</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New Crop</li>
+    </ol>
+</nav>
 <div class="card-columns">
     <div class="card">
-        <div class="card-header">I N P U T _ D A T A</div>
+        <div class="card-header">
+            <small><i><b>Select from the 3 Root Growth models based on your available data,  to be used in the computation.</b></i></small>
+        </div>
         <div class="card-body">
-          <form class="form-group" action="{%url 'waiss:add_crop' %}" method="post">
+          <form class="form-group" action="{% url 'waiss:add_crop' %}" method="post">
               {% csrf_token %}
               <div class="row">
                   <div class="col">{{crop_form.crop|as_crispy_field}}</div>
@@ -28,7 +37,6 @@
                   <div class="col">{{crop_form.mad|as_crispy_field}}</div>
               </div>
             
-            <small><i><b>Based on available data, select from the 3 Root Growth models to use in the computation.</b></i></small>
             <input type="submit" value="Save" class="btn btn-info btn-block btn-sm">
         </div>
     </div>

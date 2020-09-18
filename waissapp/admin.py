@@ -1,16 +1,29 @@
 from django.contrib import admin
-from .models import Personnel, Farm, SensorNumber, FarmSummaries, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, FieldUnitSettings, BasinAppEff, BasinComp, BorderComp, FurrowComp, DripComp, SprinklerComp, CalibrationConstant, BasinPara, BorderPara, FurrowPara, DripPara, SprinklerPara
+from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, SensorNumber, FarmSummaries, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, FieldUnitSettings, BasinComp, BorderComp, FurrowComp, DripComp, SprinklerComp, CalibrationConstant, BasinPara, BorderPara, FurrowPara, DripPara, SprinklerPara
+
+
+class SentMsgsInline(admin.TabularInline):
+    model = SentMsgs
+
+class SenderInline(admin.TabularInline):
+    model = Sender
+
+class ReceiverInline(admin.TabularInline):
+    model = Receiver
+
+class ReceivedMsgsInline(admin.TabularInline):
+    model = FieldUnit
 
 class FieldUnitInline(admin.TabularInline):
-    model = FieldUnit
-    extra=0
+    model = ReceivedMsgs
+    extra=1
 
 class MoistureContentInline(admin.TabularInline):
     model = MoistureContent
     extra=3
 
 class MoistureContentAdmin(admin.ModelAdmin):
-    list_display = ('sensor', 'fieldunit', 'raw_data')
+    list_display = ('sensor_name', 'fieldunit', 'raw_data')
     ordering = ['timestamp']
 
 class SensorNumberInline(admin.TabularInline):
@@ -18,7 +31,7 @@ class SensorNumberInline(admin.TabularInline):
     extra=0
 
 class SensorNumberAdmin(admin.ModelAdmin):
-    list_display = ('name', 'depth', 'fieldunit')
+    list_display = ('sensor_name', 'depth', 'fieldunit')
     inlines = [MoistureContentInline]
 
 class FarmInline(admin.TabularInline):
@@ -26,10 +39,9 @@ class FarmInline(admin.TabularInline):
 
 class FarmAdmin(admin.ModelAdmin):
     ordering = ["farm_name"]
-    list_display=('farm_name', 'farm_location')
+    list_display=('farm_name', 'brgy', 'municipality', 'province', 'lat', 'longi')
 
 class FieldUnitAdmin(admin.ModelAdmin):
-    list_display=('name', 'farm_name')
     inlines = [SensorNumberInline]
     
 class FarmSummariesInline(admin.TabularInline):
@@ -38,6 +50,11 @@ class FarmSummariesInline(admin.TabularInline):
 class FarmSummariesAdmin(admin.ModelAdmin):
     list_display = ('name', 'farm_name', 'farm_manager', 'fieldunit', 'crop', 'soil', 'intakefamily', 'calib_eqn', 'basin_sys', 'border_sys', 'furrow_sys', 'sprinkler_sys', 'drip_sys')
     ordering = ["name"]
+
+admin.site.register(SentMsgs)
+admin.site.register(Sender)
+admin.site.register(ReceivedMsgs)
+admin.site.register(Receiver)
 
 admin.site.register(Farm, FarmAdmin)
 admin.site.register(FarmSummaries, FarmSummariesAdmin)
@@ -82,11 +99,6 @@ admin.site.register(IntakeFamily, IntakeFamilyAdmin)
 admin.site.register(Crop, CropAdmin)
 admin.site.register(FieldUnitSettings, FieldUnitSettingsAdmin)
 
-class BasinAppEffInline(admin.TabularInline):
-    model = BasinAppEff
-
-class BasinAppEffAdmin(admin.ModelAdmin):
-    list_display = ('appeff', 'eff_adv_ratio')
 
 class BasinCompInline(admin.TabularInline):
     model = BasinComp
@@ -122,14 +134,13 @@ class CalibrationConstantInline(admin.TabularInline):
     model = CalibrationConstant
     
 class CalibrationConstantAdmin(admin.ModelAdmin):
-    list_display =('calib_name', 'sensor','calib_equation', 'calib_coeff_a', 'calib_coeff_b', 'calib_coeff_c', 'calib_coeff_d', 'calib_coeff_m')
+    list_display =('calib_name', 'calib_equation', 'calib_coeff_a', 'calib_coeff_b', 'calib_coeff_c', 'calib_coeff_d', 'calib_coeff_m')
 
 admin.site.register(BasinComp, BasinCompAdmin)
 admin.site.register(BorderComp, BorderCompAdmin)
 admin.site.register(FurrowComp, FurrowCompAdmin)
 admin.site.register(SprinklerComp, SprinklerCompAdmin)
 admin.site.register(DripComp, DripCompAdmin)
-admin.site.register(BasinAppEff, BasinAppEffAdmin)
 admin.site.register(CalibrationConstant, CalibrationConstantAdmin)
 
 class BasinParaInline(admin.TabularInline):
@@ -148,7 +159,7 @@ class DripParaInline(admin.TabularInline):
     model = DripPara
 
 class BasinParaAdmin(admin.ModelAdmin):
-    list_display =('basin_name', 'discharge', 'basin_length', 'ea', 'eff_adv_ratio')
+    list_display =('basin_name', 'discharge', 'basin_length', 'ea')
 
 class BorderParaAdmin(admin.ModelAdmin):
     list_display =('border_name','discharge')

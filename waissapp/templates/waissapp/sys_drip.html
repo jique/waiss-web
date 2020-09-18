@@ -7,64 +7,44 @@
 
 {% block main_block %}
 <div class="row">
-    <div class="col-lg-6 mx-auto">
+    <div class="col-lg-12 mx-auto">
         <div class="card mb-4">
-            <div class="card-header py-3">S Y S T E M _ D A T A</div>
+            <div class="card-header py-3"><i class="fas fa-tasks"></i>&emsp;System Setup</div>
             <div class="card-body">
-                <form class="form-group" action="{% url 'waiss:sys_basin' %}" method="post">
+                <form class="form-group" action="{% url 'waiss:sys_drip' %}" method="post">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col">{{farmsummaries_form.name|as_crispy_field }}</div>
+                        <div class="col-2"></div>
+                        <div class="col">{{farmsummaries_form.drip_sys|as_crispy_field }}</div>
+                        <div class="col-2"><a href="{% url 'waiss:adddrip' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     <div class="row">
                         <div class="col">{{farmsummaries_form.farm_name|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_farm' %}"><input type="button" class="btn btn-info btn-block" value="Add"></a></div>
-                    </div>
-                    <div class="row">
+                        <div class="col-2"><a href="{% url 'waiss:add_farm' %}"><i class="fas fa-plus"></i></a></div>
                         <div class="col">{{farmsummaries_form.farm_manager|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_farm' %}"><input type="button" class="btn btn-info btn-block" value="Add"></a></div>
+                        <div class="col-2"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     <div class="row">
                         <div class="col">{{farmsummaries_form.fieldunit|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_fieldunit' %}"><input type="button" class="btn btn-info btn-block" value="Add"></a></div>
+                        <div class="col-2"><a href="{% url 'waiss:add_fieldunit' %}"><i class="fas fa-plus"></i></a></div>
+                        <div class="col">{{farmsummaries_form.settings|as_crispy_field }}</div>
+                        <div class="col-2"><a href="{% url 'waiss:add_settings' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
-                    <div class="row">
-                        <div class="col"></div>
-                        <div class="col-6"><a href="{% url 'waiss:add_sensor' %}"><input type="button" class="btn btn-info btn-sm btn-block" value="Add sensors here."></a></div>
-                    </div>
-                    <br>
                     <div class="row">
                         <div class="col">{{farmsummaries_form.crop|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_crop' %}"><input type="button" class="btn btn-info btn-block" value="Add"></a></div>
-                    </div>
-                    <div class="row">
+                        <div class="col-2"><a href="{% url 'waiss:add_crop' %}"><i class="fas fa-plus"></i></a></div>
                         <div class="col">{{farmsummaries_form.soil|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:addsoil' %}"><input type="button" class="btn btn-info btn-block" value="Add"></a></div>
+                        <div class="col-2"><a href="{% url 'waiss:addsoil' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     <div class="row">
+                        <div class="col">{{farmsummaries_form.intakefamily|as_crispy_field }}</div>
+                        <div class="col-2"><a href="{% url 'waiss:add_intakefamily' %}"><i class="fas fa-plus"></i></a></div>
                         <div class="col">{{farmsummaries_form.calib_eqn|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_calib' %}"><input type="button" class="btn btn-info btn-block" value="Add"></a></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{farmsummaries_form.drip_sys|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:adddrip' %}"><input type="button" class="btn btn-info btn-block" value="Add"></a></div>
+                        <div class="col-2"><a href="{% url 'waiss:add_calib' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     <input type="submit" value="Save" class="btn btn-secondary btn-block">
                 </form>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 mx-auto">
-        <div class="card mb-4">
-            <div class="card-header py-3">show summary here?</div>
-            <div class="card-body">
-                <p>System Name:</p>
-                <p>Irrigtion System: <b><em>Drip</em></b> (system name)</p>
-                <p>Farm:</p>
-                <p>Field Unit: (w/ sensors)</p>
-                <p>Crop:</p>
-                <p>Soil:</p>
-                <p>Calibration Equation:</p>
             </div>
         </div>
     </div>

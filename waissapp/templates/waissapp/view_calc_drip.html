@@ -43,5 +43,37 @@
 {% endblock %}
 
 {% block bottom_script_block %}
+<script>
+    var ea; //get from BasinPara model
+    var eff_adv_ratio; //save to BasinComp model
+    var net_app_depth; //save to BasinComp model
+    var net_opp_time; //save to BasinComp model
+    var inflow_time; //save to BasinComp model 
+    var advance_time; //save to BasinComp model 
+    var irrigation_period; //save to BasinComp model
+    
+    if (ea=50) {
+        eff_adv_ration=3.2;}
+    else if (ea=55) {
+        eff_adv_ration=2.45;}
+    else if (ea=60) {
+        eff_adv_ration=2.45;}
+    else if (ea=65) {
+        eff_adv_ration=2.45;}
+    else if (ea=70) {
+        eff_adv_ration=2.45;}
+    else if (ea=75) {
+        eff_adv_ration=2.45;}
+    else if (ea=80) {
+        eff_adv_ration=2.45;}
+    else if (ea=85) {
+        eff_adv_ration=2.45;}
+    else if (ea=90) {
+        eff_adv_ration=2.45;}
+    else if (ea=95) {
+        eff_adv_ration=2.45;}
+    
+
+</script>
 {% endblock %}
     

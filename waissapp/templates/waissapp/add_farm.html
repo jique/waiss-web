@@ -6,10 +6,16 @@
 {% endblock %}
 
 {% block main_block %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">WAISS</li>
+        <li class="breadcrumb-item"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Irrigation System</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New Farm</li>
+    </ol>
+</nav>
 <div class="row">
     <div class="col-lg-8 mx-auto">
         <div class="card mb-4">
-            <div class="card-header py-3">I N P U T _ D A T A</div>
             <div class="card-body">
                 <form class="form-group" action="{% url 'waiss:add_farm' %}" method="post">
                     <br>
@@ -18,10 +24,29 @@
                             <div class="col">{{ farm_form.farm_name|as_crispy_field }}</div>
                         </div>
                         <div class="row">
-                            <div class="col">{{ farm_form.farm_location|as_crispy_field }}</div>
+                            <div class="col">{{ farm_form.lat|as_crispy_field }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col">{{ farm_form.longi|as_crispy_field }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col">{{ farm_form.brgy|as_crispy_field }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col">{{ farm_form.province|as_crispy_field }}</div>
                         </div>
                         <input type="submit" value="Submit" class="btn btn-secondary btn-block">
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mx-auto">
+        <div class="card mb-4">
+            <div class="card-body">
+                MAP?
             </div>
         </div>
     </div>

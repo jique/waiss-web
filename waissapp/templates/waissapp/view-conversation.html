@@ -1,0 +1,95 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block style_block%}
+<style>
+  
+  .text {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  .darker {
+    border-color: #ccc;
+    background-color: #ddd;
+  }
+  
+  .text::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  .text img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  
+  .text img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+  }
+  
+  .time-right {
+    float: right;
+    color: #aaa;
+  }
+  
+  .time-left {
+    float: left;
+    color: #999;
+  }
+  </style>
+{% endblock %}
+
+{% block main_block %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Inbox</li>
+      <li class="breadcrumb-item active" aria-current="page">Conversation</li>
+  </ol>
+</nav>
+<div class="card shadow mb-4">
+    <div class="card-body">
+      <div class="table-responsive rounded">
+        <div class="text">
+          <img src={% static "theme/waiss_logo.png" %} alt="Avatar" class="left">
+          <p>Sample advisory message from server.</p>
+          <span class="time-right">12:00</span>
+        </div>
+        
+        <div class="text darker">
+            <img src={% static "theme/fieldunit.jpg" %} alt="Avatar" class="right">
+            <p>Sample advisory message from fieldunit.</p>
+            <span class="time-left">12:01</span>
+        </div>
+        <div class="text">
+          <img src={% static "theme/waiss_logo.png" %} alt="Avatar" class="left">
+          <p>Sample advisory message from server.</p>
+          <span class="time-right">12:00</span>
+        </div>
+        
+        <div class="text darker">
+            <img src={% static "theme/fieldunit.jpg" %} alt="Avatar" class="right">
+            <p>Sample advisory message from fieldunit.</p>
+            <span class="time-left">12:01</span>
+        </div>
+    </table>
+</div>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

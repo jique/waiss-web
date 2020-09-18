@@ -6,10 +6,13 @@
 {% endblock %}
 
 {% block main_block %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
+        <li class="breadcrumb-item active" aria-current="page">Farm Summaries</li>
+    </ol>
+</nav>
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Farm Data</h6>
-    </div>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
@@ -18,8 +21,9 @@
                 <th class="align-top  fit">System Name</th>
                 <th class="align-top  fit">Actions</th>
                 <th class="align-top  fit">Farm</th>
-                <th class="align-top  fit">Field Unit</th>
                 <th class="align-top  fit">Manager</th>
+                <th class="align-top  fit">Field Unit</th>
+                <th class="align-top  fit">Settings</th>
                 <th class="align-top  fit">Crop</th>
                 <th class="align-top  fit">Soil</th>
                 <th class="align-top  fit">Intake Family</th>
@@ -41,9 +45,10 @@
                         <a href={% url 'waiss:delete_farmsummaries' instance.id %} <button class="btn btn-danger">Delete</button></a>
                     </div>
                 </td>                   
-                <td class="align-middle fit">{{instance.farm_name}}</td>
-                <td class="align-middle fit">{{instance.fieldunit}}</td>                    
+                <td class="align-middle fit">{{instance.farm_name}}</td>                    
                 <td class="align-middle fit">{{instance.farm_manager}}</td>
+                <td class="align-middle fit">{{instance.fieldunit}}</td>                    
+                <td class="align-middle fit">{{instance.settings}}</td>
                 <td class="align-middle fit">{{instance.crop}}</td>                    
                 <td class="align-middle fit">{{instance.soil}}</td>
                 <td class="align-middle fit">{{instance.intakefamily|default_if_none:"-"}}</td>                    

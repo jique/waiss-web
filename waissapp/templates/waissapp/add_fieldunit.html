@@ -5,25 +5,58 @@
 {% endblock %}
             
 {% block main_block %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">WAISS</li>
+        <li class="breadcrumb-item"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Irrigation System</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New Field Unit</li>
+    </ol>
+</nav>
 <div class="row">
-    <div class="col-lg-8 mx-auto">
+    <div class="col-lg-12 mx-auto">
         <div class="card mb-4">
-            <div class="card-header py-3">I N P U T _ D A T A</div>
             <div class="card-body">
-                <form class="form-group" action="{% url 'waiss:add_fieldunit' %}" method="post">
+                <form class="form-group" method="post">
                     {% csrf_token %}
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.name|as_crispy_field }}</div>
-                        <div class="col">{{ fieldunit_form.farm_name|as_crispy_field }}</div>
-                    </div>
-                  <input type="submit" value="Submit" class="btn btn-secondary btn-block">
+                    {{ form.as_p }}
+                    <table style="border:none;">
+                        <thead>
+                            <tr>
+                                <th>Sensor</th>
+                                <th>Depth (m)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for form_data in formset %}
+                            <tr class="item">
+                                <td>
+                                    {{ form_data.sensor_name }}
+                                </td>
+                                <td>
+                                    {{ form_data.depth }}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-block remove-form-row" id="{{ formset.prefix }}">Delete</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary btn-block add-form-row" id="{{ formset.prefix }}">Add</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {{ formset.management_form }}
+                    <br>
+                    <input type="submit" value="Submit" class="btn btn-secondary btn-block">
                 </form>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block bottom_script_block %}
+<script type="text/javascript" src={% static "js/formset.js" %}></script>
 {% endblock %}
     

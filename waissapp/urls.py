@@ -35,13 +35,12 @@ urlpatterns = [
 
      #SENSOR_PARAMETERS
      path('show-sensor-database/', views.sensor_list_view, name='list_sensor'),
-     path('add-sensor/', views.add_sensor, name='add_sensor'),
      path('edit_sensor/<str:pk>/', views.editSensor, name='edit_sensor'),
      path('delete_sensor/<str:pk>/', views.deleteSensor, name='delete_sensor'),
 
      #CALIBRATION_PARAMETERS
      path('add-calib/', views.add_calib, name='add_calib'),
-     path('show-calib-database/',views.list_calib, name='list_calib'),
+     path('show-calib-database/', views.list_calib, name='list_calib'),
      path('edit_calib/<str:pk>/', views.editCalib, name='edit_calib'),
      path('delete_calib/<str:pk>/', views.deleteCalib, name='delete_calib'),
 
@@ -52,7 +51,7 @@ urlpatterns = [
      path('delete_farm/<str:pk>/', views.deleteFarm, name='delete_farm'),
 
      #PERSONNEL_PARAMETERS
-     path('add-advisorysettings/',views.add_personnel, name='add_personnel'),
+     path('add-farm-manager/',views.add_personnel, name='add_personnel'),
      path('show-personnel-database/', views.personnel_list_view, name='list_personnel'),
      path('edit_personnel/<str:pk>/', views.editPersonnel, name='edit_personnel'),
      path('delete_personnel/<str:pk>/', views.deletePersonnel, name='delete_personnel'),
@@ -74,10 +73,6 @@ urlpatterns = [
      path('show-intakefamily-database/', views.list_intakefamily, name='list_intakefamily'),
      path('edit_intakefamily/<str:pk>/', views.editIntakeFamily, name='edit_intakefamily'),
      path('delete_intakefamily/<str:pk>/', views.deleteIntakeFamily, name='delete_intakefamily'),
-
-     
-     path('select-irrig-type/', views.choose_irrig, name='irriginfo'),
-     path('select-irrig-type-database/', views.choose_irrig_database, name='choose-irrigation-system-type'),
 
      #DRIP_PARAMETERS
      path('edit_drip/<str:pk>/', views.editDrip, name='edit_drip'),
@@ -108,4 +103,9 @@ urlpatterns = [
      path('delete_basin/<str:pk>/', views.deleteBasin, name='delete_basin'),
      path('add-basin-system/', views.add_basin, name='addbasin'),
      path('show-basin-database/', views.basin_list, name='listbasin'),
+
+     path('send-message/', views.send_message, name='send-message'), #Send a message
+     path('delete_msg/<str:pk>/', views.delete_msgs, name='messages_delete'),
+     path('messages/', views.list_msgs, name='messages'),
+     path('view-conversation/', views.view_msg, name='view-conversation'),
 ]

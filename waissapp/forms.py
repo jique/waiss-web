@@ -1,16 +1,30 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Personnel, Soil, Crop, FieldUnitSettings, CalibrationConstant, FarmSummaries, IntakeFamily, Farm, FieldUnit, SensorNumber, BasinComp, BorderComp, FurrowComp, SprinklerComp, DripComp, BasinPara, BorderPara, FurrowPara, SprinklerPara, DripPara
+from .models import SentMsgs, Personnel, Soil, Crop, FieldUnitSettings, CalibrationConstant, FarmSummaries, IntakeFamily, Farm, FieldUnit, SensorNumber, BasinComp, BorderComp, FurrowComp, SprinklerComp, DripComp, BasinPara, BorderPara, FurrowPara, SprinklerPara, DripPara
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from bootstrap_datepicker.widgets import DatePicker
 
+
+        
 class SoilForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SoilForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-9' 
     class Meta:
         model = Soil
         exclude = ()  # this says to include all fields from model to the form
 
 class IntakeFamilyForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(IntakeFamilyForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-9' 
     class Meta:
         model = IntakeFamily
         exclude = ()  # this says to include all fields from model to the form
@@ -26,10 +40,19 @@ class CropForm(ModelForm):
         model = Crop
         exclude = ()  # this says to include all fields from model to the form
 
-class FieldUnitForm(ModelForm):
+class FieldUnitForm(forms.ModelForm):
+    
     class Meta:
         model = FieldUnit
         exclude = ()  # this says to include all fields from model to the form 
+    
+        fields = [
+            'name',
+        ]
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': "form-control formset-field"})
+        }
 
 class FieldUnitSettingsForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -39,17 +62,38 @@ class FieldUnitSettingsForm(ModelForm):
         model = FieldUnitSettings
         exclude = ()  # this says to include all fields from model to the form       
 
-class SensorForm(ModelForm):
+class SensorForm(forms.ModelForm):
     class Meta:
         model = SensorNumber
         exclude = ()  # this says to include all fields from model to the form  
 
+        fields = [
+            'sensor_name',
+            'depth'
+        ]
+
+        widgets = {
+            'sensor_name': forms.TextInput(attrs={'class': "form-control formset-field",'placeholder': "sensor_name"}),
+            'depth': forms.NumberInput(attrs={'class': "form-control formset-field",'placeholder': "sensor_depth"})
+        }
 class CalibForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CalibForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-9' 
     class Meta:
         model = CalibrationConstant
         exclude = ()  # this says to include all fields from model to the form 
 
 class FarmForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(FarmForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-9' 
     class Meta:
         model = Farm
         exclude = ()  # this says to include all fields from model to the form 
@@ -114,11 +158,14 @@ class DripParaForm(ModelForm):
     class Meta:
         model = DripPara
         exclude = ()
-
-class irrigtypeForm(forms.Form):
-    farm_irrigation = forms.ChoiceField(choices=[("BASIN", "Basin"), ("BORDER", "Border"),("FURROW", "Furrow"), ("SPRINKLER", "Sprinkler"), ("DRIP", "Drip")], label="Irrigation System Type")
-
+        
 class PersonnelForm(ModelForm):
     class Meta:
         model = Personnel
         exclude = ()
+
+class SentMsgsForm(ModelForm):
+
+    class Meta:
+        model = SentMsgs
+        exclude = ()  # this says to include all fields from model to the form

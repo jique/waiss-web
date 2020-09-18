@@ -6,6 +6,7 @@
 
 <head>
     {% block meta_block %}
+    {% endblock %}
     <meta charset=”utf-8”> 
     <link rel="stylesheet" href={% static "theme/sb-admin-2.min.css" %}>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,8 +24,7 @@
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    {% endblock %}
-
+    
     <title>
         {% block title_block %}
         WAISS
@@ -57,6 +57,7 @@
       white-space: nowrap;
       width: 1%;
   }
+
 </style>
   {% endblock%}
   {% block top_script_block %}
@@ -103,11 +104,11 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Types:</h6>
-            <a class="collapse-item" href={% url 'waiss:sys_basin' %}>Basin System</a>
-            <a class="collapse-item" href={% url 'waiss:sys_border' %}>Border System</a>
-            <a class="collapse-item" href={% url 'waiss:sys_furrow' %}>Furrow System</a>
-            <a class="collapse-item" href={% url 'waiss:sys_sprinkler' %}>Sprinkler System</a>
-            <a class="collapse-item" href={% url 'waiss:sys_drip' %}>Drip System</a>
+            <a class="collapse-item" href={% url 'waiss:sys_basin' %}>Basin</a>
+            <a class="collapse-item" href={% url 'waiss:sys_border' %}>Border</a>
+            <a class="collapse-item" href={% url 'waiss:sys_furrow' %}>Furrow</a>
+            <a class="collapse-item" href={% url 'waiss:sys_sprinkler' %}>Sprinkler</a>
+            <a class="collapse-item" href={% url 'waiss:sys_drip' %}>Drip</a>
           </div>
         </div>
       </li>
@@ -127,7 +128,7 @@
             <a class="collapse-item" href={% url 'waiss:list_soil' %}>Soil Type</a>
             <a class="collapse-item" href={% url 'waiss:list_intakefamily' %}>Intake family</a>
             <a class="collapse-item" href={% url 'waiss:list_calib' %}>Calibration Constants</a>
-            <a class="collapse-item" href={% url 'waiss:choose-irrigation-system-type' %}>Irrigation System</a>
+            <a class="collapse-item" href={% url 'waiss:listbasin' %}>Irrigation System</a>
             <a class="collapse-item" href={% url 'waiss:list_fieldunit' %}>Field Units</a>
             <a class="collapse-item" href={% url 'waiss:list_sensor' %}>Sensors</a>
             <a class="collapse-item" href={% url 'waiss:list_settings' %}>Settings</a>
@@ -156,11 +157,11 @@
         <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Types:</h6>
-            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Basin System</a>
-            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Border System</a>
-            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Furrow System</a>
-            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Sprinkler System</a>
-            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Drip System</a>
+            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Basin</a>
+            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Border</a>
+            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Furrow</a>
+            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Sprinkler</a>
+            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Drip</a>
           </div>
         </div>
       </li>
@@ -199,7 +200,7 @@
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
               <!-- Dropdown - Messages -->
@@ -247,28 +248,9 @@
 
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="{% url 'waiss:messages' %}" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
               </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
-                  Message Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-              </div>
             </li>
 
             <div class="topbar-divider d-none d-sm-block"></div>
@@ -310,227 +292,75 @@
         <div class="container-fluid">
 
           {% block main_block %}
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+          <div class="card">
+            <a class="weatherwidget-io" href="https://forecast7.com/en/14d17121d24/los-banos/" data-label_1="LOS BAÑOS" data-theme="blue-mountains" >LOS BAÑOS</a>
+            <script>
+            !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+            </script>
           </div>
-
-          <!-- Content Row -->
+          <br>
           <div class="row">
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
+          <div class="col-4 align-self-center">
+            <div class="card text-center">
+              <div class="card-body">
+                <i class="far fa-calendar-alt fa-3x"></i>
+                <p><br>Today : 9/8/2020<br>
+                  Time : 12:05 PM
+                </p>
               </div>
             </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
+              <div class="card text-center">
+              <div class="card-body">
+                  <span style="font-size: x-large;">20</span><span style="font-size: x-large;">&nbsp;<i>days</i></span>
+                  <br><small><i>Days after Planting</i></small>
+                  <br>
+                  <span style="font-size: x-large;">80</span><span style="font-size: x-large;">&nbsp;<i>days</i></span><br><small><i>Growing Period</i></small><br>
+                  <small>Expected Date of Harvesting : 2/2/2021</small>
+                </p>
               </div>
             </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                        </div>
-                        <div class="col">
-                          <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
+        </div>
+            <div class="col-6 align-self-center">
+            <div class="card text-center">
+              <div class="card-body">
+                <h4>Irrigation Advisory</h4>
+                <img src={% static "theme/wi-raindrops.svg" %} style="height: 100px;" alt="Card image cap">
+                <p>
+                  <span style="font-size: xx-large;">25%</span><span style="font-size: xx-large;">&nbsp;<i>MC<sub>v</sub></i></span>
+                  <br>
+                  <span style="font-size: x-large;"><i>Irrigate your crops!</i></span>
+                  <br>
+                  <span style="font-size: large;"><i>50 liters or 30 mins @ 1.0 lps</i></span>
+                  <br>
+                  <small><em>
+                  Date Measured : 9/8/2020
+                  <br>
+                  Time Measured : 12:00 PM
+                  <br>
+                  Previous MC<sub>v</sub> : <span>26%</span></em></small>
+                </p>
               </div>
             </div>
           </div>
-
-          <!-- Content Row -->
-
-          <div class="row">
-
-            <!-- Area Chart -->
-            <div class="col-xl-8 col-lg-7">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
+          
+          <div class="col-2 align-self-center">
+            <div class="card text-center">
+              <div class="card-body">
+                <div class="row">
+                    <div class="col" style="font-size: xx-large;"><span>32</span>&#8451;</div>
                 </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
+                <small><i>Air Temperature</i></small>
+                <div class="row">
+                    <div class="col"  style="font-size: xx-large;"><span>72</span>&nbsp;%</div>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pie Chart -->
-            <div class="col-xl-4 col-lg-5">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
-                  </div>
-                  <div class="mt-4 text-center small">
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-primary"></i> Direct
-                    </span>
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-success"></i> Social
-                    </span>
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-info"></i> Referral
-                    </span>
-                  </div>
-                </div>
+                  <small><i>Relative Humidity</i></small>
               </div>
             </div>
           </div>
-
-          <!-- Content Row -->
-          <div class="row">
-
-            <!-- Content Column -->
-            <div class="col-lg-6 mb-4">
-
-              <!-- Project Card Example -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
-                </div>
-                <div class="card-body">
-                  <h4 class="small font-weight-bold">Server Migration <span class="float-right">20%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Sales Tracking <span class="float-right">40%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Customer Database <span class="float-right">60%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Payout Details <span class="float-right">80%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>
-                  <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-6 mb-4">
-
-              <!-- Illustrations -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
-                </div>
-                <div class="card-body">
-                  <div class="text-center">
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/undraw_posting_photo.svg" alt="">
-                  </div>
-                  <p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely free and without attribution!</p>
-                  <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on unDraw &rarr;</a>
-                </div>
-              </div>
-
-              <!-- Approach -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
-                </div>
-                <div class="card-body">
-                  <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-                  <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap framework, especially the utility classes.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
+          
+          
+          
 {% endblock %}
         </div>
         <!-- /.container-fluid -->
@@ -594,7 +424,14 @@
   <!-- Page level custom scripts -->
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
+  <script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+  
 {% block bottom_script_block %}
+
 {% endblock %}
     
 </body>

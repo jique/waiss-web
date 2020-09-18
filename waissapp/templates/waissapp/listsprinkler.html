@@ -6,10 +6,16 @@
 {% endblock %}
 
 {% block main_block %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a  href="{% url 'waiss:listbasin' %}">Basin</a></li>
+        <li class="breadcrumb-item"><a  href="{% url 'waiss:listborder' %}">Border</a></li>
+        <li class="breadcrumb-item"><a  href="{% url 'waiss:listfurrow' %}">Furrow</a></li>
+        <li class="breadcrumb-item">Sprinkler</li>
+        <li class="breadcrumb-item"><a  href="{% url 'waiss:listdrip' %}">Drip</a></li>
+    </ol>
+</nav>
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Sprinkler Irrigation System Data</h6>
-    </div>
     <div class="card-body">
       <div class="table-responsive rounded">
         <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
@@ -46,6 +52,10 @@
         </tbody>
                 {% endfor %}
     </table>
+</div>
+<div>
+    <a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true"><i class="fas fa-angle-left"></i>&nbsp;Back</a>&emsp;
+    <a  href="javascript:history.go(+1)"onMOuseOver="self.status.referrer;return true">Forward&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 {% endblock %}
 

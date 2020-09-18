@@ -6,10 +6,16 @@
 {% endblock %}
 
 {% block main_block %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">WAISS</li>
+        <li class="breadcrumb-item"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Basin Irrigation System</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New Drip</li>
+    </ol>
+</nav>
 <div class="row">
-    <div class="col-lg-10 mx-auto">
+    <div class="col-lg-6 mx-auto">
         <div class="card mb-4">
-            <div class="card-header py-3">I N P U T _ D A T A</div>
             <div class="card-body">
                 <form class="form-group" action="{% url 'waiss:adddrip' %}" method="post">
                 {% csrf_token %}
@@ -22,12 +28,16 @@
                     <div class="row">
                         <div class="col">{{ drip_form.emitters_per_plant|as_crispy_field }}</div>
                         <div class="col">{{ drip_form.emitter_spacing|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
                         <div class="col">{{ drip_form.plant_spacing|as_crispy_field }}</div>
                         <div class="col">{{ drip_form.row_spacing|as_crispy_field }}</div>
                     </div>
                     <div class="row">
                         <div class="col">{{ drip_form.wetted_dia|as_crispy_field }}</div>
                         <div class="col">{{ drip_form.EU|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
                         <div class="col">{{ drip_form.irrigation_interval|as_crispy_field }}</div>
                     </div>
                     <div class="row">
@@ -35,6 +45,14 @@
                     </div>
                     <input type="submit" value="Save" class="btn btn-secondary btn-block">
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mx-auto">
+        <div class="card mb-4">
+            <img class="card-img-top" src={% static "theme/drip.gif" %} alt="Card image cap">
+            <div class="card-body">
+                <p><em><small>insert better GUIDE image para sa parameters na hinihingi</small></em></p>
             </div>
         </div>
     </div>
