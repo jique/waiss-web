@@ -6,9 +6,18 @@
 {% endblock %}
 
 {% block main_block %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
+        <li class="breadcrumb-item active" aria-current="page"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Crops</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Crop</li>
+    </ol>
+</nav>
 <div class="card-columns">
     <div class="card">
-        <div class="card-header">I N P U T _ D A T A</div>
+        <div class="card-header">
+            <small><i><b>Select from the 3 Root Growth models based on your available data,  to be used in the computation.</b></i></small>
+        </div>
         <div class="card-body">
           <form class="form-group" action="" method="post">
               {% csrf_token %}

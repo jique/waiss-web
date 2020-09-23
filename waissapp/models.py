@@ -66,14 +66,14 @@ class MoistureContent(models.Model):
         get_latest_by = "timestamp"
 
 class FieldUnitSettings(models.Model):
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, null=True)
+    fieldunit = models.ForeignKey (FieldUnit, verbose_name="Field Unit", on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=30, verbose_name="Settings Name", null=True, blank=True)
     usk = models.CharField(verbose_name="Unique Security Key", max_length=8)
     fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", default=True)
     withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", default=True)
     automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", default=True)
-    servernumber = PhoneNumberField(null=True, blank=True, unique=True)
-    fieldunitnumber = PhoneNumberField(null=True, blank=True, unique=True)
+    servernumber = PhoneNumberField(verbose_name="Server Number", null=True, blank=True)
+    fieldunitnumber = PhoneNumberField(verbose_name="Field Unit Number", null=True, blank=True)
     numberofsamples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True)
     sensorintegrationtime = models.TimeField(verbose_name="Sensor Integration Time")
     timestart = models.TimeField(verbose_name='Starting Time', null=True, blank=True)

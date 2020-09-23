@@ -6,17 +6,25 @@
 {% endblock %}
 
 {% block main_block %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">WAISS</li>
+        <li class="breadcrumb-item active" aria-current="page">Border Irrigation System</li>
+    </ol>
+</nav>
 <div class="row">
     <div class="col-lg-12 mx-auto">
         <div class="card mb-4">
-            <div class="card-header py-3"><i class="fas fa-tasks"></i>&emsp;System Setup</div>
+            <div class="card-header py-3">
+                <small><i>Create new <b>Water Advisory for Irrigation Scheduling System (WAISS)</b>. Choose parameters from database or create new one by clicking the plus icon.</i></small>
+            </div>
             <div class="card-body">
                 <form class="form-group" action="{% url 'waiss:sys_border' %}" method="post">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col">{{farmsummaries_form.name|as_crispy_field }}</div>
                         <div class="col-2"></div>
-                        <div class="col">{{farmsummaries_form.basin_sys|as_crispy_field }}</div>
+                        <div class="col">{{farmsummaries_form.border_sys|as_crispy_field }}</div>
                         <div class="col-2"><a href="{% url 'waiss:addborder' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     <div class="row">

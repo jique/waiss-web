@@ -47,8 +47,7 @@
     </table>
 </div>
 <div>
-    <a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true"><i class="fas fa-angle-left"></i>&nbsp;Back</a>&emsp;
-    <a  href="javascript:history.go(+1)"onMOuseOver="self.status.referrer;return true">Forward&nbsp;<i class="fas fa-angle-right"></i></a>
+    <a href={% url 'waiss:addfurrow' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new furrow irrigation system data here</em></small>
 </div>
 {% endblock %}
 

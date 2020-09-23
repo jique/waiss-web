@@ -5,10 +5,16 @@
 {% endblock %}
             
 {% block main_block %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
+        <li class="breadcrumb-item active" aria-current="page"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Field Units</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Field Unit</li>
+    </ol>
+</nav>
 <div class="row">
-    <div class="col-lg-8 mx-auto">
+    <div class="col-lg-12 mx-auto">
         <div class="card mb-4">
-            <div class="card-header py-3">I N P U T _ D A T A</div>
             <div class="card-body">
                 <form class="form-group" action="" method="post">
                     {% csrf_token %}

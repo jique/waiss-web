@@ -99,7 +99,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Setup Farm</span>
+          <span>Setup WAISS for Farm</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -292,6 +292,7 @@
         <div class="container-fluid">
 
           {% block main_block %}
+          
           <div class="card">
             <a class="weatherwidget-io" href="https://forecast7.com/en/14d17121d24/los-banos/" data-label_1="LOS BAÑOS" data-theme="blue-mountains" >LOS BAÑOS</a>
             <script>
@@ -299,6 +300,12 @@
             </script>
           </div>
           <br>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Dashboard</li>
+                <li class="breadcrumb-item active" aria-current="page">#Farm #FieldUnit</li>
+            </ol>
+          </nav>
           <div class="row">
           <div class="col-4 align-self-center">
             <div class="card text-center">
@@ -408,22 +415,6 @@
     </div>
   </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins -->
-  <script src="vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
   <script>
     $(function () {
     $('[data-toggle="tooltip"]').tooltip()
@@ -431,7 +422,6 @@
   </script>
   
 {% block bottom_script_block %}
-
 {% endblock %}
     
 </body>

@@ -6,23 +6,23 @@
 {% endblock %}
 
 {% block main_block %}
-<div class="row">
-    <div class="col-lg-6 mx-auto">
-      <div class="card mb-4">
-        <div class="card-header py-3">
-          C O N F I R M
-        </div>
-        <div class="card-body">
-        <p>Are you sure you wanna delete "{{item}}"?</p>
-        <form class="form-group" action={% url 'waiss:delete_drip' item.id %} method="post">
-            {% csrf_token %}
-            <a href="{% url 'waiss:listdrip' %}">Cancel</a>
-            <input type="submit" name="Confirm">
-        </form>
-</div>
-</div>
-</div>
-</div>
+<div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title">Delete Drip</h5>
+      </div>
+      <div class="modal-body">
+          <small><em>Are you sure you want to delete drip irrigation <b>"{{item}}"</b>?</em></small>
+      </div>
+      <div class="modal-footer">
+          <form class="form-group" action={% url 'waiss:delete_drip' item.id %} method="post">
+              {% csrf_token %}
+          <a href="{% url 'waiss:listdrip' %}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+          <button type="submit" class="btn btn-danger">Confirm</button>
+          </form>
+      </div>
+  </div>
+</div>  
 {% endblock %}
 
 {% block bottom_script_block %}

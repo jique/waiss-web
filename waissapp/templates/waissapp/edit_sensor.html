@@ -5,19 +5,25 @@
 {% endblock %}
             
 {% block main_block %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
+        <li class="breadcrumb-item active" aria-current="page"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Sensors</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Sensor Information</li>
+    </ol>
+</nav>
 <div class="row">
     <div class="col-lg-8 mx-auto">
         <div class="card mb-4">
-            <div class="card-header py-3">I N P U T _ D A T A</div>
             <div class="card-body">
                 <form class="form-group" action="" method="post">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col">{{ sensor_form.fieldunit|as_crispy_field }}</div>
+                        <div class="col">{{ sensor_form.sensor_name|as_crispy_field }}</div>
+                        <div class="col">{{ sensor_form.depth|as_crispy_field }}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ sensor_form.name|as_crispy_field }}</div>
-                        <div class="col">{{ sensor_form.depth|as_crispy_field }}</div>
+                        <div class="col">{{ sensor_form.errors }}</div>
                     </div>
                     <input type="submit" value="Save" class="btn btn-secondary btn-block">
                 </form>

@@ -47,10 +47,9 @@
         </tbody>
             {% endfor %}
     </table>
-    <h6><em>Add new farm data here. <a href={% url 'waiss:add_farm' %}><i class='far fa-edit'></i></a></em></h6>
+    <a href={% url 'waiss:add_farm' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new farm data here.</em></small>
 </div>
 {% endblock %}
 
 {% block bottom_script_block %}
 {% endblock %}
-    

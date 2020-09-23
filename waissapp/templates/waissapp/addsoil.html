@@ -18,6 +18,7 @@
     <div class="card mb-4">
         <div class="card-body"><br>
             <form class="form-group" action="{% url 'waiss:addsoil' %}" method="post">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col">{{soil_form.soiltype|as_crispy_field}}</div>
                 </div>

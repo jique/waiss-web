@@ -27,7 +27,7 @@
                 {% for instance in sensor_list %}
         <tbody>
             <tr>  
-                <td class="align-middle fit">{{instance.name}}</td>
+                <td class="align-middle fit">{{instance.sensor_name}}</td>
                 <td class="fit">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                         <a href={% url 'waiss:edit_sensor' instance.id %} <button class="btn btn-info"> Edit</button></a>
@@ -40,6 +40,7 @@
         </tbody>
                 {% endfor %}
     </table>
+    <small><a href={% url 'waiss:add_fieldunit' %}><i class='far fa-edit'></i></a>&nbsp;<em>Add new sensor data here</em></small>
     </div>
 </div>
 {% endblock %}
