@@ -75,11 +75,11 @@ class FieldUnitSettings(models.Model):
     servernumber = PhoneNumberField(verbose_name="Server Number", null=True, blank=True)
     fieldunitnumber = PhoneNumberField(verbose_name="Field Unit Number", null=True, blank=True)
     numberofsamples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True)
-    sensorintegrationtime = models.TimeField(verbose_name="Sensor Integration Time")
+    sensorintegrationtime = models.TimeField(verbose_name='Sensor Integration Time', null=True, blank=True)
     timestart = models.TimeField(verbose_name='Starting Time', null=True, blank=True)
     timestop = models.TimeField(verbose_name='Stopping Time', null=True, blank=True)
-    delay = models.TimeField(verbose_name='Sending Delay', null=True, blank=True)
-    clockcorrection = models.TimeField(verbose_name='Clock Correction', null=True, blank=True)
+    delay = models.DurationField(verbose_name='Sending Delay', null=True, blank=True)
+    clockcorrection = models.DurationField(verbose_name='Clock Correction', null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Site: Field Unit Settings"
@@ -187,7 +187,7 @@ class Crop(models.Model):
     root_b = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" b", null=True, blank=True)
     root_c = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" c", null=True, blank=True)
     
-    root_ini = models.DecimalField(max_digits=15, decimal_places=5, verbose_name="Root Depth during Transplant (m)", null=True, blank=True)
+    root_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True, blank=True)
     def __str__(self):
         return self.crop
 

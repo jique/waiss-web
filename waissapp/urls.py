@@ -5,6 +5,8 @@ app_name = 'waiss'
 
 urlpatterns = [
      path('', views.index, name='index'),
+     path('login/', views.login, name='login'),
+     path('register/', views.register, name='register'),
      path('about/', views.about, name='about'),
      path('charts/', views.charts, name='charts'), 
      path('show-irrig-calculations/', views.irrig_calculations, name='irrig-calculations'),

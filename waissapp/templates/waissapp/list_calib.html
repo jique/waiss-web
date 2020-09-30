@@ -15,7 +15,7 @@
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th class="align-top fit">Calibration Name</th>
@@ -31,8 +31,8 @@
                 <th class="align-top">Calibrated By</th>
             </tr>
         </thead>
-                {% for instance in calib_list %}
         <tbody>
+            {% for instance in calib_list %}
             <tr> 
                 <td class="align-middle fit">{{instance.calib_name}}</td>
                 <td class="fit">
@@ -51,10 +51,11 @@
                 <td class="align-middle fit">{{instance.date_tested|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.tested_by|default_if_none:"-"}}</td>
             </tr>
+            {% endfor %}
         </tbody>
-                {% endfor %}
     </table>
-    <a href={% url 'waiss:add_calib' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new calibration equation.</em></small>
+</div>
+<a href={% url 'waiss:add_calib' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new calibration equation.</em></small>
 </div>
 {% endblock %}
 

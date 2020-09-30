@@ -15,7 +15,7 @@
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th class="align-top  fit">Farm Name</th>
@@ -27,8 +27,8 @@
                 <th class="align-top  fit">Longitude</th>
             </tr>
         </thead>
-            {% for instance in farm_list %}
         <tbody>
+            {% for instance in farm_list %}
             <tr>  
                 <td class="align-middle fit">{{instance.farm_name}}</td>
                 <td class="fit">
@@ -42,12 +42,12 @@
                 <td class="align-middle fit">{{instance.brgy}}</td>
                 <td class="align-middle fit">{{instance.lat}}</td>
                 <td class="align-middle fit">{{instance.longi}}</td>
-                
             </tr>
-        </tbody>
             {% endfor %}
+        </tbody>
     </table>
-    <a href={% url 'waiss:add_farm' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new farm data here.</em></small>
+</div>
+<a href={% url 'waiss:add_farm' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new farm data here.</em></small>
 </div>
 {% endblock %}
 

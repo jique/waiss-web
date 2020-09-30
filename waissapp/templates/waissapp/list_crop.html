@@ -15,57 +15,58 @@
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-            <tr>
-                <th class="align-top">Crop</th>
-                <th class="align-top">Actions</th>
-                <th class="align-top">Date Transplanted</th>
-                <th class="align-top">Growing Period (days)</th>
-                <th class="align-top">Management Allowable Depletion (MC<sub>v</sub> , %)</th>
-                <th class="align-top">Depth of Rootzone (m)</th>
-                <th class="align-top">K<sub>c(ini)</sub></th>
-                <th class="align-top">K<sub>c(mid)</sub></th>
-                <th class="align-top">K<sub>c(end)</sub></th>
-                <th class="align-top">K<sub>c</sub> curve cutoff (1)</th>
-                <th class="align-top">K<sub>c</sub> curve cutoff (2)</th>
-                <th class="align-top">K<sub>c</sub> curve cutoff (3)</th>
-                <th class="align-top">Equation Form</sub></th>
-                <th class="align-top"> a</sub></th>
-                <th class="align-top"> b</th>
-                <th class="align-top"> c</th>
-                <th class="align-top">Root Depth during Transplanting (m)</th>
-            </tr>
-        </thead>
+        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th class="align-top">Crop</th>
+                    <th class="align-top">Actions</th>
+                    <th class="align-top">Date Transplanted</th>
+                    <th class="align-top">Growing Period (days)</th>
+                    <th class="align-top">Management Allowable Depletion (MC<sub>v</sub> , %)</th>
+                    <th class="align-top">Depth of Rootzone (m)</th>
+                    <th class="align-top">K<sub>c(ini)</sub></th>
+                    <th class="align-top">K<sub>c(mid)</sub></th>
+                    <th class="align-top">K<sub>c(end)</sub></th>
+                    <th class="align-top">K<sub>c</sub> curve cutoff (1)</th>
+                    <th class="align-top">K<sub>c</sub> curve cutoff (2)</th>
+                    <th class="align-top">K<sub>c</sub> curve cutoff (3)</th>
+                    <th class="align-top">Equation Form</sub></th>
+                    <th class="align-top"> a</sub></th>
+                    <th class="align-top"> b</th>
+                    <th class="align-top"> c</th>
+                    <th class="align-top">Root Depth during Transplanting (m)</th>
+                </tr>
+            </thead>
+                    
+            <tbody>
                 {% for instance in crop_list %}
-        <tbody>
-            <tr> 
-                <td class="align-middle fit">{{instance.crop}}</td>
-                <td>
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_crop' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_crop' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                    </div>
-                </td>
-                <td class="align-middle">{{instance.date_transplanted|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.growingperiod|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.mad|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.drz|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.kc_ini|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.kc_mid|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.kc_end|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.kc_cc_1|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.kc_cc_2|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.kc_cc_3|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.eqnform|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.root_a|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.root_b|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.root_c|default_if_none:"-"}}</td>
-                <td class="align-middle">{{instance.root_ini|default_if_none:"-"}}</td>
-                
-            </tr>
-        </tbody>
+                <tr> 
+                    <td class="align-middle fit">{{instance.crop}}</td>
+                    <td>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                            <a href={% url 'waiss:edit_crop' instance.id %} <button class="btn btn-info"> Edit</button></a>
+                            <a href={% url 'waiss:delete_crop' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                        </div>
+                    </td>
+                    <td class="align-middle">{{instance.date_transplanted|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.growingperiod|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.mad|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.drz|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.kc_ini|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.kc_mid|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.kc_end|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.kc_cc_1|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.kc_cc_2|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.kc_cc_3|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.eqnform|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.root_a|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.root_b|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.root_c|default_if_none:"-"}}</td>
+                    <td class="align-middle">{{instance.root_ini|default_if_none:"-"}}</td>
+                    
+                </tr>
                 {% endfor %}
+            </tbody>
         </table>
     </div>
     <a href={% url 'waiss:add_crop' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new crop data here</em></small>

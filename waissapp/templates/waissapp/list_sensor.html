@@ -15,7 +15,7 @@
 <div class="card shadow mb-4">
     <div class="card-body">
     <div class="table-responsive">
-        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th class="align-top fit">Sensor</th>
@@ -24,8 +24,8 @@
                 <th class="align-top fit">Depth (m)</th>
             </tr>
         </thead>
-                {% for instance in sensor_list %}
         <tbody>
+            {% for instance in sensor_list %}
             <tr>  
                 <td class="align-middle fit">{{instance.sensor_name}}</td>
                 <td class="fit">
@@ -37,11 +37,11 @@
                 <td class="align-middle fit">{{instance.fieldunit}}</td>
                 <td class="align-middle fit">{{instance.depth}}</td>
             </tr>
+            {% endfor %}
         </tbody>
-                {% endfor %}
     </table>
-    <small><a href={% url 'waiss:add_fieldunit' %}><i class='far fa-edit'></i></a>&nbsp;<em>Add new sensor data here</em></small>
     </div>
+    <small><a href={% url 'waiss:add_fieldunit' %}><i class='far fa-edit'></i></a>&nbsp;<em>Add new sensor data here</em></small>
 </div>
 {% endblock %}
 

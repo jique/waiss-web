@@ -8,13 +8,12 @@
 {% block main_block %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-      <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">WAISS</li>
-      <li class="breadcrumb-item"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Irrigation System</a></li>
+      <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
       <li class="breadcrumb-item active" aria-current="page">New Intake Family</li>
   </ol>
 </nav>
 <div class="row">
-  <div class="col-lg-12 mx-auto">
+  <div class="col-lg-9 mx-auto">
     <div class="card mb-4">
         <div class="card-body">
           <form class="form-group" action="{% url 'waiss:add_intakefamily' %}" method="post">
@@ -23,7 +22,6 @@
                   <div class="col">{{intakefamily_form.intakefamily|as_crispy_field}}</div>
               </div>
               <div class="col-10 mx-auto">
-                <p>Coefficients</p>
                   <div class="row">
                     <div class="col">{{intakefamily_form.coeff_a|as_crispy_field}}</div>
                   </div>
@@ -45,6 +43,31 @@
             </div>
               <input type="submit" value="Save" class="btn btn-secondary btn-block">
           </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 mx-auto">
+    <div class="card mb-4">
+        <div class="card-body">
+          <em>
+          <h6>Soils Intake Family</h6>
+          <small>
+            <br>
+          <p>
+          The intake
+family number of a soil relates the <b>time
+required to infiltrate a given quantity of
+water in a specific soil type</b>. Since the
+intake rate of the soil decreases as more
+water is applied, the family designation
+(e.g., 0.1, 05, 1.0, 1.5,…) reflect the final
+intake rate of the soil.
+          </p>
+          <p>
+            The intake rate of the soil under irrigation is affected by many factors such as <b>soil texture, soil structure, compaction,
+organic matter, stratified soils, salts in the soil, water quality, sediments in the irrigation water</b>, etc. Therefore, the above
+times can very for a given application depth and intake family number. 
+          </p></small></em>
       </div>
     </div>
   </div>

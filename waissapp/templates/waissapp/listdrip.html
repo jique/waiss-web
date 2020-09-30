@@ -18,7 +18,7 @@
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
         <thead>
                     <tr>
                         <th class="align-top fit">System Name</th>
@@ -34,8 +34,9 @@
 
                     </tr>
                 </thead>
-                {% for instance in drip_list %}
+               
                 <tbody>
+                    {% for instance in drip_list %}
                     <tr>  
                         <td class="align-middle fit">{{instance.name}}</td>
                         <td>
@@ -53,8 +54,9 @@
                         <td class="align-middle fit">{{instance.EU}}</td>
                         <td class="align-middle fit">{{instance.irrigation_interval}}</td>
                     </tr>
+                    {% endfor %}
                 </tbody>
-                {% endfor %}
+                
             </table>
         </div>
 <div>

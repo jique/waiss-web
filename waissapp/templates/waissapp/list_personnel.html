@@ -14,7 +14,7 @@
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th class="align-top  fit">Last Name</th>
@@ -23,8 +23,9 @@
                 <th class="align-top  fit">Mobile Number</th>
             </tr>
         </thead>
-            {% for instance in personnel_list %}
+            
         <tbody>
+            {% for instance in personnel_list %}
             <tr>  
                 <td class="align-middle fit">{{instance.last_name}}</td>
                 <td class="align-middle fit">{{instance.first_name}}</td>
@@ -36,10 +37,11 @@
                 </td>
                 <td class="align-middle fit">{{instance.phone_number}}</td>
             </tr>
-        </tbody>
             {% endfor %}
+        </tbody>
     </table>
-    <small><a href={% url 'waiss:add_personnel' %}><i class='far fa-edit'></i></a>&nbsp;<em>Add new personnel information here</em></small>
+</div>
+<small><a href={% url 'waiss:add_personnel' %}><i class='far fa-edit'></i></a>&nbsp;<em>Add new personnel information here</em></small>
 </div>
 {% endblock %}
 

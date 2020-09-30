@@ -15,7 +15,7 @@
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th class="align-top">Setting Name</th>
@@ -35,8 +35,8 @@
                     <th class="align-top">Clock Correction</th>
                 </tr>
             </thead>
-                    {% for instance in settings_list %}
             <tbody>
+                {% for instance in settings_list %}
                 <tr>  
                     <td class="align-middle fit">{{instance.name}}</td>
                     <td class="fit">
@@ -58,10 +58,10 @@
                     <td class="align-middle fit">{{instance.timestop}}</td>
                     <td class="align-middle fit">{{instance.delay}}</td>
                     <td class="align-middle fit">{{instance.clockcorrection}}</td>
-                    
                 </tr>
+                {% endfor %}
             </tbody>
-                    {% endfor %}
+                    
         </table> 
     </div>
     <a href={% url 'waiss:add_settings' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new field unit settings.</em></small>

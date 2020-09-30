@@ -18,7 +18,7 @@
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th class="align-top">System Name</th>
@@ -33,8 +33,8 @@
                 <th class="align-top">Application Efficiency (%)</th>
             </tr>
         </thead>
-                {% for instance in border_list %}
         <tbody>
+            {% for instance in border_list %}
             <tr>  
                 <td class="align-middle fit">{{instance.border_name}}</td>
                 <td class="fit">
@@ -52,8 +52,9 @@
                 <td class="align-middle fit">{{instance.area_slope}}</td>
                 <td class="align-middle fit">{{instance.ea}}</td>
             </tr>
+            {% endfor %}
         </tbody>
-                {% endfor %}
+                
     </table>
 </div>
 <div>

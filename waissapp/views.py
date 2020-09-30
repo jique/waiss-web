@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, FarmSummaries, SensorNumber, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, FieldUnitSettings, BasinComp, BorderComp, FurrowComp, DripComp, SprinklerComp, CalibrationConstant, BasinPara, FurrowPara, BorderPara, DripPara, SprinklerPara
 from django.utils import timezone
-from datetime import date
+import datetime
+from datetime import date, datetime
 import json
 from django.urls import reverse
 from django import forms
@@ -12,6 +13,12 @@ from django.db import transaction, IntegrityError
 
 def index(request):
 	return render(request, 'waissapp/index.html')
+
+def register(request):
+	return render(request, 'waissapp/register.html')
+
+def login(request):
+	return render(request, 'waissapp/login.html')
 
 def about(request):
 	return render(request, 'waissapp/about.html')

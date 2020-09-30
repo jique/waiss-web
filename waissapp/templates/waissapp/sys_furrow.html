@@ -23,33 +23,33 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col">{{farmsummaries_form.name|as_crispy_field }}</div>
-                        <div class="col-2"></div>
+                        <div class="col-1"></div>
                         <div class="col">{{farmsummaries_form.furrow_sys|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:addfurrow' %}"><i class="fas fa-plus"></i></a></div>
+                        <div class="col-1"><a href="{% url 'waiss:addfurrow' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     <div class="row">
                         <div class="col">{{farmsummaries_form.farm_name|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_farm' %}"><i class="fas fa-plus"></i></a></div>
+                        <div class="col-1"><a href="{% url 'waiss:add_farm' %}"><i class="fas fa-plus"></i></a></div>
                         <div class="col">{{farmsummaries_form.farm_manager|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus"></i></a></div>
+                        <div class="col-1"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     <div class="row">
                         <div class="col">{{farmsummaries_form.fieldunit|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_fieldunit' %}"><i class="fas fa-plus"></i></a></div>
+                        <div class="col-1"><a href="{% url 'waiss:add_fieldunit' %}"><i class="fas fa-plus"></i></a></div>
                         <div class="col">{{farmsummaries_form.settings|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_settings' %}"><i class="fas fa-plus"></i></a></div>
+                        <div class="col-1"><a href="{% url 'waiss:add_settings' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     <div class="row">
                         <div class="col">{{farmsummaries_form.crop|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_crop' %}"><i class="fas fa-plus"></i></a></div>
+                        <div class="col-1"><a href="{% url 'waiss:add_crop' %}"><i class="fas fa-plus"></i></a></div>
                         <div class="col">{{farmsummaries_form.soil|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:addsoil' %}"><i class="fas fa-plus"></i></a></div>
+                        <div class="col-1"><a href="{% url 'waiss:addsoil' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     <div class="row">
                         <div class="col">{{farmsummaries_form.intakefamily|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_intakefamily' %}"><i class="fas fa-plus"></i></a></div>
+                        <div class="col-1"><a href="{% url 'waiss:add_intakefamily' %}"><i class="fas fa-plus"></i></a></div>
                         <div class="col">{{farmsummaries_form.calib_eqn|as_crispy_field }}</div>
-                        <div class="col-2"><a href="{% url 'waiss:add_calib' %}"><i class="fas fa-plus"></i></a></div>
+                        <div class="col-1"><a href="{% url 'waiss:add_calib' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     <input type="submit" value="Save" class="btn btn-secondary btn-block">
                 </form>
