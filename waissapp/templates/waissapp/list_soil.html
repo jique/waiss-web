@@ -48,7 +48,9 @@
                     
             </table>
         </div>
-        <small><a href={% url 'waiss:addsoil' %}><i class='far fa-edit'></i></a>&nbsp;<em>Add new soil data here</em></small>
+        <div class="float-right">
+            <small><em>Add new soil data here&nbsp;</em></small><a href={% url 'waiss:addsoil' %}><img src={% static "theme/add_soil.png" %} style="height: 50px;" alt="Card image cap"></a>
+        </div>
 </div>
 {% endblock %}
 

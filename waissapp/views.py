@@ -1,18 +1,27 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, FarmSummaries, SensorNumber, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, FieldUnitSettings, BasinComp, BorderComp, FurrowComp, DripComp, SprinklerComp, CalibrationConstant, BasinPara, FurrowPara, BorderPara, DripPara, SprinklerPara
+from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, SensorNumber, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, BasinComp, BorderComp, FurrowComp, DripComp, SprinklerComp, CalibrationConstant, BasinPara, FurrowPara, BorderPara, DripPara, SprinklerPara
 from django.utils import timezone
 import datetime
 from datetime import date, datetime
 import json
 from django.urls import reverse
 from django import forms
-from .forms import SentMsgsForm, PersonnelForm, SoilForm, CalibForm, CropForm, FieldUnitSettingsForm, FarmForm, IntakeFamilyForm, FarmSummariesForm, FieldUnitForm, SensorForm, BasinForm, BorderForm, FurrowForm, SprinklerForm, DripForm, BasinParaForm, FurrowParaForm, BorderParaForm, DripParaForm, SprinklerParaForm
+from .forms import SentMsgsForm, PersonnelForm, SoilForm, CalibForm, CropForm, FarmForm, IntakeFamilyForm, FieldUnitForm, SensorForm, BasinForm, BorderForm, FurrowForm, SprinklerForm, DripForm, BasinParaForm, FurrowParaForm, BorderParaForm, DripParaForm, SprinklerParaForm
 from django.forms import modelformset_factory
 from django.db import transaction, IntegrityError
 
 def index(request):
 	return render(request, 'waissapp/index.html')
+
+def load_page(request):
+	return render(request, 'waissapp/load_page.html')
+
+def computation_option(request):
+	return render(request, 'waissapp/simp_advanced.html')
+
+def irrig_type(request):
+	return render(request, 'waissapp/irrig_type.html')
 
 def register(request):
 	return render(request, 'waissapp/register.html')
@@ -669,113 +678,76 @@ def deleteSprinkler(request, pk):
 	return render(request, 'waissapp/delete_sprinkler.html', context)
 #END_OF_SPRINKLER_IRRIGATION
 
-#FARM_SUMMARIES for IRRIG_SYS
-def list_sys(request):
-	queryset = FarmSummaries.objects.all()
-	
-	context = {
-		"farm_summaries_list":queryset,
-	}
-	return render(request, 'waissapp/list_farm_summaries.html', context)
-
-def edit_farmsummaries(request, pk):
-	para = FarmSummaries.objects.get(id=pk)
-	form = FarmSummariesForm(instance=para)
-
-	if request.method == 'POST':  # data sent by user
-		form = FarmSummariesForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/systems/')
-
-	context = {
-		"farmsummaries_form":form,
-	}
-	return render(request, 'waissapp/edit_farmsummaries.html', context)
-
-def delete_farmsummaries(request, pk):
-	para = FarmSummaries.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/systems/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_farmsummaries.html', context)
-
 def basin_calc(request):
 	if request.method == 'POST':  # data sent by user
-		form = FarmSummariesForm(request.POST)
+		form = FarmForm(request.POST)
 		if form.is_valid():
 			form.save()  # this will save info to database
 	else:  # display empty form
-		form = FarmSummariesForm()
+		form = FarmForm()
 	
 	context = {
-		"farmsummaries_form":form,
+		"farm_form":form,
 	}
 
 	return render(request, 'waissapp/sys_basin.html', context)
 
 def border_calc(request):
 	if request.method == 'POST':  # data sent by user
-		form = FarmSummariesForm(request.POST)
+		form = FarmForm(request.POST)
 		if form.is_valid():
 			form.save()  # this will save info to database
 	else:  # display empty form
-		form = FarmSummariesForm()
+		form = FarmForm()
 
 	context = {
-		"farmsummaries_form":form,
+		"farm_form":form,
 	}
 
 	return render(request, 'waissapp/sys_border.html', context)
 
 def furrow_calc(request):
 	if request.method == 'POST':  # data sent by user
-		form = FarmSummariesForm(request.POST)
+		form = FarmForm(request.POST)
 		if form.is_valid():
 			form.save()  # this will save info to database
 	else:  # display empty form
-		form = FarmSummariesForm()
+		form = FarmForm()
 	
 	context = {
-		"farmsummaries_form":form,
+		"farm_form":form,
 	}
 
 	return render(request, 'waissapp/sys_furrow.html', context)
 
 def drip_calc(request):
 	if request.method == 'POST':  # data sent by user
-		form = FarmSummariesForm(request.POST)
+		form = FarmForm(request.POST)
 		if form.is_valid():
 			form.save()  # this will save info to database
 	else:  # display empty form
-		form = FarmSummariesForm()
+		form = FarmForm()
 	
 	context = {
-		"farmsummaries_form":form,
+		"farm_form":form,
 	}
 
 	return render(request, 'waissapp/sys_drip.html', context)
 
 def sprinkler_calc(request):
 	if request.method == 'POST':  # data sent by user
-		form = FarmSummariesForm(request.POST)
+		form = FarmForm(request.POST)
 		if form.is_valid():
 			form.save()  # this will save info to database
 	else:  # display empty form
-		form = FarmSummariesForm()
+		form = FarmForm()
 	
 	context = {
-		"farmsummaries_form":form,
+		"farm_form":form,
 	}
 
 	return render(request, 'waissapp/sys_sprinkler.html', context)
 
-
-
-#END#FARM_SUMMARIES for IRRIG_SYS
 
 #COMPUTATION
 def list_drip_calc(request):
@@ -789,8 +761,8 @@ def list_drip_calc(request):
 def view_calc_drip(request, pk):
 	latest_data = DripComp.objects.filter(id=pk).latest() #how to get latest computation data
 	system_data = latest_data.objects.all()
-	farm_summary =FarmSummaries.objects.all()
-	#parameters = FarmSummaries.objects.filter(id=pk).set_all() #how to get ID of the farm summaries
+	farm_summary =farm.objects.all()
+	#parameters = farm.objects.filter(id=pk).set_all() #how to get ID of the farm summaries
 	
 	#greenhouse_A = Greenhouse.objects.get(name="Pamana_A")
 	#date_transplanted = greenhouse_A.date_transplanted.date()

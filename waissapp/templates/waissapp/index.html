@@ -175,7 +175,7 @@
         Addons
       </div>
       <li class="nav-item">
-        <a class="nav-link" href={% url 'waiss:list_farm_summaries' %}>
+        <a class="nav-link" href={% url 'waiss:list_farm' %}>
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Systems</span></a>
       </li>
@@ -297,7 +297,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Jay Ann Lommod</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
@@ -321,9 +321,7 @@
                 </a>
               </div>
             </li>
-
           </ul>
-
         </nav>
         <!-- End of Topbar -->
 
@@ -332,7 +330,6 @@
 
           {% endblock%}
           {% block main_block %}
-          
           <div class="card">
               <a class="weatherwidget-io" href="https://forecast7.com/en/14d17121d24/los-banos/" data-label_1="LOS BAÑOS" data-theme="blue-mountains" >LOS BAÑOS</a>
               <script>
@@ -347,69 +344,69 @@
             </ol>
           </nav>
           <div class="row">
-          <div class="col-4 align-self-center">
-            <div class="card text-center">
-              <div class="card-body">
-                <i class="far fa-calendar-alt fa-3x"></i>
-                <h6><br>
-                  <span id="date"></span>
-                   <br>
-                  <span id="time"></span>
-                </h6>
-              </div>
-            </div>
-              <div class="card text-center">
-              <div class="card-body">
-                  <span style="font-size: x-large;">20</span><span style="font-size: x-large;">&nbsp;<i>days</i></span>
-                  <br><small><i>Days after Planting</i></small>
-                  <br>
-                  <span style="font-size: x-large;">80</span><span style="font-size: x-large;">&nbsp;<i>days</i></span><br><small><i>Growing Period</i></small><br>
-                  <small>Expected Date of Harvesting : 2/2/2021</small>
-                </p>
-              </div>
-            </div>
-        </div>
-            <div class="col-6 align-self-center">
-            <div class="card text-center">
-              <div class="card-body">
-                <h4>Irrigation Advisory</h4>
-                <img src={% static "theme/wi-raindrops.svg" %} style="height: 100px;" alt="Card image cap">
-                <p>
-                  <span style="font-size: xx-large;">25%</span><span style="font-size: xx-large;">&nbsp;<i>MC<sub>v</sub></i></span>
-                  <br>
-                  <span style="font-size: x-large;"><i>Irrigate your crops!</i></span>
-                  <br>
-                  <span style="font-size: large;"><i>50 liters or 30 mins @ 1.0 lps</i></span>
-                  <br>
-                  <small><em>
-                  Date Measured : 9/8/2020
-                  <br>
-                  Time Measured : 12:00 PM
-                  <br>
-                  Previous MC<sub>v</sub> : <span>26%</span></em></small>
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-2 align-self-center">
-            <div class="card text-center">
-              <div class="card-body">
-                <div class="row">
-                    <div class="col" style="font-size: xx-large;"><span>32</span>&#8451;</div>
-                </div>
-                <small><i>Air Temperature</i></small>
-                <div class="row">
-                    <div class="col"  style="font-size: xx-large;"><span>72</span>&nbsp;%</div>
+            <div class="col-lg-3">
+                <div class="card text-center">
+                  <div class="card-body">
+                    <img src={% static "theme/growing_plant.png" %} style="height: 150px;" alt="Card image cap">
+                    <br>
+                    <span style="font-size: x-large;">20</span><span style="font-size: x-large;">&nbsp;<i>days</i></span>
+                    <br><small><i>Days after Planting</i></small>
+                    <br>
+                    <span style="font-size: x-large;">80</span><span style="font-size: x-large;">&nbsp;<i>days</i></span><br><small><i>Growing Period</i></small>
+                    <br>
+                    <span style="font-size: x-large;">11/30/2020</span>
+                    <br>
+                    <small>Expected Date of Harvesting</small>
+                  </p>
                   </div>
-                  <small><i>Relative Humidity</i></small>
+                </div>
               </div>
+              <div class="col-lg-7">
+                <div class="card text-center">
+                  <div class="card-body">
+                    <img src={% static "theme/water_on_plant.png" %} style="height: 100px;" alt="Card image cap">
+                    <p>
+                      <span style="font-size: xx-large;">25%</span><span style="font-size: xx-large;">&nbsp;<i>MC<sub>v</sub></i></span>
+                      <br>
+                      <small><i>Soil Moisture Content</i></small>
+                      <br>
+                      <span style="font-size: x-large;"><i>Irrigate your crops!</i></span>
+                      <br>
+                      <span style="font-size: large;"><i>50 liters or 30 mins @ 1.0 lps</i></span>
+                      <br>
+                      <small><em>
+                      Date Measured : 9/8/2020
+                      <br>
+                      Time Measured : 12:00 PM
+                      <br>
+                      Previous MC<sub>v</sub> : <span>26%</span></em></small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2 align-self-center">
+                <div class="card text-center">
+                  <div class="card-body">
+                    <img src={% static "theme/calendar_with_clock_2.png" %} style="height: 70px;" alt="Card image cap">
+                    <h6><br>
+                      <span id="date"></span>
+                      <br>
+                      <span id="time"></span>
+                    </h6>
+                  </div>
+              </div>
+                <div class="card text-center">
+                  <div class="card-body">
+                    <img src={% static "theme/humidity.png" %} style="height: 70px;" alt="Card image cap">
+                    <div class="row"><div class="col" style="font-size: xx-large;"><span>32</span>&#8451;</div></div>
+                    <small><i>Air Temperature</i></small>
+                    <div class="row"><div class="col"  style="font-size: xx-large;"><span>72</span>&nbsp;%</div></div>
+                    <small><i>Relative Humidity</i></small>
+                  </div>
+                </div>
+              </div>
+
             </div>
-          </div>
-        </div>
-          
-          
-          
 {% endblock %}
         </div>
         <!-- /.container-fluid -->

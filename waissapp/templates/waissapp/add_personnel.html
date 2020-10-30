@@ -13,7 +13,14 @@
     </ol>
 </nav>
 <div class="row">
-    <div class="col-lg-12 mx-auto">
+    <div class="col-lg-4 mx-auto">
+        <div class="card mb-4">
+            <div class="card-body">
+                <img src={% static "theme/add_personnel.png" %} style="height: 60vh;" alt="Card image cap">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 mx-auto">
         <div class="card mb-4">
             <div class="card-body">
                 <form class="form-group" action="{% url 'waiss:add_personnel' %}" method="post">   
@@ -40,4 +47,3 @@
 
 {% block bottom_script_block %}
 {% endblock %}
-        

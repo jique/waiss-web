@@ -41,7 +41,10 @@
         </tbody>
     </table>
 </div>
-<small><a href={% url 'waiss:add_personnel' %}><i class='far fa-edit'></i></a>&nbsp;<em>Add new personnel information here</em></small>
+<div class="float-right">
+    <small><em>Add new personnel information here&emsp;</em></small><a href={% url 'waiss:add_personnel' %}><img src={% static "theme/add_personnel.png" %} style="height: 50px;" alt="Card image cap"></a>
+</div>
+
 </div>
 {% endblock %}
 

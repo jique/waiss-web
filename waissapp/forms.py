@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import SentMsgs, Personnel, Soil, Crop, FieldUnitSettings, CalibrationConstant, FarmSummaries, IntakeFamily, Farm, FieldUnit, SensorNumber, BasinComp, BorderComp, FurrowComp, SprinklerComp, DripComp, BasinPara, BorderPara, FurrowPara, SprinklerPara, DripPara
+from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, IntakeFamily, Farm, FieldUnit, SensorNumber, BasinComp, BorderComp, FurrowComp, SprinklerComp, DripComp, BasinPara, BorderPara, FurrowPara, SprinklerPara, DripPara
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from durationwidget.widgets import TimeDurationWidget
@@ -47,7 +47,6 @@ class CropForm(forms.ModelForm):
         
 
 class FieldUnitForm(forms.ModelForm):
-    
     class Meta:
         model = FieldUnit
         exclude = ()  # this says to include all fields from model to the form 
@@ -60,7 +59,6 @@ class FieldUnitForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': "form-control formset-field"})
         }
 
-class FieldUnitSettingsForm(forms.ModelForm):
     sensorintegrationtime = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time','step':'1'}), label="Sensor Integration Time")  
     timestart = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Start Time")
     timestop = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Stop Time")
@@ -72,16 +70,14 @@ class FieldUnitSettingsForm(forms.ModelForm):
         label="Clock Correction", 
         widget=TimeDurationWidget(show_days=False, show_hours=False, show_minutes=True, show_seconds=True, attrs={'class':'form-control'}), 
         required=False)
-    class Meta:
-        model = FieldUnitSettings
-        exclude = ()  # this says to include all fields from model to the form
+
     def __init__(self, *args, **kwargs):
-        super(FieldUnitSettingsForm, self).__init__(*args, **kwargs)
+        super(FieldUnitForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-lg-5'
         self.helper.field_class = 'col-lg-7'
-
+        
 class SensorForm(forms.ModelForm):
     class Meta:
         model = SensorNumber
@@ -117,17 +113,6 @@ class FarmForm(ModelForm):
     class Meta:
         model = Farm
         exclude = ()  # this says to include all fields from model to the form 
-
-class FarmSummariesForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(FarmSummariesForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-5'
-        self.helper.field_class = 'col-lg-7' 
-    class Meta:
-        model = FarmSummaries
-        exclude = ()  # this says to include all fields from model to the form
 
 class BasinForm(ModelForm):
     class Meta:
