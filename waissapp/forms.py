@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, IntakeFamily, Farm, FieldUnit, SensorNumber, BasinComp, BorderComp, FurrowComp, SprinklerComp, DripComp, BasinPara, BorderPara, FurrowPara, SprinklerPara, DripPara
+from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, IntakeFamily, Farm, FieldUnit, FieldUnitSettings,SensorNumber, BasinComp, BorderComp, FurrowComp, SprinklerComp, DripComp, BasinPara, BorderPara, FurrowPara, SprinklerPara, DripPara
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from durationwidget.widgets import TimeDurationWidget
@@ -45,20 +45,16 @@ class CropForm(forms.ModelForm):
         model = Crop
         exclude = ()  # this says to include all fields from model to the form
         
-
-class FieldUnitForm(forms.ModelForm):
+class FieldUnitForm(ModelForm):
     class Meta:
         model = FieldUnit
+        exclude = ()
+
+class FieldUnitSettingsForm(forms.ModelForm):
+    class Meta:
+        model = FieldUnitSettings
         exclude = ()  # this says to include all fields from model to the form 
     
-        fields = [
-            'name',
-        ]
-
-        widgets = {
-            'name': forms.TextInput(attrs={'class': "form-control formset-field"})
-        }
-
     sensorintegrationtime = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time','step':'1'}), label="Sensor Integration Time")  
     timestart = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Start Time")
     timestop = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Stop Time")
@@ -72,7 +68,7 @@ class FieldUnitForm(forms.ModelForm):
         required=False)
 
     def __init__(self, *args, **kwargs):
-        super(FieldUnitForm, self).__init__(*args, **kwargs)
+        super(FieldUnitSettingsForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-lg-5'

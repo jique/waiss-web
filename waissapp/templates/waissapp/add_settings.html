@@ -19,11 +19,10 @@
                 <form class="form-group" action="{% url 'waiss:add_settings' %}" method="post">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col">{{ settings_form.name|as_crispy_field}}</div>
                         <div class="col">{{ settings_form.usk|as_crispy_field}}</div>
+                        <div class="col">{{ settings_form.fieldunitstatus|as_crispy_field}}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ settings_form.fieldunitstatus|as_crispy_field}}</div>
                         <div class="col">{{ settings_form.withirrigation|as_crispy_field}}</div>
                         <div class="col">{{ settings_form.automaticthreshold|as_crispy_field}}</div>
                     </div>

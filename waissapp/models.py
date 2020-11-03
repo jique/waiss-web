@@ -18,7 +18,7 @@ class Personnel(models.Model):
 #SITE VALUES
 class FieldUnit(models.Model):
     name = models.CharField(max_length=25, null=True, blank=True, verbose_name="Field Unit Name")
-    usk = models.CharField(verbose_name="Unique Security Key", max_length=8)
+    usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True, blank=True)
     fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", default=True)
     withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", default=True)
     automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", default=True)
@@ -265,6 +265,26 @@ class SprinklerPara(models.Model):
     def __str__(self):
         return self.name
 
+class FieldUnitSettings(models.Model):
+    name = models.CharField(max_length=30, verbose_name="Settings Name", null=True, blank=True)
+    usk = models.CharField(verbose_name="Unique Security Key", max_length=8)
+    fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", default=True)
+    withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", default=True)
+    automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", default=True)
+    servernumber = PhoneNumberField(verbose_name="Server Number", null=True, blank=True)
+    fieldunitnumber = PhoneNumberField(verbose_name="Field Unit Number", null=True, blank=True)
+    numberofsamples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True)
+    sensorintegrationtime = models.DurationField(verbose_name='Sensor Integration Time', null=True, blank=True)
+    timestart = models.TimeField(verbose_name='Starting Time', null=True, blank=True)
+    timestop = models.TimeField(verbose_name='Stopping Time', null=True, blank=True)
+    delay = models.TimeField(verbose_name='Sending Delay', null=True, blank=True)
+    clockcorrection = models.TimeField(verbose_name='Clock Correction', null=True, blank=True)
+    delay = models.DurationField(verbose_name='Sending Delay', null=True, blank=True)
+    clockcorrection = models.DurationField(verbose_name='Clock Correction', null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Site: Field Unit Settings"
+
 class Farm(models.Model):
     farm_name = models.CharField(max_length=20)
     province = models.CharField(max_length=50, null="True", blank="True")
@@ -272,17 +292,24 @@ class Farm(models.Model):
     brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True", blank="True")
     lat = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Latitude (deg)", null="True", blank="True")
     longi = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Longitude (deg)", null="True", blank="True")
+
     farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Manager", null=True, blank=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True) 
+    
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True, blank=True)
     soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True, blank=True)
     intakefamily = models.ForeignKey(IntakeFamily, on_delete=models.CASCADE, verbose_name="Intake Family", null=True, blank=True)
     calib_eqn = models.ForeignKey(CalibrationConstant, on_delete=models.CASCADE, verbose_name="Calibration", null=True, blank=True)
+    settings = models.ForeignKey(FieldUnitSettings, on_delete=models.CASCADE, verbose_name="Settings", null=True, blank=True)
+    
+    #/IRRIGATION_SYSTEM_OPTIONS
     basin_sys = models.ForeignKey(BasinPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
     border_sys = models.ForeignKey(BorderPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
     furrow_sys = models.ForeignKey(FurrowPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
     sprinkler_sys = models.ForeignKey(SprinklerPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
     drip_sys = models.ForeignKey(DripPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
-
+    #//IRRIGATION_SYSTEM_OPTIONS
+    raw_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
     class Meta:
         verbose_name_plural = "Site: Farms"
         ordering = ('farm_name',)
@@ -384,6 +411,18 @@ class DripComp(models.Model):
         verbose_name_plural = "Computation: Drip"
         get_latest_by = "timestamp"
 
+class MoistureContent(models.Model):
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True)
+    sensor_name = models.ForeignKey(SensorNumber, on_delete=models.CASCADE, null=True, blank=True)
+    raw_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
+    timestamp = models.DateTimeField(verbose_name='Time Measured', null=True, blank=True)
+    
+    class Meta:
+        verbose_name_plural = "Site: Sensor Readings"
+        get_latest_by = "timestamp"
+
+
+        
 #MESSAGES
 class Receiver(models.Model):#FOREIGNKEY PERSONNEL??? FIELDUNIT SETTINGS??
     receiver_number = PhoneNumberField(null=True, blank=True)
@@ -397,7 +436,7 @@ class Sender(models.Model):
 
 class SentMsgs(models.Model):
     msg = models.TextField(max_length=200)
-    usk = models.CharField(verbose_name="Unique Security Key", max_length=8)
+    usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True, blank=True)
     receiver_number = models.ForeignKey(Receiver, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Receiver")
     sender_number = models.ForeignKey(Sender, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Sender")
     fieldunit_number =PhoneNumberField(null=True, blank=True) #foreignkey field unit settings?
@@ -409,7 +448,7 @@ class SentMsgs(models.Model):
 
 class ReceivedMsgs(models.Model):
     msg = models.TextField(max_length=200)
-    usk = models.CharField(verbose_name="Unique Security Key", max_length=8)
+    usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True, blank=True)
     receiver_number = models.ForeignKey(Receiver, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Receiver")
     sender_number = models.ForeignKey(Sender, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Sender")
     fieldunit_number = PhoneNumberField(null=True, blank=True)

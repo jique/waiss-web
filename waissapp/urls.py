@@ -4,8 +4,8 @@ from . import views
 app_name = 'waiss'
 
 urlpatterns = [
-     path('', views.index, name='index'),
-     path('login/', views.login, name='login'),
+     path('dashboard/', views.index, name='index'),
+     path('', views.login, name='login'),
      path('register/', views.register, name='register'),
 
      path('welcome/', views.load_page, name='load_page'),

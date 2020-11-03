@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, SensorNumber, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, BasinComp, BorderComp, FurrowComp, DripComp, SprinklerComp, CalibrationConstant, BasinPara, BorderPara, FurrowPara, DripPara, SprinklerPara
+from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, SensorNumber, MoistureContent, FieldUnit, FieldUnitSettings, Soil, IntakeFamily, Crop, BasinComp, BorderComp, FurrowComp, DripComp, SprinklerComp, CalibrationConstant, BasinPara, BorderPara, FurrowPara, DripPara, SprinklerPara
 
 
 class SentMsgsInline(admin.TabularInline):
@@ -54,6 +54,7 @@ admin.site.register(SensorNumber, SensorNumberAdmin)
 admin.site.register(Personnel)
 admin.site.register(MoistureContent, MoistureContentAdmin)
 admin.site.register(FieldUnit, FieldUnitAdmin)
+admin.site.register(FieldUnitSettings)
 
 class SoilInline(admin.TabularInline):
     model = Soil

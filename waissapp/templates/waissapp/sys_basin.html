@@ -24,16 +24,10 @@
             <div class="card-body">
                 <form class="form-group" action="{% url 'waiss:sys_basin' %}" method="post">
                     {% csrf_token %}
-                    <div class="row">
-                        <div class="col">{{farm_form.name|as_crispy_field }}</div>
-                        <div class="col-1"><i class="fas fa-sync-alt" onClick="javascript:document.location.reload()"" data-toggle="tooltip" data-placement="right" title="sync newly added parameters"></i></div>
-                        <div class="col">{{farm_form.basin_sys|as_crispy_field }}</div>
+                        <div class="row"><div class="col">{{farm_form.basin_sys|as_crispy_field }}</div>
                         <div class="col-1"><a href="{% url 'waiss:addbasin' %}"><i class="fas fa-plus"  data-toggle="tooltip" data-placement="right" title="add new basin irrigation system"></i></a></div>
-                        
                     </div>
                     <div class="row">
-                        <div class="col">{{farm_form.farm_name|as_crispy_field }}</div>
-                        <div class="col-1"><a href="{% url 'waiss:add_farm' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add farm"></i></a></div>
                         <div class="col">{{farm_form.farm_manager|as_crispy_field }}</div>
                         <div class="col-1"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add personnel"></i></a></div>
                     </div>

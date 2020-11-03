@@ -22,7 +22,8 @@
                 <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                     <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                        <div class="col-lg-6 d-none d-lg-block">
+                            <img src={% static "theme/options.png" %}>
                         </div>
                         <div class="col-lg-6">
                             <div class="p-5">
@@ -37,7 +38,7 @@
                                                 <a href="{% url 'waiss:irrig_type' %}" <button class="btn btn-info btn-user btn-block">Advanced Computation</button></a> 
                                             </div>
                                             <div class="text-center">
-                                               <small>Advanced computation requires a lot of constants and coefficients!</small>
+                                               <small>Advanced computation requires a lot of constants and coefficients, but also more accurate!</small>
                                             </div>
                                         </form>
                                     </div>
@@ -51,6 +52,9 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block footer_block %}
 {% endblock %}
 
 {% block bottom_script_block %}

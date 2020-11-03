@@ -22,12 +22,14 @@
                 <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                     <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                        <div class="col-lg-6 d-none d-lg-block">
+                            <img src={% static "theme/type.png" %}>
                         </div>
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Choose the irrigation type of your system!</h1>
+                                    <small>Alright! You have chosen ADVANCED COMPUTATION.</small>
+                                    <h1 class="h4 text-gray-900 mb-4">Now, choose the type of your irrigation system!</h1>
                                     </div>
                                         <form class="user">
                                             <div class="form-group">
@@ -57,6 +59,9 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block footer_block %}
 {% endblock %}
 
 {% block bottom_script_block %}

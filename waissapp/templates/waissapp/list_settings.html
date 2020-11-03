@@ -64,7 +64,10 @@
                     
         </table> 
     </div>
-    <a href={% url 'waiss:add_settings' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new field unit settings.</em></small>
+    <div class="float-right"> 
+        <small><em>Add new field unit settings</em></small>&nbsp;
+        <a href={% url 'waiss:add_settings' %}><img src={% static "theme/add_settings.png" %} style="height: 50px;" alt="Card image cap"></a>
+    </div> 
     </div>
 </div>
 {% endblock %}
