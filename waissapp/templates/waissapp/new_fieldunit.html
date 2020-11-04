@@ -1,0 +1,72 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block meta_block %}
+  <title>Welcome!</title>
+{% endblock %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block dashboard_block %}
+<body class="bg-gradient-info">
+
+  <div class="container">
+{% endblock %}
+
+{% block main_block %}
+<div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div class="col-lg-2 d-none d-lg-block">
+          <img src={% static "theme/add_fieldunit.png" %} height="25%vh;">
+        </div>
+        <div class="col-lg-10">
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">3/10: Field Unit & Settings</h1>
+                <div>
+                <div>
+                    <form class="form-group" action="{% url 'waiss:new_fieldunit' %}" method="post">
+                        <br>
+                        {% csrf_token %}
+                            <div class="row">
+                                <div class="col">{{ fieldunit_form.name|as_crispy_field }}</div>
+                                <div class="col">{{ fieldunit_form.usk|as_crispy_field}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col">{{ fieldunit_form.servernumber|as_crispy_field}}</div>
+                                <div class="col">{{ fieldunit_form.fieldunitnumber|as_crispy_field}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col">{{ fieldunit_form.numberofsamples|as_crispy_field}}</div>
+                                <div class="col">{{ fieldunit_form.sensorintegrationtime|as_crispy_field}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col">{{ fieldunit_form.timestart|as_crispy_field}}</div>
+                                <div class="col">{{ fieldunit_form.timestop|as_crispy_field}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col">{{ fieldunit_form.delay|as_crispy_field}}</div>
+                                <div class="col">{{ fieldunit_form.clockcorrection|as_crispy_field}}</div>
+                            </div>
+                            <input type="submit" value="Submit" class="btn btn-secondary btn-block">
+                            <div class="row">
+                                <div class="col">{{ fieldunit_form.errors}}</div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer_block %}
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}

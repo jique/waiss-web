@@ -24,7 +24,7 @@ class FieldUnit(models.Model):
     automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", default=True)
     servernumber = PhoneNumberField(verbose_name="Server Number", null=True, blank=True)
     fieldunitnumber = PhoneNumberField(verbose_name="Field Unit Number", null=True, blank=True)
-    numberofsamples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True)
+    numberofsamples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True, blank=True)
     sensorintegrationtime = models.TimeField(verbose_name='Sensor Integration Time', null=True, blank=True)
     timestart = models.TimeField(verbose_name='Starting Time', null=True, blank=True)
     timestop = models.TimeField(verbose_name='Stopping Time', null=True, blank=True)
@@ -265,26 +265,6 @@ class SprinklerPara(models.Model):
     def __str__(self):
         return self.name
 
-class FieldUnitSettings(models.Model):
-    name = models.CharField(max_length=30, verbose_name="Settings Name", null=True, blank=True)
-    usk = models.CharField(verbose_name="Unique Security Key", max_length=8)
-    fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", default=True)
-    withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", default=True)
-    automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", default=True)
-    servernumber = PhoneNumberField(verbose_name="Server Number", null=True, blank=True)
-    fieldunitnumber = PhoneNumberField(verbose_name="Field Unit Number", null=True, blank=True)
-    numberofsamples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True)
-    sensorintegrationtime = models.DurationField(verbose_name='Sensor Integration Time', null=True, blank=True)
-    timestart = models.TimeField(verbose_name='Starting Time', null=True, blank=True)
-    timestop = models.TimeField(verbose_name='Stopping Time', null=True, blank=True)
-    delay = models.TimeField(verbose_name='Sending Delay', null=True, blank=True)
-    clockcorrection = models.TimeField(verbose_name='Clock Correction', null=True, blank=True)
-    delay = models.DurationField(verbose_name='Sending Delay', null=True, blank=True)
-    clockcorrection = models.DurationField(verbose_name='Clock Correction', null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = "Site: Field Unit Settings"
-
 class Farm(models.Model):
     farm_name = models.CharField(max_length=20)
     province = models.CharField(max_length=50, null="True", blank="True")
@@ -300,7 +280,6 @@ class Farm(models.Model):
     soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True, blank=True)
     intakefamily = models.ForeignKey(IntakeFamily, on_delete=models.CASCADE, verbose_name="Intake Family", null=True, blank=True)
     calib_eqn = models.ForeignKey(CalibrationConstant, on_delete=models.CASCADE, verbose_name="Calibration", null=True, blank=True)
-    settings = models.ForeignKey(FieldUnitSettings, on_delete=models.CASCADE, verbose_name="Settings", null=True, blank=True)
     
     #/IRRIGATION_SYSTEM_OPTIONS
     basin_sys = models.ForeignKey(BasinPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
@@ -309,7 +288,8 @@ class Farm(models.Model):
     sprinkler_sys = models.ForeignKey(SprinklerPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
     drip_sys = models.ForeignKey(DripPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
     #//IRRIGATION_SYSTEM_OPTIONS
-    raw_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
+
+    raw_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True, blank=True)
     class Meta:
         verbose_name_plural = "Site: Farms"
         ordering = ('farm_name',)
@@ -410,18 +390,6 @@ class DripComp(models.Model):
     class Meta:
         verbose_name_plural = "Computation: Drip"
         get_latest_by = "timestamp"
-
-class MoistureContent(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True)
-    sensor_name = models.ForeignKey(SensorNumber, on_delete=models.CASCADE, null=True, blank=True)
-    raw_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
-    timestamp = models.DateTimeField(verbose_name='Time Measured', null=True, blank=True)
-    
-    class Meta:
-        verbose_name_plural = "Site: Sensor Readings"
-        get_latest_by = "timestamp"
-
-
         
 #MESSAGES
 class Receiver(models.Model):#FOREIGNKEY PERSONNEL??? FIELDUNIT SETTINGS??

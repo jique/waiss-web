@@ -28,14 +28,13 @@
                         <div class="col-1"><a href="{% url 'waiss:addbasin' %}"><i class="fas fa-plus"  data-toggle="tooltip" data-placement="right" title="add new basin irrigation system"></i></a></div>
                     </div>
                     <div class="row">
+                        <div class="col-1"><a href="{% url 'waiss:add_farm' %}"><i class="fas fa-plus"></i></a></div>
                         <div class="col">{{farm_form.farm_manager|as_crispy_field }}</div>
                         <div class="col-1"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add personnel"></i></a></div>
                     </div>
                     <div class="row">
                         <div class="col">{{farm_form.fieldunit|as_crispy_field }}</div>
                         <div class="col-1"><a href="{% url 'waiss:add_fieldunit' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add fieldunit"></i></a></div>
-                        <div class="col">{{farm_form.settings|as_crispy_field }}</div>
-                        <div class="col-1"><a href="{% url 'waiss:add_settings' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add fieldunit settings"></i></a></div>
                     </div>
                     <div class="row">
                         <div class="col">{{farm_form.crop|as_crispy_field }}</div>
@@ -44,8 +43,6 @@
                         <div class="col-1"><a href="{% url 'waiss:addsoil' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                     </div>
                     <div class="row">
-                        <div class="col">{{farm_form.intakefamily|as_crispy_field }}</div>
-                        <div class="col-1"><a href="{% url 'waiss:add_intakefamily' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add intake family"></i></a></div>
                         <div class="col">{{farm_form.calib_eqn|as_crispy_field }}</div>
                         <div class="col-1"><a href="{% url 'waiss:add_calib' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add calibration eqn"></i></a></div>
                     </div>

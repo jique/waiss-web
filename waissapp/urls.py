@@ -12,6 +12,20 @@ urlpatterns = [
      path('computation_option/', views.computation_option, name='simp_advanced'),
      path('choose-irrigation/', views.irrig_type, name='irrig_type'),
 
+     #NEW_DATA
+     path('newfarm/', views.newfarm, name='new_farm'),
+     path('newpersonnel/', views.newpersonnel, name='new_personnel'),
+     path('newfieldunit/', views.newfieldunit, name='new_fieldunit'),
+     path('newsensor/', views.newsensor, name='new_sensor'),
+     path('newcrop/', views.newcrop, name='new_crop'),
+     path('newsoil/', views.newsoil, name='new_soil'),
+     path('newcalibrationequation/', views.newcalib, name='new_calib'),
+     path('newbasin/', views.newbasin, name='new_basin'),
+     path('newborder/', views.newborder, name='new_border'),
+     path('newfurrow/', views.newfurrow, name='new_furrow'),
+     path('newdrip/', views.newdrip, name='new_drip'),
+     path('newsprinkler/', views.newsprinkler, name='new_sprinkler'),
+
      path('about/', views.about, name='about'),
      path('charts/', views.charts, name='charts'), 
      path('show-irrig-calculations/', views.irrig_calculations, name='irrig-calculations'),
@@ -25,12 +39,6 @@ urlpatterns = [
      path('calculate-furrow-system/', views.furrow_calc, name='sys_furrow'),
      path('calculate-drip-system/', views.drip_calc, name='sys_drip'),
      path('calculate-sprinkler-system/', views.sprinkler_calc, name='sys_sprinkler'),
-     
-     #FIELDUNIT_SETTINGS
-     path('add-settings/', views.add_settings, name='add_settings'),
-     path('show-settings-database/', views.list_settings, name='list_settings'),
-     path('edit_settings/<str:pk>/', views.editSettings, name='edit_settings'),
-     path('delete_settings/<str:pk>/', views.deleteSettings, name='delete_settings'),
      
      #FIELDUNIT_PARAMETERS
      path('show-fieldunit-database/', views.fieldunit_list_view, name='list_fieldunit'),

@@ -1,0 +1,125 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block meta_block %}
+  <title>Welcome!</title>
+{% endblock %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block dashboard_block %}
+<body class="bg-gradient-info">
+
+  <div class="container">
+{% endblock %}
+
+{% block main_block %}
+<div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div class="col-lg-5 d-none d-lg-block">
+          <img src={% static "theme/add_crop.png" %}>
+        </div>
+        <div class="col-lg-7">
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">5/8: Crop & Parameters</h1>
+                <div>
+                <div>
+                    <form class="form-group" action="{% url 'waiss:new_farm' %}" method="post">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">{{crop_form.crop|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{crop_form.drz|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{crop_form.date_transplanted|as_crispy_field}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{crop_form.growingperiod|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{crop_form.mad|as_crispy_field}}</div>
+                                </div>
+                            </div>
+                        </div>
+                            <br>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><b>Root Growth Model 1: Borg-Grimes Model</b></h6>
+                                    <div class="row">
+                                        <div class="col">{{crop_form.root_ini|as_crispy_field}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><b>Root Growth Model 2: User-Defined</b></h6>
+                                    <div class="row">
+                                        <div class="col">{{crop_form.eqnform|as_crispy_field}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">{{crop_form.root_a|as_crispy_field}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">{{crop_form.root_b|as_crispy_field}}</div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col">{{crop_form.root_c|as_crispy_field}}</div>
+                                    </div>
+                                    <small><i>Linear: MC<sub>v</sub> = (analog_reading)*a + b<br>
+                                        Quadratic: MC<sub>v</sub> = (analog_reading)<sup>2</sup>*a + (analog_reading)*b + c</i>
+                                    </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><b>Root Growth Model 3: Inverse K<sub>c</sub></b></h6>
+                                    <div class=form-group"">
+                                        <div class="row">
+                                            <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">{{crop_form.kc_mid|as_crispy_field}}</div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col">{{crop_form.kc_end|as_crispy_field}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">{{crop_form.kc_cc_1|as_crispy_field}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">{{crop_form.kc_cc_2|as_crispy_field}}</div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col">{{crop_form.kc_cc_3|as_crispy_field}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <br>
+                        <input type="submit" value="Submit" class="btn btn-info btn-block">
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer_block %}
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}

@@ -28,20 +28,20 @@
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Choose the range of accuracy of the irrigation period computation!</h1>
+                                    <div>
+                                    <h1 class="h4 text-gray-900 mb-4">Let's start!</h1>
+                                    <small>Choose the range of accuracy of the irrigation duration or volume computation.</small>
+                                    <small>Advanced computation requires a lot of constants and coefficients, but also more accurate!</small>
                                     </div>
-                                        <form class="user">
+                                    <br>
+                                    <form class="user">
                                             <div class="form-group">
                                                 <a href="" <button class="btn btn-info btn-user btn-block">Simple Computation</button></a> 
                                             </div>
                                             <div class="form-group">
-                                                <a href="{% url 'waiss:irrig_type' %}" <button class="btn btn-info btn-user btn-block">Advanced Computation</button></a> 
+                                                <a href="{% url 'waiss:new_farm' %}" <button class="btn btn-info btn-user btn-block">Advanced Computation</button></a> 
                                             </div>
-                                            <div class="text-center">
-                                               <small>Advanced computation requires a lot of constants and coefficients, but also more accurate!</small>
-                                            </div>
-                                        </form>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
