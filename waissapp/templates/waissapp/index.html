@@ -68,7 +68,6 @@
         $('#dataTable').DataTable();
       } );
     </script>
-    </script>
     
     <title>
         {% block title_block %}
@@ -80,14 +79,8 @@
 
 <body id="page-top" onload="startTime()">
 
-  <style>
-    table {
-      border-left: 4px solid rgb(156, 219, 220);
-      border-bottom: 4px solid rgb(156, 219, 220);
-    }
-  </style>
   {% block style_block%}
-  {% endblock%}
+  {% endblock %}
 
   {% block top_script_block %}
   {% endblock %}
@@ -101,18 +94,18 @@
     <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href={% url 'waiss:about' %}>
+      <a class="sidebar-brand d-flex align-items-center justify-content-center">
         <div class="sidebar-brand-icon">
-          <span><img src={% static "theme/waiss_logo.png" %} width=40px height=40px></span>
+          <img src={% static "theme/waiss_logo.png" %} width=40px height=40px>
+          <span style="color: white;">WAISS</span>
         </div>
-        <div class="sidebar-brand-text mx-3">WAISS</div>
       </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href={% url 'waiss:index' %}>
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
@@ -129,12 +122,12 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Setup WAISS for Farm</span>
+          <i class="fas fa-seedling fa-cog"></i>
+          <span>Add New Farm</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Types:</h6>
+            <h6 class="collapse-header">Irrigation System Type:</h6>
             <a class="collapse-item" href={% url 'waiss:sys_basin' %}>Basin</a>
             <a class="collapse-item" href={% url 'waiss:sys_border' %}>Border</a>
             <a class="collapse-item" href={% url 'waiss:sys_furrow' %}>Furrow</a>
@@ -147,12 +140,11 @@
       <!-- Nav Item - Database Collapse Menu -->
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-        <i class="fas fa-fw fa-wrench"></i>
+        <i class="fas fa-fw fa-database"></i>
         <span>Database</span>
       </a>
       <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Database:</h6>
             <a class="collapse-item" href={% url 'waiss:list_farm' %}>Farms</a>
             <a class="collapse-item" href={% url 'waiss:list_personnel' %}>Personnel</a>
             <a class="collapse-item" href={% url 'waiss:list_crop' %}>Crops</a>
@@ -165,36 +157,18 @@
         </div>
       </div>
     </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
 
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Addons
-      </div>
-      <li class="nav-item">
-        <a class="nav-link" href={% url 'waiss:list_farm' %}>
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Systems</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Calculations</span>
-        </a>
-        <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Types:</h6>
-            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Basin</a>
-            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Border</a>
-            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Furrow</a>
-            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Sprinkler</a>
-            <a class="collapse-item" href={% url 'waiss:list_drip_calc' %}>Drip</a>
-          </div>
-        </div>
-      </li>
+    <li class="nav-item">
+      <a class="nav-link" href={% url 'waiss:about' %}><i class="fas fa-address-card"></i>
+        <span>About Us</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href={% url 'waiss:index' %}><i class="fas fa-square-root-alt"></i>
+      <span>About the Calculations</span></a>
+    </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -329,83 +303,144 @@
 
           {% endblock%}
           {% block main_block %}
+          <!--
           <div class="card">
               <a class="weatherwidget-io" href="https://forecast7.com/en/14d17121d24/los-banos/" data-label_1="LOS BAÑOS" data-theme="blue-mountains" >LOS BAÑOS</a>
               <script>
               !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
               </script>
           </div>
-          <br>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">Dashboard</li>
-                <li class="breadcrumb-item active" aria-current="page">#Farm #FieldUnit</li>
-            </ol>
-          </nav>
+        -->
+          <!-- Content Row -->
           <div class="row">
-            <div class="col-lg-3">
-                <div class="card text-center">
-                  <div class="card-body">
-                    <img src={% static "theme/growing_plant.png" %} style="height: 150px;" alt="Card image cap">
-                    <br>
-                    <span style="font-size: x-large;">20</span><span style="font-size: x-large;">&nbsp;<i>days</i></span>
-                    <br><small><i>Days after Planting</i></small>
-                    <br>
-                    <span style="font-size: x-large;">80</span><span style="font-size: x-large;">&nbsp;<i>days</i></span><br><small><i>Growing Period</i></small>
-                    <br>
-                    <span style="font-size: x-large;">11/30/2020</span>
-                    <br>
-                    <small>Expected Date of Harvesting</small>
-                  </p>
+            <!-- Date & Time Card-->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Date and Time</div>
+                      <div class="h6 mb-0 font-weight-bold text-gray-800">
+                          <span id="date"></span>
+                          <br>
+                          <span id="time"></span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-7">
-                <div class="card text-center">
-                  <div class="card-body">
-                    <img src={% static "theme/water_on_plant.png" %} style="height: 100px;" alt="Card image cap">
-                    <p>
-                      <span style="font-size: xx-large;">25%</span><span style="font-size: xx-large;">&nbsp;<i>MC<sub>v</sub></i></span>
-                      <br>
-                      <small><i>Soil Moisture Content</i></small>
-                      <br>
-                      <span style="font-size: x-large;"><i>Irrigate your crops!</i></span>
-                      <br>
-                      <span style="font-size: large;"><i>50 liters or 30 mins @ 1.0 lps</i></span>
-                      <br>
-                      <small><em>
-                      Date Measured : 9/8/2020
-                      <br>
-                      Time Measured : 12:00 PM
-                      <br>
-                      Previous MC<sub>v</sub> : <span>26%</span></em></small>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-2 align-self-center">
-                <div class="card text-center">
-                  <div class="card-body">
-                    <img src={% static "theme/calendar_with_clock_2.png" %} style="height: 70px;" alt="Card image cap">
-                    <h6><br>
-                      <span id="date"></span>
-                      <br>
-                      <span id="time"></span>
-                    </h6>
-                  </div>
-              </div>
-                <div class="card text-center">
-                  <div class="card-body">
-                    <img src={% static "theme/humidity.png" %} style="height: 70px;" alt="Card image cap">
-                    <div class="row"><div class="col" style="font-size: xx-large;"><span>32</span>&#8451;</div></div>
-                    <small><i>Air Temperature</i></small>
-                    <div class="row"><div class="col"  style="font-size: xx-large;"><span>72</span>&nbsp;%</div></div>
-                    <small><i>Relative Humidity</i></small>
+            </div>
+            <!-- Days after Planting Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Days after Planting</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        <span>20</span>
+                        <span>/ 80</span><span>&nbsp;<i>days</i></span>
+                      </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-seedling fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
+            <!-- Air Temperature -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Air Temperature</div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                            <span>32</span>&#8451;
+                          </div>
+                        </div>
+                    <div class="col-auto">
+                      <i class="fas fa-thermometer-half fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <!-- Relative Humidity Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Relative Humidity</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        <span>72</span>&nbsp;%
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-humidity fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Row -->
+
+          <div class="row">
+
+            <!-- Line Chart -->
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Moisture Content</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="">
+                    </canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Irrigation Advisory -->
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <!-- Card Header -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Irrigation Advisory</h6>
+                </div>
+                <div class="card-body">
+                  <div class="text-center">
+                    <img src={% static "theme/water_on_plant.png" %} style="height: 100px;">
+                    <p>
+                    <span style="font-size: xx-large;">25%</span><span style="font-size: xx-large;">&nbsp;<i>MC<sub>v</sub></i></span>
+                    <br>
+                    <span style="font-size: x-large;"><i>Irrigate your crops!</i></span>
+                    <br>
+                    <span style="font-size: large;"><i>50 liters or 30 mins @ 1.0 lps</i></span>
+                    <br>
+                    <small><em>
+                    Date Measured : 9/8/2020
+                    <br>
+                    Time Measured : 12:00 PM
+                    <br>
+                    Previous MC<sub>v</sub> : <span>26%</span></em></small>
+                  </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 {% endblock %}
         </div>
         <!-- /.container-fluid -->
@@ -461,6 +496,9 @@
     })
   </script>
   <script>
+    $('.dropdown-toggle').dropdown()
+  </script>
+  <script>
     //phone number mask
     $(document).ready(function (){
       $('#id_phone_number').usPhoneFormat({
@@ -484,6 +522,16 @@
 
   <!-- Page level custom scripts -->
   <script src={% static "js/demo/datatables-demo.js" %}></script>
+
+  <script src={% static "jquery-3.2.1.min.js"></script>
+  <script src={% static "breadcrumbs-generator.min.js"></script>
+  <script>
+    $(function() {
+      $('#breadcrumbs').breadcrumbsGenerator();
+      sitemaps: '#sitemaps',
+      index_type: 'index.html'
+    });
+    </script>
 
 {% block bottom_script_block %}
 {% endblock %}

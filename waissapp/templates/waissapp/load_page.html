@@ -33,16 +33,21 @@
                                     <small>
                                         Now, do you want us to guide you to the whole process?
                                         <br> 
-                                        If yes, click <em><b>new irrigation session button</b></em> below.
+                                        If yes, click <em><b>new farm button</b></em> below.
                                         <br>
-                                        Else, go right away to the dashboard.
+                                        If you already have a farm data added previously, click <em><b>new field unit button</b></em> instead.
+                                        <br>
+                                        Else, go right away to the <em><b>dashboard</b></em>.
                                     </small>
                                     </div>
                                     <br>
                                     </div>
                                         <form class="user">
                                             <div class="form-group">
-                                                <a href={% url 'waiss:simp_advanced' %} <button class="btn btn-info btn-user btn-block">New Irrigation Session</button></a> 
+                                                <a href="{% url 'waiss:new_personnel' %}" <button class="btn btn-info btn-user btn-block">New Farm</button></a> 
+                                            </div>
+                                            <div class="form-group">
+                                                <a href="{% url 'waiss:new_fieldunit' %}" <button class="btn btn-info btn-user btn-block">New Field Unit</button></a> 
                                             </div>
                                             <div class="form-group">
                                                 <a href="{% url 'waiss:index' %}" <button class="btn btn-info btn-user btn-block">Dashboard</button></a> 

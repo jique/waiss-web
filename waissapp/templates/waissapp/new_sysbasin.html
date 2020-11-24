@@ -1,0 +1,164 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block meta_block %}
+  <title>Welcome!</title>
+{% endblock %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block dashboard_block %}
+<body class="page-top bg-info">
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <!-- Topbar Navbar -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Jay Ann Lomod</span>
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                </a>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block main_block %}
+<div class="bg-white container col-lg-10 rounded">
+    <div class="col">
+        <div class="p-5">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'waiss:new_personnel' %}>Personnel</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href={% url 'waiss:new_crop' %}>Crop</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href={% url 'waiss:new_soil' %}>Soil</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Irrigation</a>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" href={% url 'waiss:new_basin' %}>Basin</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_border' %}>Border</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_furrow' %}>Furrow</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_sprinkler' %}>Sprinkler</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_drip' %}>Drip</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'waiss:new_fieldunit' %}>Field Unit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'waiss:new_sensor' %}>Sensors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'waiss:new_calib' %}>Calibration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'waiss:new_intakefamily' %}>Intake Family</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Farm</a>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" href={% url 'waiss:new_sysbasin' %}>Basin</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_sysborder' %}>Border</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_sysfurrow' %}>Furrow</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_syssprinkler' %}>Sprinkler</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_sysdrip' %}>Drip</a>
+                    </div>
+                </li>
+            </ul>
+            <br>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 11.11%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-success" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-info" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-warning" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-secondary" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-primary" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-success" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-info" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <br>
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Final</h1>
+                <div>
+                <div>
+                    <form class="form-group" action="{% url 'waiss:new_sysbasin' %}" method="post">
+                        {% csrf_token %}
+                        <div class="card col-11 mx-auto">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">{{ farm_form.farm_name|as_crispy_field }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{ farm_form.brgy|as_crispy_field }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{ farm_form.province|as_crispy_field }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{farm_form.farm_manager|as_crispy_field }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{farm_form.crop|as_crispy_field }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{farm_form.soil|as_crispy_field }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{farm_form.basin_sys|as_crispy_field }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{farm_form.fieldunit|as_crispy_field }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{farm_form.calib_eqn|as_crispy_field }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{farm_form.intakefamily|as_crispy_field }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <input type="submit" value="Submit" class="btn btn-info btn-block">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer_block %}
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}

@@ -13,10 +13,10 @@
     </ol>
 </nav>
 <div class="row">
-    <div class="col-4">
-        <div class="card mb-4 ">
+    <div class="col-7">
+        <div class="card">
             <div class="card-header">
-                <small><i><b>Select from the 3 Root Growth models based on your available data,  to be used in the computation.</b></i></small>
+                <small><i><b>Select 1 of the 3 Root Growth models based on your available data.</b></i></small>
             </div>
             <div class="card-body">
             <form class="form-group" action="{% url 'waiss:add_crop' %}" method="post">
@@ -40,47 +40,16 @@
                 <div class="row">
                     <div class="col">{{crop_form.source|as_crispy_field}}</div>
                 </div>
-                <input type="submit" value="Save" class="btn btn-info btn-block btn-sm">
+                
             </div>
         </div>
     </div>
-    <div class="col-4">
-        <div class="card mb-4 ">
-            <div class="card">
-                <div class="card-body">
-                  <h6 class="card-title">Root Growth Model 1: Borg-Grimes Model</h6>
-                      <div class="row">
-                          <div class="col">{{crop_form.root_ini|as_crispy_field}}</div>
-                      </div>
-                </div>
+    <div class="col-5">
+        <div class="card">
+            <div class="card-header">
+                <small><i><b>Root Growth Model 1: Inverse K<sub>c</sub></b></i></small>
             </div>
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">Root Growth Model 2: User-Defined</h6>
-                      <div class="row">
-                          <div class="col">{{crop_form.eqnform|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col">{{crop_form.root_a|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                        <div class="col">{{crop_form.root_b|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col">{{crop_form.root_c|as_crispy_field}}</div>
-                  </div>
-                      <small><i>Linear: MC<sub>v</sub> = (analog_reading)*a + b<br>
-                        Quadratic: MC<sub>v</sub> = (analog_reading)<sup>2</sup>*a + (analog_reading)*b + c</i>
-                      </small>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-4">
-        <div class="card mb-4 ">
-            <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Root Growth Model 3: Inverse K<sub>c</sub></h6>
                 <div class=form-group"">
                     <div class="row">
                         <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
@@ -100,11 +69,46 @@
                     <div class="row">
                       <div class="col">{{crop_form.kc_cc_3|as_crispy_field}}</div>
                     </div>
-        </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<br>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header"><small><i><b>Root Growth Model 2: User-Defined</b></i></small></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">{{crop_form.eqnform|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{crop_form.root_a|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{crop_form.root_b|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{crop_form.root_c|as_crispy_field}}</div>
+                </div>
+                <small><i>Linear: MC<sub>v</sub> = (analog_reading)*a + b<br>
+                  Quadratic: MC<sub>v</sub> = (analog_reading)<sup>2</sup>*a + (analog_reading)*b + c</i>
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-header"><small><i><b>Root Growth Model 3: Borg-Grimes Model</b></i></small></div>
+            <div class="card-body">{{crop_form.root_ini|as_crispy_field}}</div>
+        </form>
+        </div>
+    </div>
+</div>
+<br>
+<input type="submit" value="Submit" class="btn btn-info btn-block">
+<br>
 
 {% endblock %}
 

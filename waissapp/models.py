@@ -18,6 +18,10 @@ class Personnel(models.Model):
 #SITE VALUES
 class FieldUnit(models.Model):
     name = models.CharField(max_length=25, null=True, blank=True, verbose_name="Field Unit Name")
+    
+    lat = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Latitude (°)", null="True", blank="True")
+    longi = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Longitude (°)", null="True", blank="True")
+    
     usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True, blank=True)
     fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", default=True)
     withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", default=True)
@@ -25,11 +29,11 @@ class FieldUnit(models.Model):
     servernumber = PhoneNumberField(verbose_name="Server Number", null=True, blank=True)
     fieldunitnumber = PhoneNumberField(verbose_name="Field Unit Number", null=True, blank=True)
     numberofsamples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True, blank=True)
-    sensorintegrationtime = models.TimeField(verbose_name='Sensor Integration Time', null=True, blank=True)
+    sensorintegrationtime = models.IntegerField(verbose_name='Sensor Integration Time (ms)', null=True, blank=True)
     timestart = models.TimeField(verbose_name='Starting Time', null=True, blank=True)
     timestop = models.TimeField(verbose_name='Stopping Time', null=True, blank=True)
-    delay = models.DurationField(verbose_name='Sending Delay', null=True, blank=True)
-    clockcorrection = models.DurationField(verbose_name='Clock Correction', null=True, blank=True)
+    delay = models.IntegerField(verbose_name='Sending Delay (ms)', null=True, blank=True)
+    clockcorrection = models.IntegerField(verbose_name='Clock Correction (s)', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -141,9 +145,9 @@ class Crop(models.Model):
     kc_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (ini)", null=True, blank=True)
     kc_mid = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (mid)", null=True, blank=True)
     kc_end = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (end)", null=True, blank=True)
-    kc_cc_1 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc curve cutoff (1)", null=True, blank=True)
-    kc_cc_2 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc curve cutoff (2)", null=True, blank=True)
-    kc_cc_3 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc curve cutoff (3)", null=True, blank=True)
+    kc_cc_1 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 1", null=True, blank=True)
+    kc_cc_2 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 2", null=True, blank=True)
+    kc_cc_3 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 3", null=True, blank=True)
     source = models.CharField(max_length=30, verbose_name="Data Source", null=True, blank=True)
 
     CHOICES = [
@@ -235,9 +239,9 @@ class FurrowPara(models.Model):
 
 class DripPara(models.Model):
     name = models.CharField(max_length=30, verbose_name="System Name", null=True, blank=True)
-    bln_single_lateral = models.BooleanField (verbose_name="Is a Single Straight Lateral type.")
+    bln_single_lateral = models.BooleanField (verbose_name="Single Straight Lateral")
     #if bln_single_lateral is true
-    emitters_per_plant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="No. of Emitters per Plant", null=True, blank=True)
+    emitters_per_plant = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="No. of Emitters per Plant", null=True, blank=True)
     emitter_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Spacing (m)", null=True, blank=True)
     #if bln_single_lateral is false
     plant_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Plant spacing (m)", null=True, blank=True)
@@ -245,7 +249,7 @@ class DripPara(models.Model):
     wetted_dia = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Wetted diameter (m)", null=True, blank=True)
     #
     EU = models.DecimalField(max_digits=3, decimal_places=3, verbose_name="Design Emission Uniformity", null=True, blank=True)
-    irrigation_interval = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Irrigation Interval (days)", null=True, blank=True)
+    irrigation_interval = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Irrigation Interval (days)", null=True, blank=True)
     class Meta:
         verbose_name_plural = "Irrigation System: Drip"
     def __str__(self):
@@ -270,12 +274,10 @@ class Farm(models.Model):
     province = models.CharField(max_length=50, null="True", blank="True")
     municipality = models.CharField(max_length=50, null="True", blank="True")
     brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True", blank="True")
-    lat = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Latitude (deg)", null="True", blank="True")
-    longi = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Longitude (deg)", null="True", blank="True")
 
     farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Manager", null=True, blank=True)
     fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True) 
-    
+    sensors = models.ForeignKey(SensorNumber, on_delete=models.CASCADE, null=True, blank=True) 
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True, blank=True)
     soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True, blank=True)
     intakefamily = models.ForeignKey(IntakeFamily, on_delete=models.CASCADE, verbose_name="Intake Family", null=True, blank=True)
@@ -297,100 +299,16 @@ class Farm(models.Model):
     def __str__(self):
         return self.farm_name
 
-class BasinComp(models.Model):
+class IrrigationAdvisory(models.Model):
     fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True)            
-    eff_adv_ratio = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="R", null=True)
     net_app_depth = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Net Application Depth (mm)", null=True)
-    net_opp_time = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Net Opportunity Time (mins)", null=True)
-    inflow_time = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Inflow Time (mins)", null=True)
-    advance_time = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Advance Time (mins)", null=True)
     irrigation_period = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Irrigation Period (mins)", null=True)
+    irrigation_volume = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Irrigation Volume (l)", null=True)
 
     class Meta:
         verbose_name_plural = "Computation: Basin"
 
-class BorderComp(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True)
-    net_app_depth = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Net Application Depth (mm)", null=True)
-    net_opp_time = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Net Opportunity Time (mins)", null=True)
-    lag_time = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Lag Time (mins)", null=True)
-    inflow_time = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Inflow Time (mins)", null=True)
-    irrigation_period = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Irrigation Period (mins)", null=True)
-    
-    class Meta:
-        verbose_name_plural = "Computation: Border"
 
-class FurrowComp(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True)
-    net_app_depth = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Net Application Depth (mm)", null=True)
-    net_opp_time = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Net Opportunity Time (mins)", null=True)
-    advance_time = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Advance Time (mins)", null=True)
-    #if bln_furrow_type is true, irrigation period is equal to net opportunity time
-    irrigation_period = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Irrigation Period (mins)", null=True)
-    class Meta:
-        verbose_name_plural = "Computation: Furrow"
-
-class SprinklerComp(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True)
-    farm_area = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Farm area (sq.m)", null=True)
-    area_irrigated_at_a_time = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area irrigated at a time (sq.m)", null=True)
-    lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True)
-    sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True)
-    num_of_sprinklers = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Number of sprinklers", null=True)
-    ea = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Application Efficiency", null=True)
-    #Is operating pressure known?
-    bln_operating_pressure = models.BooleanField (verbose_name="Is the operating pressure known?")
-    #If yes, then
-    operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True)
-    nozzle_dia = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Nozzle diameter (mm)", help_text="Fill-out only if operating pressure is known.", null=True)
-    discharge_coefficient = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Discharge Coefficient", help_text="Fill-out only if operating pressure is known.", null=True)
-    #
-    sprinkler_discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler Discharge (lps)", help_text="Fill-out if operating pressure is unknown.", null=True)
-    #
-    net_app_depth = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Net Application Depth (mm)", null=True)
-    gross_app_depth = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Gross Application Depth (mm)", null=True)
-    application_rate = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Application Rate (lps/sq.m)", null=True)
-    #If application rate is less than FC, then irrigation rate is equal to FC. Insert if then statement in views.py for this.
-    irrigation_rate = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Irrigation Rate (lps/sq.m)", null=True)
-    irrigation_period = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Irrigation Period (mins)", null=True)
-    
-    class Meta:
-        verbose_name_plural = "Computation: Sprinkler"
-
-class DripComp(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True)
-    percent_wetted_area  = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Percent Wetted Diameter (%)", null=True)
-    bln_pw_between_33_and_50 = models.BooleanField (verbose_name="Is the Percent Wetted Perimeter between 33 to 50 percent?")
-    #Insert recommendation to redesign system?
-    net_app_depth = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Net Application Depth (mm)", null=True)
-
-    bln_compute_EU = models.BooleanField (verbose_name="Design Emission Uniformity unknown, compute!")
-    #if compute EU true
-    ave_emitter_discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Average emitter discharge (lps)", null=True)
-    min_emitter_discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Minimum emitter discharge (lps)", null=True)
-    
-    #if bln_compute_emitter_coeff is true, make form for inputting table of discharge data
-    bln_compute_emitter_coeff = models.BooleanField (verbose_name="Emitter coefficient unknown, compute!")
-    emitter_coeff = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter coefficient", help_text="Input emitter coefficient if known.", null=True)
-    transpiration_requirement = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Transpiration Requirement (?)", null=True)
-    gross_app_depth = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Gross Application Depth (mm)", null=True)
-    #
-    bln_prefers_irrig_interval = models.BooleanField (verbose_name="Have preffered irrigation interval.")
-    #if bln_prefers_irrig_interval false
-    #input crop characteristics
-    percent_shaded = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Percent Shaded (%)", null=True)
-    peak_ETo  = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm)", null=True)
-    ave_peak_daily_transpiration = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Average Peak Daily Transpiration Rate", null=True)
-    #
-    gross_volume_required_per_plant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Gross Volume Required per Plant (l)", null=True)
-    irrigation_period = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Irrigation Peiod (mins)", null=True)
-
-    timestamp = models.DateTimeField(verbose_name='Time Measured', null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = "Computation: Drip"
-        get_latest_by = "timestamp"
-        
 #MESSAGES
 class Receiver(models.Model):#FOREIGNKEY PERSONNEL??? FIELDUNIT SETTINGS??
     receiver_number = PhoneNumberField(null=True, blank=True)

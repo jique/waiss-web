@@ -10,79 +10,157 @@
 {% endblock %}
 
 {% block dashboard_block %}
-<body class="bg-gradient-info">
+<body class="page-top bg-info">
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <!-- Topbar Navbar -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Jay Ann Lomod</span>
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                </a>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
 
-  <div class="container">
 {% endblock %}
 
 {% block main_block %}
-<div class="card o-hidden border-0 shadow-lg my-5">
-    <div class="card-body p-0">
-      <!-- Nested Row within Card Body -->
-      <div class="row">
-        <div class="col-lg-5 d-none d-lg-block">
-          <div class="p-5">
-            <div class="text-center">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Linear: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=(analogreading)a&plus;b" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=(analogreading)a&plus;b" title="MC_v=(analogreading)a+b" /></a>
-                    <li class="list-group-item">Quadratic: <br> <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;a(analogreading)^2&space;&plus;&space;b(analogreading)&plus;c" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;a(analogreading)^2&space;&plus;&space;b(analogreading)&plus;c" title="MC_v = a(analogreading)^2 + b(analogreading)+c" /></a></li>
-                    <li class="list-group-item">Exponential: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;ae^b(analogreading)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;ae^b(analogreading)" title="MC_v = ae^b(analogreading)" /></a></li>
-                    <li class="list-group-item">Logarithmic: <br> <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;aln(analogreading)&space;&plus;&space;b" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;aln(analogreading)&space;&plus;&space;b" title="MC_v = aln(analogreading) + b" /></a></li>
-                    <li class="list-group-item">Symmetrical Sigmoidal: <br> <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{1&space;&plus;&space;(\frac{analogreading}{c})^b}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{1&space;&plus;&space;(\frac{analogreading}{c})^b}" title="MC_v= d + \frac{(a - d)}{1 + (\frac{analogreading}{c})^b}" /></a>
-                    <li class="list-group-item">Assymmetrical Sigmoidal: <br><a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{(1&space;&plus;&space;(\frac{analogreading}{c})^b)^m}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{(1&space;&plus;&space;(\frac{analogreading}{c})^b)^m}" title="MC_v= d + \frac{(a - d)}{(1 + (\frac{analogreading}{c})^b)^m}" /></a></li>
-                </ul>
-                </div>
+<div class="bg-white container col-lg-10 rounded">
+    
+    <div class="col">
+        
+        <div class="p-5">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'waiss:new_personnel' %}>Personnel</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href={% url 'waiss:new_crop' %}>Crop</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href={% url 'waiss:new_soil' %}>Soil</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Irrigation</a>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" href={% url 'waiss:new_basin' %}>Basin</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_border' %}>Border</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_furrow' %}>Furrow</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_sprinkler' %}>Sprinkler</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_drip' %}>Drip</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'waiss:new_fieldunit' %}>Field Unit</a>
+                  </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'waiss:new_sensor' %}>Sensors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href={% url 'waiss:new_calib' %}>Calibration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'waiss:new_intakefamily' %}>Intake Family</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Farm</a>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" href={% url 'waiss:new_sysbasin' %}>Basin</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_sysborder' %}>Border</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_sysfurrow' %}>Furrow</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_syssprinkler' %}>Sprinkler</a>
+                    <a class="dropdown-item" href={% url 'waiss:new_sysdrip' %}>Drip</a>
+                    </div>
+                </li>
+            </ul>
+            <br>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 11.11%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-success" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-info" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-warning" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-secondary" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-primary" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-        </div>
-        <div class="col-lg-7">
-            <div class="p-5">
+            <br>
                 <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">6/8: Sensors Calibration</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Sensor Calibration</h1>
                 <div>
                 <div>
                     <form class="form-group" action="{% url 'waiss:new_calib' %}" method="post">
-                        <br>
                         {% csrf_token %}
-                        <div class="row">
-                            <div class="col">{{calib_form.calib_name|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>
-                        </div>
-                        <div class="col-8 mx-auto">
-                            <div class="row">
-                                <div class="col">{{calib_form.calib_coeff_a|as_crispy_field}}</div>
+                        <div class="card col-11 mx-auto">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">{{calib_form.calib_name|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <div class="row">
+                                        <div class="col">{{calib_form.calib_coeff_a|as_crispy_field}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">{{calib_form.calib_coeff_b|as_crispy_field}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">{{calib_form.calib_coeff_c|as_crispy_field}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">{{calib_form.calib_coeff_d|as_crispy_field}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">{{calib_form.calib_coeff_m|as_crispy_field}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{calib_form.date_tested|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{calib_form.tested_by|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{calib_form.errors}}</div>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Linear: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=(analogreading)a&plus;b" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=(analogreading)a&plus;b" title="MC_v=(analogreading)a+b" /></a>
+                                    <li class="list-group-item">Quadratic: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;a(analogreading)^2&space;&plus;&space;b(analogreading)&plus;c" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;a(analogreading)^2&space;&plus;&space;b(analogreading)&plus;c" title="MC_v = a(analogreading)^2 + b(analogreading)+c" /></a></li>
+                                    <li class="list-group-item">Exponential: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;ae^b(analogreading)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;ae^b(analogreading)" title="MC_v = ae^b(analogreading)" /></a></li>
+                                    <li class="list-group-item">Logarithmic: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;aln(analogreading)&space;&plus;&space;b" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;aln(analogreading)&space;&plus;&space;b" title="MC_v = aln(analogreading) + b" /></a></li>
+                                    <li class="list-group-item">Symmetrical Sigmoidal: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{1&space;&plus;&space;(\frac{analogreading}{c})^b}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{1&space;&plus;&space;(\frac{analogreading}{c})^b}" title="MC_v= d + \frac{(a - d)}{1 + (\frac{analogreading}{c})^b}" /></a>
+                                    <li class="list-group-item">Assymmetrical Sigmoidal: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{(1&space;&plus;&space;(\frac{analogreading}{c})^b)^m}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{(1&space;&plus;&space;(\frac{analogreading}{c})^b)^m}" title="MC_v= d + \frac{(a - d)}{(1 + (\frac{analogreading}{c})^b)^m}" /></a></li>
+                                </ul>
                             </div>
-                            <div class="row">
-                                <div class="col">{{calib_form.calib_coeff_b|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{calib_form.calib_coeff_c|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{calib_form.calib_coeff_d|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{calib_form.calib_coeff_m|as_crispy_field}}</div>
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col">{{calib_form.date_tested|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{calib_form.tested_by|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{calib_form.errors}}</div>
-                        </div>
+                        <br>
                         <input type="submit" value="Submit" class="btn btn-info btn-block">
                     </form>
                 </div>
-            </div>
+            </div>      
         </div>
-    </div>
-</div>
-
 {% endblock %}
 
 {% block footer_block %}

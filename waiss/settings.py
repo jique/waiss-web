@@ -25,7 +25,8 @@ SECRET_KEY = 'hw(n^1pl(6(%e9$&(fz+q0v-&)1k%&=w-e)dw2)1)5d7&swp+m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["10.0.93.165"]
+ALLOWED_HOSTS = ["10.0.93.165","127.0.0.1"]
+
 
 
 # Application definition
@@ -39,9 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'bootstrap_datepicker',
     'phonenumber_field',
-    'durationwidget',
 ]
 
 MIDDLEWARE = [

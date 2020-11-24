@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, SensorNumber, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, BasinComp, BorderComp, FurrowComp, DripComp, SprinklerComp, CalibrationConstant, BasinPara, BorderPara, FurrowPara, DripPara, SprinklerPara
+from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, SensorNumber, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, IrrigationAdvisory, CalibrationConstant, BasinPara, BorderPara, FurrowPara, DripPara, SprinklerPara
 
 
 class SentMsgsInline(admin.TabularInline):
@@ -39,7 +39,7 @@ class FarmInline(admin.TabularInline):
 
 class FarmAdmin(admin.ModelAdmin):
     ordering = ["farm_name"]
-    list_display=('farm_name', 'brgy', 'municipality', 'province', 'lat', 'longi')
+    list_display=('farm_name', 'brgy', 'municipality', 'province')
 
 class FieldUnitAdmin(admin.ModelAdmin):
     inlines = [SensorNumberInline]
@@ -84,48 +84,12 @@ admin.site.register(Soil, SoilAdmin)
 admin.site.register(IntakeFamily, IntakeFamilyAdmin)
 admin.site.register(Crop, CropAdmin)
 
-
-class BasinCompInline(admin.TabularInline):
-    model = BasinComp
-
-class BorderCompInline(admin.TabularInline):
-    model = BorderComp
-
-class FurrowCompInline(admin.TabularInline):
-    model = FurrowComp
-
-class SprinklerCompInline(admin.TabularInline):
-    model = SprinklerComp
-
-class DripCompInline(admin.TabularInline):
-    model = DripComp
-
-class BasinCompAdmin(admin.ModelAdmin):
-    list_display = ('net_app_depth', 'net_opp_time', 'inflow_time', 'advance_time', 'irrigation_period')
-
-class BorderCompAdmin(admin.ModelAdmin):
-    list_display = ('net_app_depth', 'net_opp_time', 'lag_time', 'inflow_time', 'irrigation_period')
-
-class FurrowCompAdmin(admin.ModelAdmin):
-    list_display = ('net_app_depth', 'net_opp_time', 'advance_time', 'irrigation_period')
-
-class SprinklerCompAdmin(admin.ModelAdmin):
-    list_display = ('net_app_depth', 'gross_app_depth', 'application_rate', 'irrigation_rate', 'irrigation_period' )
-
-class DripCompAdmin(admin.ModelAdmin):
-    list_display = ('percent_wetted_area', 'net_app_depth', 'transpiration_requirement', 'gross_app_depth', 'percent_shaded', 'peak_ETo','ave_peak_daily_transpiration', 'gross_volume_required_per_plant', 'irrigation_period')
-
 class CalibrationConstantInline(admin.TabularInline):
     model = CalibrationConstant
     
 class CalibrationConstantAdmin(admin.ModelAdmin):
     list_display =('calib_name', 'calib_equation', 'calib_coeff_a', 'calib_coeff_b', 'calib_coeff_c', 'calib_coeff_d', 'calib_coeff_m')
 
-admin.site.register(BasinComp, BasinCompAdmin)
-admin.site.register(BorderComp, BorderCompAdmin)
-admin.site.register(FurrowComp, FurrowCompAdmin)
-admin.site.register(SprinklerComp, SprinklerCompAdmin)
-admin.site.register(DripComp, DripCompAdmin)
 admin.site.register(CalibrationConstant, CalibrationConstantAdmin)
 
 class BasinParaInline(admin.TabularInline):
@@ -163,3 +127,10 @@ admin.site.register(BorderPara, BorderParaAdmin)
 admin.site.register(FurrowPara, FurrowParaAdmin)
 admin.site.register(SprinklerPara, SprinklerParaAdmin)
 admin.site.register(DripPara, DripParaAdmin)
+
+class IrrigationAdvisoryInline(admin.TabularInline):
+    model = IrrigationAdvisory
+class IrrigationAdvisoryAdmin(admin.ModelAdmin):
+    list_display =('fieldunit', 'net_app_depth', 'irrigation_period', 'irrigation_volume')
+
+admin.site.register(IrrigationAdvisory, IrrigationAdvisoryAdmin)

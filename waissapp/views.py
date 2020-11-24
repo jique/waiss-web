@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, SensorNumber, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, BasinComp, BorderComp, FurrowComp, DripComp, SprinklerComp, CalibrationConstant, BasinPara, FurrowPara, BorderPara, DripPara, SprinklerPara
+from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, SensorNumber, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, CalibrationConstant, BasinPara, FurrowPara, BorderPara, DripPara, SprinklerPara
 from django.utils import timezone
 import datetime
 from datetime import date, datetime
 import json
 from django.urls import reverse
 from django import forms
-from .forms import SentMsgsForm, PersonnelForm, SoilForm, CalibForm, CropForm, FarmForm, IntakeFamilyForm, FieldUnitForm, SensorForm, BasinForm, BorderForm, FurrowForm, SprinklerForm, DripForm, BasinParaForm, FurrowParaForm, BorderParaForm, DripParaForm, SprinklerParaForm
+from .forms import SentMsgsForm, PersonnelForm, SoilForm, CalibForm, CropForm, FarmForm, IntakeFamilyForm, FieldUnitForm, SensorForm, BasinParaForm, FurrowParaForm, BorderParaForm, DripParaForm, SprinklerParaForm
 from django.forms import modelformset_factory
 from django.db import transaction, IntegrityError
 
@@ -362,15 +362,15 @@ def deleteSensor(request, pk):
 #END#SENSOR_PARAMETERS
 
 #FARM_PARAMETERS
-def newfarm(request):
+def newintakefamily(request):
 	if request.method == 'POST':  # data sent by user
-		form = FarmForm(request.POST)
+		form = IntakeFamilyForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect('/newpersonnel/')
+			return redirect('/choose-irrigation/')
 	else:  # display empty form
-		form = FarmForm()
-	return render(request, 'waissapp/new_farm.html', {'farm_form': form})
+		form = IntakeFamilyForm()
+	return render(request, 'waissapp/new_intakefamily.html', {'intakefamily_form': form})
 
 def farm_account(request):
 	if request.method == 'POST':  # data sent by user
@@ -829,38 +829,6 @@ def sprinkler_calc(request):
 
 	return render(request, 'waissapp/sys_sprinkler.html', context)
 
-
-#COMPUTATION
-def list_drip_calc(request):
-	queryset = DripComp.objects.all()
-
-	context = {
-		"calc_list":queryset,
-	}
-	return render(request, 'waissapp/list_drip_calc.html', context)
-
-def view_calc_drip(request, pk):
-	latest_data = DripComp.objects.filter(id=pk).latest() #how to get latest computation data
-	system_data = latest_data.objects.all()
-	farm_summary =farm.objects.all()
-	#parameters = farm.objects.filter(id=pk).set_all() #how to get ID of the farm summaries
-	
-	#greenhouse_A = Greenhouse.objects.get(name="Pamana_A")
-	#date_transplanted = greenhouse_A.date_transplanted.date()
-	days_delta = datetime.now().date() - date_transplanted
-	delta_DAT = days_delta.days
-	date_Today = datetime.now().date()
-	local_time = timezone.localtime(latest_dataset.timestamp).time()
-	date_read = timezone.localtime(latest_dataset.timestamp).date()
-
-	context = {
-		"local_time": local_time,
-		"date_read": date_read,
-		"date_Today": date_Today,
-		"display_DAT" : delta_DAT,
-	}
-	return render(request, 'waissapp/view_calc_drip.html', context)
-
 def send_message(request):
 	if request.method == 'POST':  # data sent by user
 		form = SentMsgsForm(request.POST)
@@ -890,3 +858,73 @@ def delete_msgs(request, pk): #deleteconversation
 
 def view_msg(request):
 	return render(request, 'waissapp/view-conversation.html')
+
+def newsysbasin(request):
+	if request.method == 'POST':  # data sent by user
+		form = FarmForm(request.POST)
+		if form.is_valid():
+			form.save()  # this will save info to database
+	else:  # display empty form
+		form = FarmForm()
+	
+	context = {
+		"farm_form":form,
+	}
+
+	return render(request, 'waissapp/new_sysbasin.html', context)
+
+def newsysborder(request):
+	if request.method == 'POST':  # data sent by user
+		form = FarmForm(request.POST)
+		if form.is_valid():
+			form.save()  # this will save info to database
+	else:  # display empty form
+		form = FarmForm()
+	
+	context = {
+		"farm_form":form,
+	}
+
+	return render(request, 'waissapp/new_sysborder.html', context)
+
+def newsysfurrow(request):
+	if request.method == 'POST':  # data sent by user
+		form = FarmForm(request.POST)
+		if form.is_valid():
+			form.save()  # this will save info to database
+	else:  # display empty form
+		form = FarmForm()
+	
+	context = {
+		"farm_form":form,
+	}
+
+	return render(request, 'waissapp/new_sysfurrow.html', context)
+
+def newsysdrip(request):
+	if request.method == 'POST':  # data sent by user
+		form = FarmForm(request.POST)
+		if form.is_valid():
+			form.save()  # this will save info to database
+	else:  # display empty form
+		form = FarmForm()
+	
+	context = {
+		"farm_form":form,
+	}
+
+	return render(request, 'waissapp/new_sysdrip.html', context)
+
+def newsyssprinkler(request):
+	if request.method == 'POST':  # data sent by user
+		form = FarmForm(request.POST)
+		if form.is_valid():
+			form.save()  # this will save info to database
+	else:  # display empty form
+		form = FarmForm()
+	
+	context = {
+		"farm_form":form,
+	}
+
+	return render(request, 'waissapp/new_syssprinkler.html', context)

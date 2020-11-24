@@ -13,7 +13,6 @@ urlpatterns = [
      path('choose-irrigation/', views.irrig_type, name='irrig_type'),
 
      #NEW_DATA
-     path('newfarm/', views.newfarm, name='new_farm'),
      path('newpersonnel/', views.newpersonnel, name='new_personnel'),
      path('newfieldunit/', views.newfieldunit, name='new_fieldunit'),
      path('newsensor/', views.newsensor, name='new_sensor'),
@@ -25,14 +24,17 @@ urlpatterns = [
      path('newfurrow/', views.newfurrow, name='new_furrow'),
      path('newdrip/', views.newdrip, name='new_drip'),
      path('newsprinkler/', views.newsprinkler, name='new_sprinkler'),
+     path('newsysbasin/', views.newsysbasin, name='new_sysbasin'),
+     path('newsysborder/', views.newsysborder, name='new_sysborder'),
+     path('newsysfurrow/', views.newsysfurrow, name='new_sysfurrow'),
+     path('newsysdrip/', views.newsysdrip, name='new_sysdrip'),
+     path('newsyssprinkler/', views.newsyssprinkler, name='new_syssprinkler'),
+     path('newintakefamily/', views.newintakefamily, name='new_intakefamily'),
 
      path('about/', views.about, name='about'),
      path('charts/', views.charts, name='charts'), 
      path('show-irrig-calculations/', views.irrig_calculations, name='irrig-calculations'),
      
-     path('drip-calc/', views.list_drip_calc, name='list_drip_calc'),
-     path('view_calc_drip/<str:pk>/', views.view_calc_drip, name='view_calc_drip'),
-
      #SYSTEMS
      path('calculate-basin-system/', views.basin_calc, name='sys_basin'),
      path('calculate-border-system/', views.border_calc, name='sys_border'),
@@ -47,6 +49,7 @@ urlpatterns = [
      path('delete_fieldunit/<str:pk>/', views.deleteFieldUnit, name='delete_fieldunit'),
 
      #SENSOR_PARAMETERS
+     path('add-sensor/', views.add_sensor, name='add_sensor'),
      path('show-sensor-database/', views.sensor_list_view, name='list_sensor'),
      path('edit_sensor/<str:pk>/', views.editSensor, name='edit_sensor'),
      path('delete_sensor/<str:pk>/', views.deleteSensor, name='delete_sensor'),
