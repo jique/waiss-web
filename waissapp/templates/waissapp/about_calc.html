@@ -1,0 +1,83 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block pageheading_block %}
+About us
+{% endblock %}
+
+{% block main_block %}
+    <div class="main-body">
+        <div class="">
+            <h6>Basin</h6>
+            <div>
+                <h6>EQUATIONS:</h6>
+
+                    <p>Net Opportunity Time (Tn)</p>
+                    <p>Tn=((Fn-c)/a))^(1/b)
+                        <br>
+                        Where:
+                        <br>
+                            Tn = net opportunity time (min)
+                            <br>
+                            Fn = net depth of application (mm)
+                            <br>
+                            a, b, c = infiltration constants (see Table 1)</p>
+
+                        Net Application Depth (Fn)
+
+                    〖 F〗_n=(FC-PWP)*MAD*DRZ
+
+                    Where:
+                    FC = field capacity, by volume
+                    PWP= permanent wilting point, by volume
+                    DRZ= depth of rootzone (m)
+                    MAD= management allowable deficit
+
+                        Advanced Time (Tt) - time required for water to cover the field
+
+                    〖 T〗_t=T_n*R
+
+                    Where:
+                    Tt = advance time (min)
+                    Tn = net opportunity time (min)
+                    R = efficiency-advance ratio (see Table 2)
+
+                        Basin Length (L)
+                    L=(6x10^4 Q_u T_t)/((〖aT_t〗^b/(a+b)+7)+(1798n^(3/8) 〖Q_u〗^(9/16) 〖T_t〗^(3/16) )
+                        Where:
+                    L = basin length (m)
+                    Qu= unit inflow rate (m3/s/m)
+                    n = Manning’s roughness coefficient
+                    Ea= Application Efficiency
+
+                        Inflow time (Ta)
+                    T_a=FnL/(600Q_u E_a )
+                        Where: 
+                            Ta = inflow time (min)
+                    Where:
+                    Ea=F_n/F_g 
+
+                    Design Rule: T can be either Ta or Tt, whichever is greater.
+            </div>
+        </div>
+        <div class="">
+            <h6>Border</h6>
+        </div>
+        <div class="">
+            <h6>Furrow</h6>
+        </div>
+        <div class="">
+            <h6>Drip</h6>
+        </div>
+        <div class="">
+            <h6>Sprinkler</h6>
+        </div>
+    </div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+        

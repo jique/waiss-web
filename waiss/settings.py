@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
+from pathlib import Path
 
 import os
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'phonenumber_field',
+    'templates',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +62,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':  [],
+        'DIRS': {},
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

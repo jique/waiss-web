@@ -10,105 +10,29 @@
 {% endblock %}
 
 {% block dashboard_block %}
-<body class="page-top bg-info">
-    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        <!-- Topbar Navbar -->
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Jay Ann Lomod</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                </a>
-                <!-- Dropdown - User Information -->
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-                </div>
-            </li>
-        </ul>
-    </nav>
-
+<body class="page-top bg-info"><br>
 {% endblock %}
 
 {% block main_block %}
 <div class="bg-white container col-lg-10 rounded">
-    
     <div class="col">
-        
         <div class="p-5">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link" href={% url 'waiss:new_personnel' %}>Personnel</a>
-                  </li>
-                <li class="nav-item">
-                  <a class="nav-link active">Crop</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href={% url 'waiss:new_soil' %}>Soil</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Irrigation</a>
-                    <div class="dropdown-menu">
-                    <a class="dropdown-item" href={% url 'waiss:new_basin' %}>Basin</a>
-                    <a class="dropdown-item" href={% url 'waiss:new_border' %}>Border</a>
-                    <a class="dropdown-item" href={% url 'waiss:new_furrow' %}>Furrow</a>
-                    <a class="dropdown-item" href={% url 'waiss:new_sprinkler' %}>Sprinkler</a>
-                    <a class="dropdown-item" href={% url 'waiss:new_drip' %}>Drip</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href={% url 'waiss:new_fieldunit' %}>Field Unit</a>
-                  </li>
-                <li class="nav-item">
-                    <a class="nav-link" href={% url 'waiss:new_sensor' %}>Sensors</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href={% url 'waiss:new_calib' %}>Calibration</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href={% url 'waiss:new_intakefamily' %}>Intake Family</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Farm</a>
-                    <div class="dropdown-menu">
-                    <a class="dropdown-item" href={% url 'waiss:new_sysbasin' %}>Basin</a>
-                    <a class="dropdown-item" href={% url 'waiss:new_sysborder' %}>Border</a>
-                    <a class="dropdown-item" href={% url 'waiss:new_sysfurrow' %}>Furrow</a>
-                    <a class="dropdown-item" href={% url 'waiss:new_syssprinkler' %}>Sprinkler</a>
-                    <a class="dropdown-item" href={% url 'waiss:new_sysdrip' %}>Drip</a>
-                    </div>
-                </li>
-            </ul>
-            <br>
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 11.11%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar bg-success" role="progressbar" style="width: 11.11%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="text-center">
-                <br>
-                <h1 class="h4 text-gray-900 mb-4">
-                    Crop & Parameters
-                </h1>
-            <div>
-            <div>
-                <form class="form-group" action="{% url 'waiss:new_crop' %}" method="post">
-                    <div class="card col-11 mx-auto">
-                        <div class="card-body">
+          <h4 class="display-4" style="font-size: 35px;">Let's get started!</h4>
+          <p class="lead" style="font-size: 15px;">Input required information for each parameters.</p>
+          <div class="progress_bar">
+              <div class="pro-bar">
+                  <small class="progress_bar_title">
+                      Personnel | <span style="color: #1abc9c; font-size: large;"><b> Crop</b></span>
+                      <span class="progress_number">22.2%</span>
+                  </small>
+                  <span class="progress-bar-inner" style="background-color: #1abc9c; width: 22.2%;" data-value="22.2" data-percentage-value="22.2"></span>
+              </div>
+          </div>
+                <div class="card">
+                  <div class="card-header"><small>Fillout only 1 out of the 3 Root Growth Models below depending on you available data.</small></div>
+                    <div class="card-body">
+                        <form class="form-group" action="{% url 'waiss:new_crop' %}" method="post">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="col">{{crop_form.crop|as_crispy_field}}</div>
                             </div>
@@ -125,21 +49,33 @@
                             <div class="row">
                                 <div class="col">{{crop_form.mad|as_crispy_field}}</div>
                             </div>
+                          </div>
                         </div>
-                    </div>
-                        <br>
-                        <div class="card col-11 mx-auto">
+                      <div id="accordion">
+                        <div class="card">
+                          <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" type="button">
+                                Root Growth Model 1: Borg-Grimes Model
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
-                                <h6 class="card-title"><b>Root Growth Model 1: Borg-Grimes Model</b></h6>
-                                <div class="row">
-                                    <div class="col">{{crop_form.root_ini|as_crispy_field}}</div>
-                                </div>
+                                <div class="col">{{crop_form.root_ini|as_crispy_field}}</div>
                             </div>
+                          </div>
                         </div>
-                        <br>
-                        <div class="card col-11 mx-auto">
+                        <div class="card">
+                          <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" type="button">
+                                Root Growth Model 2: User-Defined
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                             <div class="card-body">
-                                <h6 class="card-title"><b>Root Growth Model 2: User-Defined</b></h6>
                                 <div class="row">
                                     <div class="col">{{crop_form.eqnform|as_crispy_field}}</div>
                                 </div>
@@ -150,52 +86,59 @@
                                     <div class="col">{{crop_form.root_b|as_crispy_field}}</div>
                                 </div>
                                 <div class="row">
-                                <div class="col">{{crop_form.root_c|as_crispy_field}}</div>
+                                    <div class="col">{{crop_form.root_c|as_crispy_field}}</div>
                                 </div>
                                 <small><i>Linear: MC<sub>v</sub> = (analog_reading)*a + b<br>
                                     Quadratic: MC<sub>v</sub> = (analog_reading)<sup>2</sup>*a + (analog_reading)*b + c</i>
                                 </small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" type="button">
+                                Root Growth Model 3: Inverse K<sub>c</sub>
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{crop_form.kc_mid|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                <div class="col">{{crop_form.kc_end|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{crop_form.kc_cc_1|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{crop_form.kc_cc_2|as_crispy_field}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{crop_form.kc_cc_3|as_crispy_field}}</div>
                                 </div>
                             </div>
+                          </div>
                         </div>
                         <br>
-                        <div class="card col-11 mx-auto">
-                            <div class="card-body">
-                                <h6 class="card-title"><b>Root Growth Model 3: Inverse K<sub>c</sub></b></h6>
-                                <div class=form-group"">
-                                    <div class="row">
-                                        <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">{{crop_form.kc_mid|as_crispy_field}}</div>
-                                    </div>
-                                    <div class="row">
-                                    <div class="col">{{crop_form.kc_end|as_crispy_field}}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">{{crop_form.kc_cc_1|as_crispy_field}}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">{{crop_form.kc_cc_2|as_crispy_field}}</div>
-                                    </div>
-                                    <div class="row">
-                                    <div class="col">{{crop_form.kc_cc_3|as_crispy_field}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <br>
-                    <input type="submit" value="Submit" class="btn btn-info btn-block">
-                    </form>
+                        <div class="text-center">
+                        <button type="button" class="btn btn-success"><a href="" onclick="window.history.go(-1); return false;" style="color:white">Previous</a></button>
+                        <input type="submit" value="Submit" class="btn btn-info">
+                        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_soil' %} style="color:white">Next</a></button>
+                      </form>
+                    </div>
+                </div>
             </div>
         </div>
 </div>
-        
-
+<br>
 {% endblock %}
 
-{% block footer_block %}
-{% endblock %}
 
 {% block bottom_script_block %}
 {% endblock %}

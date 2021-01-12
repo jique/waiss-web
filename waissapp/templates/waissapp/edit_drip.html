@@ -21,24 +21,34 @@
                 <form class="form-group" action="" method="post">
                 {% csrf_token %}
                     <div class="row">
-                        <div class="col">{{ drip_form.name|as_crispy_field }}</div>
+                        <div class="col">{{ irrigation_form.name_drip|as_crispy_field }}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ drip_form.bln_single_lateral|as_crispy_field }}</div>
+                        <div class="col">{{ irrigation_form.bln_single_lateral|as_crispy_field }}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ drip_form.emitters_per_plant|as_crispy_field }}</div>
-                        <div class="col">{{ drip_form.emitter_spacing|as_crispy_field }}</div>
-                        <div class="col">{{ drip_form.plant_spacing|as_crispy_field }}</div>
-                        <div class="col">{{ drip_form.row_spacing|as_crispy_field }}</div>
+                        <div class="col">{{ irrigation_form.emitters_per_plant|as_crispy_field }}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ drip_form.wetted_dia|as_crispy_field }}</div>
-                        <div class="col">{{ drip_form.EU|as_crispy_field }}</div>
-                        <div class="col">{{ drip_form.irrigation_interval|as_crispy_field }}</div>
+                        <div class="col">{{ irrigation_form.emitter_spacing|as_crispy_field }}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ drip_form.errors }}</div>
+                        <div class="col">{{ irrigation_form.plant_spacing|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.row_spacing|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.wetted_dia|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.EU|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.irrigation_interval|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.errors }}</div>
                     </div>
                     <input type="submit" value="Save" class="btn btn-secondary btn-block">
                 </form>

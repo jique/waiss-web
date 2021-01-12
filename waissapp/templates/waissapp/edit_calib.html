@@ -10,58 +10,61 @@ Input Calibration Data
 {% endblock %}
 
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
-        <li class="breadcrumb-item active" aria-current="page"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Calibration Equations</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Edit Calibration Equation</li>
-    </ol>
-</nav>
+<br>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active"><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button">&nbsp;EDIT<em> <b>"{{item}}"</b></em></a>
+    </li>
+</ul>
 <div class="row">
     <div class="col-lg-7">
         <div class="card mb-4 ">
-            <div class="card-header py-3">I N P U T _ D A T A</div>
-                <div class="card-body">
-                    <form class="django-form" action="" method="post">
-                        {% csrf_token %}
+            <div class="card-body">
+                <form class="django-form" action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col">{{calib_form.name|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{calib_form.fieldunit|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>
+                    </div>
+                    <div class="col-8 mx-auto">
                         <div class="row">
-                            <div class="col">{{calib_form.calib_name|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>
-                        </div>
-                        <div class="col-8 mx-auto">
-                            <div class="row">
-                                <div class="col">{{calib_form.calib_coeff_a|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{calib_form.calib_coeff_b|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{calib_form.calib_coeff_c|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{calib_form.calib_coeff_d|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{calib_form.calib_coeff_m|as_crispy_field}}</div>
-                            </div>
+                            <div class="col">{{calib_form.calib_coeff_a|as_crispy_field}}</div>
                         </div>
                         <div class="row">
-                            <div class="col">{{calib_form.date_tested|as_crispy_field}}</div>
+                            <div class="col">{{calib_form.calib_coeff_b|as_crispy_field}}</div>
                         </div>
                         <div class="row">
-                            <div class="col">{{calib_form.tested_by|as_crispy_field}}</div>
+                            <div class="col">{{calib_form.calib_coeff_c|as_crispy_field}}</div>
                         </div>
                         <div class="row">
-                            <div class="col">{{calib_form.errors}}</div>
+                            <div class="col">{{calib_form.calib_coeff_d|as_crispy_field}}</div>
                         </div>
-                        <input type="submit" value="Submit" class="btn btn-secondary btn-block">
-                    </form>
-                </div>
+                        <div class="row">
+                            <div class="col">{{calib_form.calib_coeff_m|as_crispy_field}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{calib_form.date_tested|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{calib_form.tested_by|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{calib_form.errors}}</div>
+                    </div>
+                    <input type="submit" value="Submit" class="btn btn-secondary btn-block">
+                </form>
             </div>
         </div>
+    </div>
+    
     <div class="col-lg-5">
+        <br>
         <div class="card mb-4">
             <div class="card-header py-3">E Q U A T I O N S _ S T A N D A R D _ F O R M S</div>
             <div class="card-body">

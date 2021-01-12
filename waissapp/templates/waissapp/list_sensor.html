@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
-        <li class="breadcrumb-item active" aria-current="page">Sensors</li>
-    </ol>
-</nav>
+<br>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="{% url 'waiss:list_sensor' %}">Sensors</a>
+    </li>
+</ul>
 <div class="card shadow mb-4">
     <div class="card-body">
     <div class="table-responsive">
@@ -27,7 +27,7 @@
         <tbody>
             {% for instance in sensor_list %}
             <tr>  
-                <td class="align-middle fit">{{instance.sensor_name}}</td>
+                <td class="align-middle fit">{{instance.name}}</td>
                 <td class="fit">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                         <a href={% url 'waiss:edit_sensor' instance.id %} <button class="btn btn-info"> Edit</button></a>

@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
-        <li class="breadcrumb-item active" aria-current="page">Farms</li>
-    </ol>
-</nav>
+<br>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="{% url 'waiss:list_farm' %}">Farms</a>
+    </li>
+</ul>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -19,31 +19,32 @@
         <thead>
             <tr>
                 <th class="align-top  fit">Farm Name</th>
-                <th class="align-top  fit">Actions</th>
                 <th class="align-top  fit">Province</th>
                 <th class="align-top  fit">Municipality</th>
                 <th class="align-top  fit">Barangay</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             {% for instance in farm_list %}
             <tr>  
-                <td class="align-middle fit">{{instance.farm_name}}</td>
-                <td class="fit">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_farm' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_farm' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                    </div>
-                </td>                  
+                <td class="align-middle fit">{{instance.name}}</td>              
                 <td class="align-middle fit">{{instance.province}}</td>
                 <td class="align-middle fit">{{instance.municipality}}</td>
                 <td class="align-middle fit">{{instance.brgy}}</td>
+                <td>
+                    <div class="btn-group btn-group-sm float-left" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_farm' instance.id %}><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                        &nbsp;
+                        <a href={% url 'waiss:delete_farm' instance.id %}><img class="rounded"  src={% static "theme/delete.png" %} style="height: 30px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
-<a href={% url 'waiss:add_farm' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new farm data here.</em></small>
+<small><em>Add new farm data here.</em></small>&nbsp;<a href={% url 'waiss:add_farm' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
 </div>
 {% endblock %}
 

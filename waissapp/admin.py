@@ -1,21 +1,15 @@
 from django.contrib import admin
-from .models import SentMsgs, ReceivedMsgs, Receiver, Sender, Personnel, Farm, SensorNumber, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, IrrigationAdvisory, CalibrationConstant, BasinPara, BorderPara, FurrowPara, DripPara, SprinklerPara
+from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, IrrigationAdvisory, CalibrationConstant, IrrigationParameters
 
 
 class SentMsgsInline(admin.TabularInline):
     model = SentMsgs
 
-class SenderInline(admin.TabularInline):
-    model = Sender
-
-class ReceiverInline(admin.TabularInline):
-    model = Receiver
-
 class ReceivedMsgsInline(admin.TabularInline):
-    model = FieldUnit
-
-class FieldUnitInline(admin.TabularInline):
     model = ReceivedMsgs
+    
+class FieldUnitInline(admin.TabularInline):
+    model = FieldUnit
     extra=1
 
 class MoistureContentInline(admin.TabularInline):
@@ -23,34 +17,32 @@ class MoistureContentInline(admin.TabularInline):
     extra=3
 
 class MoistureContentAdmin(admin.ModelAdmin):
-    list_display = ('sensor_name', 'fieldunit', 'raw_data')
+    list_display = ('sensor', 'mc_data', 'timestamp')
     ordering = ['timestamp']
 
-class SensorNumberInline(admin.TabularInline):
-    model = SensorNumber
+class SensorInline(admin.TabularInline):
+    model = Sensor
     extra=0
 
-class SensorNumberAdmin(admin.ModelAdmin):
-    list_display = ('sensor_name', 'depth', 'fieldunit')
+class SensorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'depth', 'fieldunit')
     inlines = [MoistureContentInline]
 
 class FarmInline(admin.TabularInline):
     model = Farm
 
 class FarmAdmin(admin.ModelAdmin):
-    ordering = ["farm_name"]
-    list_display=('farm_name', 'brgy', 'municipality', 'province')
+    ordering = ["name"]
+    list_display=('name', 'brgy', 'municipality', 'province')
 
 class FieldUnitAdmin(admin.ModelAdmin):
-    inlines = [SensorNumberInline]
+    inlines = [SensorInline]
 
 admin.site.register(SentMsgs)
-admin.site.register(Sender)
 admin.site.register(ReceivedMsgs)
-admin.site.register(Receiver)
 
 admin.site.register(Farm, FarmAdmin)
-admin.site.register(SensorNumber, SensorNumberAdmin)
+admin.site.register(Sensor, SensorAdmin)
 admin.site.register(Personnel)
 admin.site.register(MoistureContent, MoistureContentAdmin)
 admin.site.register(FieldUnit, FieldUnitAdmin)
@@ -88,45 +80,17 @@ class CalibrationConstantInline(admin.TabularInline):
     model = CalibrationConstant
     
 class CalibrationConstantAdmin(admin.ModelAdmin):
-    list_display =('calib_name', 'calib_equation', 'calib_coeff_a', 'calib_coeff_b', 'calib_coeff_c', 'calib_coeff_d', 'calib_coeff_m')
+    list_display =('name', 'calib_equation', 'calib_coeff_a', 'calib_coeff_b', 'calib_coeff_c', 'calib_coeff_d', 'calib_coeff_m')
 
 admin.site.register(CalibrationConstant, CalibrationConstantAdmin)
 
-class BasinParaInline(admin.TabularInline):
-    model = BasinPara
+class IrrigationParametersInline(admin.TabularInline):
+    model = IrrigationParameters
 
-class BorderParaInline(admin.TabularInline):
-    model = BorderPara
+class IrrigationParametersAdmin(admin.ModelAdmin):
+    list_display =('name', 'discharge', 'basin_length', 'ea', 'bln_furrow_type', 'bln_single_lateral', 'emitters_per_plant', 'emitter_spacing', 'plant_spacing', 'row_spacing', 'wetted_dia', 'EU', 'irrigation_interval')
 
-class FurrowParaInline(admin.TabularInline):
-    model = FurrowPara
-
-class SprinklerParaInline(admin.TabularInline):
-    model = SprinklerPara
-
-class DripParaInline(admin.TabularInline):
-    model = DripPara
-
-class BasinParaAdmin(admin.ModelAdmin):
-    list_display =('basin_name', 'discharge', 'basin_length', 'ea')
-
-class BorderParaAdmin(admin.ModelAdmin):
-    list_display =('border_name','discharge')
-
-class FurrowParaAdmin(admin.ModelAdmin):
-    list_display =('name', 'bln_furrow_type')
-
-class SprinklerParaAdmin(admin.ModelAdmin):
-    list_display =('name', 'farm_area')
-
-class DripParaAdmin(admin.ModelAdmin):
-    list_display =('name', 'bln_single_lateral', 'emitters_per_plant', 'emitter_spacing', 'plant_spacing', 'row_spacing', 'wetted_dia', 'EU', 'irrigation_interval')
-
-admin.site.register(BasinPara, BasinParaAdmin)
-admin.site.register(BorderPara, BorderParaAdmin)
-admin.site.register(FurrowPara, FurrowParaAdmin)
-admin.site.register(SprinklerPara, SprinklerParaAdmin)
-admin.site.register(DripPara, DripParaAdmin)
+admin.site.register(IrrigationParameters, IrrigationParametersAdmin)
 
 class IrrigationAdvisoryInline(admin.TabularInline):
     model = IrrigationAdvisory

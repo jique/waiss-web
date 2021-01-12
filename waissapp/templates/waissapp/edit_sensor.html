@@ -5,6 +5,7 @@
 {% endblock %}
             
 {% block main_block %}
+<br>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
@@ -22,7 +23,7 @@
                         <div class="col">{{ sensor_form.fieldunit|as_crispy_field }}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ sensor_form.sensor_name|as_crispy_field }}</div>
+                        <div class="col">{{ sensor_form.name|as_crispy_field }}</div>
                     </div>
                     <div class="row">
                         <div class="col">{{ sensor_form.depth|as_crispy_field }}</div>

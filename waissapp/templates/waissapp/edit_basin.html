@@ -24,19 +24,21 @@
                 <form class="form-group" action="" method="post">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col">{{ basin_form.basin_name|as_crispy_field}}</div>
+                        <div class="col">{{ irrigation_form.name_basin|as_crispy_field}}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ basin_form.basin_length|as_crispy_field}}</div>
-                        <div class="col">{{ basin_form.discharge|as_crispy_field}}</div>
+                        <div class="col">{{ irrigation_form.basin_length|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.discharge|as_crispy_field}}</div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            {{ basin_form.ea|as_crispy_field}}
+                            {{ irrigation_form.ea|as_crispy_field}}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col"> {{ basin_form.errors }}</div>
+                        <div class="col"> {{ irrigation_form.errors }}</div>
                     </div>
                     <input type="submit" value="Save" class="btn btn-secondary btn-block">
                 </form>

@@ -6,12 +6,15 @@
 {% endblock %}
 
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
-        <li class="breadcrumb-item active" aria-current="page">Crops</li>
-    </ol>
-</nav>
+<br>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="{% url 'waiss:list_crop' %}">Crops</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled"><img src={% static "theme/add_crop.png" %} style="height: 30px;"></a>
+    </li>
+</ul>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -19,7 +22,6 @@
             <thead>
                 <tr>
                     <th class="align-top">Crop</th>
-                    <th class="align-top">Actions</th>
                     <th class="align-top">Date Transplanted</th>
                     <th class="align-top">Growing Period (days)</th>
                     <th class="align-top">Management Allowable Depletion (MC<sub>v</sub> , %)</th>
@@ -35,6 +37,7 @@
                     <th class="align-top"> b</th>
                     <th class="align-top"> c</th>
                     <th class="align-top">Root Depth during Transplanting (m)</th>
+                    <th class="align-top"></th>
                 </tr>
             </thead>
                     
@@ -42,12 +45,6 @@
                 {% for instance in crop_list %}
                 <tr> 
                     <td class="align-middle fit">{{instance.crop}}</td>
-                    <td>
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                            <a href={% url 'waiss:edit_crop' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                            <a href={% url 'waiss:delete_crop' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                        </div>
-                    </td>
                     <td class="align-middle">{{instance.date_transplanted|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.growingperiod|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.mad|default_if_none:"-"}}</td>
@@ -63,15 +60,20 @@
                     <td class="align-middle">{{instance.root_b|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.root_c|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.root_ini|default_if_none:"-"}}</td>
-                    
+                    <td>
+                        <div class="btn-group btn-group-sm float-left" role="group" aria-label="Basic example">
+                            <a href={% url 'waiss:edit_crop' instance.id %}><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                            &nbsp;
+                            <a href={% url 'waiss:delete_crop' instance.id %}><img class="rounded"  src={% static "theme/delete.png" %} style="height: 30px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        </div>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
     <div class="float-right"> 
-        <small><em>Add new crop data here</em></small>
-        <a href={% url 'waiss:add_crop' %}><img src={% static "theme/add_crop.png" %} style="height: 50px;" alt="Card image cap"></a>&nbsp;
+        <small><em>Add new farm data here.</em></small>&nbsp;<a href={% url 'waiss:add_crop' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
     </div> 
 </div>
 </div>

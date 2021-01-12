@@ -6,15 +6,24 @@
 {% endblock %}
 
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a  href="{% url 'waiss:listbasin' %}">Basin</a></li>
-        <li class="breadcrumb-item"><a  href="{% url 'waiss:listborder' %}">Border</a></li>
-        <li class="breadcrumb-item">Furrow</li>
-        <li class="breadcrumb-item"><a  href="{% url 'waiss:listsprinkler' %}">Sprinkler</a></li>
-        <li class="breadcrumb-item"><a  href="{% url 'waiss:listdrip' %}">Drip</a></li>
-    </ol>
-</nav>
+<br>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'waiss:listbasin' %}">Basin</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'waiss:listborder' %}">Border</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="{% url 'waiss:listfurrow' %}">Furrow</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'waiss:listsprinkler' %}">Sprinkler</a>
+      </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'waiss:listdrip' %}">Drip</a>
+    </li>
+</ul>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -35,7 +44,7 @@
                 <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                         <a href={% url 'waiss:edit_furrow' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_furrow' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                        <a href={% url 'waiss:delete_irrigation' instance.id %} <button class="btn btn-danger">Delete</button></a>
                     </div>
                 </td>
                 <td class="align-middle fit">{{instance.bln_furrow_type}}</td>
@@ -48,7 +57,7 @@
     </table>
 </div>
 <div>
-    <a href={% url 'waiss:addfurrow' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new furrow irrigation system data here</em></small>
+    <a href={% url 'waiss:add_furrow' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new furrow irrigation system data here</em></small>
 </div>
 {% endblock %}
 

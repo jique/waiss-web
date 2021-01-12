@@ -6,10 +6,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Personnel(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    phone_number = models.CharField(max_length=11, null=True, blank=True)
+    number = models.CharField(max_length=11, null=True, blank=True)
 
     def __str__(self):
-        return '{} {}'.format(self.first_name, self.last_name)
+        return self.number
     
     class Meta:
         verbose_name_plural = "Site: Personnel"
@@ -26,9 +26,8 @@ class FieldUnit(models.Model):
     fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", default=True)
     withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", default=True)
     automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", default=True)
-    servernumber = PhoneNumberField(verbose_name="Server Number", null=True, blank=True)
-    fieldunitnumber = PhoneNumberField(verbose_name="Field Unit Number", null=True, blank=True)
-    numberofsamples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True, blank=True)
+    mobilenumber = PhoneNumberField(verbose_name="Field Unit Number", null=True, blank=True)
+    samples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True, blank=True)
     sensorintegrationtime = models.IntegerField(verbose_name='Sensor Integration Time (ms)', null=True, blank=True)
     timestart = models.TimeField(verbose_name='Starting Time', null=True, blank=True)
     timestop = models.TimeField(verbose_name='Stopping Time', null=True, blank=True)
@@ -39,28 +38,25 @@ class FieldUnit(models.Model):
         return self.name
     class Meta:
         verbose_name_plural = "Site: Field Units"
-        db_table = "fieldunits"
 
-class SensorNumber(models.Model):
-    fieldunit = models.ForeignKey (FieldUnit, related_name="fieldunits", on_delete=models.CASCADE, null=True, blank=True)
-    sensor_name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True)
-    depth = models.DecimalField(max_digits=6, decimal_places=4, verbose_name="Depth, m")
+class Sensor(models.Model):
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
+    name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True)
+    depth = models.DecimalField(max_digits=6, decimal_places=4, verbose_name="Depth, m", null=True, blank=True)
     
     def __str__(self):
-        return self.sensor_name
+        return self.name
 
     class Meta:
         verbose_name_plural = "Site: Sensors"
-        db_table = "sensors"
 
 class MoistureContent(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True)
-    sensor_name = models.ForeignKey(SensorNumber, on_delete=models.CASCADE, null=True, blank=True)
-    raw_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
-    timestamp = models.DateTimeField(verbose_name='Time Measured', null=True, blank=True)
-    
+    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, null=True)
+    timestamp = models.DateTimeField(verbose_name='Date & Time Measured', null=True)
+    mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
+
     class Meta:
-        verbose_name_plural = "Site: Sensor Readings"
+        verbose_name_plural = "Site: Moisture Content"
         get_latest_by = "timestamp"
 
 
@@ -79,7 +75,8 @@ class Soil(models.Model):
         ordering = ('soiltype',)
 
 class CalibrationConstant(models.Model):
-    calib_name = models.CharField(max_length=25, verbose_name="Calibration Name", null=True, blank=True)
+    name = models.CharField(max_length=25, verbose_name="Calibration Name", null=True, blank=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, null=True, blank=True)
     LINEAR = 'LIN'
     QUADRATIC = 'QUA'
     SYMMETRICAL_SIGMOIDAL = 'SSIG'
@@ -114,7 +111,7 @@ class CalibrationConstant(models.Model):
     tested_by = models.CharField(max_length=30, verbose_name="Tested By", null=True, blank=True)
 
     def __str__(self):
-        return self.calib_name
+        return self.name
         
     class Meta:
         verbose_name_plural = "Site: Calibration Equation Constants"
@@ -170,12 +167,11 @@ class Crop(models.Model):
 
 
 #SITE VALUES
-
-class BasinPara(models.Model):
-    basin_name = models.CharField(max_length=30, verbose_name="Basin Irrigation System Filename", null=True, blank=True)
+class IrrigationParameters(models.Model):
+    name= models.CharField(max_length=30, verbose_name="System Name", null=True, blank=True)
+    #BASIN
     discharge = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Unit Discharge (lps)", null=True, blank=True)
     basin_length = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Basin Length (m)", null=True, blank=True)
-    
     #this has database, pwede na tanggalin pag nalagay na sa views.py ang values ng R
     EFF_CHOICES = [
         (50, '50'),
@@ -188,22 +184,13 @@ class BasinPara(models.Model):
         (90, '90'),
         (95, '95'),
     ]
-
     ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", help_text="Application efficiency is the fraction of the irrigation water that is used by the crop. Provided there are no runoff losses, the application efficiency (%) is the required irrigation depth (mm), divided by the average applied irrigation depth (mm), multiplied by 100%.", null=True)
-    class Meta:
-        verbose_name_plural = "Irrigation System: Basin"
-    def __str__(self):
-        return self.basin_name
-
-class BorderPara(models.Model):
-    border_name = models.CharField(max_length=30, verbose_name="System Name", null=True, blank=True)
-    discharge = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Unit Discharge (lps)", null=True, blank=True)
-    border_width = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Border Width (m)", null=True, blank=True)
-    num_of_border_strips = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Number of Borders", null=True, blank=True)
+    #BORDER
+    width = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Border Width (m)", null=True, blank=True)
+    border_strips = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Number of Borders", null=True, blank=True)
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, blank=True)
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope", null=True, blank=True)
     
-    #this has database
     EFF_CHOICES = [
         (50, '50'),
         (55, '55'),
@@ -219,26 +206,13 @@ class BorderPara(models.Model):
     ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True, blank=True)
     flow_rate_per_strip = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Flow rate per border strip (lps)", null=True, blank=True)
     total_flow_rate = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Total flow rate (lps)", null=True, blank=True)
-    
-    class Meta:
-        verbose_name_plural = "Irrigation System: Border"
-    def __str__(self):
-        return self.border_name
-
-class FurrowPara(models.Model):
-    name = models.CharField(max_length=30, verbose_name="System Name", null=True, blank=True)
+    #FURROW
     bln_furrow_type = models.BooleanField (verbose_name="It is an open-ended furrow.")
-    discharge = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Unit Discharge (lps)", null=True, blank=True)
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope", null=True, blank=True)
     #p_adjusted = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="P adjusted (m)", null=True) #doublecheck details
     #just insert in js computation
-    class Meta:
-        verbose_name_plural = "Irrigation System: Furrow"
-    def __str__(self):
-        return self.name
 
-class DripPara(models.Model):
-    name = models.CharField(max_length=30, verbose_name="System Name", null=True, blank=True)
+    #DRIP
     bln_single_lateral = models.BooleanField (verbose_name="Single Straight Lateral")
     #if bln_single_lateral is true
     emitters_per_plant = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="No. of Emitters per Plant", null=True, blank=True)
@@ -250,54 +224,39 @@ class DripPara(models.Model):
     #
     EU = models.DecimalField(max_digits=3, decimal_places=3, verbose_name="Design Emission Uniformity", null=True, blank=True)
     irrigation_interval = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Irrigation Interval (days)", null=True, blank=True)
-    class Meta:
-        verbose_name_plural = "Irrigation System: Drip"
-    def __str__(self):
-        return self.name
 
-class SprinklerPara(models.Model):
-    name = models.CharField(max_length=30, verbose_name="System Name", null=True, blank=True)
+    #SPRINKLER
     farm_area = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Farm area (sq.m)", null=True, blank=True)
     area_irrigated_at_a_time = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area irrigated at a time (sq.m)", null=True, blank=True)
     lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True, blank=True)
     sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True, blank=True)
     num_of_sprinklers = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Number of sprinklers", null=True, blank=True)
     ea = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Application Efficiency", null=True, blank=True)
-    sprinkler_discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler Discharge (lps)", null=True, blank=True)
     class Meta:
-        verbose_name_plural = "Irrigation System: Sprinkler"
+        verbose_name_plural = "Irrigation System"
+
     def __str__(self):
         return self.name
 
 class Farm(models.Model):
-    farm_name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20)
     province = models.CharField(max_length=50, null="True", blank="True")
     municipality = models.CharField(max_length=50, null="True", blank="True")
     brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True", blank="True")
 
     farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Manager", null=True, blank=True)
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True) 
-    sensors = models.ForeignKey(SensorNumber, on_delete=models.CASCADE, null=True, blank=True) 
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True, blank=True)
     soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True, blank=True)
     intakefamily = models.ForeignKey(IntakeFamily, on_delete=models.CASCADE, verbose_name="Intake Family", null=True, blank=True)
-    calib_eqn = models.ForeignKey(CalibrationConstant, on_delete=models.CASCADE, verbose_name="Calibration", null=True, blank=True)
-    
-    #/IRRIGATION_SYSTEM_OPTIONS
-    basin_sys = models.ForeignKey(BasinPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
-    border_sys = models.ForeignKey(BorderPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
-    furrow_sys = models.ForeignKey(FurrowPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
-    sprinkler_sys = models.ForeignKey(SprinklerPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
-    drip_sys = models.ForeignKey(DripPara, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
-    #//IRRIGATION_SYSTEM_OPTIONS
+    irrigation = models.ForeignKey(IrrigationParameters, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)    
 
-    raw_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True, blank=True)
     class Meta:
         verbose_name_plural = "Site: Farms"
-        ordering = ('farm_name',)
+        ordering = ('name',)
 
     def __str__(self):
-        return self.farm_name
+        return self.name
 
 class IrrigationAdvisory(models.Model):
     fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True)            
@@ -306,41 +265,26 @@ class IrrigationAdvisory(models.Model):
     irrigation_volume = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Irrigation Volume (l)", null=True)
 
     class Meta:
-        verbose_name_plural = "Computation: Basin"
+        verbose_name_plural = "Computation"
 
 
 #MESSAGES
-class Receiver(models.Model):#FOREIGNKEY PERSONNEL??? FIELDUNIT SETTINGS??
-    receiver_number = PhoneNumberField(null=True, blank=True)
-    def __str__(self):
-        return str(self.receiver_number)
-
-class Sender(models.Model):
-    sender_number = PhoneNumberField(null=True, blank=True)
-    def __str__(self):
-        return str(self.sender_number)
-
-class SentMsgs(models.Model):
-    msg = models.TextField(max_length=200)
-    usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True, blank=True)
-    receiver_number = models.ForeignKey(Receiver, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Receiver")
-    sender_number = models.ForeignKey(Sender, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Sender")
-    fieldunit_number =PhoneNumberField(null=True, blank=True) #foreignkey field unit settings?
-    timestamp = models.DateTimeField(verbose_name='Date/Time Sent', null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = "Messages: Sent"
-        get_latest_by = "timestamp"
-
 class ReceivedMsgs(models.Model):
-    msg = models.TextField(max_length=200)
-    usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True, blank=True)
-    receiver_number = models.ForeignKey(Receiver, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Receiver")
-    sender_number = models.ForeignKey(Sender, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Sender")
-    fieldunit_number = PhoneNumberField(null=True, blank=True)
-    timestamp = models.DateTimeField(verbose_name='Time Sent', null=True, blank=True)
+    number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True) 
+    msg = models.TextField(max_length=200, verbose_name="Message", null=True, blank=True)
+    timestamp = models.DateTimeField(verbose_name='Date/Time Sent', null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Messages: Received"
         get_latest_by = "timestamp"
 
+
+class SentMsgs(models.Model):
+    msg = models.TextField(max_length=200, verbose_name="Message", null=True, blank=True)
+    number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True) 
+    sent = models.BooleanField(verbose_name="Sent?", default=False)
+    timestamp = models.DateTimeField(verbose_name='Date/Time Sent', null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Messages: Sent"
+        get_latest_by = "timestamp"

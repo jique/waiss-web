@@ -6,15 +6,24 @@
 {% endblock %}
 
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a  href="{% url 'waiss:listbasin' %}">Basin</a></li>
-        <li class="breadcrumb-item">Border</li>
-        <li class="breadcrumb-item"><a  href="{% url 'waiss:listfurrow' %}">Furrow</a></li>
-        <li class="breadcrumb-item"><a  href="{% url 'waiss:listsprinkler' %}">Sprinkler</a></li>
-        <li class="breadcrumb-item"><a  href="{% url 'waiss:listdrip' %}">Drip</a></li>
-    </ol>
-</nav>
+<br>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'waiss:listbasin' %}">Basin</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="{% url 'waiss:listborder' %}">Border</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'waiss:listfurrow' %}">Furrow</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'waiss:listsprinkler' %}">Sprinkler</a>
+      </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'waiss:listdrip' %}">Drip</a>
+    </li>
+</ul>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -36,14 +45,14 @@
         <tbody>
             {% for instance in border_list %}
             <tr>  
-                <td class="align-middle fit">{{instance.border_name}}</td>
+                <td class="align-middle fit">{{instance.name}}</td>
                 <td class="fit">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                         <a href={% url 'waiss:edit_border' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_border' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                        <a href={% url 'waiss:delete_irrigation' instance.id %} <button class="btn btn-danger">Delete</button></a>
                     </div>
                 </td>
-                <td class="align-middle fit">{{instance.num_of_border_strips}}</td>
+                <td class="align-middle fit">{{instance.border_strips}}</td>
                 <td class="align-middle fit">{{instance.border_width}}</td>
                 <td class="align-middle fit">{{instance.discharge}}</td>
                 <td class="align-middle fit">{{instance.flow_rate_per_strip}}</td>
@@ -58,7 +67,7 @@
     </table>
 </div>
 <div>
-    <a href={% url 'waiss:addborder' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new border irrigation system data here</em></small>
+    <a href={% url 'waiss:add_border' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new border irrigation system data here</em></small>
 </div>
 {% endblock %}
 

@@ -4,13 +4,14 @@
 
 {% block top_script_block %}
 {% endblock %}}
+
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
-        <li class="breadcrumb-item active" aria-current="page">Field Units</li>
-    </ol>
-</nav>
+<br>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" >Field Units</a>
+    </li>
+</ul>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -18,7 +19,20 @@
         <thead>
             <tr>
                 <th class="align-top fit">Field Unit</th>
-                <th class="align-top fit">Actions</th>
+                <th class="align-top fit">Latitude</th>
+                <th class="align-top fit">Longitude</th>
+                <th class="align-top fit">USK</th>
+                <th class="align-top fit">Mobile Number</th>
+                <th class="align-top fit">Power</th>
+                <th class="align-top fit">Irrigation</th>
+                <th class="align-top fit">Automatic Threshold</th>
+                <th class="align-top fit">Samples</th>
+                <th class="align-top fit">Sensor Integration Time</th>
+                <th class="align-top fit">Time Start</th>
+                <th class="align-top fit">Time Stop</th>
+                <th class="align-top fit">Delay</th>
+                <th class="align-top fit">Clock Correction</th>
+                <th class="align-top fit"></th>
             </tr>
         </thead>
                 
@@ -26,10 +40,24 @@
             {% for instance in fieldunit_list %}
             <tr>  
                 <td>{{instance.name}}</td>
-                <td class="fit">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_fieldunit' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_fieldunit' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                <td>{{instance.lat|default_if_none:"-"}}</td>
+                <td>{{instance.longi|default_if_none:"-"}}</td>
+                <td>{{instance.usk|default_if_none:"-"}}</td>
+                <td>{{instance.mobilenumber|default_if_none:"-"}}</td>
+                <td>{{instance.fieldunitstatus|default_if_none:"OFF"}}</td>
+                <td>{{instance.withirrigation|default_if_none:"-"}}</td>
+                <td>{{instance.automaticthreshold|default_if_none:"-"}}</td>
+                <td>{{instance.samples|default_if_none:"-"}}</td>
+                <td>{{instance.sensorintegrationtime|default_if_none:"-"}}</td>
+                <td>{{instance.timestart|default_if_none:"-"}}</td>
+                <td>{{instance.timestop|default_if_none:"-"}}</td>
+                <td>{{instance.delay|default_if_none:"-"}}</td>
+                <td>{{instance.clockcorrection|default_if_none:"-"}}</td>
+                <td>
+                    <div class="btn-group btn-group-sm float-left" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_fieldunit' instance.id %}><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                        &nbsp;
+                        <a href={% url 'waiss:delete_fieldunit' instance.id %}><img class="rounded"  src={% static "theme/delete.png" %} style="height: 30px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
                     </div>
                 </td>
             </tr>

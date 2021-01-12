@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
-        <li class="breadcrumb-item active" aria-current="page">Calibration Equations</li>
-    </ol>
-</nav>
+<br>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" >Calibration Equations</a>
+    </li>
+</ul>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -19,8 +19,7 @@
         <thead>
             <tr>
                 <th class="align-top fit">Calibration Name</th>
-                <th class="align-top fit">Actions</th>
-                <th class="align-top fit">Sensor</th>
+                <th class="align-top fit">Field Unit</th>
                 <th class="align-top">Equation Form</th>
                 <th class="align-top"> a</th>
                 <th class="align-top"> b</th>
@@ -29,19 +28,14 @@
                 <th class="align-top"> m</th>
                 <th class="align-top">Date Calibrated</th>
                 <th class="align-top">Calibrated By</th>
+                <th class="align-top fit"></th>
             </tr>
         </thead>
         <tbody>
             {% for instance in calib_list %}
             <tr> 
-                <td class="align-middle fit">{{instance.calib_name}}</td>
-                <td class="fit">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_calib' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_calib' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                    </div>
-                </td>
-                <td class="align-middle fit">{{instance.sensor|default_if_none:"-"}}</td>
+                <td class="align-middle fit">{{instance.name}}</td>
+                <td class="align-middle fit">{{instance.fieldunit|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.calib_equation|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.calib_coeff_a|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.calib_coeff_b|default_if_none:"-"}}</td>
@@ -50,6 +44,13 @@
                 <td class="align-middle fit">{{instance.calib_coeff_m|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.date_tested|default_if_none:"-"}}</td>
                 <td class="align-middle fit">{{instance.tested_by|default_if_none:"-"}}</td>
+                <td>
+                    <div class="btn-group btn-group-sm float-left" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_calib' instance.id %}><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                        &nbsp;
+                        <a href={% url 'waiss:delete_calib' instance.id %}><img class="rounded"  src={% static "theme/delete.png" %} style="height: 30px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

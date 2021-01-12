@@ -19,7 +19,7 @@
                     <form class="django-form" action="{% url 'waiss:add_calib' %}" method="post">
                         {% csrf_token %}
                         <div class="row">
-                            <div class="col">{{calib_form.calib_name|as_crispy_field}}</div>
+                            <div class="col">{{calib_form.name|as_crispy_field}}</div>
                         </div>
                         <div class="row">
                             <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>

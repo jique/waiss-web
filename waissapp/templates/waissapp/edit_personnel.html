@@ -22,10 +22,14 @@
                     {% csrf_token %} 
                     <div class="row">
                         <div class="col">{{personnel_form.first_name|as_crispy_field}}</div>
-                        <div class="col">{{personnel_form.last_name|as_crispy_field}}</div>
-                        <div class="col">{{personnel_form.phone_number|as_crispy_field}}</div>
                     </div>
-                    <input type="submit" value="Save" class="btn btn-secondary btn-block">
+                    <div class="row">
+                        <div class="col">{{personnel_form.last_name|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{personnel_form.number|as_crispy_field}}</div>
+                    </div>
+                    <input type="submit" value="Save" class="btn btn-info btn-block">
                 </form>
             </div>
         </div>

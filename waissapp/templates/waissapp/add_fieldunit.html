@@ -5,12 +5,12 @@
 {% endblock %}
             
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
-        <li class="breadcrumb-item active" aria-current="page">New Field Unit</li>
-    </ol>
-</nav>
+<br>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active"><b>Add New Field Unit</b></a>
+    </li>
+</ul>
 <div class="row">
     <div class="col-lg-12 mx-auto">
         <div class="card mb-4">
@@ -31,13 +31,10 @@
                         <div class="col">{{ fieldunit_form.longi|as_crispy_field }}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ fieldunit_form.servernumber|as_crispy_field}}</div>
+                        <div class="col">{{ fieldunit_form.mobilenumber|as_crispy_field}}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ fieldunit_form.fieldunitnumber|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.numberofsamples|as_crispy_field}}</div>
+                        <div class="col">{{ fieldunit_form.samples|as_crispy_field}}</div>
                     </div>
                     <div class="row">
                         <div class="col">{{ fieldunit_form.sensorintegrationtime|as_crispy_field}}</div>

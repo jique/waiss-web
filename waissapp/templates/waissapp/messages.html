@@ -14,7 +14,7 @@
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive rounded">
-            <table class="table table-hover border-left-info" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-hover border-left-info border-bottom-info" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th class="align-top fit">Number</th>
@@ -23,21 +23,37 @@
                     <th class="align-top fit">Actions</th>
                 </tr>
             </thead>
-                    {% for instance in msgs %}
+            {% for instance in sent_msgs %}
             <tbody>
-                <tr>  
-                    <td class="align-middle fit">{{instance.sender_number}}</td>
+                <tr>
+                    <td class="align-middle fit">{{instance.number}}</td>
                     <td class="align-middle fit">{{instance.msg}}</td>
                     <td class="align-middle fit">{{instance.timestamp}}</td>
                     <td class="fit">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                            <a href={% url 'waiss:view-conversation' %} <button class="btn btn-info">View Conversation</button></a>
+                            <a href={% url 'waiss:view-conversation' instance.number %} <button class="btn btn-info">View Conversation</button></a>
                             <a href={% url 'waiss:messages_delete' instance.id %} <button class="btn btn-danger">Delete</button></a>
                         </div>
                     </td>
                 </tr>
             </tbody>
-                    {% endfor %}
+            {% endfor %}   
+            
+            {% for instance in msgs %}
+            <tbody>
+                <tr>  
+                    <td class="align-middle fit">{{instance.number}}</td>
+                    <td class="align-middle fit">{{instance.msg}}</td>
+                    <td class="align-middle fit">{{instance.timestamp}}</td>
+                    <td class="fit">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                            <a href={% url 'waiss:view-conversation' instance.number %} <button class="btn btn-info">View Conversation</button></a>
+                            <a href={% url 'waiss:messages_delete' instance.id %} <button class="btn btn-danger">Delete</button></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
         </table>
         <a href={% url 'waiss:send-message' %} <button class="btn btn-info text-center">SEND NEW MESSAGE</button></a>
 </div>

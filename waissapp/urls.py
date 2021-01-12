@@ -5,8 +5,8 @@ app_name = 'waiss'
 
 urlpatterns = [
      path('dashboard/', views.index, name='index'),
-     path('', views.login, name='login'),
-     path('register/', views.register, name='register'),
+     path('accounts/login', views.login, name='login'),
+     path('accounts/register/', views.register, name='register'),
 
      path('welcome/', views.load_page, name='load_page'),
      path('computation_option/', views.computation_option, name='simp_advanced'),
@@ -14,33 +14,22 @@ urlpatterns = [
 
      #NEW_DATA
      path('newpersonnel/', views.newpersonnel, name='new_personnel'),
-     path('newfieldunit/', views.newfieldunit, name='new_fieldunit'),
-     path('newsensor/', views.newsensor, name='new_sensor'),
      path('newcrop/', views.newcrop, name='new_crop'),
      path('newsoil/', views.newsoil, name='new_soil'),
+     path('newirrigation/', views.newirrigation, name='new_irrigation'),
+     path('newfarm/', views.newfarm, name='new_farm'),
      path('newcalibrationequation/', views.newcalib, name='new_calib'),
-     path('newbasin/', views.newbasin, name='new_basin'),
-     path('newborder/', views.newborder, name='new_border'),
-     path('newfurrow/', views.newfurrow, name='new_furrow'),
-     path('newdrip/', views.newdrip, name='new_drip'),
-     path('newsprinkler/', views.newsprinkler, name='new_sprinkler'),
-     path('newsysbasin/', views.newsysbasin, name='new_sysbasin'),
-     path('newsysborder/', views.newsysborder, name='new_sysborder'),
-     path('newsysfurrow/', views.newsysfurrow, name='new_sysfurrow'),
-     path('newsysdrip/', views.newsysdrip, name='new_sysdrip'),
-     path('newsyssprinkler/', views.newsyssprinkler, name='new_syssprinkler'),
+     path('newfieldunit/', views.newfieldunit, name='new_fieldunit'),
+     path('newsensor/', views.create_sensor_model_form, name='new_sensor'),
+     path('newdata/', views.newdata, name='new_data'),
+
      path('newintakefamily/', views.newintakefamily, name='new_intakefamily'),
 
      path('about/', views.about, name='about'),
-     path('charts/', views.charts, name='charts'), 
-     path('show-irrig-calculations/', views.irrig_calculations, name='irrig-calculations'),
+     path('about-the-calculations/', views.about_calc, name='about_calc'),
      
      #SYSTEMS
      path('calculate-basin-system/', views.basin_calc, name='sys_basin'),
-     path('calculate-border-system/', views.border_calc, name='sys_border'),
-     path('calculate-furrow-system/', views.furrow_calc, name='sys_furrow'),
-     path('calculate-drip-system/', views.drip_calc, name='sys_drip'),
-     path('calculate-sprinkler-system/', views.sprinkler_calc, name='sys_sprinkler'),
      
      #FIELDUNIT_PARAMETERS
      path('show-fieldunit-database/', views.fieldunit_list_view, name='list_fieldunit'),
@@ -92,36 +81,33 @@ urlpatterns = [
 
      #DRIP_PARAMETERS
      path('edit_drip/<str:pk>/', views.editDrip, name='edit_drip'),
-     path('delete_drip/<str:pk>/', views.deleteDrip, name='delete_drip'),
-     path('add-drip-system/', views.add_drip, name='adddrip'),
+     path('delete_irrigation/<str:pk>/', views.deleteIrrigation, name='delete_irrigation'),
+     path('add-drip-system/', views.add_drip, name='add_drip'),
      path('show-drip-database/', views.drip_list, name='listdrip'),
      
      #SPRINKLER_PARAMETERS
      path('edit_sprinkler/<str:pk>/', views.editSprinkler, name='edit_sprinkler'),
-     path('delete_sprinkler/<str:pk>/', views.deleteSprinkler, name='delete_sprinkler'),
-     path('add-sprinkler-system/', views.add_sprinkler, name='addsprinkler'),
+     path('add-sprinkler-system/', views.add_sprinkler, name='add_sprinkler'),
      path('show-sprinkler-database/', views.sprinkler_list, name='listsprinkler'),
      
      #BORDER_PARAMETERS
      path('edit_border/<str:pk>/', views.editBorder, name='edit_border'),
-     path('delete_border/<str:pk>/', views.deleteBorder, name='delete_border'),
-     path('add-border-system/', views.add_border, name='addborder'),
+     path('add-border-system/', views.add_border, name='add_border'),
      path('show-border-database/', views.border_list, name='listborder'),
      
      #FURROW_PARAMETERS
      path('edit_furrow/<str:pk>/', views.editFurrow, name='edit_furrow'),
-     path('delete_furrow/<str:pk>/', views.deleteFurrow, name='delete_furrow'),
-     path('add-furrow-system/', views.add_furrow, name='addfurrow'),
+     path('add-furrow-system/', views.add_furrow, name='add_furrow'),
      path('show-furrow-database/', views.furrow_list, name='listfurrow'),
      
      #BASIN_PARAMETERS
      path('edit_basin/<str:pk>/', views.editBasin, name='edit_basin'),
-     path('delete_basin/<str:pk>/', views.deleteBasin, name='delete_basin'),
-     path('add-basin-system/', views.add_basin, name='addbasin'),
+     path('add-basin-system/', views.addbasin, name='add_basin'),
      path('show-basin-database/', views.basin_list, name='listbasin'),
 
-     path('send-message/', views.send_message, name='send-message'), #Send a message
+     path('send-message/', views.send_message, name='send-message'),
      path('delete_msg/<str:pk>/', views.delete_msgs, name='messages_delete'),
      path('messages/', views.list_msgs, name='messages'),
-     path('view-conversation/', views.view_msg, name='view-conversation'),
+     path('view-conversation/<str:number>/', views.view_msg, name='view-conversation'),
+     path('add-data/', views.add_data, name='add_data'),
 ]

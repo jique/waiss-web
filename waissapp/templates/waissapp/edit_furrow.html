@@ -20,17 +20,19 @@
                 <form class="form-group" action="" method="post">
                 {% csrf_token %}
                     <div class="row">
-                        <div class="col">{{ furrow_form.name|as_crispy_field}}</div>
+                        <div class="col">{{ irrigation_form.name_furrow|as_crispy_field}}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ furrow_form.bln_furrow_type|as_crispy_field}}</div>
+                        <div class="col">{{ irrigation_form.bln_furrow_type|as_crispy_field}}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ furrow_form.discharge|as_crispy_field}}</div>
-                        <div class="col">{{ furrow_form.area_slope|as_crispy_field}}</div>
+                        <div class="col">{{ irrigation_form.discharge|as_crispy_field}}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ furrow_form.errors }}</div>
+                        <div class="col">{{ irrigation_form.area_slope|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.errors }}</div>
                     </div>
                     <input type="submit" value="Save" class="btn btn-secondary btn-block">
                 </form>
