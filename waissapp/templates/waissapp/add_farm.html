@@ -6,15 +6,10 @@
 {% endblock %}
 
 {% block main_block %}
-<br>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active"><b>Add Farm</b></a>
-    </li>
-</ul>
 <div class="row">
     <div class="col">
         <div class="card mb-4">
+            <div class="card-header">Add New Farm</div>
             <div class="card-body">
                 <form class="form-group" action="{% url 'waiss:add_farm' %}" method="post">
                     <br>

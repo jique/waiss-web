@@ -807,14 +807,28 @@ def delete_msgs(request, pk): #deleteconversation
 	return render(request, 'waissapp/messages_delete.html', context)
 
 def view_msg(request, number):
+	receivedmsgs = ReceivedMsgs.objects.all()
+	sentmsgs = SentMsgs.objects.all()
+
 	number = number 
-	received = ReceivedMsgs.objects.filter(number=number)
-	sent = SentMsgs.objects.filter(number=number)
-	received = received.get()
+	cel_number = Personnel.objects.get(number=number)
+
+	received = cel_number.receivedmsgs_set.all()
+	sent =cel_number.sentmsgs_set.all()
+
+	combined_list = []
+	for x in range(1):
+		combined_list.append(received[x])
+		combined_list.append(sent[x])
 
 	context = {
+		"received_msgs":receivedmsgs,
+		"sent_msgs": sentmsgs,
+		"number": number,
+		"cel_number": cel_number,
 		"sent": sent,
 		"received": received,
+		"combined_list": combined_list
 	}
 	return render(request, 'waissapp/view-conversation.html', context)
 

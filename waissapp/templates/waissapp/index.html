@@ -72,33 +72,34 @@
 
   {% block style_block%}
   <style>
-      .icon-bar {
-      width: 60px;
+  .icon-bar {
+    width: 60px;
+    background-color: rgba(0, 0, 0, 0);
+    position: fixed;
+    padding-bottom:100px;
+    }
+
+    .icon-bar a {
+      display: block;
+      text-align: center;
+      padding: 16px;
+      transition: all 0.3s ease;
+      color: white;
+      font-size: 36px;
+    }
+
+    .icon-bar a:hover {
       background-color: rgba(0, 0, 0, 0);
-      position: fixed;
-      padding-bottom:100px;
-      }
+    }
+    .progress_bar .pro-bar {
+      background: hsl(0, 0%, 97%);
+      box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.1) inset;
+      height:4px;
+      margin-bottom: 12px;
+      margin-top: 50px;
+      position: relative;
+    }
 
-      .icon-bar a {
-        display: block;
-        text-align: center;
-        padding: 16px;
-        transition: all 0.3s ease;
-        color: white;
-        font-size: 36px;
-      }
-
-      .icon-bar a:hover {
-        background-color: rgba(0, 0, 0, 0);
-      }
-      .progress_bar .pro-bar {
-    background: hsl(0, 0%, 97%);
-    box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.1) inset;
-    height:4px;
-    margin-bottom: 12px;
-    margin-top: 50px;
-    position: relative;
-}
 .progress_bar .progress_bar_title{
     color: hsl(218, 4%, 50%);
     font-size: 15px;
@@ -141,17 +142,6 @@
     position: absolute;
     right: -4px;
     top: -5px;
-}
-.sidebar {
-  position: fixed;
-}
-.topbar {
-  margin-bottom: 20px;
-  width:83%;
-  float:right;
-}
-.container-fluid {
-  padding-left:18%
 }
 .bg-image {
   background-image: url({% static "theme/bg.png" %});
@@ -385,7 +375,7 @@
                 <div class="col-4 text-gray-800"><h5><b>{{farm_form.fieldunit|as_crispy_field }}</b></h5></div>
                 <div class="col text-right text-info"><b><span id="date"></span>&nbsp;<span class="text-success">|</span>&nbsp;<span id="time"></span></b> &emsp; <i class="fas fa-calendar fa-2x"></i></div>
               </div>
-          </form>
+            </form>
           <div class="row">
             <!-- Days after Planting Card -->
             <div class="col-xl-4 col-md-6 mb-4">

@@ -5,18 +5,10 @@
 {% endblock %}
             
 {% block main_block %}
-<br>
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
-        <li class="breadcrumb-item active" aria-current="page">Sensors</li>
-        <li class="breadcrumb-item active" aria-current="page">Add new</li>
-    </ol>
-</nav>
 <div class="row">
     <div class="col-lg-12 mx-auto">
         <div class="card mb-4">
-            <div class="card-header py-3"><small><i><b>Add sensors one at a time.</b></i></small></div>
+            <div class="card-header py-3"><small><i><b>Add moisture content data.</b></i></small></div>
             <div class="card-body">
                 <form class="form-group" action="" method="POST">
                     {% csrf_token %} 
