@@ -5,8 +5,16 @@ from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureCon
 class SentMsgsInline(admin.TabularInline):
     model = SentMsgs
 
+class SentMsgsAdmin(admin.ModelAdmin):
+    list_display = ('number', 'msg', 'timestamp')
+    ordering = ['timestamp']
+
 class ReceivedMsgsInline(admin.TabularInline):
     model = ReceivedMsgs
+
+class ReceivedMsgsAdmin(admin.ModelAdmin):
+    list_display = ('number', 'msg', 'timestamp')
+    ordering = ['timestamp']
     
 class FieldUnitInline(admin.TabularInline):
     model = FieldUnit
@@ -38,8 +46,8 @@ class FarmAdmin(admin.ModelAdmin):
 class FieldUnitAdmin(admin.ModelAdmin):
     inlines = [SensorInline]
 
-admin.site.register(SentMsgs)
-admin.site.register(ReceivedMsgs)
+admin.site.register(SentMsgs, SentMsgsAdmin)
+admin.site.register(ReceivedMsgs, ReceivedMsgsAdmin)
 
 admin.site.register(Farm, FarmAdmin)
 admin.site.register(Sensor, SensorAdmin)

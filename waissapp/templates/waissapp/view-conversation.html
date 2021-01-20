@@ -8,7 +8,6 @@
 {% block main_block %}
 <br>
 <style>
-  .container{max-width:1170px; margin:auto;}
 img{ max-width:100%;}
 .inbox_people {
   background: #f8f8f8 none repeat scroll 0 0;
@@ -23,29 +22,13 @@ img{ max-width:100%;}
 }
 .top_spac{ margin: 20px 0 0;}
 
-
 .recent_heading {float: left; width:40%;}
-.srch_bar {
-  display: inline-block;
-  text-align: right;
-  width: 60%; padding:
-}
-.headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
 
 .recent_heading h4 {
   color: #05728f;
   font-size: 21px;
   margin: auto;
 }
-.srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
-.srch_bar .input-group-addon button {
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border: medium none;
-  padding: 0;
-  color: #707070;
-  font-size: 18px;
-}
-.srch_bar .input-group-addon { margin: 0 0 0 -27px;}
 
 .chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
 .chat_ib h5 span{ font-size:13px; float:right;}
@@ -71,6 +54,7 @@ img{ max-width:100%;}
 .active_chat{ background:#ebebeb;}
 
 .incoming_msg_img {
+  margin-left: 2%;
   display: inline-block;
   width: 6%;
 }
@@ -78,7 +62,7 @@ img{ max-width:100%;}
   display: inline-block;
   padding: 0 0 0 10px;
   vertical-align: top;
-  width: 92%;
+  width: 90%;
  }
  .received_withd_msg p {
   background: #ebebeb none repeat scroll 0 0;
@@ -102,7 +86,7 @@ img{ max-width:100%;}
   width: 60%;
 }
 
- .sent_msg p {
+.sent_msg p {
   background: #05728f none repeat scroll 0 0;
   border-radius: 3px;
   font-size: 14px;
@@ -110,7 +94,7 @@ img{ max-width:100%;}
   padding: 5px 10px 5px 12px;
   width:100%;
 }
-.outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
+.outgoing_msg{ overflow:hidden; margin:26px 2% 26px;}
 .sent_msg {
   float: right;
   width: 46%;
@@ -124,7 +108,11 @@ img{ max-width:100%;}
   width: 100%;
 }
 
-.type_msg {border-top: 1px solid #c4c4c4;position: relative;}
+.type_msg {
+  border-top: 1px solid #c4c4c4;
+  position: relative;
+  margin-left: 2%;
+  }
 .msg_send_btn {
   background: #05728f none repeat scroll 0 0;
   border: medium none;
@@ -133,66 +121,45 @@ img{ max-width:100%;}
   cursor: pointer;
   font-size: 17px;
   height: 33px;
-  position: absolute;
   right: 0;
   top: 11px;
   width: 33px;
 }
-.messaging { padding: 0 0 50px 0;}
-.msg_history {
-  height: 516px;
-  overflow-y: auto;
-}
+
 </style>
 <div class="row">
     <div class="col">
       <div class="card">
         <div class="container">
           <br>
-          <h3 class=" text-center">Messaging</h3>
+          <h4 class="text-left">Messages</h4>
           <div class="messaging">
-                <div class="inbox_msg">
-                  <div class="inbox_people">
-                    <div class="headind_srch">
-                      <div class="recent_heading">
-                        <h4>Recent</h4>
+            <div class="inbox_msg">
+              <div class="inbox_people">
+                <div class="inbox_chat">
+                  {% for msg in final_list %}
+                  <div class="chat_list">
+                    <div class="chat_people">
+                      <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>
+                      <div class="chat_ib">
+                        <h5>{{msg.number}} <span class="chat_date">{{msg.timestamp}}</span></h5>
+                        <p>{{msg.msg}}
+                       <span class="text-right"><a href={% url 'waiss:view-conversation' msg.number %}> View</a></span>
+                          <span><a href={% url 'waiss:messages_delete' msg.id %}>Delete</a></span></p>
                       </div>
-                      <div class="srch_bar">
-                        <div class="stylish-input-group">
-                          <input type="text" class="search-bar"  placeholder="Search" >
-                          <span class="input-group-addon">
-                          <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                          </span> </div>
                       </div>
                     </div>
-                    <div class="inbox_chat">
-                      {% for msg in received_msgs %}
-                      <div class="chat_list">
-                        <div class="chat_people">
-                          <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                          <div class="chat_ib">
-                            <h5>{{msg.number}} <span class="chat_date">{{msg.timestamp}}</span></h5>
-                            <p>{{msg.msg}}</p>
-                          </div>
-                        </div>
-                      </div>
-                      {% endfor %}
-                      {% for msg in sent %}
-                      <div class="chat_list">
-                        <div class="chat_people">
-                          <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                          <div class="chat_ib">
-                            <h5>{{msg.number}} <span class="chat_date">{{msg.timestamp}}</span></h5>
-                            <p>{{msg.msg}}</p>
-                          </div>
-                        </div>
-                      </div>
-                      {% endfor %}
-                    </div>
-                  </div>
-                  <div class="mesgs">
-                    {% for msg in sent %}
-                    <div class="msg_history">
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <h6><i class="fas fa-arrow-left"></i>&emsp;{{number}}</h6>
+                </div>
+                <br>
+                <div class="msg_history">
+                  {% for msg in result %}
+                    {% if not msg.marker %}
                       <div class="incoming_msg">
                         <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                         <div class="received_msg">
@@ -202,28 +169,36 @@ img{ max-width:100%;}
                           </div>
                         </div>
                       </div>
-                      {% endfor %}
-                      {% for msg in received %}
+                    {% else %}
                       <div class="outgoing_msg">
                         <div class="sent_msg">
                           <p>{{msg.msg}}</p>
-                          <span class="time_date"> {{msg.timestamp}} </span> </div>
+                          <span class="time_date">{{msg.timestamp}}</span> 
+                        </div>
                       </div>
-                      {% endfor %}
-                    <div class="type_msg">
-                      <div class="input_msg_write">
-                        <input type="text" class="write_msg" placeholder="Type a message" />
-                        <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                      </div>
+                    {% endif %}
+                  {% endfor %}
+                  <div class="type_msg">
+                    <div class="input_msg_write">
+                      <form action={% url 'waiss:view-conversation' number %} method="post">
+                      {% csrf_token %}
+                          <div class="row">
+                              <div class="col">{{ form.msg|as_crispy_field }}</div>
+                              <div class="col-2">
+                                <br><br>
+                                <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                              </div>
+                          </div>
+                      </form>
                     </div>
                   </div>
                 </div>
+            </div>
+          </div>
       </div>
     </div>
+  </div>
 </div>
-<br>
 {% endblock %}
 
-{% block bottom_script_block %}
-{% endblock %}
     

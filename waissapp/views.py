@@ -11,6 +11,8 @@ from django.template import RequestContext
 from django.forms import modelformset_factory
 from .forms import SentMsgsForm, PersonnelForm, SoilForm, CalibForm, CropForm, FarmForm, IntakeFamilyForm, FieldUnitForm, IrrigationParametersForm, SensorForm, MCForm
 from django.db import transaction, IntegrityError
+from itertools import chain
+from operator import attrgetter
 
 def index(request):
 	if request.method == 'POST':  # data sent by user
@@ -358,15 +360,17 @@ def add_data(request):
 	return render(request, 'waissapp/add_data.html', {'form': form})
 
 def add_sensor(request):
-    if request.method == 'POST':  # data sent by user
-        form = SensorForm(request.POST)
-        if form.is_valid():
-            form.save()  # this will save info to database
-            return redirect('/show-sensor-database/')
-    else:  # display empty form
-        form = SensorForm()
-
-    return render(request, 'waissapp/add_sensor.html', {'sensor_form': form})
+	SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3)
+	form = SensorFormSet(queryset=Sensor.objects.none())
+	if request.method == 'POST':
+		form = SensorFormSet(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('/newdata/')
+	else:  # display empty form
+		form = SensorFormSet(queryset=Sensor.objects.none())
+	
+	return render(request, 'waissapp/add_sensor.html', {'sensor_form': form})
 
 def sensor_list_view(request):
 	queryset = Sensor.objects.all()
@@ -790,14 +794,17 @@ def send_message(request):
 def list_msgs(request):
 	receivedmsgs = ReceivedMsgs.objects.all()
 	sentmsgs = SentMsgs.objects.all()
+	llist = sorted(chain(receivedmsgs, sentmsgs), key=attrgetter('timestamp'))
+	final_list = reversed(llist)
+
 	context = {
-		"msgs":receivedmsgs,
-		"sent_msgs": sentmsgs,
+		"joinedlist": final_list
 	}
 	return render(request, 'waissapp/messages.html', context)
 
 def delete_msgs(request, pk): #deleteconversation
 	para2 = SentMsgs.objects.get(id=pk)
+
 	if request.method == 'POST':
 		para2.delete()
 		return redirect('/messages/')
@@ -812,23 +819,29 @@ def view_msg(request, number):
 
 	number = number 
 	cel_number = Personnel.objects.get(number=number)
-
 	received = cel_number.receivedmsgs_set.all()
-	sent =cel_number.sentmsgs_set.all()
+	sent = cel_number.sentmsgs_set.all()
 
-	combined_list = []
-	for x in range(1):
-		combined_list.append(received[x])
-		combined_list.append(sent[x])
+	llist = sorted(chain(receivedmsgs, sentmsgs), key=attrgetter('timestamp'))
+	final_list = reversed(llist)
+	result = sorted(chain(received,sent), key=attrgetter('timestamp'))
+
+	if request.method == 'POST':  # data sent by user
+		form = SentMsgsForm(request.POST)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/view-conversation/')
+	else:  # display empty form
+		form = SentMsgsForm()
 
 	context = {
-		"received_msgs":receivedmsgs,
-		"sent_msgs": sentmsgs,
 		"number": number,
 		"cel_number": cel_number,
 		"sent": sent,
 		"received": received,
-		"combined_list": combined_list
+		"form": form,
+		"final_list": final_list,
+		"result": result
 	}
 	return render(request, 'waissapp/view-conversation.html', context)
 

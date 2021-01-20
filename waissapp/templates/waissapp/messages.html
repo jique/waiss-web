@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block main_block %}
+<br>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Inbox</li>
@@ -23,7 +24,7 @@
                     <th class="align-top fit">Actions</th>
                 </tr>
             </thead>
-            {% for instance in sent_msgs %}
+            {% for instance in joinedlist %}
             <tbody>
                 <tr>
                     <td class="align-middle fit">{{instance.number}}</td>
@@ -38,22 +39,6 @@
                 </tr>
             </tbody>
             {% endfor %}   
-            
-            {% for instance in msgs %}
-            <tbody>
-                <tr>  
-                    <td class="align-middle fit">{{instance.number}}</td>
-                    <td class="align-middle fit">{{instance.msg}}</td>
-                    <td class="align-middle fit">{{instance.timestamp}}</td>
-                    <td class="fit">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                            <a href={% url 'waiss:view-conversation' instance.number %} <button class="btn btn-info">View Conversation</button></a>
-                            <a href={% url 'waiss:messages_delete' instance.id %} <button class="btn btn-danger">Delete</button></a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-            {% endfor %}
         </table>
         <a href={% url 'waiss:send-message' %} <button class="btn btn-info text-center">SEND NEW MESSAGE</button></a>
 </div>

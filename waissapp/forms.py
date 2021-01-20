@@ -126,6 +126,10 @@ class PersonnelForm(ModelForm):
         exclude = ()
 
 class SentMsgsForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SentMsgsForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.fields['msg'].widget = forms.Textarea(attrs={'rows': 2})
     class Meta:
         model = SentMsgs
         exclude = ()  # this says to include all fields from model to the form

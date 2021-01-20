@@ -6,10 +6,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Personnel(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    number = models.CharField(max_length=11, null=True, blank=True)
+    number = PhoneNumberField(max_length=11, null=True, blank=True)
 
     def __str__(self):
-        return self.number
+        return str(self.number)
     
     class Meta:
         verbose_name_plural = "Site: Personnel"
@@ -273,10 +273,13 @@ class ReceivedMsgs(models.Model):
     number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True) 
     msg = models.TextField(max_length=200, verbose_name="Message", null=True, blank=True)
     timestamp = models.DateTimeField(verbose_name='Date/Time Sent', null=True, blank=True)
-
+    marker = models.BooleanField(default=False)
     class Meta:
         verbose_name_plural = "Messages: Received"
         get_latest_by = "timestamp"
+    
+    def __str__(self):
+        return str(self.number)
 
 
 class SentMsgs(models.Model):
@@ -284,7 +287,11 @@ class SentMsgs(models.Model):
     number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True) 
     sent = models.BooleanField(verbose_name="Sent?", default=False)
     timestamp = models.DateTimeField(verbose_name='Date/Time Sent', null=True, blank=True)
+    marker = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Messages: Sent"
         get_latest_by = "timestamp"
+    
+    def __str__(self):
+        return str(self.number)

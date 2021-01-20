@@ -144,7 +144,16 @@
     top: -5px;
 }
 .bg-image {
-  background-image: url({% static "theme/bg.png" %});
+  background-image: url({% static "theme/bg_2.png" %});
+}
+.sidebar {
+  position: fixed;
+  overflow: auto;
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+}
+.container-fluid {
+  float: left;
 }
 </style>
   {% endblock %}
@@ -159,17 +168,16 @@
   <div id="wrapper">
     <!-- Sidebar -->
     
-    <ul class="navbar-nav bg-image sidebar sidebar-light accordion font-weight-bold" id="accordionSidebar">
-      <li class="nav-item">
-        <a class="nav-item">
-          <br>
-          <div class="navbar-brand-icon">
-            &nbsp;
-            <img src={% static "theme/waiss_logo.png" %} width=50px height=50px>
-            <span class="text-gray-100">WAISS</span>
-          </div>
-        </a>
-      </li>
+    <ul class="navbar-nav bg-image sidebar sidebar-light accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
+        <div class="sidebar-brand-icon">
+          <img src={% static "theme/waiss_logo.png" %} width=50px height=50px>
+        </div>
+        <div class="sidebar-brand-text mx-3">WAISS</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
         <a class="nav-link" href={% url 'waiss:index' %}>
@@ -183,7 +191,7 @@
 
       <!-- Heading -->
       <div class="sidebar-heading text-gray-100">
-        Interface
+        Create
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
@@ -256,26 +264,19 @@
 
 {% block topbar_block %}
         <!-- Topbar -->
-        <nav class="navbar navbar-light navbar-expand bg-white topbar">
-                <!-- Sidebar Toggle (Topbar) -->
+        <nav class="navbar navbar-light navbar-expand bg-white fixed-top mb-4 topbar shadow">
+          <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
+            <div class="sidebar-brand-icon">
+              <img src={% static "theme/waiss_logo.png" %} width=50px height=50px>
+            </div>
+            <div class="sidebar-brand-text mx-3">WAISS</div>
+          </div>
+              <!-- Sidebar Toggle (Topbar) -->
               <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
               </button>
-              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-              <!-- Topbar Search -->
-              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-sm btn-info" type="button">
-                      <i class="fas fa-search fa-sm"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
-
               <!-- Topbar Navbar -->
-              <ul class="navbar-nav">
+              <ul class="navbar-nav ml-auto">
                 <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                 <li class="nav-item dropdown no-arrow d-sm-none">
                   <a class="nav-link dropdown-toggle" href="" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
