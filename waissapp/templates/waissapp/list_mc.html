@@ -1,0 +1,45 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<h5 class="text-left">Sensors</h5>
+<div class="card shadow mb-4">
+    <div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th class="align-top "></th>
+                <th class="align-top ">Sensor</th>
+                <th class="align-top ">Field Unit</th>
+                <th class="align-top ">Depth (m)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in list %}
+            <tr>
+                <td class="min">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_mc' item.name %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                        &nbsp;
+                        <a href={% url 'waiss:delete_mc' item.name %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        &nbsp;
+                    </div>
+                </td>
+            </tr>
+            <tr>{{item.mc_data}}</tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <small><em>Add new sensor here.</em></small>&nbsp;<a href={% url 'waiss:add_sensor' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

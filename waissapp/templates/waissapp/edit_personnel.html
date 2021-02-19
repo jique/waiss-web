@@ -6,19 +6,12 @@
 {% endblock %}
 
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
-        <li class="breadcrumb-item active" aria-current="page"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Personnels</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Edit Personnel Information</li>
-    </ol>
-</nav>
 <div class="row">
-    <div class="col-lg-8 mx-auto">
-        <div class="card mb-4">
+    <div class="col">
+        <div class="card">
+            <div class="card-header"><i><small>Edit Farm Manager&nbsp;>&nbsp;<b><span class="text-info">{{item}}</span></b></small></i></div>
             <div class="card-body">
                 <form class="form-group" action="" method="post">   
-                    <p><i>Add personnel and their their respective mobile numbers (11 digits) where the irrigation advisories are to be sent.</i></p>
                     {% csrf_token %} 
                     <div class="row">
                         <div class="col">{{personnel_form.first_name|as_crispy_field}}</div>

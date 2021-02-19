@@ -5,17 +5,10 @@
 {% endblock %}
             
 {% block main_block %}
-<br>
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" breadcrumb-item active" aria-current="page">Database</li>
-        <li class="breadcrumb-item active" aria-current="page"><a  href="javascript:history.go(-1)"onMOuseOver="self.status.referrer;return true">Sensors</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Edit Sensor Information</li>
-    </ol>
-</nav>
 <div class="row">
-    <div class="col-lg mx-auto">
-        <div class="card mb-4">
+    <div class="col">
+        <div class="card">
+            <div class="card-header"><i><small>Edit Sensor&nbsp;>&nbsp;<b><span class="text-info">{{item}}</span></b></small></i></div>
             <div class="card-body">
                 <form class="form-group" action="{% url 'waiss:add_sensor' %}" method="post">
                     {% csrf_token %}

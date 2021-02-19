@@ -25,6 +25,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href={% static "css/sb-admin-2.min.css" %} rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href={% static "vendor/datatables/dataTables.bootstrap4.min.css" %} rel="stylesheet">
     <script>
       //Update clock
         function startTime() {
@@ -72,25 +73,6 @@
 
   {% block style_block%}
   <style>
-  .icon-bar {
-    width: 60px;
-    background-color: rgba(0, 0, 0, 0);
-    position: fixed;
-    padding-bottom:100px;
-    }
-
-    .icon-bar a {
-      display: block;
-      text-align: center;
-      padding: 16px;
-      transition: all 0.3s ease;
-      color: white;
-      font-size: 36px;
-    }
-
-    .icon-bar a:hover {
-      background-color: rgba(0, 0, 0, 0);
-    }
     .progress_bar .pro-bar {
       background: hsl(0, 0%, 97%);
       box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.1) inset;
@@ -146,14 +128,13 @@
 .bg-image {
   background-image: url({% static "theme/bg_2.png" %});
 }
-.sidebar {
-  position: fixed;
-  overflow: auto;
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+td {
+    width: auto;
 }
-.container-fluid {
-  float: left;
+
+td.min {
+    width: 1%;
+    white-space: nowrap;
 }
 </style>
   {% endblock %}
@@ -162,221 +143,239 @@
   {% endblock %}
 
   {% block dashboard_block %}
-
-  <!-- Page Wrapper -->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
   
-  <div id="wrapper">
-    <!-- Sidebar -->
-    
-    <ul class="navbar-nav bg-image sidebar sidebar-light accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
-        <div class="sidebar-brand-icon">
-          <img src={% static "theme/waiss_logo.png" %} width=50px height=50px>
-        </div>
-        <div class="sidebar-brand-text mx-3">WAISS</div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href={% url 'waiss:index' %}>
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span class="text-gray-100">Dashboard</span>
-        </a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading text-gray-100">
-        Create
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link " href="{% url 'waiss:add_farm' %}">
-          <i class="fas fa-seedling fa-cog"></i>
-          <span class="text-gray-100"> Add New Farm</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="{% url 'waiss:add_fieldunit' %}">
-          <i class="fas fa-seedling fa-cog"></i>
-          <span class="text-gray-100"> Add New Field Unit</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="{% url 'waiss:add_data' %}">
-          <i class="fas fa-seedling fa-cog"></i>
-          <span class="text-gray-100"> Add MC Data </span>
-        </a>
-      </li>
-
-      <!-- Nav Item - Database Collapse Menu -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDatabase" aria-expanded="true" aria-controls="collapseDatabase">
-        <i class="fas fa-fw fa-database"></i>
-        <span class="text-gray-100">Database</span>
-      </a>
-      <div id="collapseDatabase" class="collapse" aria-labelledby="headingDatabase" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href={% url 'waiss:list_farm' %}>Farms</a>
-            <a class="collapse-item" href={% url 'waiss:list_personnel' %}>Personnel</a>
-            <a class="collapse-item" href={% url 'waiss:list_crop' %}>Crops</a>
-            <a class="collapse-item" href={% url 'waiss:list_soil' %}>Soil Type</a>
-            <a class="collapse-item" href={% url 'waiss:list_intakefamily' %}>Intake family</a>
-            <a class="collapse-item" href={% url 'waiss:list_calib' %}>Calibration Constants</a>
-            <a class="collapse-item" href={% url 'waiss:listbasin' %}>Irrigation System</a>
-            <a class="collapse-item" href={% url 'waiss:list_fieldunit' %}>Field Units</a>
-            <a class="collapse-item" href={% url 'waiss:list_sensor' %}>Sensors</a>
-        </div>
-      </div>
-    </li>
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <li class="nav-item">
-      <a class="nav-link" href={% url 'waiss:about' %}><i class="fas fa-address-card"></i>
-        <span class="text-gray-100">About Us</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href={% url 'waiss:about_calc' %}><i class="fas fa-square-root-alt"></i>
-      <span class="text-gray-100">About the Calculations</span></a>
-    </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-    </ul>
-    <!-- End of Sidebar -->
-    {% endblock %}
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-      <!-- Main Content -->
-      <div id="content">
-
-{% block topbar_block %}
-        <!-- Topbar -->
-        <nav class="navbar navbar-light navbar-expand bg-white fixed-top mb-4 topbar shadow">
-          <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
-            <div class="sidebar-brand-icon">
-              <img src={% static "theme/waiss_logo.png" %} width=50px height=50px>
-            </div>
-            <div class="sidebar-brand-text mx-3">WAISS</div>
+      <!-- Sidebar -->
+      <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
+  
+        <!-- Sidebar - Brand -->
+        <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
+          <div class="sidebar-brand-icon">
+            <a href="{% url 'waiss:index' %}"><img src={% static "theme/waiss_logo.png" %} width=50px height=50px></a>
           </div>
-              <!-- Sidebar Toggle (Topbar) -->
-              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                <i class="fa fa-bars"></i>
-              </button>
-              <!-- Topbar Navbar -->
-              <ul class="navbar-nav ml-auto">
-                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                <li class="nav-item dropdown no-arrow d-sm-none">
-                  <a class="nav-link dropdown-toggle" href="" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-search fa-fw"></i>
-                  </a>
-                  <!-- Dropdown - Messages -->
-                  <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                    <form class="form-inline mr-auto w-100 navbar-search">
-                      <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                          <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                          </button>
-                        </div>
+          <div class="sidebar-brand-text mx-3">WAISS</div>
+        </div>
+  
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+  
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'waiss:index' %}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+        </li>
+  
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+  
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Input
+        </div>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'waiss:add_system' %}">
+            <i class="fas fa-clipboard-list"></i>
+            <span class="text-gray-100">Create System</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParam" aria-expanded="true" aria-controls="collapseParam">
+            <i class="fas fa-plus-square"></i>
+            <span class="text-gray-100">Parameters</span>
+          </a>
+          <div id="collapseParam" class="collapse" aria-labelledby="headingParam" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href={% url 'waiss:add_farm' %}>Farm</a>
+                <a class="collapse-item" href={% url 'waiss:add_personnel' %}>Farm Manager</a>
+                <a class="collapse-item" href={% url 'waiss:add_crop' %}>Crop</a>
+                <a class="collapse-item" href={% url 'waiss:addsoil' %}>Soil</a>
+                <a class="collapse-item" href={% url 'waiss:add_calib' %}>Calibration</a>
+                <a class="collapse-item" href={% url 'waiss:add_irrigation' %}>Irrigation System</a>
+                <a class="collapse-item" href={% url 'waiss:add_fieldunit' %}>Field Unit</a>
+                <a class="collapse-item" href={% url 'waiss:add_sensor' %}>Sensors</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'waiss:add_mc' %}">
+            <i class="fas fa-tint"></i>
+            <span class="text-gray-100">MC Readings</span>
+          </a>
+        </li>
+  
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+  
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Database
+        </div>
+  
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDatabase" aria-expanded="true" aria-controls="collapseDatabase">
+            <i class="fas fa-fw fa-database"></i>
+            <span class="text-gray-100">Database</span>
+          </a>
+          <div id="collapseDatabase" class="collapse" aria-labelledby="headingDatabase" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href={% url 'waiss:list_system' %}>Systems</a>
+                <hr>
+                <a class="collapse-item" href={% url 'waiss:list_farm' %}>Farms</a>
+                <a class="collapse-item" href={% url 'waiss:list_personnel' %}>Farm Manager</a>
+                <a class="collapse-item" href={% url 'waiss:list_crop' %}>Crops</a>
+                <a class="collapse-item" href={% url 'waiss:list_soil' %}>Soil Type</a>
+                <a class="collapse-item" href={% url 'waiss:list_calib' %}>Calibration Constants</a>
+                <a class="collapse-item" href={% url 'waiss:list_irrigation' %}>Irrigation System</a>
+                <a class="collapse-item" href={% url 'waiss:list_fieldunit' %}>Field Units</a>
+                <a class="collapse-item" href={% url 'waiss:list_sensor' %}>Sensors</a>
+            </div>
+          </div>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+  
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          About
+        </div>
+
+        <li class="nav-item">
+          <a class="nav-link" href={% url 'waiss:about' %}><i class="fas fa-address-card"></i>
+            <span class="text-gray-100">About Us</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href={% url 'waiss:about_calc' %}><i class="fas fa-square-root-alt"></i>
+          <span class="text-gray-100">About the Calculations</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+  
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+  
+      </ul>
+      <!-- End of Sidebar -->
+  
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+  
+        <!-- Main Content -->
+        <div id="content">
+  
+          <!-- Topbar -->
+          <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+  
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+              <i class="fa fa-bars"></i>
+            </button>
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+              
+              <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+              <li class="nav-item dropdown no-arrow d-sm-none">
+                <a class="nav-link dropdown-toggle" href="" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-search fa-fw"></i>
+                </a>
+                <!-- Dropdown - Messages -->
+                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                  <form class="form-inline mr-auto w-100 navbar-search">
+                    <div class="input-group">
+                      <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                          <i class="fas fa-search fa-sm"></i>
+                        </button>
                       </div>
-                    </form>
+                    </div>
+                  </form>
+                </div>
+              </li>
+  
+            <!-- Nav Item - Messages -->
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Message Center
+                </h6>
+                {% for msgs in final_list %}
+                <a class="dropdown-item d-flex align-items-center" href={% url 'waiss:view-conversation' msgs.number %}>
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
                   </div>
-                </li>
-
-                <!-- Nav Item - Alerts -->
-                <li class="nav-item dropdown no-arrow mx-1">
-                  <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-bell fa-fw"></i>
-                    <!-- Counter - Alerts -->
-                    <span class="badge badge-danger badge-counter">3+</span>
-                  </a>
-                  <!-- Dropdown - Alerts -->
-                  <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                    <h6 class="dropdown-header">
-                      Alerts Center
-                    </h6>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="mr-3">
-                        <div class="icon-circle bg-success">
-                          <i class="fas fa-donate text-white"></i>
-                        </div>
-                      </div>
-                      <div>
-                        <div class="small text-gray-500">December 7, 2019</div>
-                        $290.29 has been deposited into your account!
-                      </div>
-                    </a>
-
-                    <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                  <div>
+                    <div class="small text-gray-500">{{msgs.timestamp}}</div>
+                    <span class="small font-weight-bold">{{msgs.msg}}</span>
                   </div>
-                </li>
-
-                <!-- Nav Item - Messages -->
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'waiss:messages' %}" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-envelope fa-fw"></i>
+                </a>
+                {% endfor %}
+                <a class="dropdown-item text-center small text-gray-500" href="{% url 'waiss:messages' %}">Show All Alerts</a>
+              </div>
+            </li>
+  
+              <div class="topbar-divider d-none d-sm-block"></div>
+  
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                  <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                </a>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
                   </a>
-                </li>
-
-                <div class="topbar-divider d-none d-sm-block"></div>
-
-                <!-- Nav Item - User Information -->
-                <li class="nav-item dropdown no-arrow">
-                  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Jay Ann Lomod</span>
-                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
                   </a>
-                  <!-- Dropdown - User Information -->
-                  <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">
-                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                      Profile
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                      Settings
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                      Activity Log
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                      Logout
-                    </a>
-                  </div>
-                </li>
-              </ul>
-        </nav>
-        <!-- End of Topbar -->
-
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <!-- End of Topbar -->
+  
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
           {% endblock %}
 
           {% block main_block %}
-          <form class="form-group" action="{% url 'waiss:index' %}" method="post">
-            {% csrf_token %} 
               <div class="row">
-                <div class="col-4 text-gray-800"><h5><b>{{farm_form.fieldunit|as_crispy_field }}</b></h5></div>
-                <div class="col text-right text-info"><b><span id="date"></span>&nbsp;<span class="text-success">|</span>&nbsp;<span id="time"></span></b> &emsp; <i class="fas fa-calendar fa-2x"></i></div>
+                <div class="col text-gray-800 form-group">
+                  <label for="system">Choose a system:</label>
+                      <select name="system" id="system">
+                        <option value="">--------</option>
+                        {% for x in system %}
+                        <option value={{x.name}}>{{x.name}}</option>
+                        {% endfor %}
+                      </select>
+                </div>
+                <div class="col text-right align-bottom"><small><span id="date"></span>&nbsp;|&nbsp;<span id="time"></span></small></div>
               </div>
-            </form>
+          <!-- Page Heading -->
+          
           <div class="row">
             <!-- Days after Planting Card -->
             <div class="col-xl-4 col-md-6 mb-4">
@@ -429,7 +428,7 @@
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-humidity fa-2x text-gray-300"></i>
+                      <i class="fas fa-tint fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
@@ -457,7 +456,7 @@
               </div>
             </div>
             <!-- Irrigation Advisory -->
-            <div class="col-3">
+            <div class="col-4">
               <div class="card shadow mb-4">
                 <!-- Card Header -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -484,16 +483,6 @@
                 </div>
               </div>
             </div>
-              <div class="col-1">
-                  <div class="text icon-bar rounded">
-                    <section id="refreshStatus"><a id="refreshTooltip" class="d-block  bg-info rounded-circle" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" data-bs-hover-animate="pulse" href="#" onclick="updateData()" style="font-size: 20px;" title="Update Data Now"><i id="iconRefresh" class="fas fa-sync-alt" style="color:#f7f7f7;"></i></a></section>
-                    <section id="powerStatus"><a id="powerTooltip" class="d-block bg-danger rounded-circle" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" data-bs-hover-animate="jello" href="#" onclick="powerButton()" style="font-size: 20px;"><i id="iconPower" class="fas fa-power-off" style="color: #f7f7f7;"></i></a></section>
-                    <section id="unitStatus"><a id="statusTooltip" class="d-block bg-success rounded-circle" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" data-bs-hover-animate="tada" href="#" onclick="autosyncButton()" style="font-size: 20px;"  ><i id="iconStatus" class="fas fa-exchange-alt" style="color:#f7f7f7;"></i></a></section>
-                    <section id="fanStatus"><a id="fanTooltip" class="d-block bg-warning rounded-circle" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" data-bs-hover-animate="wobble" href="#" onclick="fanButton()" style="font-size: 20px;" ><i id="iconFan" class="fas fa-fan" style="color:#f7f7f7;"></i></a></section>
-                    <section id="battStatus"><a id="battTooltip" class="d-block bg-secondary rounded-circle" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" data-bs-hover-animate="rubberBand" href="#" onclick="battButton()" style="font-size: 20px;" ><i id="iconBatt" class="fas fa-battery-full" style="color:#f7f7f7;"></i></a></section>
-                    <section id="addData" data-toggle="modal" data-target="#modalAddData"><a id="addDataTooltip" class="d-block bg-primary rounded-circle" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" data-bs-hover-animate="swing" href="#" style="font-size: 20px;" title="Add Data Manually"><i id="iconAddData" class="fas fa-pencil-alt" style="color:#f7f7f7;"></i></a></section>
-                  </div>
-              </div>
           </div>
 {% endblock %}
         </div>
@@ -503,13 +492,6 @@
       <!-- End of Main Content -->
 {% block footer_block %}
       <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Project SARAi 2020</span>
-          </div>
-        </div>
-      </footer>
       <!-- End of Footer -->
 {% endblock %}
 
@@ -544,21 +526,11 @@
   </div>
   
   <script>
-    //tooltip
     $(function () {
     $('[data-toggle="tooltip"]').tooltip()
     })
-
-    //collapse
-    $('.dropdown-toggle').dropdown()
     
-    //phone number mask
-    $(document).ready(function (){
-      $('#id_phone_number').usPhoneFormat({
-        format: '(xxx) xxx-xxxx',
-      });
-    });
-    //
+    $('.dropdown-toggle').dropdown()
     $('.collapse').collapse()
   </script>
   <!-- Bootstrap core JavaScript-->

@@ -6,20 +6,16 @@
 {% endblock %}
 
 {% block main_block %}
-<br>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" >Calibration Equations</a>
-    </li>
-</ul>
+<h5 class="text-left">Calibration Equations</h5>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info border-bottom-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th class="align-top fit">Calibration Name</th>
-                <th class="align-top fit">Field Unit</th>
+                <th class="align-top"></th>
+                <th class="align-top">Calibration Name</th>
+                <th class="align-top">Field Unit</th>
                 <th class="align-top">Equation Form</th>
                 <th class="align-top"> a</th>
                 <th class="align-top"> b</th>
@@ -28,35 +24,35 @@
                 <th class="align-top"> m</th>
                 <th class="align-top">Date Calibrated</th>
                 <th class="align-top">Calibrated By</th>
-                <th class="align-top fit"></th>
             </tr>
         </thead>
         <tbody>
             {% for instance in calib_list %}
-            <tr> 
-                <td class="align-middle fit">{{instance.name}}</td>
-                <td class="align-middle fit">{{instance.fieldunit|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.calib_equation|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.calib_coeff_a|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.calib_coeff_b|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.calib_coeff_c|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.calib_coeff_d|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.calib_coeff_m|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.date_tested|default_if_none:"-"}}</td>
-                <td class="align-middle fit">{{instance.tested_by|default_if_none:"-"}}</td>
-                <td>
-                    <div class="btn-group btn-group-sm float-left" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_calib' instance.id %}><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+            <tr>
+                <td class="min">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_calib' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
                         &nbsp;
-                        <a href={% url 'waiss:delete_calib' instance.id %}><img class="rounded"  src={% static "theme/delete.png" %} style="height: 30px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        <a href={% url 'waiss:delete_calib' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        &nbsp;
                     </div>
-                </td>
+                </td> 
+                <td class="align-middle min">{{instance.name}}</td>
+                <td class="align-middle ">{{instance.fieldunit|default_if_none:"-"}}</td>
+                <td class="align-middle ">{{instance.calib_equation|default_if_none:"-"}}</td>
+                <td class="align-middle ">{{instance.calib_coeff_a|default_if_none:"-"}}</td>
+                <td class="align-middle ">{{instance.calib_coeff_b|default_if_none:"-"}}</td>
+                <td class="align-middle ">{{instance.calib_coeff_c|default_if_none:"-"}}</td>
+                <td class="align-middle ">{{instance.calib_coeff_d|default_if_none:"-"}}</td>
+                <td class="align-middle ">{{instance.calib_coeff_m|default_if_none:"-"}}</td>
+                <td class="align-middle ">{{instance.date_tested|default_if_none:"-"}}</td>
+                <td class="align-middle ">{{instance.tested_by|default_if_none:"-"}}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
-<a href={% url 'waiss:add_calib' %}><i class='far fa-edit'></i></a>&nbsp;<small><em>Add new calibration equation.</em></small>
+<small><em>Add new calibration equation here.</em></small>&nbsp;<a href={% url 'waiss:add_calib' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
 </div>
 {% endblock %}
 

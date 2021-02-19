@@ -6,66 +6,52 @@
 {% endblock %}}
 
 {% block main_block %}
-<br>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" >Field Units</a>
-    </li>
-</ul>
+<h5 class="text-left">Field Units</h5>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info border-bottom-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th class="align-top fit">Field Unit</th>
-                <th class="align-top fit">Latitude</th>
-                <th class="align-top fit">Longitude</th>
-                <th class="align-top fit">USK</th>
-                <th class="align-top fit">Mobile Number</th>
-                <th class="align-top fit">Power</th>
-                <th class="align-top fit">Irrigation</th>
-                <th class="align-top fit">Automatic Threshold</th>
-                <th class="align-top fit">Samples</th>
-                <th class="align-top fit">Sensor Integration Time</th>
-                <th class="align-top fit">Time Start</th>
-                <th class="align-top fit">Time Stop</th>
-                <th class="align-top fit">Delay</th>
-                <th class="align-top fit">Clock Correction</th>
-                <th class="align-top fit"></th>
+                <th class="align-top "></th>
+                <th class="align-top ">Field Unit</th>
+                <th class="align-top ">USK</th>
+                <th class="align-top ">Mobile Number</th>
+                <th class="align-top ">Samples</th>
+                <th class="align-top ">Sensor Integration Time</th>
+                <th class="align-top ">Time Start</th>
+                <th class="align-top ">Time Stop</th>
+                <th class="align-top ">Delay</th>
+                <th class="align-top ">Clock Correction</th>
             </tr>
         </thead>
                 
         <tbody>
             {% for instance in fieldunit_list %}
-            <tr>  
-                <td>{{instance.name}}</td>
-                <td>{{instance.lat|default_if_none:"-"}}</td>
-                <td>{{instance.longi|default_if_none:"-"}}</td>
-                <td>{{instance.usk|default_if_none:"-"}}</td>
-                <td>{{instance.mobilenumber|default_if_none:"-"}}</td>
-                <td>{{instance.fieldunitstatus|default_if_none:"OFF"}}</td>
-                <td>{{instance.withirrigation|default_if_none:"-"}}</td>
-                <td>{{instance.automaticthreshold|default_if_none:"-"}}</td>
-                <td>{{instance.samples|default_if_none:"-"}}</td>
-                <td>{{instance.sensorintegrationtime|default_if_none:"-"}}</td>
-                <td>{{instance.timestart|default_if_none:"-"}}</td>
-                <td>{{instance.timestop|default_if_none:"-"}}</td>
-                <td>{{instance.delay|default_if_none:"-"}}</td>
-                <td>{{instance.clockcorrection|default_if_none:"-"}}</td>
-                <td>
-                    <div class="btn-group btn-group-sm float-left" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_fieldunit' instance.id %}><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+            <tr>
+                <td class="min">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_fieldunit' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
                         &nbsp;
-                        <a href={% url 'waiss:delete_fieldunit' instance.id %}><img class="rounded"  src={% static "theme/delete.png" %} style="height: 30px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        <a href={% url 'waiss:delete_fieldunit' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        &nbsp;
                     </div>
                 </td>
+                <td class="min">{{instance.name}}</td>
+                <td>{{instance.usk|default_if_none:"-"}}</td>
+                <td>{{instance.number|default_if_none:"-"}}</td>
+                <td>{{instance.samples|default_if_none:"-"}}</td>
+                <td>{{instance.sensorintegrationtime|default_if_none:"-"}}</td>
+                <td class="min">{{instance.timestart|default_if_none:"-"}}</td>
+                <td class="min">{{instance.timestop|default_if_none:"-"}}</td>
+                <td>{{instance.delay|default_if_none:"-"}}</td>
+                <td>{{instance.clockcorrection|default_if_none:"-"}}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
-<small><a href={% url 'waiss:add_fieldunit' %}><i class='far fa-edit'></i></a>&nbsp;<em>Add new field unit here</em></small>
+<small><em>Add new field unit here.</em></small>&nbsp;<a href={% url 'waiss:add_fieldunit' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
 </div>
 {% endblock %}
 

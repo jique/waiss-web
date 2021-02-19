@@ -1,32 +1,26 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
-
 
 #SITE VALUES
 class Personnel(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    number = PhoneNumberField(max_length=11, null=True, blank=True)
+    number = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.number)
+        return '{}'.format(self.number)
     
     class Meta:
-        verbose_name_plural = "Site: Personnel"
+        verbose_name_plural = "Site: Farm Managers"
         ordering = ('last_name',)
     
 #SITE VALUES
 class FieldUnit(models.Model):
     name = models.CharField(max_length=25, null=True, blank=True, verbose_name="Field Unit Name")
-    
-    lat = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Latitude (°)", null="True", blank="True")
-    longi = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Longitude (°)", null="True", blank="True")
-    
     usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True, blank=True)
+    number = models.IntegerField(verbose_name="Field Unit Number", null=True, blank=True)
     fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", default=True)
     withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", default=True)
     automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", default=True)
-    mobilenumber = PhoneNumberField(verbose_name="Field Unit Number", null=True, blank=True)
     samples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True, blank=True)
     sensorintegrationtime = models.IntegerField(verbose_name='Sensor Integration Time (ms)', null=True, blank=True)
     timestart = models.TimeField(verbose_name='Starting Time', null=True, blank=True)
@@ -35,7 +29,7 @@ class FieldUnit(models.Model):
     clockcorrection = models.IntegerField(verbose_name='Clock Correction (s)', null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return '{}'.format(self.number)
     class Meta:
         verbose_name_plural = "Site: Field Units"
 
@@ -45,7 +39,7 @@ class Sensor(models.Model):
     depth = models.DecimalField(max_digits=6, decimal_places=4, verbose_name="Depth, m", null=True, blank=True)
     
     def __str__(self):
-        return self.name
+        return '{}'.format(self.name)
 
     class Meta:
         verbose_name_plural = "Site: Sensors"
@@ -55,10 +49,12 @@ class MoistureContent(models.Model):
     timestamp = models.DateTimeField(verbose_name='Date & Time Measured', null=True)
     mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
 
+    def __str__(self):
+        return '{}'.format(self.sensor)
+
     class Meta:
         verbose_name_plural = "Site: Moisture Content"
         get_latest_by = "timestamp"
-
 
 #DATABASE
 class Soil(models.Model):
@@ -88,11 +84,10 @@ class CalibrationConstant(models.Model):
     CALIBRATION_EQUATION_CHOICES = [
         (LINEAR, 'Linear'),
         (QUADRATIC, 'Quadratic'),
+        (EXPONENTIAL, 'Exponential'),
+        (LOGARITHMIC, 'Logarithmic'),
         (SYMMETRICAL_SIGMOIDAL, 'Symmetrical Sigmoidal'),
         (ASYMMETRICAL_SIGMOIDAL, 'Asymmetrical Sigmoidal'),
-        (EXPONENTIAL, 'Exponential'),
-        (POWER, 'Power'),
-        (LOGARITHMIC, 'Logarithmic'),
     ]
 
     calib_equation = models.CharField(
@@ -139,6 +134,14 @@ class Crop(models.Model):
     growingperiod = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Growing Period, days", null=True, blank=True)
     mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True, blank=True)
     drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True)
+    
+    rooting = [
+        ("Borg-Grimes Model", 'Borg-Grimes Model'),
+        ("User-Defined", 'User-Defined'),
+        ("Inverse Kc", 'Inverse Kc'),
+    ]
+
+    root_growth_model = models.CharField(choices=rooting, max_length=30, verbose_name="Root Growth Model", null=True, blank=True)
     kc_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (ini)", null=True, blank=True)
     kc_mid = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (mid)", null=True, blank=True)
     kc_end = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (end)", null=True, blank=True)
@@ -156,7 +159,6 @@ class Crop(models.Model):
     root_a = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" a", null=True, blank=True)
     root_b = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" b", null=True, blank=True)
     root_c = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" c", null=True, blank=True)
-    
     root_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True, blank=True)
     def __str__(self):
         return self.crop
@@ -165,10 +167,18 @@ class Crop(models.Model):
         verbose_name_plural = "Database: Crop"
         ordering = ('crop',)
 
-
 #SITE VALUES
 class IrrigationParameters(models.Model):
-    name= models.CharField(max_length=30, verbose_name="System Name", null=True, blank=True)
+    name= models.CharField(max_length=30, verbose_name="Irrigation System Name", null=True, blank=True)
+    irrig_choices = [
+        ('basin', 'basin'),
+        ('border', 'border'),
+        ('furrow', 'furrow'),
+        ('sprinkler', 'sprinkler'),
+        ('drip', 'drip')
+    ]
+
+    irrigation_system_type = models.CharField(choices=irrig_choices, max_length=30, verbose_name="Irrigation System Type", null=True, blank=True)
     #BASIN
     discharge = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Unit Discharge (lps)", null=True, blank=True)
     basin_length = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Basin Length (m)", null=True, blank=True)
@@ -184,31 +194,16 @@ class IrrigationParameters(models.Model):
         (90, '90'),
         (95, '95'),
     ]
-    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", help_text="Application efficiency is the fraction of the irrigation water that is used by the crop. Provided there are no runoff losses, the application efficiency (%) is the required irrigation depth (mm), divided by the average applied irrigation depth (mm), multiplied by 100%.", null=True)
+    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", help_text="Application efficiency is the fraction of the irrigation water that is used by the crop. Provided there are no runoff losses, the application efficiency (%) is the required irrigation depth (mm), divided by the average applied irrigation depth (mm), multiplied by 100%.", blank=True, null=True)
     #BORDER
     width = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Border Width (m)", null=True, blank=True)
     border_strips = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Number of Borders", null=True, blank=True)
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, blank=True)
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope", null=True, blank=True)
-    
-    EFF_CHOICES = [
-        (50, '50'),
-        (55, '55'),
-        (60, '60'),
-        (70, '70'),
-        (75, '75'),
-        (80, '80'),
-        (85, '85'),
-        (90, '90'),
-        (95, '95'),
-    ]
-
-    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True, blank=True)
     flow_rate_per_strip = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Flow rate per border strip (lps)", null=True, blank=True)
     total_flow_rate = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Total flow rate (lps)", null=True, blank=True)
     #FURROW
     bln_furrow_type = models.BooleanField (verbose_name="It is an open-ended furrow.")
-    area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope", null=True, blank=True)
     #p_adjusted = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="P adjusted (m)", null=True) #doublecheck details
     #just insert in js computation
 
@@ -231,7 +226,6 @@ class IrrigationParameters(models.Model):
     lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True, blank=True)
     sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True, blank=True)
     num_of_sprinklers = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Number of sprinklers", null=True, blank=True)
-    ea = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Application Efficiency", null=True, blank=True)
     class Meta:
         verbose_name_plural = "Irrigation System"
 
@@ -244,15 +238,25 @@ class Farm(models.Model):
     municipality = models.CharField(max_length=50, null="True", blank="True")
     brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True", blank="True")
 
-    farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Manager", null=True, blank=True)
+    class Meta:
+        verbose_name_plural = "Site: Farms"
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name
+
+class WAISSystems(models.Model):
+    name = models.CharField(max_length=20)
+    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm", null=True, blank=True)
+    farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Farm Manager", null=True, blank=True)
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True, blank=True)
     soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True, blank=True)
-    intakefamily = models.ForeignKey(IntakeFamily, on_delete=models.CASCADE, verbose_name="Intake Family", null=True, blank=True)
-    irrigation = models.ForeignKey(IrrigationParameters, on_delete=models.CASCADE, verbose_name="Irrigation", null=True, blank=True)
+    calib = models.ForeignKey(CalibrationConstant, on_delete=models.CASCADE, verbose_name="Calibration Equation", null=True, blank=True)
+    irrigation = models.ForeignKey(IrrigationParameters, on_delete=models.CASCADE, verbose_name="Irrigation System", null=True, blank=True)
     fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)    
 
     class Meta:
-        verbose_name_plural = "Site: Farms"
+        verbose_name_plural = "WAISSystems"
         ordering = ('name',)
 
     def __str__(self):
@@ -267,31 +271,29 @@ class IrrigationAdvisory(models.Model):
     class Meta:
         verbose_name_plural = "Computation"
 
-
 #MESSAGES
 class ReceivedMsgs(models.Model):
-    number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True) 
+    number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True)
     msg = models.TextField(max_length=200, verbose_name="Message", null=True, blank=True)
-    timestamp = models.DateTimeField(verbose_name='Date/Time Sent', null=True, blank=True)
-    marker = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(verbose_name='Date/Time Sent', auto_now_add=True, null=True, blank=True)
+    marker = models.BooleanField(default=True)
     class Meta:
         verbose_name_plural = "Messages: Received"
         get_latest_by = "timestamp"
     
     def __str__(self):
-        return str(self.number)
-
+        return '{}'.format(self.number)
 
 class SentMsgs(models.Model):
+    number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True)
     msg = models.TextField(max_length=200, verbose_name="Message", null=True, blank=True)
-    number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True) 
     sent = models.BooleanField(verbose_name="Sent?", default=False)
-    timestamp = models.DateTimeField(verbose_name='Date/Time Sent', null=True, blank=True)
-    marker = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(verbose_name='Date/Time Sent', auto_now_add=True, null=True, blank=True)
+    marker = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "Messages: Sent"
         get_latest_by = "timestamp"
     
     def __str__(self):
-        return str(self.number)
+        return '{}'.format(self.number)

@@ -6,39 +6,35 @@
 {% endblock %}
 
 {% block main_block %}
-<br>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="{% url 'waiss:list_farm' %}">Farms</a>
-    </li>
-</ul>
+<h5 class="text-left">Farms</h5>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info border-bottom-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th class="align-top  fit">Farm Name</th>
-                <th class="align-top  fit">Province</th>
-                <th class="align-top  fit">Municipality</th>
-                <th class="align-top  fit">Barangay</th>
-                <th></th>
+                <th class="align-top"></th>
+                <th class="align-top">Farm Name</th>
+                <th class="align-top">Province</th>
+                <th class="align-top">Municipality</th>
+                <th class="align-top">Barangay</th>
             </tr>
         </thead>
         <tbody>
             {% for instance in farm_list %}
-            <tr>  
-                <td class="align-middle fit">{{instance.name}}</td>              
-                <td class="align-middle fit">{{instance.province}}</td>
-                <td class="align-middle fit">{{instance.municipality}}</td>
-                <td class="align-middle fit">{{instance.brgy}}</td>
-                <td>
-                    <div class="btn-group btn-group-sm float-left" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_farm' instance.id %}><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+            <tr>
+                <td class="min">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_farm' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
                         &nbsp;
-                        <a href={% url 'waiss:delete_farm' instance.id %}><img class="rounded"  src={% static "theme/delete.png" %} style="height: 30px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        <a href={% url 'waiss:delete_farm' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        &nbsp;
                     </div>
                 </td>
+                <td class="align-middle">{{instance.name}}</td>              
+                <td class="align-middle">{{instance.province}}</td>
+                <td class="align-middle">{{instance.municipality}}</td>
+                <td class="align-middle">{{instance.brgy}}</td>
             </tr>
             {% endfor %}
         </tbody>

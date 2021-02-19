@@ -6,51 +6,45 @@
 {% endblock %}
 
 {% block main_block %}
-<br>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="{% url 'waiss:list_soil' %}">Soils</a>
-    </li>
-</ul>
+<h5 class="text-left">Soils</h5>
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover border-left-info border-bottom-info" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th></th>
                         <th class="align-top">Soil Name</th>
                         <th class="align-top">Field Capacity (MCv, %)</th>
                         <th class="align-top">Permanent Wilting Point (MCv, %)</th>
                         <th class="align-top">Permanent Wilting Point (MCv, %)</th>
                         <th class="align-top">Source</th>
-                        <th></th>
                     </tr>
                 </thead>
                         
                 <tbody>
                     {% for instance in soil_list %}
-                    <tr>  
-                        <td class="align-middle">{{instance.soiltype}}</td>
+                    <tr>
+                        <td class="min">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href={% url 'waiss:edit_soil' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                                &nbsp;
+                                <a href={% url 'waiss:delete_soil' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                                &nbsp;
+                            </div>
+                        </td> 
+                        <td class="align-middle min">{{instance.soiltype}}</td>
                         <td class="align-middle">{{instance.fc|default_if_none:"-"}}</td>
                         <td class="align-middle">{{instance.pwp|default_if_none:"-"}}</td>
                         <td class="align-middle">{{instance.As|default_if_none:"-"}}</td>
-                        <td class="align-middle">{{instance.source|default_if_none:"-"}}</td>
-                        <td>
-                            <div class="btn-group btn-group-sm float-left" role="group" aria-label="Basic example">
-                                <a href={% url 'waiss:edit_soil' instance.id %}><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                                &nbsp;
-                                <a href={% url 'waiss:delete_soil' instance.id %}><img class="rounded"  src={% static "theme/delete.png" %} style="height: 30px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                            </div>
-                        </td>
+                        <td class="align-middle min">{{instance.source|default_if_none:"-"}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
                     
             </table>
         </div>
-        <div class="float-right">
-            <small><em>Add new soil data here&nbsp;</em></small><a href={% url 'waiss:addsoil' %}><img src={% static "theme/add_soil.png" %} style="height: 50px;" alt="Card image cap"></a>
-        </div>
+        <small><em>Add new crop data here.</em></small>&nbsp;<a href={% url 'waiss:addsoil' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new soil data"></a>
 </div>
 {% endblock %}
 

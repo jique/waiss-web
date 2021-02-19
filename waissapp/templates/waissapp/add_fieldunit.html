@@ -5,47 +5,33 @@
 {% endblock %}
             
 {% block main_block %}
-<br>
+<h5 class="text-left">Add Field Unit</h5>
 <div class="row">
-    <div class="col-lg-6 mx-auto">
+    <div class="col-lg-12">
         <div class="card mb-4">
-            <div class="card-header">Add New Field Unit</div>
+            <div class="card-header"><small>Input field unit settings.</small></div>
             <div class="card-body">
-                <form class="form-group" action="{% url 'waiss:add_fieldunit' %}" method="post">
+                <form class="form-group" action="" method="post">
                     <br>
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col">{{ fieldunit_form.name|as_crispy_field }}</div>
-                    </div>
-                    <div class="row">
+                        <div class="col-6">{{ fieldunit_form.name|as_crispy_field }}</div>
                         <div class="col">{{ fieldunit_form.usk|as_crispy_field}}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ fieldunit_form.lat|as_crispy_field }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.longi|as_crispy_field }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.mobilenumber|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.samples|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
+                        <div class="col">{{ fieldunit_form.number|as_crispy_field}}</div>
                         <div class="col">{{ fieldunit_form.sensorintegrationtime|as_crispy_field}}</div>
                     </div>
                     <div class="row">
                         <div class="col">{{ fieldunit_form.timestart|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
                         <div class="col">{{ fieldunit_form.timestop|as_crispy_field}}</div>
                     </div>
                     <div class="row">
                         <div class="col">{{ fieldunit_form.delay|as_crispy_field}}</div>
+                        <div class="col">{{ fieldunit_form.clockcorrection|as_crispy_field}}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ fieldunit_form.clockcorrection|as_crispy_field}}</div>
+                        <div class="col-6">{{ fieldunit_form.samples|as_crispy_field}}</div>
                     </div>
                     <div class="row">
                         <div class="col">{{ fieldunit_form.errors}}</div>

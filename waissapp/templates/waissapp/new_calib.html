@@ -10,228 +10,210 @@
 {% endblock %}
 
 {% block dashboard_block %}
-<body class="page-top bg-info">
-{% endblock %}
-
-{% block topbar_block %}
-
-<nav class="navbar navbar-light navbar-expand bg-white topbar">
-    <ul class="navbar-nav">
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-item">
-              <div class="navbar-brand-icon">
-                &nbsp;
-                <img src={% static "theme/waiss_logo.png" %} width=50px height=50px>
-                <span class="text-gray-800">WAISS</span>
-              </div>
-            </a>
-          </li>
-    </ul>
-    <!-- Sidebar Toggle (Topbar) -->
-  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-    <i class="fa fa-bars"></i>
-  </button>
-  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-  <!-- Topbar Search -->
-  <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-    <div class="input-group">
-      <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-      <div class="input-group-append">
-        <button class="btn btn-sm btn-info" type="button">
-          <i class="fas fa-search fa-sm"></i>
-        </button>
+  <!-- Topbar -->
+  <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
+      <div class="sidebar-brand-icon">
+        <a href="{% url 'waiss:index' %}"><img src={% static "theme/waiss_logo.png" %} width=50px height=50px></a>
       </div>
+      <div class="sidebar-brand-text mx-3">WAISS</div>
     </div>
-  </form>
-
-  <!-- Topbar Navbar -->
-  <ul class="navbar-nav">
-    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-    <li class="nav-item dropdown no-arrow d-sm-none">
-      <a class="nav-link dropdown-toggle" href="" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-search fa-fw"></i>
-      </a>
-      <!-- Dropdown - Messages -->
-      <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-        <form class="form-inline mr-auto w-100 navbar-search">
-          <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button">
-                <i class="fas fa-search fa-sm"></i>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </li>
-
-    <!-- Nav Item - Alerts -->
-    <li class="nav-item dropdown no-arrow mx-1">
-      <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-bell fa-fw"></i>
-        <!-- Counter - Alerts -->
-        <span class="badge badge-danger badge-counter">3+</span>
-      </a>
-      <!-- Dropdown - Alerts -->
-      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-        <h6 class="dropdown-header">
-          Alerts Center
-        </h6>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="mr-3">
-            <div class="icon-circle bg-success">
-              <i class="fas fa-donate text-white"></i>
-            </div>
-          </div>
-          <div>
-            <div class="small text-gray-500">December 7, 2019</div>
-            $290.29 has been deposited into your account!
-          </div>
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+      
+      <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+      <li class="nav-item dropdown no-arrow d-sm-none">
+        <a class="nav-link dropdown-toggle" href="" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-search fa-fw"></i>
         </a>
+        <!-- Dropdown - Messages -->
+        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+          <form class="form-inline mr-auto w-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li>
 
-        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-      </div>
-    </li>
+      <!-- Nav Item - Alerts -->
+      <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-bell fa-fw"></i>
+          <!-- Counter - Alerts -->
+          <span class="badge badge-danger badge-counter">3+</span>
+        </a>
+        <!-- Dropdown - Alerts -->
+        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+          <h6 class="dropdown-header">
+            Alerts Center
+          </h6>
+          <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+              <div class="icon-circle bg-primary">
+                <i class="fas fa-file-alt text-white"></i>
+              </div>
+            </div>
+            <div>
+              <div class="small text-gray-500">December 12, 2019</div>
+              <span class="font-weight-bold">A new monthly report is ready to download!</span>
+            </div>
+          </a>
+          <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+        </div>
+      </li>
 
     <!-- Nav Item - Messages -->
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'waiss:messages' %}" aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-envelope fa-fw"></i>
+        <!-- Counter - Messages -->
+        <span class="badge badge-danger badge-counter">5+</span>
       </a>
-    </li>
-
-    <div class="topbar-divider d-none d-sm-block"></div>
-
-    <!-- Nav Item - User Information -->
-    <li class="nav-item dropdown no-arrow">
-      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Jay Ann Lomod</span>
-        <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-      </a>
-      <!-- Dropdown - User Information -->
-      <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-        <a class="dropdown-item" href="#">
-          <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-          Profile
+      <!-- Dropdown - Messages -->
+      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+        <h6 class="dropdown-header">
+          Message Center
+        </h6>
+        {% for msgs in final_list %}
+        <a class="dropdown-item d-flex align-items-center" href={% url 'waiss:view-conversation' msgs.number %}>
+          <div class="mr-3">
+            <div class="icon-circle bg-primary">
+              <i class="fas fa-file-alt text-white"></i>
+            </div>
+          </div>
+          <div>
+            <div class="small text-gray-500">{{msgs.timestamp}}</div>
+            <span class="small font-weight-bold">{{msgs.msg}}</span>
+          </div>
         </a>
-        <a class="dropdown-item" href="#">
-          <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-          Settings
-        </a>
-        <a class="dropdown-item" href="#">
-          <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-          Activity Log
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-          <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-          Logout
-        </a>
+        {% endfor %}
+        <a class="dropdown-item text-center small text-gray-500" href="{% url 'waiss:messages' %}">Show All Alerts</a>
       </div>
     </li>
-  </ul>
-</nav>
+
+      <div class="topbar-divider d-none d-sm-block"></div>
+
+      <!-- Nav Item - User Information -->
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+          <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+        </a>
+        <!-- Dropdown - User Information -->
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="#">
+            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+            Profile
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+            Settings
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+            Activity Log
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Logout
+          </a>
+        </div>
+      </li>
+    </ul>
+  </nav>
 {% endblock %}
 {% block main_block %}
-<br>
-<div class="bg-white container col-lg-10 rounded">
-    <div class="col">
+<div class="container-fluid">
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+    <div class="col-9">
+      <div class="card">
         <div class="p-5">
             <h4 class="display-4" style="font-size: 35px;">Let's get started!</h4>
             <p class="lead" style="font-size: 15px;">Input required information for each parameters.</p>
             <div class="progress_bar">
                 <div class="pro-bar">
                     <small class="progress_bar_title">
-                        Personnel | Crop | Soil | Irrigation System | Field Unit | Farm | <span style="color: #1abc9c; font-size: large;"><b>Calibration Equation</b></span>
-                        <span class="progress_number">77.7%</span>
+                        Farm | Personnel | Crop | Soil | Irrigation | Field Unit | <span style="color: #1abc9c; font-size: large;"><b>Calibration</b></span>
+                        <span class="progress_number">70%</span>
                     </small>
-                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 77.7%;" data-value="77.7" data-percentage-value="77.7"></span>
+                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 70%;" data-value="70" data-percentage-value="70"></span>
                 </div>
             </div>
             <div class="card">
+              <form class="form-group" action="" method="post">
+                {% csrf_token %}
                 <div class="card-header">
-                    <small>Fillout calibration equation coefficients.</small>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                    <small>Equation Standard Form</small>
+                    <small>Fillout calibration equation coefficients.</small>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <form class="form-group" action="{% url 'waiss:new_calib' %}" method="post">
-                            {% csrf_token %}
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">{{calib_form.fieldunit|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{calib_form.name|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>
-                                </div>
-                                <div class="col-8 mx-auto">
-                                    <div class="row">
-                                        <div class="col">{{calib_form.calib_coeff_a|as_crispy_field}}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">{{calib_form.calib_coeff_b|as_crispy_field}}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">{{calib_form.calib_coeff_c|as_crispy_field}}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">{{calib_form.calib_coeff_d|as_crispy_field}}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">{{calib_form.calib_coeff_m|as_crispy_field}}</div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{calib_form.date_tested|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{calib_form.tested_by|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{calib_form.errors}}</div>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                            <div class="card-body">
-                                <br><br><br><br><br><br><br>
-                                <p>
-                                    <small><i>Linear: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=(analogreading)a&plus;b" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=(analogreading)a&plus;b" title="MC_v=(analogreading)a+b" /></a></i></small>
-                                </p>
-                                <p>
-                                    <small><i>Quadratic: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;a(analogreading)^2&space;&plus;&space;b(analogreading)&plus;c" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;a(analogreading)^2&space;&plus;&space;b(analogreading)&plus;c" title="MC_v = a(analogreading)^2 + b(analogreading)+c" /></a></i></small>
-                                </p>
-                                <p>
-                                    <small><i>Exponential: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;ae^b(analogreading)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;ae^b(analogreading)" title="MC_v = ae^b(analogreading)" /></a></i></small>
-                                </p>
-                                <p>
-                                    <small><i>Logarithmic: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;aln(analogreading)&space;&plus;&space;b" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;aln(analogreading)&space;&plus;&space;b" title="MC_v = aln(analogreading) + b" /></a></i></small>
-                                </p>
-                                <p>
-                                    <small><i>Symmetrical Sigmoidal: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{1&space;&plus;&space;(\frac{analogreading}{c})^b}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{1&space;&plus;&space;(\frac{analogreading}{c})^b}" title="MC_v= d + \frac{(a - d)}{1 + (\frac{analogreading}{c})^b}" /></a></i></small>
-                                </p>
-                                <p>
-                                    <small><i>Assymmetrical Sigmoidal: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{(1&space;&plus;&space;(\frac{analogreading}{c})^b)^m}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{(1&space;&plus;&space;(\frac{analogreading}{c})^b)^m}" title="MC_v= d + \frac{(a - d)}{(1 + (\frac{analogreading}{c})^b)^m}" /></a></i></small>
-                                </p>
-                            </div>
-                        </div>
-                    </div> 
-                </div>
-                <br>
-                <div class="text-center">
-                    <button type="button" class="btn btn-success"><a href="" onclick="window.history.go(-1); return false;" style="color:white">Previous</a></button>
-                    <input type="submit" value="Submit" class="btn btn-info">
-                    <button type="button" class="btn btn-success"><a href={% url 'waiss:new_sensor' %} style="color:white">Next</a></button>
-                </div>
-            </form>
-        </div>
-    </div>
+                <div class="card-body">
+                  <div class="row">
+                      <div class="col">{{calib_form.fieldunit|as_crispy_field}}</div>
+                  </div>
+                  <div class="row">
+                      <div class="col">{{calib_form.name|as_crispy_field}}</div>
+                  </div>
+                  <div class="row">
+                      <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>
+                      <div class="col-5"><br>&emsp;&emsp;<span class="text-success"><small><b>Equation Standard Form</b></small></span></div>
+                  </div>
+                  <div class="col">
+                      <div class="row">
+                          <div class="col-6">{{calib_form.calib_coeff_a|as_crispy_field}}</div>
+                          <div class="col-6 text-center"><small><i>Linear: MC<sub>v</sub> = a(reading) + b<br>
+                            Quadratic: MC<sub>v</sub> = a(reading)<sup>2</sup> + b(reading) + c</i></small>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-6">{{calib_form.calib_coeff_b|as_crispy_field}}</div>
+                          <div class="col-6 text-center"><small><i>Exponential: MC<sub>v</sub> = ae<sup>b</sup>(reading)<br>
+                            Logarithmic: MC<sub>v</sub> = aln(reading) + b</i></small>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-6">{{calib_form.calib_coeff_c|as_crispy_field}}</div>
+                          <div class="col-6 text-center"><small><i>Symmetrical Sigmoidal: MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</i></small>
+                              <br><small><i>Assymmetrical Sigmoidal: <br>
+                                MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></i></small>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-6">{{calib_form.calib_coeff_d|as_crispy_field}}</div>
+                      </div>
+                      <div class="row">
+                          <div class="col-6">{{calib_form.calib_coeff_m|as_crispy_field}}</div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col">{{calib_form.date_tested|as_crispy_field}}</div>
+                  </div>
+                  <div class="row">
+                      <div class="col">{{calib_form.tested_by|as_crispy_field}}</div>
+                  </div>
+                  <div class="row">
+                      <div class="col">{{calib_form.errors}}</div>
+                  </div>
+              </div>
+          </div>
+          <br>
+          <div class="text-center">
+            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Previous</a></button>
+            <input type="submit" value="Submit" class="btn btn-info">
+            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_system' %} style="color:white">Next</a></button>
+          </div>
+        </form>
+      </div>
+      </div>
+  </div>
 </div>    
-    <br>
+<br>
 {% endblock %}
 
 {% block bottom_script_block %}

@@ -1,0 +1,56 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<h5 class="text-left">Systems</h5>
+<div class="card shadow mb-4">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th class="align-top"></th>
+                <th class="align-top">Name</th>
+                <th class="align-top">Farm</th>
+                <th class="align-top">Farm Manager</th>
+                <th class="align-top">Crop</th>
+                <th class="align-top">Soil</th>
+                <th class="align-top">Irrigation System</th>
+                <th class="align-top">Field Unit</th>
+                <th class="align-top">Calibration Equation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for instance in list %}
+            <tr>
+                <td class="min">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_system' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                        &nbsp;
+                        <a href={% url 'waiss:delete_system' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        &nbsp;
+                    </div>
+                </td>
+                <td class="align-middle min">{{instance.name}}</td>              
+                <td class="align-middle min">{{instance.farm}}</td>
+                <td class="align-middle min">{{instance.farm_manager}}</td>
+                <td class="align-middle min">{{instance.crop}}</td>
+                <td class="align-middle min">{{instance.soil}}</td>
+                <td class="align-middle min">{{instance.irrigation}}</td>
+                <td class="align-middle min">{{instance.fieldunit}}</td>
+                <td class="align-middle min">{{instance.calib}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<small><em>Generate new system here.</em></small>&nbsp;<a href={% url 'waiss:add_system' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}

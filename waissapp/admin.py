@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, IrrigationAdvisory, CalibrationConstant, IrrigationParameters
+from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, IntakeFamily, Crop, IrrigationAdvisory, CalibrationConstant, IrrigationParameters, WAISSystems
 
 
 class SentMsgsInline(admin.TabularInline):
@@ -48,7 +48,6 @@ class FieldUnitAdmin(admin.ModelAdmin):
 
 admin.site.register(SentMsgs, SentMsgsAdmin)
 admin.site.register(ReceivedMsgs, ReceivedMsgsAdmin)
-
 admin.site.register(Farm, FarmAdmin)
 admin.site.register(Sensor, SensorAdmin)
 admin.site.register(Personnel)
@@ -105,4 +104,10 @@ class IrrigationAdvisoryInline(admin.TabularInline):
 class IrrigationAdvisoryAdmin(admin.ModelAdmin):
     list_display =('fieldunit', 'net_app_depth', 'irrigation_period', 'irrigation_volume')
 
+class WAISSystemsInline(admin.TabularInline):
+    model = WAISSystems
+class WAISSystemsAdmin(admin.ModelAdmin):
+    list_display =('name', 'fieldunit')
+
 admin.site.register(IrrigationAdvisory, IrrigationAdvisoryAdmin)
+admin.site.register(WAISSystems, WAISSystemsAdmin)

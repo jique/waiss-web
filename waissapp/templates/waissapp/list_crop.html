@@ -6,22 +6,16 @@
 {% endblock %}
 
 {% block main_block %}
-<br>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="{% url 'waiss:list_crop' %}">Crops</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link disabled"><img src={% static "theme/add_crop.png" %} style="height: 30px;"></a>
-    </li>
-</ul>
+<h5 class="text-left">Crops</h5>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-left-info border-bottom-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-md table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
+                    <th class="align-top"></th>
                     <th class="align-top">Crop</th>
+                    <th class="align-top">Root Growth Model</th>
                     <th class="align-top">Date Transplanted</th>
                     <th class="align-top">Growing Period (days)</th>
                     <th class="align-top">Management Allowable Depletion (MC<sub>v</sub> , %)</th>
@@ -37,14 +31,22 @@
                     <th class="align-top"> b</th>
                     <th class="align-top"> c</th>
                     <th class="align-top">Root Depth during Transplanting (m)</th>
-                    <th class="align-top"></th>
                 </tr>
             </thead>
                     
             <tbody>
                 {% for instance in crop_list %}
                 <tr> 
-                    <td class="align-middle fit">{{instance.crop}}</td>
+                    <td class="min">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href={% url 'waiss:edit_crop' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                            &nbsp;
+                            <a href={% url 'waiss:delete_crop' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                            &nbsp;
+                        </div>
+                    </td> 
+                    <td class="align-middle min">{{instance.crop}}</td>
+                    <td class="align-middle">{{instance.root_growth_model|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.date_transplanted|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.growingperiod|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.mad|default_if_none:"-"}}</td>
@@ -60,22 +62,13 @@
                     <td class="align-middle">{{instance.root_b|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.root_c|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.root_ini|default_if_none:"-"}}</td>
-                    <td>
-                        <div class="btn-group btn-group-sm float-left" role="group" aria-label="Basic example">
-                            <a href={% url 'waiss:edit_crop' instance.id %}><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                            &nbsp;
-                            <a href={% url 'waiss:delete_crop' instance.id %}><img class="rounded"  src={% static "theme/delete.png" %} style="height: 30px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                        </div>
-                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    <div class="float-right"> 
-        <small><em>Add new farm data here.</em></small>&nbsp;<a href={% url 'waiss:add_crop' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
-    </div> 
-</div>
+    <small><em>Add new crop data here.</em></small>&nbsp;<a href={% url 'waiss:add_crop' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
+    </div>
 </div>
   <!-- /.container-fluid -->
 {% endblock %}

@@ -6,42 +6,40 @@
 {% endblock %}
 
 {% block main_block %}
-<br>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="{% url 'waiss:list_sensor' %}">Sensors</a>
-    </li>
-</ul>
+<h5 class="text-left">Sensors</h5>
 <div class="card shadow mb-4">
     <div class="card-body">
     <div class="table-responsive">
-        <table class="table table-hover border-left-info border-bottom-info" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th class="align-top fit">Sensor</th>
-                <th class="align-top fit">Actions</th>
-                <th class="align-top fit">Field Unit</th>
-                <th class="align-top fit">Depth (m)</th>
+                <th class="align-top "></th>
+                <th class="align-top ">Sensor</th>
+                <th class="align-top ">Field Unit</th>
+                <th class="align-top ">Depth (m)</th>
             </tr>
         </thead>
         <tbody>
             {% for instance in sensor_list %}
-            <tr>  
-                <td class="align-middle fit">{{instance.name}}</td>
-                <td class="fit">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_sensor' instance.id %} <button class="btn btn-info"> Edit</button></a>
-                        <a href={% url 'waiss:delete_sensor' instance.id %} <button class="btn btn-danger">Delete</button></a>
+            <tr>
+                <td class="min">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href={% url 'waiss:edit_sensor' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                        &nbsp;
+                        <a href={% url 'waiss:delete_sensor' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        &nbsp;
+                        <a href={% url 'waiss:list_mc' instance.name %}>Show MC Data</a>
                     </div>
                 </td>
-                <td class="align-middle fit">{{instance.fieldunit}}</td>
-                <td class="align-middle fit">{{instance.depth}}</td>
+                <td class="align-middle ">{{instance.name}}</td>
+                <td class="align-middle ">{{instance.fieldunit}}</td>
+                <td class="align-middle ">{{instance.depth}}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     </div>
-    <small><a href={% url 'waiss:add_sensor' %}><i class='far fa-edit'></i></a>&nbsp;<em>Add new sensor data here</em></small>
+    <small><em>Add new sensor here.</em></small>&nbsp;<a href={% url 'waiss:add_sensor' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
 </div>
 {% endblock %}
 

@@ -6,13 +6,13 @@
 {% endblock %}
 
 {% block main_block %}
+<h5 class="text-left">Add Farm</h5>
 <div class="row">
-    <div class="col">
-        <div class="card mb-4">
-            <div class="card-header">Add New Farm</div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header"><small>Farm name & location.</small></div>
             <div class="card-body">
-                <form class="form-group" action="{% url 'waiss:add_farm' %}" method="post">
-                    <br>
+                <form class="form-group" action="" method="post">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col">{{ farm_form.name|as_crispy_field }}</div>
@@ -26,59 +26,16 @@
                     <div class="row">
                         <div class="col">{{ farm_form.province|as_crispy_field }}</div>
                     </div>
-                    <div class="row">
-                        <div class="col">{{farm_form.farm_manager|as_crispy_field }}</div>
-                        <div class="col-1"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add personnel"></i></a></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{farm_form.crop|as_crispy_field }}</div>
-                        <div class="col-1"><a href="{% url 'waiss:add_crop' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add crop"></i></a></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{farm_form.soil|as_crispy_field }}</div>
-                        <div class="col-1"><a href="{% url 'waiss:addsoil' %}"><i class="fas fa-plus"  data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
-                    </div>
-                    <div class="row"><div class="col">{{farm_form.irrigation|as_crispy_field }}</div>
-                        <div class="col-1"><i class="fas fa-plus text-primary" title="add new basin irrigation system" data-toggle="modal" data-target="#irrigationtype"></i></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{farm_form.fieldunit|as_crispy_field }}</div>
-                        <div class="col-1"><a href="{% url 'waiss:add_fieldunit' %}"><i class="fas fa-plus"  data-toggle="tooltip" data-placement="right" title="add field unit"></i></a></div>
-                    </div>
                     <input type="submit" value="Submit" class="btn btn-info btn-block">
                 </form>
             </div>
         </div>
     </div>
 </div>
-<!-- Irrigation Type Modal -->
-<div class="modal fade" id="irrigationtype" tabindex="-1" role="dialog" aria-labelledby="irrigationtype" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Irrigation System Type</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body text-center">
-            <a role="button" href="{% url 'waiss:add_basin' %}" class="btn btn-info btn-sm">Basin Irrigation</a> &emsp;
-            <a role="button" href="{% url 'waiss:add_border' %}" class="btn btn-primary btn-sm">Border Irrigation</a> &emsp;
-            <a role="button" href="{% url 'waiss:add_furrow' %}" class="btn btn-secondary btn-sm">Furrow Irrigation</a> <br><br>
-            <a role="button" href="{% url 'waiss:add_drip' %}" class="btn btn-warning btn-sm">Drip Irrigation</a>&emsp;
-            <a role="button" href="{% url 'waiss:add_sprinkler' %}" class="btn btn-danger btn-sm">Sprinkler Irrigation</a>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
 {% endblock %}
 
 {% block bottom_script_block %}
-<script>
-    $('#irrigationtype').modal(options)
-</script>
+
 {% endblock %}
     

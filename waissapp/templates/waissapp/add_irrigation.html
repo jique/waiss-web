@@ -1,0 +1,187 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+
+{% endblock %}
+
+{% block main_block %}
+<h5 class="text-left">Add Irrigation System</h5>
+<div class="card">
+          <div class="card-header">
+              <small>Select from the 5 types of suface irrigation. Fillout required specifications.</small>
+          </div>
+          <div class="card-body">
+            <form class="form-group" action="" method="post">
+              {% csrf_token %}
+            <div class="col">{{ irrigation_form.name|as_crispy_field}}</div>
+            <div class="col">{{ irrigation_form.irrigation_system_type|as_crispy_field}}</div>
+        </div>
+        <div class="accordion" id="accordion">
+            <div class="card">
+              <div class="card-header text-center" id="headingOne">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" type="button">
+                    Type 1: Basin Irrigation System
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">{{ irrigation_form.basin_length|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ irrigation_form.discharge|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ irrigation_form.ea|as_crispy_field}}</div>
+                </div>
+                </div>
+              </div>
+            </div>
+              <div class="card">
+                <div class="card-header text-center" id="headingTwo">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" type="button">
+                      Type 2: Border Irrigation System
+                    </button>
+                  </h5>
+                </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.border_strips|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.width|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.discharge|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.flow_rate_per_strip|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.total_flow_rate|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.area_slope|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.mannings_coeff|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.ea|as_crispy_field}}</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header text-center" id="headingThree">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" type="button">
+                    Type 3: Furrow Irrigation System
+                  </button>
+                </h5>
+              </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.bln_furrow_type|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.discharge|as_crispy_field}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.area_slope|as_crispy_field}}</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header text-center" id="headingFour">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" type="button">
+                    Type 4: Sprinkler Irrigation System
+                  </button>
+                </h5>
+              </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.farm_area|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.area_irrigated_at_a_time|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.lateral_spacing|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.sprinkler_spacing|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.num_of_sprinklers|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.discharge|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.ea|as_crispy_field }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header text-center" id="headingFive">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive" type="button">
+                      Type 5: Drip Irrigation System
+                    </button>
+                  </h5>
+                </div>
+              <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.bln_single_lateral|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.emitters_per_plant|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.emitter_spacing|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.plant_spacing|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.row_spacing|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.wetted_dia|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.EU|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.irrigation_interval|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ irrigation_form.errors }}</div>
+                    </div>
+                </div>
+            </div>
+          </div>
+            <br>
+            <input type="submit" value="Submit" class="btn btn-info btn-block">
+        </form>
+      </div>
+    </div>  
+  </div> 
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

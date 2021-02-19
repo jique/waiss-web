@@ -9,12 +9,7 @@
 {% endblock %}
 
 {% block main_block %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">New Farm</li>
-        <li class="breadcrumb-item active" aria-current="page">Basin Irrigation System</li>
-    </ol>
-</nav>
+<h5 class="text-left">New System</h5>
 <div class="row">
     <div class="col-lg-12 mx-auto">
         <div class="card mb-4">
@@ -22,30 +17,38 @@
                 <small><i>Create new <b>Water Advisory for Irrigation Scheduling System (WAISS)</b>. Choose parameters from database or create new one by clicking the plus icon.</i></small>
             </div>
             <div class="card-body">
-                <form class="form-group" action="{% url 'waiss:add_system' %}" method="post">
+                <form class="form-group" action="" method="post">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col">{{ farm_form.name|as_crispy_field }}</div>
+                        <div class="col-11">{{form.name|as_crispy_field }}</div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ farm_form.brgy|as_crispy_field }}</div>
+                        <div class="col">{{form.farm|as_crispy_field }}</div>
+                        <div class="col-1"><a href="{% url 'waiss:add_farm' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
+                        <div class="col">{{form.farm_manager|as_crispy_field }}</div>
+                        <div class="col-1"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                     </div>
                     <div class="row">
-                        <div class="col">{{ farm_form.province|as_crispy_field }}</div>
+                        <div class="col">{{form.fieldunit|as_crispy_field }}</div>
+                        <div class="col-1"><a href="{% url 'waiss:add_fieldunit' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                     </div>
                     <div class="row">
-                        <div class="col">{{farm_form.crop|as_crispy_field }}</div>
+                        <div class="col">{{form.crop|as_crispy_field }}</div>
                         <div class="col-1"><a href="{% url 'waiss:add_crop' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add crop"></i></a></div>
                     </div>
                     <div class="row">
-                        <div class="col">{{farm_form.soil|as_crispy_field }}</div>
+                        <div class="col">{{form.soil|as_crispy_field }}</div>
                         <div class="col-1"><a href="{% url 'waiss:addsoil' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                     </div>
-                    <div class="row"><div class="col"></div>
-                        <div class="col-1"><a href=""><i class="fas fa-plus"  data-toggle="tooltip" data-placement="right" title="add new basin irrigation system"></i></a></div>
+                    <div class="row">
+                        <div class="col">{{form.calib|as_crispy_field }}</div>
+                        <div class="col-1"><a href="{% url 'waiss:add_calib' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{form.irrigation|as_crispy_field }}</div>
+                        <div class="col-1"><a href="{% url 'waiss:add_irrigation' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
                     </div>
                     <input type="submit" value="Submit" class="btn btn-info btn-block">
                 </form>

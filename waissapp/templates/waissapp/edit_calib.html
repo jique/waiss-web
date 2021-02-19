@@ -5,77 +5,64 @@
 {% block top_script_block %}
 {% endblock %}
 
-{% block pageheading_block %}
-Input Calibration Data
-{% endblock %}
 
 {% block main_block %}
-<br>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active"><img class="rounded" src={% static "theme/edit.png" %} style="height: 30px;" alt="edit button">&nbsp;EDIT<em> <b>"{{item}}"</b></em></a>
-    </li>
-</ul>
 <div class="row">
-    <div class="col-lg-7">
-        <div class="card mb-4 ">
+    <div class="col">
+        <div class="card">
+            <div class="card-header"><i><small>Edit Calibration&nbsp;>&nbsp;<b><span class="text-info">{{item}}</span></b></small></i></div>
             <div class="card-body">
                 <form class="django-form" action="" method="post">
                     {% csrf_token %}
-                    <div class="row">
-                        <div class="col">{{calib_form.name|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{calib_form.fieldunit|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>
-                    </div>
-                    <div class="col-8 mx-auto">
-                        <div class="row">
-                            <div class="col">{{calib_form.calib_coeff_a|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{calib_form.calib_coeff_b|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{calib_form.calib_coeff_c|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{calib_form.calib_coeff_d|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{calib_form.calib_coeff_m|as_crispy_field}}</div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{calib_form.date_tested|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{calib_form.tested_by|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{calib_form.errors}}</div>
-                    </div>
-                    <input type="submit" value="Submit" class="btn btn-secondary btn-block">
+                    <div class="card-body">
+                      <div class="row">
+                          <div class="col">{{calib_form.fieldunit|as_crispy_field}}</div>
+                      </div>
+                      <div class="row">
+                          <div class="col">{{calib_form.name|as_crispy_field}}</div>
+                      </div>
+                      <div class="row">
+                          <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>
+                          <div class="col-5"><br>&emsp;&emsp;<span class="text-success"><small><b>Equation Standard Form</b></small></span></div>
+                      </div>
+                      <div class="col">
+                          <div class="row">
+                              <div class="col-6">{{calib_form.calib_coeff_a|as_crispy_field}}</div>
+                              <div class="col-6 text-center"><small><i>Linear: MC<sub>v</sub> = a(reading) + b<br>
+                                Quadratic: MC<sub>v</sub> = a(reading)<sup>2</sup> + b(reading) + c</i></small>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-6">{{calib_form.calib_coeff_b|as_crispy_field}}</div>
+                              <div class="col-6 text-center"><small><i>Exponential: MC<sub>v</sub> = ae<sup>b</sup>(reading)<br>
+                                Logarithmic: MC<sub>v</sub> = aln(reading) + b</i></small>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-6">{{calib_form.calib_coeff_c|as_crispy_field}}</div>
+                              <div class="col-6 text-center"><small><i>Symmetrical Sigmoidal: MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</i></small>
+                                  <br><small><i>Assymmetrical Sigmoidal: <br>
+                                    MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></i></small>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-6">{{calib_form.calib_coeff_d|as_crispy_field}}</div>
+                          </div>
+                          <div class="row">
+                              <div class="col-6">{{calib_form.calib_coeff_m|as_crispy_field}}</div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col">{{calib_form.date_tested|as_crispy_field}}</div>
+                      </div>
+                      <div class="row">
+                          <div class="col">{{calib_form.tested_by|as_crispy_field}}</div>
+                      </div>
+                      <div class="row">
+                          <div class="col">{{calib_form.errors}}</div>
+                      </div>
+                    <input type="submit" value="Submit" class="btn btn-info btn-block">
                 </form>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-5">
-        <br>
-        <div class="card mb-4">
-            <div class="card-header py-3">E Q U A T I O N S _ S T A N D A R D _ F O R M S</div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Linear: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=(analogreading)a&plus;b" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=(analogreading)a&plus;b" title="MC_v=(analogreading)a+b" /></a>
-                    <li class="list-group-item">Quadratic: <br> <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;a(analogreading)^2&space;&plus;&space;b(analogreading)&plus;c" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;a(analogreading)^2&space;&plus;&space;b(analogreading)&plus;c" title="MC_v = a(analogreading)^2 + b(analogreading)+c" /></a></li>
-                    <li class="list-group-item">Exponential: <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;ae^b(analogreading)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;ae^b(analogreading)" title="MC_v = ae^b(analogreading)" /></a></li>
-                    <li class="list-group-item">Logarithmic: <br> <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v&space;=&space;aln(analogreading)&space;&plus;&space;b" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v&space;=&space;aln(analogreading)&space;&plus;&space;b" title="MC_v = aln(analogreading) + b" /></a></li>
-                    <li class="list-group-item">Symmetrical Sigmoidal: <br> <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{1&space;&plus;&space;(\frac{analogreading}{c})^b}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{1&space;&plus;&space;(\frac{analogreading}{c})^b}" title="MC_v= d + \frac{(a - d)}{1 + (\frac{analogreading}{c})^b}" /></a>
-                    <li class="list-group-item">Assymmetrical Sigmoidal: <br><a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{(1&space;&plus;&space;(\frac{analogreading}{c})^b)^m}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;MC_v=&space;d&space;&plus;&space;\frac{(a&space;-&space;d)}{(1&space;&plus;&space;(\frac{analogreading}{c})^b)^m}" title="MC_v= d + \frac{(a - d)}{(1 + (\frac{analogreading}{c})^b)^m}" /></a></li>
-                </ul>                
             </div>
         </div>
     </div>

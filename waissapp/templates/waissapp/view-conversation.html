@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block main_block %}
-<br>
 <style>
 img{ max-width:100%;}
 .inbox_people {
@@ -43,13 +42,18 @@ img{ max-width:100%;}
   width: 88%;
 }
 
-.chat_people{ overflow:hidden; clear:both;}
+.chat_people{ 
+  overflow:hidden; 
+  clear:both;
+  }
 .chat_list {
   border-bottom: 1px solid #c4c4c4;
   margin: 0;
   padding: 18px 16px 10px;
 }
-.inbox_chat { height: 550px; overflow-y: scroll;}
+.inbox_chat {
+  height: 480px;
+  overflow-y: scroll;}
 
 .active_chat{ background:#ebebeb;}
 
@@ -125,27 +129,33 @@ img{ max-width:100%;}
   top: 11px;
   width: 33px;
 }
-
+.msg_history {
+  height: 250px;
+  overflow-y: scroll;
+}
 </style>
 <div class="row">
     <div class="col">
-      <div class="card">
         <div class="container">
-          <br>
           <h4 class="text-left">Messages</h4>
-          <div class="messaging">
             <div class="inbox_msg">
               <div class="inbox_people">
                 <div class="inbox_chat">
-                  {% for msg in final_list %}
+                  {% for msg in joined_list %}
                   <div class="chat_list">
                     <div class="chat_people">
                       <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>
                       <div class="chat_ib">
-                        <h5>{{msg.number}} <span class="chat_date">{{msg.timestamp}}</span></h5>
-                        <p>{{msg.msg}}
-                       <span class="text-right"><a href={% url 'waiss:view-conversation' msg.number %}> View</a></span>
-                          <span><a href={% url 'waiss:messages_delete' msg.id %}>Delete</a></span></p>
+                        <h5>{{msg.number}}<span class="chat_date">{{msg.timestamp}}</span></h5>
+                        <div class="row">
+                          <div class="col">
+                            <small>{{ msg.msg}}</small>
+                          </div>
+                          <div class="col-4 small float-right">
+                            <span><a href={% url 'waiss:view-conversation' msg.number %}>View</a></span>
+                            <span><a href={% url 'waiss:messages_delete' msg.id %}>Delete</a></span>
+                          </div>
+                        </div>
                       </div>
                       </div>
                     </div>
@@ -154,18 +164,18 @@ img{ max-width:100%;}
               </div>
               <div class="card">
                 <div class="card-header">
-                  <h6><i class="fas fa-arrow-left"></i>&emsp;{{number}}</h6>
+                  <h6><a href={% url 'waiss:messages' %}><i class="fas fa-arrow-left"></i></a>&emsp;{{number}}</h6>
                 </div>
                 <br>
                 <div class="msg_history">
                   {% for msg in result %}
-                    {% if not msg.marker %}
+                    {% if msg.marker %}
                       <div class="incoming_msg">
-                        <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                        <div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>
                         <div class="received_msg">
                           <div class="received_withd_msg">
                             <p>{{msg.msg}}</p>
-                            <span class="time_date"> {{msg.timestamp}} </span>
+                            <span class="time_date">{{msg.timestamp}}</span>
                           </div>
                         </div>
                       </div>
@@ -178,14 +188,19 @@ img{ max-width:100%;}
                       </div>
                     {% endif %}
                   {% endfor %}
+                    </div>
                   <div class="type_msg">
+                    <br>
                     <div class="input_msg_write">
                       <form action={% url 'waiss:view-conversation' number %} method="post">
                       {% csrf_token %}
                           <div class="row">
+                            <div class="col-10">{{ form.number|as_crispy_field }}</div>
+                          </div>
+                          <div class="row">
                               <div class="col">{{ form.msg|as_crispy_field }}</div>
                               <div class="col-2">
-                                <br><br>
+                                <br>
                                 <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                               </div>
                           </div>
@@ -196,7 +211,7 @@ img{ max-width:100%;}
             </div>
           </div>
       </div>
-    </div>
+    <br>
   </div>
 </div>
 {% endblock %}
