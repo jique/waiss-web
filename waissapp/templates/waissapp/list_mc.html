@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block main_block %}
-<h5 class="text-left">Sensors</h5>
+<h5 class="text-left">Moisture Content Readings</h5>
 <div class="card shadow mb-4">
     <div class="card-body">
     <div class="table-responsive">
@@ -15,8 +15,8 @@
             <tr>
                 <th class="align-top "></th>
                 <th class="align-top ">Sensor</th>
-                <th class="align-top ">Field Unit</th>
-                <th class="align-top ">Depth (m)</th>
+                <th class="align-top ">Reading</th>
+                <th class="align-top ">Timestamp</th>
             </tr>
         </thead>
         <tbody>
@@ -24,19 +24,21 @@
             <tr>
                 <td class="min">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_mc' item.name %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                        <a href={% url 'waiss:edit_mc' item.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
                         &nbsp;
-                        <a href={% url 'waiss:delete_mc' item.name %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        <a href={% url 'waiss:delete_mc' item.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
                         &nbsp;
                     </div>
                 </td>
+                <td>{{item.sensor}}</td>
+                <td>{{item.mc_data}}</td>
+                <td>{{item.timestamp}}</td>
             </tr>
-            <tr>{{item.mc_data}}</tr>
             {% endfor %}
         </tbody>
     </table>
     </div>
-    <small><em>Add new sensor here.</em></small>&nbsp;<a href={% url 'waiss:add_sensor' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
+    <small><em>Add new reading here.</em></small>&nbsp;<a href={% url 'waiss:add_mc' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
 </div>
 {% endblock %}
 

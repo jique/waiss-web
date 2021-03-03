@@ -153,20 +153,20 @@
                         </div>
                         <div class="card-body">
                             <form  class="form-group" action="" method="POST">
+                                {{formset.management_form}}
                                 {% csrf_token %} 
-                                {{ form.management_form }}
-                                    {% for form in form %}
-                                    <div class="row">
-                                        <div class="col">
-                                            {{form.name|as_crispy_field}}
-                                        </div>
-                                        <div class="col">
-                                            {{form.depth|as_crispy_field}}
-                                        </div>
-                                        <div class="col">
-                                            {{form.fieldunit|as_crispy_field}}
-                                        </div>
+                                {% for form in formset %}
+                                <div class="row">
+                                    <div class="col">
+                                        {{form.name|as_crispy_field}}
                                     </div>
+                                    <div class="col">
+                                        {{form.depth|as_crispy_field}}
+                                    </div>
+                                    <div class="col">
+                                        {{form.fieldunit|as_crispy_field}}
+                                    </div>
+                                </div>
                                 {% endfor%}
                         </div>
                     </div>
@@ -174,7 +174,7 @@
                     <div class="text-center">
                         <button type="button" class="btn btn-success"><a href={% url 'waiss:new_system' %} style="color:white">Previous</a></button>
                         <input type="submit" value="Submit" class="btn btn-info">
-                        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_data' %} style="color:white">Next</a></button>
+                        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_mc' %} style="color:white">Next</a></button>
                     </div>
                 </form>
             </div>

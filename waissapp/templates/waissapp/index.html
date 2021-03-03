@@ -26,6 +26,11 @@
     <link href={% static "css/sb-admin-2.min.css" %} rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href={% static "vendor/datatables/dataTables.bootstrap4.min.css" %} rel="stylesheet">
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
       //Update clock
         function startTime() {
@@ -73,7 +78,10 @@
 
   {% block style_block%}
   <style>
-    .progress_bar .pro-bar {
+  .topbar {
+    height: 50px;
+  }
+  .progress_bar .pro-bar {
       background: hsl(0, 0%, 97%);
       box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.1) inset;
       height:4px;
@@ -81,8 +89,7 @@
       margin-top: 50px;
       position: relative;
     }
-
-.progress_bar .progress_bar_title{
+    .progress_bar .progress_bar_title{
     color: hsl(218, 4%, 50%);
     font-size: 15px;
     font-weight: 300;
@@ -136,6 +143,40 @@ td.min {
     width: 1%;
     white-space: nowrap;
 }
+
+.highcharts-figure, .highcharts-data-table table {
+    min-width: 310px; 
+    max-width: 800px;
+    margin: 0;
+}
+
+.highcharts-data-table table {
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #EBEBEB;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
 </style>
   {% endblock %}
 
@@ -156,9 +197,6 @@ td.min {
           </div>
           <div class="sidebar-brand-text mx-3">WAISS</div>
         </div>
-  
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
   
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
@@ -320,7 +358,7 @@ td.min {
                   </div>
                   <div>
                     <div class="small text-gray-500">{{msgs.timestamp}}</div>
-                    <span class="small font-weight-bold">{{msgs.msg}}</span>
+                    <span class="small font-weight-bold">{{msgs.number}}: {{msgs.msg}}</span>
                   </div>
                 </a>
                 {% endfor %}
@@ -362,73 +400,82 @@ td.min {
           {% endblock %}
 
           {% block main_block %}
-              <div class="row">
-                <div class="col text-gray-800 form-group">
-                  <label for="system">Choose a system:</label>
-                      <select name="system" id="system">
-                        <option value="">--------</option>
-                        {% for x in system %}
-                        <option value={{x.name}}>{{x.name}}</option>
-                        {% endfor %}
-                      </select>
-                </div>
-                <div class="col text-right align-bottom"><small><span id="date"></span>&nbsp;|&nbsp;<span id="time"></span></small></div>
-              </div>
-          <!-- Page Heading -->
+          <div class="row">
+            <div class="col text-gray-800">System:</div>
+            <div class="col text-right align-bottom"><small><span id="date"></span>&nbsp;|&nbsp;<span id="time"></span></small></div>
+          </div>
           
           <div class="row">
-            <!-- Days after Planting Card -->
-            <div class="col-xl-4 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
+            <!--Crop Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Days after Planting</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        <span>20</span>
-                        <span>/ 80</span><span>&nbsp;<i>days</i></span>
-                      </div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-seedling fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            <!-- Air Temperature -->
-            <div class="col-xl-4 col-md-6 mb-4">
-              <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Air Temperature</div>
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                            <span>32</span>&#8451;
-                          </div>
-                        </div>
-                    <div class="col-auto">
-                      <i class="fas fa-thermometer-half fa-2x text-gray-300"></i>
+                    <div class="col">
+                      <div class="mb-0 font-weight-bold text-gray-800">{{crop.crop}}</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Crop</div>
+                      <small>{{crop_dat}} / {{crop_growingperiod}} days [{{crop_transplanted|date:'m-d'}} - harvest_date] <br>
+                        MAD: {{crop_mad}} 
+                        {% if irrigation_type == "drip" %}| Area Shaded: {{area_shaded}} %{% endif%}
+                      </small>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Relative Humidity Card -->
-            <div class="col-xl-4 col-md-6 mb-4">
-              <div class="card border-left-warning shadow h-100 py-2">
+            <!-- Soil Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-info shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Relative Humidity</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        <span>72</span>&nbsp;%
-                      </div>
+                    <div class="col">
+                      <div class="mb-0 mr-3 font-weight-bold text-gray-800">{{soil.soiltype}}</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Soil</div>
+                      <small>FC: {{soil_fc}}&nbsp;PWP: {{soil_pwp}}<br>Intake Family: {{intake_family}}</small>
                     </div>
-                    <div class="col-auto">
-                      <i class="fas fa-tint fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Irrigation Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col">
+                      <div class="mb-0 font-weight-bold text-gray-800">{{irrigation.name}}</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Irrigation System</div>
+                      <small>type: {{irrigation_type}}<br> q:
+                        {% if irrigation_type == "basin" %}{{irrigation_q}} lps{% endif %}
+                        {% if irrigation_type == "border" %}{{irrigation_q}} lps{% endif %}
+                        {% if irrigation_type == "furrow" %}{{irrigation_q}} lps{% endif %}
+                        {% if irrigation_type == "sprinkler" %}{{irrigation_q}} lps{% endif %}
+                        {% if irrigation_type == "drip" %}{{emitter_discharge}} l/day{% endif %}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <!-- Calibration Card-->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col">
+                      <div class="mb-0 mr-3 font-weight-bold text-gray-800">{{calib.name}}</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Calibration</div>
+                      <small>{{calib_eqn}} <br>
+                        {% if calib_eqn == "quadratic" %}{{calib_coeff_a}} {{calib_coeff_b}} {{calib_coeff_c}}{% endif %}
+                        {% if calib_eqn == "linear" %}{{calib_coeff_a}} {{calib_coeff_b}}{% endif %}
+                        {% if calib_eqn == "exponential" %}{{calib_coeff_a}} {{calib_coeff_b}}{% endif %}
+                        {% if calib_eqn == "logarithmic" %}{{calib_coeff_a}} {{calib_coeff_b}}{% endif %}
+                        {% if calib_eqn == "symmetrical sigmoidal" %}{{calib_coeff_a}} {{calib_coeff_b}} {{calib_coeff_c}}{{calib_coeff_d}} {{calib_coeff_m}}{% endif %}
+                        {% if calib_eqn == "asymmetrical sigmoidal" %}{{calib_coeff_a}} {{calib_coeff_b}} {{calib_coeff_c}}{{calib_coeff_d}} {{calib_coeff_m}}{% endif %}
+                      </small>
                     </div>
                   </div>
                 </div>
@@ -442,16 +489,12 @@ td.min {
             <!-- Line Chart -->
             <div class="col-8">
               <div class="card shadow mb-4">
-                <!-- Card Header -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Moisture Content</h6>
-                </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="">
-                    </canvas>
-                  </div>
+                  <figure class="highcharts-figure">
+                    <div id="container">
+                    </div>
+                  </figure>
                 </div>
               </div>
             </div>
@@ -464,21 +507,14 @@ td.min {
                 </div>
                 <div class="card-body">
                   <div class="text-center">
-                    <img src={% static "theme/water_on_plant.png" %} style="height: 100px;">
-                    <p>
-                    <span style="font-size: xx-large;">25%</span><span style="font-size: xx-large;">&nbsp;<i>MC<sub>v</sub></i></span>
-                    <br>
-                    <span style="font-size: x-large;"><i>Irrigate your crops!</i></span>
-                    <br>
-                    <span style="font-size: large;"><i>50 liters or 30 mins @ 1.0 lps</i></span>
-                    <br>
-                    <small><em>
-                    Date Measured : 9/8/2020
-                    <br>
-                    Time Measured : 12:00 PM
-                    <br>
-                    Previous MC<sub>v</sub> : <span>26%</span></em></small>
-                  </p>
+                    <small>Field Unit: {{fieldunit.name}} <br>
+                      MC<sub>v</sub> to irrigate: {{MC_TO_IRRIGATE}} %<br>
+                      DRZ,eff: {{drz}} mm <br>
+                      Average MCv: {{mc_ave}} %<br>
+                      Net Application Depth: {{net_application_depth}} mm<br>
+                      Irrigation Period: {{irrigation_period}} mins <br>
+                      Volume: {{total_volume}} l {% if irrigation_type == "drip" %}/plant{% endif %}
+                    </small>
                   </div>
                 </div>
               </div>
@@ -538,15 +574,92 @@ td.min {
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
   <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-
   <!-- Page level plugins -->
   <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
   <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-
   <!-- Page level custom scripts -->
   <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
 
 {% block bottom_script_block %}
+<script type="text/javascript">
+  Highcharts.chart('container', {
+  chart: {
+      type: 'area'
+  },
+  title: {
+      text: 'Soil Moisture Content'
+  },
+  subtitle: {
+      text: 'Analog Values'
+  },
+  xAxis: {
+      categories: [{% for m in mc_1 %}"{{m.timestamp|date:'m-d H:i'}}",{% endfor %}],
+      tickmarkPlacement: 'on',
+      title: {
+          enabled: false
+      }
+  },
+  yAxis: {
+      title: {
+          text: 'Reading'
+      },
+      labels: {
+          formatter: function () {
+              return this.value;
+          }
+      }
+  },
+  tooltip: {
+      split: true,
+      valueSuffix: ''
+  },
+  plotOptions: {
+      area: {
+          stacking: 'normal',
+          lineColor: '#666666',
+          lineWidth: 1,
+          marker: {
+              lineWidth: 1,
+              lineColor: '#666666'
+          }
+      }
+  },
+  series: [{
+      name: '{% for s in s1 %}{{s.name}} ({{s.depth}} m){% endfor %}',
+      data: [{% for m in mc_1 %}{{m.mc_data}},{% endfor %}]
+  }, {
+      name: '{% for s in s2 %}{{s.name}} ({{s.depth}} m){% endfor %}',
+      data: [{% for m in mc_2 %}{{m.mc_data}},{% endfor %}]
+  }, {
+      name: '{% for s in s3 %}{{s.name}} ({{s.depth}} m){% endfor %}',
+      data: [{% for m in mc_3 %}{{m.mc_data}},{% endfor %}]
+  }, {
+    type: 'spline',
+    name: 'FC',
+    data: [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
+    dashStyle: 'dash',
+    marker: {
+      enabled: false,
+      lineWidth: 1}
+  }, {
+    type: 'spline',
+    name: 'MAD',
+    data: [700, 700, 700, 700, 700, 700, 700, 700],
+    dashStyle: 'dash',
+    marker: {
+      enabled: false,
+      lineWidth: 1}
+  }, {
+    type: 'spline',
+    name: 'PWP',
+    data: [400,400, 400, 400, 400, 400, 400, 400],
+    dashStyle: 'dash',
+    marker: {
+      enabled: false,
+      lineWidth: 1}
+  }],
+});
+</script>
 {% endblock %}
     
 </body>

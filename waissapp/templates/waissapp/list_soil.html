@@ -17,7 +17,7 @@
                         <th class="align-top">Soil Name</th>
                         <th class="align-top">Field Capacity (MCv, %)</th>
                         <th class="align-top">Permanent Wilting Point (MCv, %)</th>
-                        <th class="align-top">Permanent Wilting Point (MCv, %)</th>
+                        <th class="align-top">Intake Family</th>
                         <th class="align-top">Source</th>
                     </tr>
                 </thead>
@@ -36,7 +36,7 @@
                         <td class="align-middle min">{{instance.soiltype}}</td>
                         <td class="align-middle">{{instance.fc|default_if_none:"-"}}</td>
                         <td class="align-middle">{{instance.pwp|default_if_none:"-"}}</td>
-                        <td class="align-middle">{{instance.As|default_if_none:"-"}}</td>
+                        <td class="align-middle min">{{instance.intake_family|default_if_none:"-"}}</td>
                         <td class="align-middle min">{{instance.source|default_if_none:"-"}}</td>
                     </tr>
                     {% endfor %}

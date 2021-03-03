@@ -155,9 +155,6 @@
                 </div>
                 <div class="card-body">
                   <div class="row">
-                      <div class="col">{{calib_form.fieldunit|as_crispy_field}}</div>
-                  </div>
-                  <div class="row">
                       <div class="col">{{calib_form.name|as_crispy_field}}</div>
                   </div>
                   <div class="row">
@@ -166,29 +163,29 @@
                   </div>
                   <div class="col">
                       <div class="row">
-                          <div class="col-6">{{calib_form.calib_coeff_a|as_crispy_field}}</div>
+                          <div class="col-6">{{calib_form.coeff_a|as_crispy_field}}</div>
                           <div class="col-6 text-center"><small><i>Linear: MC<sub>v</sub> = a(reading) + b<br>
                             Quadratic: MC<sub>v</sub> = a(reading)<sup>2</sup> + b(reading) + c</i></small>
                           </div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{calib_form.calib_coeff_b|as_crispy_field}}</div>
+                          <div class="col-6">{{calib_form.coeff_b|as_crispy_field}}</div>
                           <div class="col-6 text-center"><small><i>Exponential: MC<sub>v</sub> = ae<sup>b</sup>(reading)<br>
                             Logarithmic: MC<sub>v</sub> = aln(reading) + b</i></small>
                           </div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{calib_form.calib_coeff_c|as_crispy_field}}</div>
+                          <div class="col-6">{{calib_form.coeff_c|as_crispy_field}}</div>
                           <div class="col-6 text-center"><small><i>Symmetrical Sigmoidal: MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</i></small>
                               <br><small><i>Assymmetrical Sigmoidal: <br>
                                 MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></i></small>
                           </div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{calib_form.calib_coeff_d|as_crispy_field}}</div>
+                          <div class="col-6">{{calib_form.coeff_d|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{calib_form.calib_coeff_m|as_crispy_field}}</div>
+                          <div class="col-6">{{calib_form.coeff_m|as_crispy_field}}</div>
                       </div>
                   </div>
                   <div class="row">

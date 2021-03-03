@@ -13,8 +13,8 @@
             <div class="card-body">
                 <form class="form-group" action="" method="POST">
                     {% csrf_token %} 
-                    {{ form.management_form }}
-                    {% for form in form %}
+                    {{ formset.management_form }}
+                    {% for form in formset %}
                     <div class="row">
                         <div class="col">
                             {{form.timestamp|as_crispy_field}}

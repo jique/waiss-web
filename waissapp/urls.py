@@ -80,7 +80,7 @@ urlpatterns = [
      path('new_mc/', views.new_mc, name='new_mc'),
      path('add_mc/', views.add_mc, name='add_mc'),
      path('list_mc/<str:name>/', views.list_mc, name='list_mc'),
-     path('edit_mc/<str:pk>/', views.edit_mc, name='edit_mc'),
+     path('edit_mc/<str:name>/', views.edit_mc, name='edit_mc'),
      path('delete_mc/<str:pk>/', views.delete_mc, name='delete_mc'),
 
      #WAISSystems

@@ -1,10 +1,9 @@
 from django.forms import ModelForm
 from django import forms
-from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, IntakeFamily, Farm, FieldUnit, IrrigationParameters, Sensor, MoistureContent, WAISSystems
+from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, Farm, FieldUnit, IrrigationParameters, Sensor, MoistureContent, WAISSystems
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
-  
 class SoilForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(SoilForm, self).__init__(*args, **kwargs)
@@ -21,8 +20,8 @@ class CropForm(forms.ModelForm):
     widget=forms.TextInput(     
         attrs={'type': 'date'}
         ),
-    required=False
-    )  
+    required=True
+    )
     def __init__(self, *args, **kwargs):
         super(CropForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -71,7 +70,6 @@ class SensorForm(ModelForm):
         exclude = ()  # this says to include all fields from model to the form 
 
 class MCForm(forms.ModelForm):
-    timestamp = forms.DateTimeField(widget=forms.TextInput(attrs={'type': 'date'}), label="Start Time")
     def __init__(self, *args, **kwargs):
         super(MCForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()

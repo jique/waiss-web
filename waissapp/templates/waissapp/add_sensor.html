@@ -12,9 +12,9 @@
             <div class="card-header"><small>Fillout sensor & depth.</small></div>
             <div class="card-body">
                 <form  class="form-group" action="" method="POST">
+                    {{formset.management_form}}
                     {% csrf_token %} 
-                    {{ form.management_form }}
-                        {% for form in sensor_form %}
+                        {% for form in formset %}
                         <div class="row">
                             <div class="col">
                                 {{form.name|as_crispy_field}}
@@ -26,7 +26,7 @@
                                 {{form.fieldunit|as_crispy_field}}
                             </div>
                         </div>
-                    {% endfor%}
+                        {% endfor%}
                     <input type="submit" value="Submit" class="btn btn-info btn-block">
                 </form>
             </div>

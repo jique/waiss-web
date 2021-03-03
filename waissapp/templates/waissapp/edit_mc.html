@@ -1,0 +1,36 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header"><i><small>Edit MC Reading&nbsp;>&nbsp;<b><span class="text-info">{{item}}</span></b></small></i></div>
+            <div class="card-body">
+                <form class="form-group" action="" method="post">
+                    <br>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col">{{ form.sensor|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ form.mc_data|as_crispy_field }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ form.timestamp|as_crispy_field }}</div>
+                    </div>
+                    <input type="submit" value="Submit" class="btn btn-info btn-block">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

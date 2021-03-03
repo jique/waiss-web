@@ -153,23 +153,21 @@
                 </div>
                     <div class="card-body">
                         <form class="form-group" action="" method="POST">
-                            {% csrf_token %} 
-                            {{ form.management_form }}
-                            {% for form in form %}
-                            <div class="row">
-                                <div class="col">
-                                    {{form.timestamp|as_crispy_field}}
-                                </div>
-                                <div class="col">
-                                    {{form.mc_data|as_crispy_field}}
-                                </div>
-                                <div class="col">
-                                    {{form.sensor|as_crispy_field}}
-                                </div>
-                            </div>
-                            {% endfor%}
-                            
-                        </div>
+                          {% csrf_token %} 
+                          {{ formset.management_form }}
+                          {% for form in formset %}
+                          <div class="row">
+                              <div class="col">
+                                  {{form.timestamp|as_crispy_field}}
+                              </div>
+                              <div class="col">
+                                  {{form.mc_data|as_crispy_field}}
+                              </div>
+                              <div class="col">
+                                  {{form.sensor|as_crispy_field}}
+                              </div>
+                          </div>
+                          {% endfor%}
                     </div>
                     <br>
                     <div class="text-center">

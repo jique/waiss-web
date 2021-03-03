@@ -152,9 +152,27 @@
                   <small>Select from the 5 types of suface irrigation. Fillout required specifications.</small>
               </div>
               <div class="card-body">
-                <div class="col">{{ irrigation_form.name|as_crispy_field}}</div>
-                <div class="col">{{ irrigation_form.irrigation_system_type|as_crispy_field}}</div>
-            </div>
+                <div class="card-body">
+                  <div class="col">{{ irrigation_form.name|as_crispy_field}}</div>
+                  <div class="col">{{ irrigation_form.irrigation_system_type|as_crispy_field}}</div>
+                  <div class="col">{{ irrigation_form.discharge|as_crispy_field}}</div>
+                  <div class="col">{{ irrigation_form.emitter_discharge|as_crispy_field }}</div>
+                  <div class="col">{{ irrigation_form.ea|as_crispy_field}}</div>
+                  <div class="col">{{ irrigation_form.area_slope|as_crispy_field}}</div>
+                  <div class="col">{{ irrigation_form.mannings_coeff|as_crispy_field}}</div>
+                  <div class="row">
+                    <div class="col">
+                    </div>
+                    <div class="col-8">
+                      <small>Common Manning's (retardance) coefficient <br>
+                        &emsp;&emsp;<b>Surface</b> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<b>n</b><br>
+                        &emsp;&emsp;Smooth, ban soil surfaces noncultivated, oil-mulch treated citrus	&emsp;&emsp;&emsp;&emsp;0.04 <br>
+                        &emsp;&emsp;Small grain, drill rows parallel to border strip &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; 0.10<br>
+                        &emsp;&emsp;Alfalfa, mint, broadcast small grain and similar crops	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 0.15 <br>
+                        &emsp;&emsp;Dense sod crops, small grain with drill rows across the border strip	&emsp;&emsp;&emsp;0.25 </small>
+                      </div>
+                  </div>
+                </div>
             </div>
             <div class="accordion" id="accordion">
                 <form class="form-group" action="" method="post">
@@ -172,17 +190,6 @@
                       <div class="row">
                         <div class="col">{{ irrigation_form.basin_length|as_crispy_field}}</div>
                     </div>
-                    <div class="row">
-                        <div class="col">{{ irrigation_form.discharge|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            {{ irrigation_form.ea|as_crispy_field}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col"> {{ irrigation_form.errors }}</div>
-                    </div>
                     </div>
                   </div>
                 </div>
@@ -196,33 +203,6 @@
                     </div>
                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.border_strips|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.width|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.discharge|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.flow_rate_per_strip|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.total_flow_rate|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.area_slope|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.mannings_coeff|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.ea|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.errors }}</div>
-                        </div>
                     </div>
                   </div>
                 </div>
@@ -239,15 +219,6 @@
                         <div class="row">
                             <div class="col">{{ irrigation_form.bln_furrow_type|as_crispy_field}}</div>
                         </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.discharge|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.area_slope|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.errors }}</div>
-                        </div>
                     </div>
                   </div>
                 </div>
@@ -262,28 +233,10 @@
                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                       <div class="card-body">
                         <div class="row">
-                            <div class="col">{{ irrigation_form.farm_area|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.area_irrigated_at_a_time|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
                             <div class="col">{{ irrigation_form.lateral_spacing|as_crispy_field }}</div>
                         </div>
                         <div class="row">
                             <div class="col">{{ irrigation_form.sprinkler_spacing|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.num_of_sprinklers|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.discharge|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.ea|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.errors }}</div>
                         </div>
                       </div>
                     </div>
@@ -320,10 +273,11 @@
                             <div class="col">{{ irrigation_form.EU|as_crispy_field }}</div>
                         </div>
                         <div class="row">
-                            <div class="col">{{ irrigation_form.irrigation_interval|as_crispy_field }}</div>
+                          <div class="col">{{ irrigation_form.bln_ii|as_crispy_field }}</div>
                         </div>
                         <div class="row">
-                            <div class="col">{{ irrigation_form.errors }}</div>
+                          <div class="col"></div>
+                          <div class="col-8">{{ irrigation_form.irrigation_interval|as_crispy_field }}</div>
                         </div>
                     </div>
                   </div>

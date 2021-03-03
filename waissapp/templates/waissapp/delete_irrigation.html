@@ -17,7 +17,7 @@
         <div class="modal-footer">
             <form class="form-group" action={% url 'waiss:delete_irrigation' item.id %} method="post">
                 {% csrf_token %}
-            <button type="button" class="btn btn-secondary" onclick="window.history.go(-1); return false;">Cancel</button>
+            <button type="button" class="btn btn-secondary" href="{% url 'waiss:list_irrigation' %}" >Cancel</button>
             <button type="submit" class="btn btn-danger">Confirm</button>
             </form>
         </div>

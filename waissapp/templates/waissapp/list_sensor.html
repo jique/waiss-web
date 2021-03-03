@@ -17,6 +17,7 @@
                 <th class="align-top ">Sensor</th>
                 <th class="align-top ">Field Unit</th>
                 <th class="align-top ">Depth (m)</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -28,12 +29,12 @@
                         &nbsp;
                         <a href={% url 'waiss:delete_sensor' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
                         &nbsp;
-                        <a href={% url 'waiss:list_mc' instance.name %}>Show MC Data</a>
                     </div>
                 </td>
                 <td class="align-middle ">{{instance.name}}</td>
                 <td class="align-middle ">{{instance.fieldunit}}</td>
                 <td class="align-middle ">{{instance.depth}}</td>
+                <td><a href={% url 'waiss:list_mc' instance.name %}>Show MC Data</a></td>
             </tr>
             {% endfor %}
         </tbody>
