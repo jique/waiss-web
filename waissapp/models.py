@@ -1,19 +1,17 @@
 from django.db import models
 
-#SITE VALUES
 class Personnel(models.Model):
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30, null=True)
     number = models.IntegerField(null=True)
 
     def __str_ (self):
-        return '{}'.format(self.first_name)
+        return self.first_name
     
     class Meta:
-        verbose_name_plural = "Site: Farm Managers"
+        verbose_name_plural = "Farm Managers"
         ordering = ('last_name',)
     
-#SITE VALUES
 class FieldUnit(models.Model):
     name = models.CharField(max_length=25, null=True, blank=True, verbose_name="Field Unit Name")
     usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True, blank=True)
@@ -29,9 +27,9 @@ class FieldUnit(models.Model):
     clockcorrection = models.IntegerField(verbose_name='Clock Correction (s)', null=True, blank=True)
 
     def __str_ (self):
-        return '{}'.format(self.number)
+        return self.number
     class Meta:
-        verbose_name_plural = "Site: Field Units"
+        verbose_name_plural = "Field Units"
 
 class Sensor(models.Model):
     fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
@@ -39,10 +37,10 @@ class Sensor(models.Model):
     depth = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Depth, m", null=True, blank=True)
     
     def __str_ (self):
-        return '{}'.format(self.name)
+        return self.name
 
     class Meta:
-        verbose_name_plural = "Site: Sensors"
+        verbose_name_plural = "Sensors"
 
 class MoistureContent(models.Model):
     sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, null=True)
@@ -50,13 +48,12 @@ class MoistureContent(models.Model):
     mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
 
     def __str_ (self):
-        return '{}'.format(self.sensor)
+        return self.sensor
 
     class Meta:
-        verbose_name_plural = "Site: Moisture Content"
+        verbose_name_plural = "Moisture Content"
         get_latest_by = "timestamp"
 
-#DATABASE
 class Soil(models.Model):
     soiltype = models.CharField(max_length=25, verbose_name="Name")
     fc = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Field Capacity (% vol)", null=True)
@@ -102,11 +99,12 @@ class Soil(models.Model):
 
     intake_family = models.CharField(max_length=30,choices=choices,verbose_name="Intake Family",null=True, blank=True, help_text="The number indicates the intake rate of the soil. Required for surface irrigations- basin, border, and furrow.")
     source = models.CharField(max_length=30, verbose_name="Data Source", null=True, blank=True)
+
     def __str_ (self):
         return self.soiltype
 
     class Meta:
-        verbose_name_plural = "Database: Soil"
+        verbose_name_plural = "Soil"
         ordering = ('soiltype',)
 
 class CalibrationConstant(models.Model):
@@ -146,9 +144,8 @@ class CalibrationConstant(models.Model):
         return self.name
         
     class Meta:
-        verbose_name_plural = "Site: Calibration Equation Constants"
+        verbose_name_plural = "Calibration Equations"
 
-#DATABASE
 class Crop(models.Model):
     crop = models.CharField(max_length=20, unique=True, null=True,)
     date_transplanted = models.DateField(verbose_name='Date Transplanted', null=True,)
@@ -160,7 +157,7 @@ class Crop(models.Model):
 
     rooting = [
         ("Borg-Grimes Model", 'Borg-Grimes Model'),
-        ("User-Defined", 'User-Definerd'),
+        ("User-Defined", 'User-Defined'),
         ("Inverse Kc", 'Inverse Kc'),
     ]
 
@@ -184,14 +181,13 @@ class Crop(models.Model):
     root_c = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" c", null=True, blank=True)
     root_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True, blank=True)
     
+    class Meta:
+        verbose_name_plural = "Crops"
+        ordering = ('crop',)
+    
     def __str_ (self):
         return self.crop
 
-    class Meta:
-        verbose_name_plural = "Database: Crop"
-        ordering = ('crop',)
-
-#SITE VALUES
 class IrrigationParameters(models.Model):
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
     irrig_choices = [
@@ -218,7 +214,7 @@ class IrrigationParameters(models.Model):
         (90, '90'),
         (95, '95'),
     ]
-    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", help_text="(Basin, Furrow)", blank=True, null=True)
+    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", help_text="Basin, Sprinkler", blank=True, null=True)
     #BORDER
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, blank=True, help_text="(Furrow, Border)")
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True, blank=True, help_text="(Furrow, Border)")
@@ -251,7 +247,6 @@ class IrrigationParameters(models.Model):
     
     class Meta:
         verbose_name_plural = "Irrigation System"
-
     def __str_ (self):
         return self.name
 
@@ -260,7 +255,7 @@ class PercentShaded(models.Model):
     area_shaded =  models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area Shaded (%)", null=True, blank=True)
     date =  models.DateField(verbose_name="Date", null=True, blank=True)
     class Meta:
-        verbose_name_plural = "Site: Percent Area Shaded"
+        verbose_name_plural = "Percent Area Shaded"
         get_latest_by = "date"
 
 class Farm(models.Model):
@@ -270,7 +265,7 @@ class Farm(models.Model):
     brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True", blank="True")
 
     class Meta:
-        verbose_name_plural = "Site: Farms"
+        verbose_name_plural = "Farms"
         ordering = ('name',)
 
     def __str_ (self):
@@ -278,29 +273,22 @@ class Farm(models.Model):
 
 class WAISSystems(models.Model):
     name = models.CharField(max_length=20)
-    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm", null=True, blank=True)
-    farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Farm Manager", null=True, blank=True)
-    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True, blank=True)
-    soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True, blank=True)
-    calib = models.ForeignKey(CalibrationConstant, on_delete=models.CASCADE, verbose_name="Calibration Equation", null=True, blank=True)
-    irrigation = models.ForeignKey(IrrigationParameters, on_delete=models.CASCADE, verbose_name="Irrigation System", null=True, blank=True)
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)    
+    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm", null=True)
+    farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Farm Manager", null=True)
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True)
+    soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True)
+    calib = models.ForeignKey(CalibrationConstant, on_delete=models.CASCADE, verbose_name="Calibration Equation", null=True)
+    irrigation = models.ForeignKey(IrrigationParameters, on_delete=models.CASCADE, verbose_name="Irrigation System", null=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True)    
+    timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
 
     class Meta:
         verbose_name_plural = "WAISSystems"
         ordering = ('name',)
+        get_latest_by = "timestamp"
 
     def __str_ (self):
         return self.name
-
-class IrrigationAdvisory(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True, blank=True)            
-    net_app_depth = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Net Application Depth (mm)", null=True)
-    irrigation_period = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Irrigation Period (mins)", null=True)
-    irrigation_volume = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Irrigation Volume (l)", null=True)
-
-    class Meta:
-        verbose_name_plural = "Computation"
 
 #MESSAGES
 class ReceivedMsgs(models.Model):
@@ -313,7 +301,7 @@ class ReceivedMsgs(models.Model):
         get_latest_by = "timestamp"
     
     def __str_ (self):
-        return '{}'.format(self.number)
+        return self.number
 
 class SentMsgs(models.Model):
     number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True)
@@ -327,4 +315,9 @@ class SentMsgs(models.Model):
         get_latest_by = "timestamp"
     
     def __str_ (self):
-        return '{}'.format(self.number)
+        return self.number
+
+class Rainfall(models.Model):
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
+    amount = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Rainfall (mm)", null=True, blank=True)
+    timestamp = models.DateTimeField(verbose_name='Date/Time Sent', null=True, blank=True)

@@ -401,10 +401,23 @@ td.min {
 
           {% block main_block %}
           <div class="row">
-            <div class="col text-gray-800">System:</div>
-            <div class="col text-right align-bottom"><small><span id="date"></span>&nbsp;|&nbsp;<span id="time"></span></small></div>
+            <div class="col text-gray-800">
+              <form method="post">
+                {% csrf_token %}
+                <label><span class="mb-0 font-weight-bold text-gray-800">Select System:</span></label>
+                <select name="selected_system" id="selected_system" class="btn btn-secondary btn-sm">
+                  <option>{{selected_system.name}}</option>
+                  {% for system in form %}
+                  <option value="{{system.name}}">{{system.name}}</option>
+                  {% endfor %}
+                </select>
+                <input class="btn btn-info btn-sm" type="submit" value="Generate Irrigation Advisory">
+                <a class="btn btn-info btn-sm" type="button" href="{% url 'waiss:list_system' %}">Modify System</a>
+              </form>
+            </div>
+            <div class="col-2 text-right align-bottom"><small><span id="date"></span>&nbsp;|&nbsp;<span id="time"></span></small></div>
           </div>
-          
+          <hr>
           <div class="row">
             <!--Crop Card -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -415,7 +428,7 @@ td.min {
                       <div class="mb-0 font-weight-bold text-gray-800">{{crop.crop}}</div>
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Crop</div>
                       <small>{{crop_dat}} / {{crop_growingperiod}} days [{{crop_transplanted|date:'m-d'}} - harvest_date] <br>
-                        MAD: {{crop_mad}} 
+                        MAD: {{crop_mad}}%
                         {% if irrigation_type == "drip" %}| Area Shaded: {{area_shaded}} %{% endif%}
                       </small>
                     </div>
@@ -432,7 +445,12 @@ td.min {
                     <div class="col">
                       <div class="mb-0 mr-3 font-weight-bold text-gray-800">{{soil.soiltype}}</div>
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Soil</div>
-                      <small>FC: {{soil_fc}}&nbsp;PWP: {{soil_pwp}}<br>Intake Family: {{intake_family}}</small>
+                      <small>
+                        {% if irrigation_type == "basin" %}FC: {{soil_fc}}&nbsp;PWP: {{soil_pwp}}<br>Intake Family: {{intake_family}}{% endif %}
+                        {% if irrigation_type == "border" %}FC: {{soil_fc}}&nbsp;PWP: {{soil_pwp}}<br>Intake Family: {{intake_family}}{% endif %}
+                        {% if irrigation_type == "furrow" %}FC: {{soil_fc}}&nbsp;PWP: {{soil_pwp}}<br>Intake Family: {{intake_family}}{% endif %}
+                        {% if irrigation_type == "sprinkler" %}FC: {{soil_fc}}<br>PWP: {{soil_pwp}}{% endif %}
+                        {% if irrigation_type == "drip" %}FC: {{soil_fc}}<br>PWP: {{soil_pwp}}{% endif %}</small>
                     </div>
                   </div>
                 </div>
@@ -447,13 +465,12 @@ td.min {
                     <div class="col">
                       <div class="mb-0 font-weight-bold text-gray-800">{{irrigation.name}}</div>
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Irrigation System</div>
-                      <small>type: {{irrigation_type}}<br> q:
-                        {% if irrigation_type == "basin" %}{{irrigation_q}} lps{% endif %}
-                        {% if irrigation_type == "border" %}{{irrigation_q}} lps{% endif %}
-                        {% if irrigation_type == "furrow" %}{{irrigation_q}} lps{% endif %}
-                        {% if irrigation_type == "sprinkler" %}{{irrigation_q}} lps{% endif %}
-                        {% if irrigation_type == "drip" %}{{emitter_discharge}} l/day{% endif %}
-                      </small>
+                        <small>type: {{irrigation_type}}<br> unit discharge: 
+                          {% if irrigation_type == "basin" %}{{irrigation_q}} lps{% endif %}
+                          {% if irrigation_type == "border" %}{{irrigation_q}} lps{% endif %}
+                          {% if irrigation_type == "furrow" %}{{irrigation_q}} lps{% endif %}
+                          {% if irrigation_type == "sprinkler" %}{{irrigation_q}} lps{% endif %}
+                          {% if irrigation_type == "drip" %}{{emitter_discharge}} l/day{% endif %}</small>
                     </div>
                   </div>
                 </div>
@@ -469,12 +486,12 @@ td.min {
                       <div class="mb-0 mr-3 font-weight-bold text-gray-800">{{calib.name}}</div>
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Calibration</div>
                       <small>{{calib_eqn}} <br>
-                        {% if calib_eqn == "quadratic" %}{{calib_coeff_a}} {{calib_coeff_b}} {{calib_coeff_c}}{% endif %}
-                        {% if calib_eqn == "linear" %}{{calib_coeff_a}} {{calib_coeff_b}}{% endif %}
-                        {% if calib_eqn == "exponential" %}{{calib_coeff_a}} {{calib_coeff_b}}{% endif %}
-                        {% if calib_eqn == "logarithmic" %}{{calib_coeff_a}} {{calib_coeff_b}}{% endif %}
-                        {% if calib_eqn == "symmetrical sigmoidal" %}{{calib_coeff_a}} {{calib_coeff_b}} {{calib_coeff_c}}{{calib_coeff_d}} {{calib_coeff_m}}{% endif %}
-                        {% if calib_eqn == "asymmetrical sigmoidal" %}{{calib_coeff_a}} {{calib_coeff_b}} {{calib_coeff_c}}{{calib_coeff_d}} {{calib_coeff_m}}{% endif %}
+                        {% if calib_eqn == "quadratic" %}{{calib_coeff_a}}x<sup>2</sup> + {{calib_coeff_b}}x + {{calib_coeff_c}}{% endif %}
+                        {% if calib_eqn == "linear" %}{{calib_coeff_a}}x + {{calib_coeff_b}}{% endif %}
+                        {% if calib_eqn == "exponential" %}{{calib_coeff_a}}xe<sup>{{calib_coeff_b}}</sup>{% endif %}
+                        {% if calib_eqn == "logarithmic" %}{{calib_coeff_a}}ln(x) + {{calib_coeff_b}}{% endif %}
+                        {% if calib_eqn == "symmetrical sigmoidal" %}{{calib_coeff_d}} + ({{calib_coeff_a}} - {{calib_coeff_d}})/(1 + (x/{{calib_coeff_c}})<sup>{{calib_coeff_b}}</sup>){% endif %}
+                        {% if calib_eqn == "asymmetrical sigmoidal" %}{{calib_coeff_d}} + ({{calib_coeff_a}} - {{calib_coeff_d}})/((1 + (x/c{{calib_coeff_c}})<sup>{{calib_coeff_b}}</sup>))<sup>{{calib_coeff_m}}</sup>{% endif %}
                       </small>
                     </div>
                   </div>
@@ -486,8 +503,26 @@ td.min {
           <!-- Content Row -->
 
           <div class="row">
+            <!-- Irrigation Advisory -->
+            <div class="col-3">
+              <div class="card border-left-primary shadow mb-4">
+                <div class="card-body">
+                  <div class="text-left">
+                    <div class="mb-0 mr-3 font-weight-bold text-gray-800">{% if mc_ave < MC_TO_IRRIGATE %}IRRIGATE{% endif %}{% if not mc_ave < MC_TO_IRRIGATE %}irrigation not needed{% endif %}</div>
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">advisory</div><br>
+                    <div><kbd class="bg-primary">{{irrigation_period}} mins</kbd><br>
+                    <span class="small">irrigation period</span></div>
+                    <div><kbd class="bg-info">{{total_volume}} m<sup>3</sup>{% if irrigation_type == "drip" %}/plant{% endif %}</kbd><br><span class="small">volume</span></div>
+                    <div><kbd class="bg-success">{{mc_ave}} %</kbd> / <kbd class="bg-success">{{MC_TO_IRRIGATE}} % </kbd><br><span class="small">MC<sub>v</sub> / MC<sub>v</sub> to irrigate</span></div>
+                    <div><kbd class="bg-secondary">{{net_application_depth}} mm</kbd><br><span class="small">net application depth</span></div>
+                    <div><kbd class="bg-secondary">{{drz}} mm</kbd><br><span class="small">effective rootzone</span></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <!-- Line Chart -->
-            <div class="col-8">
+            <div class="col-9">
               <div class="card shadow mb-4">
                 <!-- Card Body -->
                 <div class="card-body">
@@ -495,27 +530,6 @@ td.min {
                     <div id="container">
                     </div>
                   </figure>
-                </div>
-              </div>
-            </div>
-            <!-- Irrigation Advisory -->
-            <div class="col-4">
-              <div class="card shadow mb-4">
-                <!-- Card Header -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Irrigation Advisory</h6>
-                </div>
-                <div class="card-body">
-                  <div class="text-center">
-                    <small>Field Unit: {{fieldunit.name}} <br>
-                      MC<sub>v</sub> to irrigate: {{MC_TO_IRRIGATE}} %<br>
-                      DRZ,eff: {{drz}} mm <br>
-                      Average MCv: {{mc_ave}} %<br>
-                      Net Application Depth: {{net_application_depth}} mm<br>
-                      Irrigation Period: {{irrigation_period}} mins <br>
-                      Volume: {{total_volume}} l {% if irrigation_type == "drip" %}/plant{% endif %}
-                    </small>
-                  </div>
                 </div>
               </div>
             </div>
@@ -584,31 +598,33 @@ td.min {
 <script type="text/javascript">
   Highcharts.chart('container', {
   chart: {
-      type: 'area'
+      type: 'spline'
   },
   title: {
-      text: 'Soil Moisture Content'
+      text: 'Field Unit: <i>{{fieldunit.name}}</i>'
   },
   subtitle: {
-      text: 'Analog Values'
+      text: 'Soil Moisture Content'
   },
   xAxis: {
-      categories: [{% for m in mc_1 %}"{{m.timestamp|date:'m-d H:i'}}",{% endfor %}],
+      categories: [{% for t in mc_time_1 %}"{{t.timestamp|date:'m-d H:i'}}",{% endfor %}],
       tickmarkPlacement: 'on',
       title: {
           enabled: false
       }
   },
-  yAxis: {
-      title: {
-          text: 'Reading'
-      },
-      labels: {
-          formatter: function () {
-              return this.value;
-          }
-      }
-  },
+  yAxis: [{
+    title: {
+      text: 'Depth (mm)'
+    },
+    min: 0,
+    opposite: true
+  }, {
+    title: {
+      text: 'MCv (%)'
+    },
+    opposite: false
+  }],
   tooltip: {
       split: true,
       valueSuffix: ''
@@ -625,34 +641,67 @@ td.min {
       }
   },
   series: [{
-      name: '{% for s in s1 %}{{s.name}} ({{s.depth}} m){% endfor %}',
-      data: [{% for m in mc_1 %}{{m.mc_data}},{% endfor %}]
+    type: 'column',
+    name: 'Rainfall (mm)',
+    yAxis: 0,
+    data:[{% for x in rainfall %}{{x}},{% endfor %}],
+    checkbox: { checked: true },
+    dashStyle: 'dot',
+    marker: {
+      enabled: false,
+      lineWidth: 1}
   }, {
-      name: '{% for s in s2 %}{{s.name}} ({{s.depth}} m){% endfor %}',
-      data: [{% for m in mc_2 %}{{m.mc_data}},{% endfor %}]
-  }, {
-      name: '{% for s in s3 %}{{s.name}} ({{s.depth}} m){% endfor %}',
-      data: [{% for m in mc_3 %}{{m.mc_data}},{% endfor %}]
-  }, {
-    type: 'spline',
-    name: 'FC',
-    data: [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
-    dashStyle: 'dash',
+    type: 'column',
+    name: 'Net Application Depth (mm)',
+    yAxis: 0,
+    data:[{% for x in Fn_collection %}{{x}},{% endfor %}],
+    checkbox: { checked: true },
+    dashStyle: 'dot',
     marker: {
       enabled: false,
       lineWidth: 1}
   }, {
     type: 'spline',
-    name: 'MAD',
-    data: [700, 700, 700, 700, 700, 700, 700, 700],
-    dashStyle: 'dash',
+    name: 'FC',
+    yAxis: 1,
+    data:[{% for x in series_fc %}{{x}},{% endfor %}],
+    checkbox: { checked: true },
+    dashStyle: 'dot',
     marker: {
       enabled: false,
       lineWidth: 1}
   }, {
     type: 'spline',
     name: 'PWP',
-    data: [400,400, 400, 400, 400, 400, 400, 400],
+    yAxis: 1,
+    data: [{% for x in series_pwp %}{{x}},{% endfor %}],
+    checkbox: { checked: true },
+    dashStyle: 'dot',
+    marker: {
+      enabled: false,
+      lineWidth: 1}
+    
+  }, {
+    name: '{% for s in s1 %}{{s.name}} ({{s.depth}} m){% endfor %}',
+    checkbox: { checked: true },
+    yAxis: 1,
+    data: [{% for m in mc_1 %}{{m}},{% endfor %}]
+  }, {
+    name: '{% for s in s2 %}{{s.name}} ({{s.depth}} m){% endfor %}',
+    checkbox: { checked: true },
+    yAxis: 1,
+    data: [{% for m in mc_2 %}{{m}},{% endfor %}]
+  }, {
+    name: '{% for s in s3 %}{{s.name}} ({{s.depth}} m){% endfor %}',
+    checkbox: { checked: true },
+    yAxis: 1,
+    data: [{% for m in mc_3 %}{{m}},{% endfor %}]
+  }, {
+    type: 'spline',
+    name: 'Weighted MCv',
+    yAxis: 1,
+    data:[{% for m in mc_ave_collection %}{{m}},{% endfor %}],
+    checkbox: { checked: true },
     dashStyle: 'dash',
     marker: {
       enabled: false,

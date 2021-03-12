@@ -102,18 +102,6 @@ class IrrigationParametersForm(ModelForm):
         model =IrrigationParameters
         exclude = ()  # this says to include all fields from model to the form
 
-class SystemForm(forms.ModelForm):
-    system_name = forms.ModelChoiceField(queryset=WAISSystems.objects.all().order_by('name'))
-    def __init__(self, *args, **kwargs):
-        super(SystemForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8'
-    class Meta:
-        model = WAISSystems
-        exclude = ()  # this says to include all fields from model to the form 
-
 class WAISSystemsForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(WAISSystemsForm, self).__init__(*args, **kwargs)

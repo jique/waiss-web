@@ -14,22 +14,14 @@
         <thead>
             <tr>
               <th class="align-top"></th>
-              <th class="align-top">System Name</th>
+              <th class="align-top">Name</th>
               <th class="align-top ">Type</th>
               <th class="align-top ">Unit Discharge (lps)</th>
               <th class="align-top ">Application Efficiency (%)</th>
               <th class="align-top ">Basin Length (m)</th>
-              <th class="align-top">No. of Borders</th>
-              <th class="align-top">Border Width</th>
-              <th class="align-top">Discharge per Border Strip (lps)</th>
-              <th class="align-top">Total Discharge (lps)</th>
               <th class="align-top">Manning's Coefficient</th>
               <th class="align-top">Open-Ended System</th>
               <th class="align-top">Slope (m/m)</th>
-              <th class="align-top">Farm Area (m<sup>2</sup>)</th>
-              <th class="align-top">Irrigated Area at a Time (m<sup>2</sup>)</th>
-              <th class="align-top">No. of Sprinklers</th>
-              <th class="align-top">Sprinkler Spacing (m)</th>
               <th class="align-top">Lateral Spacing (m)</th>
               <th class="align-top">Single Lateral</th>
               <th class="align-top">Emitter Discharge (l/day)</th>
@@ -57,18 +49,10 @@
               <td class="align-middle ">{{instance.discharge|default_if_none:"-"}}</td>
               <td class="align-middle ">{{instance.ea|default_if_none:"-"}}</td>
               <td class="align-middle ">{{instance.basin_length|default_if_none:"-"}}</td>
-              <td class="align-middle ">{{instance.border_strips|default_if_none:"-"}}</td>
-              <td class="align-middle ">{{instance.border_width|default_if_none:"-"}}</td>
-              <td class="align-middle ">{{instance.flow_rate_per_strip|default_if_none:"-"}}</td>
-              <td class="align-middle ">{{instance.total_flow_rate|default_if_none:"-"}}</td>
+              <td class="align-middle ">{{instance.mannings_coeff|default_if_none:"-"}}</td>
               <td class="align-middle ">{{instance.mannings_coeff|default_if_none:"-"}}</td>
               <td class="align-middle ">{{instance.area_slope|default_if_none:"-"}}</td>
-              <td class="align-middle ">{{instance.farm_area|default_if_none:"-"}}</td>
-              <td class="align-middle ">{{instance.area_irrigated_at_a_time|default_if_none:"-"}}</td>
-              <td class="align-middle ">{{instance.num_of_sprinklers|default_if_none:"-"}}</td>
-              <td class="align-middle ">{{instance.sprinkler_spacing|default_if_none:"-"}}</td>
               <td class="align-middle ">{{instance.lateral_spacing|default_if_none:"-"}}</td>
-              <td class="align-middle ">{{instance.sprinkler_discharge|default_if_none:"-"}}</td>
               <td class="align-middle ">{{instance.bln_single_lateral|default_if_none:"-"}}</td>
               <td class="align-middle ">{{instance.emitter_discharge|default_if_none:"-"}}</td>
               <td class="align-middle ">{{instance.emitters_per_plant|default_if_none:"-"}}</td>

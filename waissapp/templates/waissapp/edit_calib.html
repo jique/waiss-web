@@ -16,7 +16,7 @@
                     {% csrf_token %}
                     <div class="card-body">
                       <div class="row">
-                          <div class="col">{{calib_form.fieldunit|as_crispy_field}}</div>
+                          <div class="col">{{calib_form.name|as_crispy_field}}</div>
                       </div>
                       <div class="row">
                           <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>

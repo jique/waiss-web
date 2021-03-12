@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, IrrigationAdvisory, CalibrationConstant, IrrigationParameters, WAISSystems, PercentShaded
+from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, IrrigationParameters, WAISSystems, PercentShaded, Rainfall
 
 
 class SentMsgsInline(admin.TabularInline):
@@ -46,17 +46,9 @@ class FarmAdmin(admin.ModelAdmin):
 class FieldUnitAdmin(admin.ModelAdmin):
     inlines = [SensorInline]
 
-admin.site.register(SentMsgs, SentMsgsAdmin)
-admin.site.register(ReceivedMsgs, ReceivedMsgsAdmin)
-admin.site.register(Farm, FarmAdmin)
-admin.site.register(Sensor, SensorAdmin)
-admin.site.register(Personnel)
-admin.site.register(MoistureContent, MoistureContentAdmin)
-admin.site.register(FieldUnit, FieldUnitAdmin)
-
 class SoilInline(admin.TabularInline):
     model = Soil
-    list_display =('soiltype', 'fc', 'pwp')
+    list_display =('soiltype', 'fc', 'pwp', 'source')
 
 class SoilAdmin(admin.ModelAdmin):
     list_display = ('soiltype', 'fc', 'pwp', 'source')
@@ -64,15 +56,11 @@ class SoilAdmin(admin.ModelAdmin):
 
 class CropInline(admin.TabularInline):
     model = Crop
-    list_display =('crop', 'mad', 'growingperiod', 'drz', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3', 'fieldunit', 'farm_name')
+    list_display =('crop', 'mad', 'growingperiod', 'drz', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3')
 
 class CropAdmin(admin.ModelAdmin):
     list_display =('crop', 'mad', 'growingperiod', 'drz', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3')
     ordering = ['crop',]
-
-
-admin.site.register(Soil, SoilAdmin)
-admin.site.register(Crop, CropAdmin)
 
 class CalibrationConstantInline(admin.TabularInline):
     model = CalibrationConstant
@@ -88,17 +76,11 @@ class IrrigationParametersInline(admin.TabularInline):
 class IrrigationParametersAdmin(admin.ModelAdmin):
     list_display =('name', 'discharge', 'basin_length', 'ea', 'bln_furrow_type', 'bln_single_lateral', 'emitters_per_plant', 'emitter_spacing', 'plant_spacing', 'row_spacing', 'wetted_dia', 'EU', 'irrigation_interval')
 
-admin.site.register(IrrigationParameters, IrrigationParametersAdmin)
-
-class IrrigationAdvisoryInline(admin.TabularInline):
-    model = IrrigationAdvisory
-class IrrigationAdvisoryAdmin(admin.ModelAdmin):
-    list_display =('fieldunit', 'net_app_depth', 'irrigation_period', 'irrigation_volume')
-
 class WAISSystemsInline(admin.TabularInline):
     model = WAISSystems
+    
 class WAISSystemsAdmin(admin.ModelAdmin):
-    list_display =('name', 'farm', 'farm_manager', 'crop', 'soil', 'irrigation', 'fieldunit')
+    list_display =('name', 'farm', 'farm_manager', 'crop', 'soil', 'irrigation', 'fieldunit', 'calib')
 
 class PercentShadedInline(admin.TabularInline):
     model = PercentShaded
@@ -106,6 +88,22 @@ class PercentShadedInline(admin.TabularInline):
 class PercentShadedAdmin(admin.ModelAdmin):
     list_display =('crop', 'area_shaded', 'date')
 
-admin.site.register(IrrigationAdvisory, IrrigationAdvisoryAdmin)
+class RainfallInline(admin.TabularInline):
+    model = Rainfall
+
+class RainfallAdmin(admin.ModelAdmin):
+    list_display =('timestamp', 'amount', 'fieldunit')
+
+admin.site.register(Soil, SoilAdmin)
+admin.site.register(Crop, CropAdmin)
 admin.site.register(WAISSystems, WAISSystemsAdmin)
 admin.site.register(PercentShaded, PercentShadedAdmin)
+admin.site.register(SentMsgs, SentMsgsAdmin)
+admin.site.register(ReceivedMsgs, ReceivedMsgsAdmin)
+admin.site.register(Farm, FarmAdmin)
+admin.site.register(Sensor, SensorAdmin)
+admin.site.register(Personnel)
+admin.site.register(MoistureContent, MoistureContentAdmin)
+admin.site.register(FieldUnit, FieldUnitAdmin)
+admin.site.register(IrrigationParameters, IrrigationParametersAdmin)
+admin.site.register(Rainfall, RainfallAdmin)
