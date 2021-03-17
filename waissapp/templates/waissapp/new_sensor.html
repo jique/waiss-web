@@ -157,14 +157,14 @@
                                 {% csrf_token %} 
                                 {% for form in formset %}
                                 <div class="row">
+                                  <div class="col">
+                                      {{form.fieldunit|as_crispy_field}}
+                                  </div>
                                     <div class="col">
                                         {{form.name|as_crispy_field}}
                                     </div>
                                     <div class="col">
                                         {{form.depth|as_crispy_field}}
-                                    </div>
-                                    <div class="col">
-                                        {{form.fieldunit|as_crispy_field}}
                                     </div>
                                 </div>
                                 {% endfor%}

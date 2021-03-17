@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, Farm, FieldUnit, IrrigationParameters, Sensor, MoistureContent, WAISSystems
+from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, Farm, FieldUnit, IrrigationParameters, Sensor, MoistureContent, WAISSystems, Rainfall, Gravimetric, PercentShaded
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -134,4 +134,37 @@ class SentMsgsForm(ModelForm):
         self.fields['msg'].widget = forms.Textarea(attrs={'rows': 2})
     class Meta:
         model = SentMsgs
+        exclude = ()  # this says to include all fields from model to the form
+
+class RainfallForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(RainfallForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-4'
+        self.helper.field_class = 'col-lg-8' 
+    class Meta:
+        model = Rainfall
+        exclude = ()  # this says to include all fields from model to the form
+
+class PercentShadedForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PercentShadedForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-4'
+        self.helper.field_class = 'col-lg-8' 
+    class Meta:
+        model = PercentShaded
+        exclude = ()  # this says to include all fields from model to the form
+
+class GravimetricForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super( GravimetricForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-4'
+        self.helper.field_class = 'col-lg-8' 
+    class Meta:
+        model =  Gravimetric
         exclude = ()  # this says to include all fields from model to the form

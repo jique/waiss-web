@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, IrrigationParameters, WAISSystems, PercentShaded, Rainfall
+from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, IrrigationParameters, WAISSystems, PercentShaded, Rainfall, Gravimetric
 
 
 class SentMsgsInline(admin.TabularInline):
@@ -68,8 +68,6 @@ class CalibrationConstantInline(admin.TabularInline):
 class CalibrationConstantAdmin(admin.ModelAdmin):
     list_display =('name', 'calib_equation', 'coeff_a', 'coeff_b', 'coeff_c', 'coeff_d', 'coeff_m')
 
-admin.site.register(CalibrationConstant, CalibrationConstantAdmin)
-
 class IrrigationParametersInline(admin.TabularInline):
     model = IrrigationParameters
 
@@ -92,7 +90,13 @@ class RainfallInline(admin.TabularInline):
     model = Rainfall
 
 class RainfallAdmin(admin.ModelAdmin):
-    list_display =('timestamp', 'amount', 'fieldunit')
+    list_display =('timestamp', 'fieldunit', 'amount')
+
+class GravimetricInline(admin.TabularInline):
+    model = Gravimetric
+
+class GravimetricAdmin(admin.ModelAdmin):
+    list_display =('timestamp', 'fieldunit', 'mc_data')
 
 admin.site.register(Soil, SoilAdmin)
 admin.site.register(Crop, CropAdmin)
@@ -105,5 +109,7 @@ admin.site.register(Sensor, SensorAdmin)
 admin.site.register(Personnel)
 admin.site.register(MoistureContent, MoistureContentAdmin)
 admin.site.register(FieldUnit, FieldUnitAdmin)
+admin.site.register(CalibrationConstant, CalibrationConstantAdmin)
 admin.site.register(IrrigationParameters, IrrigationParametersAdmin)
 admin.site.register(Rainfall, RainfallAdmin)
+admin.site.register(Gravimetric, GravimetricAdmin)

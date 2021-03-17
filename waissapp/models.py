@@ -5,7 +5,7 @@ class Personnel(models.Model):
     last_name = models.CharField(max_length=30, null=True)
     number = models.IntegerField(null=True)
 
-    def __str_ (self):
+    def __str__(self):
         return self.first_name
     
     class Meta:
@@ -26,17 +26,17 @@ class FieldUnit(models.Model):
     delay = models.IntegerField(verbose_name='Sending Delay (ms)', null=True, blank=True)
     clockcorrection = models.IntegerField(verbose_name='Clock Correction (s)', null=True, blank=True)
 
-    def __str_ (self):
-        return self.number
+    def __str__(self):
+        return self.name
     class Meta:
         verbose_name_plural = "Field Units"
 
 class Sensor(models.Model):
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
     name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
     depth = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Depth, m", null=True, blank=True)
     
-    def __str_ (self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -46,10 +46,6 @@ class MoistureContent(models.Model):
     sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, null=True)
     timestamp = models.DateTimeField(verbose_name='Date & Time Measured', null=True)
     mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
-
-    def __str_ (self):
-        return self.sensor
-
     class Meta:
         verbose_name_plural = "Moisture Content"
         get_latest_by = "timestamp"
@@ -100,7 +96,7 @@ class Soil(models.Model):
     intake_family = models.CharField(max_length=30,choices=choices,verbose_name="Intake Family",null=True, blank=True, help_text="The number indicates the intake rate of the soil. Required for surface irrigations- basin, border, and furrow.")
     source = models.CharField(max_length=30, verbose_name="Data Source", null=True, blank=True)
 
-    def __str_ (self):
+    def __str__(self):
         return self.soiltype
 
     class Meta:
@@ -140,7 +136,7 @@ class CalibrationConstant(models.Model):
     date_tested = models.DateTimeField(verbose_name='Date Calibrated', null=True, blank=True)
     tested_by = models.CharField(max_length=30, verbose_name="Tested By", null=True, blank=True)
 
-    def __str_ (self):
+    def __str__(self):
         return self.name
         
     class Meta:
@@ -163,7 +159,7 @@ class Crop(models.Model):
 
     root_growth_model = models.CharField(choices=rooting, max_length=30, verbose_name="Root Growth Model", null=True,)
     kc_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (ini)", null=True, blank=True)
-    kc_mid = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (medium)", null=True, blank=True)
+    kc_mid = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (med)", null=True, blank=True)
     kc_end = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (end)", null=True, blank=True)
     kc_cc_1 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 1", null=True, blank=True)
     kc_cc_2 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 2", null=True, blank=True)
@@ -185,7 +181,7 @@ class Crop(models.Model):
         verbose_name_plural = "Crops"
         ordering = ('crop',)
     
-    def __str_ (self):
+    def __str__(self):
         return self.crop
 
 class IrrigationParameters(models.Model):
@@ -247,16 +243,8 @@ class IrrigationParameters(models.Model):
     
     class Meta:
         verbose_name_plural = "Irrigation System"
-    def __str_ (self):
+    def __str__(self):
         return self.name
-
-class PercentShaded(models.Model):
-    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, verbose_name="Crop", null=True, blank=True)
-    area_shaded =  models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area Shaded (%)", null=True, blank=True)
-    date =  models.DateField(verbose_name="Date", null=True, blank=True)
-    class Meta:
-        verbose_name_plural = "Percent Area Shaded"
-        get_latest_by = "date"
 
 class Farm(models.Model):
     name = models.CharField(max_length=20)
@@ -268,11 +256,11 @@ class Farm(models.Model):
         verbose_name_plural = "Farms"
         ordering = ('name',)
 
-    def __str_ (self):
+    def __str__(self):
         return self.name
 
 class WAISSystems(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     farm = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm", null=True)
     farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Farm Manager", null=True)
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True)
@@ -281,13 +269,11 @@ class WAISSystems(models.Model):
     irrigation = models.ForeignKey(IrrigationParameters, on_delete=models.CASCADE, verbose_name="Irrigation System", null=True)
     fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True)    
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-
     class Meta:
         verbose_name_plural = "WAISSystems"
         ordering = ('name',)
         get_latest_by = "timestamp"
-
-    def __str_ (self):
+    def __str__(self):
         return self.name
 
 #MESSAGES
@@ -299,8 +285,7 @@ class ReceivedMsgs(models.Model):
     class Meta:
         verbose_name_plural = "Messages: Received"
         get_latest_by = "timestamp"
-    
-    def __str_ (self):
+    def __str__(self):
         return self.number
 
 class SentMsgs(models.Model):
@@ -309,15 +294,27 @@ class SentMsgs(models.Model):
     sent = models.BooleanField(verbose_name="Sent?", default=False)
     timestamp = models.DateTimeField(verbose_name='Date/Time Sent', auto_now_add=True, null=True, blank=True)
     marker = models.BooleanField(default=False)
-
     class Meta:
         verbose_name_plural = "Messages: Sent"
         get_latest_by = "timestamp"
-    
-    def __str_ (self):
+    def __str__(self):
         return self.number
 
 class Rainfall(models.Model):
     fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
     amount = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Rainfall (mm)", null=True, blank=True)
-    timestamp = models.DateTimeField(verbose_name='Date/Time Sent', null=True, blank=True)
+    timestamp = models.DateTimeField(verbose_name='Date & Time', null=True, blank=True)
+
+class Gravimetric(models.Model):
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True)
+    timestamp = models.DateTimeField(verbose_name='Date & Time', null=True)
+    mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="MCv (%)", null=True)
+    note = models.CharField(max_length=100, verbose_name="Remarks", null=True, blank=True)
+
+class PercentShaded(models.Model):
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, verbose_name="Crop", null=True, blank=True)
+    area_shaded =  models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area Shaded (%)", null=True, blank=True)
+    date =  models.DateField(verbose_name="Date", null=True, blank=True)
+    class Meta:
+        verbose_name_plural = "Percent Area Shaded"
+        get_latest_by = "date"

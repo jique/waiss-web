@@ -59,7 +59,7 @@ urlpatterns = [
 
      #SOIL_PARAMETERS
      path('new_soil/', views.new_soil, name='new_soil'),
-     path('add_soil/', views.add_soil, name='addsoil'),
+     path('add_soil/', views.add_soil, name='add_soil'),
      path('list_soil/', views.list_soil, name='list_soil'),
      path('edit_soil/<str:pk>/', views.edit_soil, name='edit_soil'),
      path('delete_soil/<str:pk>/', views.delete_soil, name='delete_soil'),
@@ -89,4 +89,17 @@ urlpatterns = [
      path('edit_system/<str:pk>/', views.edit_system, name='edit_system'),
      path('list_system/', views.list_system, name='list_system'),
      path('delete_system/<str:pk>/', views.delete_system, name='delete_system'),
+
+     #Other Data
+     path('add_percent_shaded/', views.add_shaded, name='add_shaded'),
+     path('edit_percent_shaded/<str:pk>/', views.edit_shaded, name='edit_shaded'),
+     path('delete_percent_shaded/<str:pk>/', views.delete_shaded, name='delete_shaded'),
+
+     path('add_gravimetric/', views.add_gravimetric, name='add_gravimetric'),
+     path('edit_gravimetric/<str:pk>/', views.edit_gravimetric, name='edit_gravimetric'),
+     path('delete_gravimetric/<str:pk>/', views.delete_gravimetric, name='delete_gravimetric'),
+
+     path('add_rainfall/', views.add_rainfall, name='add_rainfall'),
+     path('edit_rainfall/<str:pk>/', views.edit_rainfall, name='edit_rainfall'),
+     path('delete_rainfall/<str:pk>/', views.delete_rainfall, name='delete_rainfall'),
 ]

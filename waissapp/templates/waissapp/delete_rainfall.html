@@ -9,15 +9,15 @@
 <div class="modal-dialog">
   <div class="modal-content">
       <div class="modal-header">
-          <h5 class="modal-title">Warning!</h5>
+          <h5 class="modal-title">Delete Sensor</h5>
       </div>
       <div class="modal-body">
-          <small><em>Are you sure you want to delete <b>"{{item}}"</b>?</em></small>
+          <small><em>Are you sure you want to delete sensor <b>"{{item}}"</b>?</em></small>
       </div>
       <div class="modal-footer">
-          <form class="form-group" action={% url 'waiss:delete_system' item.id %} method="post">
+          <form class="form-group" action={% url 'waiss:delete_sensor' item.id %} method="post">
               {% csrf_token %}
-          <button type="button" class="btn btn-secondary" onclick="history.go(-1)">Cancel</button>
+          <a href="{% url 'waiss:list_rainfall' %}"><button type="button" class="btn btn-secondary">Cancel</button></a>
           <button type="submit" class="btn btn-danger">Confirm</button>
           </form>
       </div>

@@ -157,19 +157,18 @@
                           {{ formset.management_form }}
                           {% for form in formset %}
                           <div class="row">
+                            <div class="col">
+                                {{form.sensor|as_crispy_field}}
+                            </div>
                               <div class="col">
                                   {{form.timestamp|as_crispy_field}}
                               </div>
                               <div class="col">
                                   {{form.mc_data|as_crispy_field}}
                               </div>
-                              <div class="col">
-                                  {{form.sensor|as_crispy_field}}
-                              </div>
                           </div>
                           {% endfor%}
                     </div>
-                    <br>
                     <div class="text-center">
                         <button type="button" class="btn btn-success"><a  href={% url 'waiss:new_sensor' %} style="color:white">Previous</a></button>
                         <input type="submit" value="Submit" class="btn btn-info">
@@ -179,7 +178,6 @@
         </div>
     </div>
 </div>
-<br>
 {% endblock %}
 
 {% block bottom_script_block %}

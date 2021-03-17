@@ -9,7 +9,6 @@
     {% endblock %}
     <meta charset=”utf-8”> 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
@@ -31,33 +30,34 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
     <script>
       //Update clock
-        function startTime() {
-            var today = new Date();
-            var h = today.getHours();
-            var m = today.getMinutes();
-            var s = today.getSeconds();
-            var ampm = h >= 12 ? 'PM' : 'AM';
-            m = checkTime(m);
-            s = checkTime(s);
-            h = h % 12;
-            h = h ? h : 12; // the hour '0' should be '12'
+      function startTime() {
+        var today = new Date();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        var ampm = h >= 12 ? 'PM' : 'AM';
+        m = checkTime(m);
+        s = checkTime(s);
+        h = h % 12;
+        h = h ? h : 12; // the hour '0' should be '12'
 
-            document.getElementById('time').innerHTML = h + ":" + m + ":" + s + ' ' + ampm;
+        document.getElementById('time').innerHTML = h + ":" + m + ":" + s + ' ' + ampm;
 
-            var month = today.getMonth() + 1;
-            var day = today.getDate();
-            var year = today.getFullYear();
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+        var year = today.getFullYear();
 
-            document.getElementById('date').innerHTML = month + '/' + day + '/' + year;
+        document.getElementById('date').innerHTML = month + '/' + day + '/' + year;
 
-            var t = setTimeout(startTime, 500);
+        var t = setTimeout(startTime, 500);
         }
         console.log(startTime(new Date));
         function checkTime(i) {
-            if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
-            return i;
+          if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+          return i;
         }
     </script>
     <script>
@@ -132,9 +132,6 @@
     right: -4px;
     top: -5px;
 }
-.bg-image {
-  background-image: url({% static "theme/bg_2.png" %});
-}
 td {
     width: auto;
 }
@@ -177,10 +174,115 @@ td.min {
 .highcharts-data-table tr:hover {
     background: #f1f7ff;
 }
-</style>
-  {% endblock %}
+.label-container{
+	position:fixed;
+	bottom:48px;
+	right:105px;
+	display:table;
+	visibility: hidden;
+}
 
-  {% block top_script_block %}
+.label-text{
+	color:#FFF;
+	background:rgba(51,51,51,0.5);
+	display:table-cell;
+	vertical-align:middle;
+	padding:10px;
+	border-radius:3px;
+}
+
+.label-arrow{
+	display:table-cell;
+	vertical-align:middle;
+	color: white;
+	opacity:0.5;
+}
+
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	animation: bot-to-top 2s ease-out;
+}
+
+.icon-ul{
+	position:fixed;
+	right:40px;
+	padding-bottom:20px;
+	bottom:50px;
+	z-index:100;
+}
+
+.icon-li{
+	list-style:none;
+	margin-bottom:10px;
+}
+
+.icon-a{
+	background-color:#5bc0de;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	width:40px;
+	height:40px;
+	display:block;
+}
+
+.icon-ul:hover{
+	visibility:visible!important;
+	opacity:1!important;
+}
+
+.my-float{
+	font-size:20px;
+	margin-top:10px;
+}
+
+.icon-a#menu-share + .icon-ul{
+  visibility: hidden;
+}
+
+.icon-a#menu-share:hover + .icon-ul{
+  visibility: visible;
+  animation: scale-in 0.5s;
+}
+
+.icon-a#menu-share .icon-i{
+	animation: rotate-in 0.5s;
+}
+
+.icon-a#menu-share:hover > .icon-i{
+	animation: rotate-out 0.5s;
+}
+
+@keyframes bot-to-top {
+    0%   {bottom:-40px}
+    50%  {bottom:40px}
+}
+
+@keyframes scale-in {
+    from {transform: scale(0);opacity: 0;}
+    to {transform: scale(1);opacity: 1;}
+}
+
+@keyframes rotate-in {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(90deg);}
+}
+
+@keyframes rotate-out {
+    from {transform: rotate(90deg);}
+    to {transform: rotate(0deg);}
+}
+</style>
   {% endblock %}
 
   {% block dashboard_block %}
@@ -230,19 +332,14 @@ td.min {
                 <a class="collapse-item" href={% url 'waiss:add_farm' %}>Farm</a>
                 <a class="collapse-item" href={% url 'waiss:add_personnel' %}>Farm Manager</a>
                 <a class="collapse-item" href={% url 'waiss:add_crop' %}>Crop</a>
-                <a class="collapse-item" href={% url 'waiss:addsoil' %}>Soil</a>
-                <a class="collapse-item" href={% url 'waiss:add_calib' %}>Calibration</a>
+                <a class="collapse-item" href={% url 'waiss:add_soil' %}>Soil</a>
                 <a class="collapse-item" href={% url 'waiss:add_irrigation' %}>Irrigation System</a>
                 <a class="collapse-item" href={% url 'waiss:add_fieldunit' %}>Field Unit</a>
+                <a class="collapse-item" href={% url 'waiss:add_calib' %}>Calibration</a>
                 <a class="collapse-item" href={% url 'waiss:add_sensor' %}>Sensors</a>
+                <a class="collapse-item" href={% url 'waiss:add_mc' %}>MCv Readings</a>
             </div>
           </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'waiss:add_mc' %}">
-            <i class="fas fa-tint"></i>
-            <span class="text-gray-100">MC Readings</span>
-          </a>
         </li>
   
         <!-- Divider -->
@@ -267,10 +364,10 @@ td.min {
                 <a class="collapse-item" href={% url 'waiss:list_personnel' %}>Farm Manager</a>
                 <a class="collapse-item" href={% url 'waiss:list_crop' %}>Crops</a>
                 <a class="collapse-item" href={% url 'waiss:list_soil' %}>Soil Type</a>
-                <a class="collapse-item" href={% url 'waiss:list_calib' %}>Calibration Constants</a>
                 <a class="collapse-item" href={% url 'waiss:list_irrigation' %}>Irrigation System</a>
                 <a class="collapse-item" href={% url 'waiss:list_fieldunit' %}>Field Units</a>
-                <a class="collapse-item" href={% url 'waiss:list_sensor' %}>Sensors</a>
+                <a class="collapse-item" href={% url 'waiss:list_calib' %}>Calibration Constants</a>
+                <a class="collapse-item" href={% url 'waiss:list_sensor' %}>Sensors & MCv Readings</a>
             </div>
           </div>
         </li>
@@ -400,19 +497,20 @@ td.min {
           {% endblock %}
 
           {% block main_block %}
+          
           <div class="row">
             <div class="col text-gray-800">
               <form method="post">
                 {% csrf_token %}
-                <label><span class="mb-0 font-weight-bold text-gray-800">Select System:</span></label>
-                <select name="selected_system" id="selected_system" class="btn btn-secondary btn-sm">
-                  <option>{{selected_system.name}}</option>
-                  {% for system in form %}
-                  <option value="{{system.name}}">{{system.name}}</option>
-                  {% endfor %}
-                </select>
-                <input class="btn btn-info btn-sm" type="submit" value="Generate Irrigation Advisory">
-                <a class="btn btn-info btn-sm" type="button" href="{% url 'waiss:list_system' %}">Modify System</a>
+                <label class="mb-0 font-weight-bold text-gray-800">System: </label>
+                    <select name="selected_system" id="selected_system" class="btn btn-secondary btn-sm">
+                      <option>{{selected_system}}</option>
+                      {% for system in form %}
+                      <option value="{{system.name}}">{{system}}</option>
+                      {% endfor %}
+                    </select>
+                    <input class="btn btn-info btn-sm" type="submit" value="Generate Irrigation Advisory">
+                    <a class="btn btn-info btn-sm" type="button" href="{% url 'waiss:list_system' %}">Modify System</a>
               </form>
             </div>
             <div class="col-2 text-right align-bottom"><small><span id="date"></span>&nbsp;|&nbsp;<span id="time"></span></small></div>
@@ -425,9 +523,9 @@ td.min {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col">
-                      <div class="mb-0 font-weight-bold text-gray-800">{{crop.crop}}</div>
+                      <div class="mb-0 font-weight-bold text-gray-800">{{crop}}</div>
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Crop</div>
-                      <small>{{crop_dat}} / {{crop_growingperiod}} days [{{crop_transplanted|date:'m-d'}} - harvest_date] <br>
+                      <small>{{crop_dat}} / {{crop_growingperiod}} days<br> <!--crop_dat based on latest mc_reading-->
                         MAD: {{crop_mad}}%
                         {% if irrigation_type == "drip" %}| Area Shaded: {{area_shaded}} %{% endif%}
                       </small>
@@ -443,14 +541,14 @@ td.min {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col">
-                      <div class="mb-0 mr-3 font-weight-bold text-gray-800">{{soil.soiltype}}</div>
+                      <div class="mb-0 mr-3 font-weight-bold text-gray-800">{{soil}}</div>
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Soil</div>
                       <small>
-                        {% if irrigation_type == "basin" %}FC: {{soil_fc}}&nbsp;PWP: {{soil_pwp}}<br>Intake Family: {{intake_family}}{% endif %}
-                        {% if irrigation_type == "border" %}FC: {{soil_fc}}&nbsp;PWP: {{soil_pwp}}<br>Intake Family: {{intake_family}}{% endif %}
-                        {% if irrigation_type == "furrow" %}FC: {{soil_fc}}&nbsp;PWP: {{soil_pwp}}<br>Intake Family: {{intake_family}}{% endif %}
-                        {% if irrigation_type == "sprinkler" %}FC: {{soil_fc}}<br>PWP: {{soil_pwp}}{% endif %}
-                        {% if irrigation_type == "drip" %}FC: {{soil_fc}}<br>PWP: {{soil_pwp}}{% endif %}</small>
+                        {% if irrigation_type == "basin" %}FC: {{soil_fc}} % MCv&nbsp;PWP: {{soil_pwp}} % MCv<br>Intake Family: {{intake_family}}{% endif %}
+                        {% if irrigation_type == "border" %}FC: {{soil_fc}} % MCv&nbsp;PWP: {{soil_pwp}} % MCv<br>Intake Family: {{intake_family}}{% endif %}
+                        {% if irrigation_type == "furrow" %}FC: {{soil_fc}} % MCv&nbsp;PWP: {{soil_pwp}} % MCv<br>Intake Family: {{intake_family}}{% endif %}
+                        {% if irrigation_type == "sprinkler" %}FC: {{soil_fc}} % MCv<br>PWP: {{soil_pwp}} % MCv{% endif %}
+                        {% if irrigation_type == "drip" %}FC: {{soil_fc}} % MCv<br>PWP: {{soil_pwp}} % MCv{% endif %}</small>
                     </div>
                   </div>
                 </div>
@@ -463,7 +561,7 @@ td.min {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col">
-                      <div class="mb-0 font-weight-bold text-gray-800">{{irrigation.name}}</div>
+                      <div class="mb-0 font-weight-bold text-gray-800">{{irrigation}}</div>
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Irrigation System</div>
                         <small>type: {{irrigation_type}}<br> unit discharge: 
                           {% if irrigation_type == "basin" %}{{irrigation_q}} lps{% endif %}
@@ -483,7 +581,7 @@ td.min {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col">
-                      <div class="mb-0 mr-3 font-weight-bold text-gray-800">{{calib.name}}</div>
+                      <div class="mb-0 mr-3 font-weight-bold text-gray-800">{{calib}}</div>
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Calibration</div>
                       <small>{{calib_eqn}} <br>
                         {% if calib_eqn == "quadratic" %}{{calib_coeff_a}}x<sup>2</sup> + {{calib_coeff_b}}x + {{calib_coeff_c}}{% endif %}
@@ -507,15 +605,15 @@ td.min {
             <div class="col-3">
               <div class="card border-left-primary shadow mb-4">
                 <div class="card-body">
-                  <div class="text-left">
-                    <div class="mb-0 mr-3 font-weight-bold text-gray-800">{% if mc_ave < MC_TO_IRRIGATE %}IRRIGATE{% endif %}{% if not mc_ave < MC_TO_IRRIGATE %}irrigation not needed{% endif %}</div>
+                  <div class="text-center">
+                    <div class="mb-0 mr-3 font-weight-bold text-gray-800">{% if mc_ave < MC_TO_IRRIGATE %}IRRIGATE{% endif %}{% if not mc_ave < MC_TO_IRRIGATE %}irrigation not needed{% endif %}<hr style="margin-left:0 ; padding:0; line-height:1px;"></div>
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">advisory</div><br>
-                    <div><kbd class="bg-primary">{{irrigation_period}} mins</kbd><br>
+                    <div><b>{{irrigation_period}} mins</b><br>
                     <span class="small">irrigation period</span></div>
-                    <div><kbd class="bg-info">{{total_volume}} m<sup>3</sup>{% if irrigation_type == "drip" %}/plant{% endif %}</kbd><br><span class="small">volume</span></div>
-                    <div><kbd class="bg-success">{{mc_ave}} %</kbd> / <kbd class="bg-success">{{MC_TO_IRRIGATE}} % </kbd><br><span class="small">MC<sub>v</sub> / MC<sub>v</sub> to irrigate</span></div>
-                    <div><kbd class="bg-secondary">{{net_application_depth}} mm</kbd><br><span class="small">net application depth</span></div>
-                    <div><kbd class="bg-secondary">{{drz}} mm</kbd><br><span class="small">effective rootzone</span></div>
+                    <div><b>{{total_volume}} m<sup>3</sup>{% if irrigation_type == "drip" %}/plant{% endif %}</b><br><span class="small">volume</span></div>
+                    <div>{{mc_ave}} % / {{MC_TO_IRRIGATE}} %<br><span class="small">MC<sub>v</sub> / MC<sub>v</sub> to irrigate</span></div>
+                    <div>{{net_application_depth}} mm<br><span class="small">net application depth</span></div>
+                    <div>{{drz}} mm<br><span class="small">effective rootzone</span></div>
                     <div></div>
                   </div>
                 </div>
@@ -534,6 +632,25 @@ td.min {
               </div>
             </div>
           </div>
+        </div>
+        <!-- icons -->
+        <a class="float icon-a fa-rotate-90" id="menu-share" style="display: inline-block;">
+          <i class="fas fa-share fa-flip-horizontal my-float icon-i"></i>
+        </a>
+        <ul class="icon-ul">
+          <li class="icon-li">
+            <a href={% url 'waiss:add_gravimetric' %} class="icon-a"><img src={% static "theme/microwave-white-18dp.svg" %} class="my-float icon-i" title="add gravimetric soil moisture content"></a>
+          </li>
+          <li class="icon-li">
+            <a href={% url 'waiss:add_shaded' %} class="icon-a"><i class="fa fa-sun my-float icon-i" title="add percent shaded area"></i></a>
+          </li>
+          <li class="icon-li">
+            <a href={% url 'waiss:add_mc' %} class="icon-a"><i class="fas fa-tint my-float icon-i" title="add soil moisture reading"></i></a>
+          </li>
+          <li class="icon-li">
+            <a href={% url 'waiss:add_rainfall' %} class="icon-a"><i class="fas fa-oil-can my-float icon-i" title="add rainfall/irrigation"></i></a>
+          </li>
+        </ul>
 {% endblock %}
         </div>
         <!-- /.container-fluid -->
@@ -547,15 +664,8 @@ td.min {
 
     </div>
     <!-- End of Content Wrapper -->
-
-  </div>
   <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
+  
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -623,6 +733,7 @@ td.min {
     title: {
       text: 'MCv (%)'
     },
+    min: 0,
     opposite: false
   }],
   tooltip: {
@@ -641,6 +752,30 @@ td.min {
       }
   },
   series: [{
+    type: 'areaspline',
+    name: 'FC',
+    yAxis: 1,
+    data:[{% for x in series_fc %}{{x}},{% endfor %}],
+    checkbox: { checked: true },
+    color: 'rgb(91, 192, 222)',
+    fillOpacity : '0.1',
+    dashStyle: 'dot',
+    marker: {
+      enabled: false,
+      lineWidth: 1,}
+  }, {
+    type: 'areaspline',
+    name: 'PWP',
+    yAxis: 1,
+    data: [{% for x in series_pwp %}{{x}},{% endfor %}],
+    checkbox: { checked: true },
+    color: 'rgb(217, 83, 79)',
+    fillOpacity : '0.1',
+    dashStyle: 'dot',
+    marker: {
+      enabled: false,
+      lineWidth: 1}
+  }, {
     type: 'column',
     name: 'Rainfall (mm)',
     yAxis: 0,
@@ -661,41 +796,37 @@ td.min {
       enabled: false,
       lineWidth: 1}
   }, {
-    type: 'spline',
-    name: 'FC',
+    type: 'scatter',
+    name: 'Gravimetric MCv (%)',
     yAxis: 1,
-    data:[{% for x in series_fc %}{{x}},{% endfor %}],
+    data: [{% for x in gravimetric_collection %}{{x}},{% endfor %}],
     checkbox: { checked: true },
-    dashStyle: 'dot',
     marker: {
-      enabled: false,
-      lineWidth: 1}
-  }, {
-    type: 'spline',
-    name: 'PWP',
-    yAxis: 1,
-    data: [{% for x in series_pwp %}{{x}},{% endfor %}],
-    checkbox: { checked: true },
-    dashStyle: 'dot',
-    marker: {
-      enabled: false,
-      lineWidth: 1}
-    
+      enabled: true}
   }, {
     name: '{% for s in s1 %}{{s.name}} ({{s.depth}} m){% endfor %}',
     checkbox: { checked: true },
     yAxis: 1,
-    data: [{% for m in mc_1 %}{{m}},{% endfor %}]
+    data: [{% for m in mc_1 %}{{m}},{% endfor %}],
+    marker: {
+      enabled: false,
+      lineWidth: 1}
   }, {
     name: '{% for s in s2 %}{{s.name}} ({{s.depth}} m){% endfor %}',
     checkbox: { checked: true },
     yAxis: 1,
-    data: [{% for m in mc_2 %}{{m}},{% endfor %}]
+    data: [{% for m in mc_2 %}{{m}},{% endfor %}],
+    marker: {
+      enabled: false,
+      lineWidth: 1}
   }, {
     name: '{% for s in s3 %}{{s.name}} ({{s.depth}} m){% endfor %}',
     checkbox: { checked: true },
     yAxis: 1,
-    data: [{% for m in mc_3 %}{{m}},{% endfor %}]
+    data: [{% for m in mc_3 %}{{m}},{% endfor %}],
+    marker: {
+      enabled: false,
+      lineWidth: 1}
   }, {
     type: 'spline',
     name: 'Weighted MCv',
@@ -704,7 +835,7 @@ td.min {
     checkbox: { checked: true },
     dashStyle: 'dash',
     marker: {
-      enabled: false,
+      enabled: true,
       lineWidth: 1}
   }],
 });

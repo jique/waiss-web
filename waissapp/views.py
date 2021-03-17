@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, IrrigationParameters, WAISSystems, PercentShaded, Rainfall
+from django.http import HttpResponse
+from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, IrrigationParameters, WAISSystems, PercentShaded, Rainfall, Gravimetric
 from django.utils import timezone
 import datetime
 from datetime import date, datetime
@@ -77,6 +78,23 @@ def index(request):
 				rainfall_collection.append(p_amount)
 				break
 
+	gravimetric_data = Gravimetric.objects.all().filter(fieldunit=fieldunit) #for gravimetric data
+	sorted_gravimetric = sorted(gravimetric_data, key=attrgetter('timestamp'))
+	gravimetric_collection = [] 
+
+	for p in sorted_gravimetric: # for creating list that has the same index of the mc data
+		p_time = p.timestamp
+		p_amount = float(p.mc_data)
+		j = len(gravimetric_collection)
+		for i, m in enumerate(mc_list, start=1):
+			m_time = m.timestamp
+			if p_time == m_time:
+				z = i-j-1
+				for x in range(0, z):
+					gravimetric_collection.append(0.0)
+				gravimetric_collection.append(p_amount)
+				break
+	print(gravimetric_collection)
 	MC_TO_IRRIGATE = round((((soil_fc - soil_pwp)* crop_mad) + soil_pwp)*100, 2) # mc to initiate irrigation advisory
 	
 	mci_1 = float(mc_1.latest().mc_data)
@@ -376,6 +394,7 @@ def index(request):
 	soil_pwp = soil.pwp
 	crop_mad = round(crop.mad * 100)
 	total_volume = round((total_volume/1000),4)
+
 	context = {
 		"final_list": reversed_list,
 		"form": form,
@@ -411,6 +430,7 @@ def index(request):
 		"series_fc": series_fc,
 		"series_pwp": series_pwp,
 		"rainfall": rainfall_collection,
+		"gravimetric_collection": gravimetric_collection,
 		"mc_ave_collection": mc_ave_collection,
 		"Fn_collection": Fn_collection,
 		"MC_TO_IRRIGATE": MC_TO_IRRIGATE,
@@ -422,7 +442,7 @@ def index(request):
 		"irrigation_period":irrigation_period,
 		"total_volume": total_volume,
 		"area_shaded": area_shaded,
-		"emitter_discharge": q
+		"emitter_discharge": q,
 	}
 	return render(request, 'waissapp/index.html', context)
 
@@ -1054,7 +1074,7 @@ def view_msg(request, number):
 
 #MC Readings
 def new_mc(request):
-	DataFormSet = modelformset_factory(MoistureContent, exclude=(), extra=3)
+	DataFormSet = modelformset_factory(MoistureContent, exclude=(), extra=6)
 	formset = DataFormSet(queryset=MoistureContent.objects.none())
 	if request.method == 'POST':
 		formset = DataFormSet(request.POST)
@@ -1077,7 +1097,7 @@ def add_mc(request):
 		formset = DataFormSet(request.POST)
 		if formset.is_valid():
 			formset.save()
-			return redirect('/dashboard/')
+			return redirect('/add_mc/')
 	else:  # display empty form
 		formset = DataFormSet(queryset=MoistureContent.objects.none())
 	
@@ -1120,3 +1140,139 @@ def delete_mc(request, pk):
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_mc.html', context)
+
+def add_rainfall(request):
+	RainfallFormSet = modelformset_factory(Rainfall, exclude=(), extra=1)
+	formset = RainfallFormSet(queryset=Rainfall.objects.none())
+	queryset = Rainfall.objects.all()
+	reversed_list = reversed(sorted(queryset, key=attrgetter('timestamp')))
+
+	if request.method == 'POST':
+		formset = RainfallFormSet(request.POST)
+		if formset.is_valid():
+			formset.save()
+			return redirect('/add_rainfall/')
+	else:  # display empty form
+		formset = RainfallFormSet(queryset=Rainfall.objects.none())
+	
+	context = {
+		"formset": formset,
+		"list": reversed_list,
+	}
+	return render(request, 'waissapp/add_rainfall.html', context)
+
+def edit_rainfall(request, name):
+	para = Rainfall.objects.get(id=name)
+	form = RainfallForm(instance=para)
+
+	if request.method == 'POST':  # data sent by user
+		form = RainfallForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/dashboard/')
+
+	context = {
+		"form":form,
+		"item": para,
+	}
+	return render(request, 'waissapp/edit_rainfall.html', context)
+
+def delete_rainfall(request, pk):
+	para = Rainfall.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/add_rainfall/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_rainfall.html', context)
+
+def add_shaded(request):
+	PercentShadedFormSet = modelformset_factory(PercentShaded, exclude=(), extra=1)
+	formset = PercentShadedFormSet(queryset=PercentShaded.objects.none())
+	queryset = PercentShaded.objects.all()
+	reversed_list = reversed(sorted(queryset, key=attrgetter('timestamp')))
+	if request.method == 'POST':
+		formset = PercentShadedFormSet(request.POST)
+		if formset.is_valid():
+			formset.save()
+			return redirect('/add_shaded/')
+	else:  # display empty form
+		formset = PercentShadedFormSet(queryset=PercentShaded.objects.none())
+	
+	context = {
+		"formset": formset,
+		"list": reversed_list,
+	}
+	
+	return render(request, 'waissapp/add_shaded.html', context)
+
+def edit_shaded(request, name):
+	para = Shaded.objects.get(id=name)
+	form = PercentShadedForm(instance=para)
+
+	if request.method == 'POST':  # data sent by user
+		form = PercentShadedForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/dashboard/')
+
+	context = {
+		"form":form,
+		"item": para,
+	}
+	return render(request, 'waissapp/edit_shaded.html', context)
+
+def delete_shaded(request, pk):
+	para = PercentShaded.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/add_shaded/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_shaded.html', context)
+
+def add_gravimetric(request):
+	GravimetricFormSet = modelformset_factory(Gravimetric, exclude=(), extra=1)
+	formset = GravimetricFormSet(queryset=Gravimetric.objects.none())
+	queryset = Gravimetric.objects.all()
+	reversed_list = reversed(sorted(queryset, key=attrgetter('timestamp')))
+	if request.method == 'POST':
+		formset = GravimetricFormSet(request.POST)
+		if formset.is_valid():
+			formset.save()
+			return redirect('/add_gravimetric/')
+	else:  # display empty form
+		formset = GravimetricFormSet(queryset=Gravimetric.objects.none())
+	
+	context = {
+		"formset": formset,
+		"list": reversed_list,
+	}
+	
+	return render(request, 'waissapp/add_gravimetric.html', context)
+
+def edit_gravimetric(request, name):
+	para = Gravimetric.objects.get(id=name)
+	form = GravimetricForm(instance=para)
+	if request.method == 'POST':  # data sent by user
+		form = GravimetricForm(request.POST, instance=para)
+		if form.is_valid():
+			form.save()  # this will save info to database
+			return redirect('/dashboard/')
+	context = {
+		"form":form,
+		"item": para,
+	}
+	return render(request, 'waissapp/edit_gravimetric.html', context)
+
+def delete_gravimetric(request, pk):
+	para = Gravimetric.objects.get(id=pk)
+	if request.method == 'POST':
+		para.delete()
+		return redirect('/add_gravimetric/')
+	context = {
+		"item":para	
+	}
+	return render(request, 'waissapp/delete_gravimetric.html', context)
