@@ -28,8 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["10.0.93.165","127.0.0.1"]
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -60,7 +58,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': {},
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,6 +71,9 @@ TEMPLATES = [
         },
     },
 ]
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'waiss.wsgi.application'
 
@@ -128,3 +129,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'waissapp'),
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

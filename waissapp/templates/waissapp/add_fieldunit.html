@@ -16,11 +16,10 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-6">{{ fieldunit_form.name|as_crispy_field }}</div>
-                        <div class="col">{{ fieldunit_form.usk|as_crispy_field}}</div>
                     </div>
                     <div class="row">
                         <div class="col">{{ fieldunit_form.number|as_crispy_field}}</div>
-                        <div class="col">{{ fieldunit_form.sensorintegrationtime|as_crispy_field}}</div>
+                        <div class="col">{{ fieldunit_form.usk|as_crispy_field}}</div>
                     </div>
                     <div class="row">
                         <div class="col">{{ fieldunit_form.timestart|as_crispy_field}}</div>
@@ -31,6 +30,7 @@
                         <div class="col">{{ fieldunit_form.clockcorrection|as_crispy_field}}</div>
                     </div>
                     <div class="row">
+                        <div class="col">{{ fieldunit_form.sensorintegrationtime|as_crispy_field}}</div>
                         <div class="col-6">{{ fieldunit_form.samples|as_crispy_field}}</div>
                     </div>
                     <div class="row">
@@ -42,8 +42,5 @@
         </div>
     </div>
 </div>
-{% endblock %}
-{% block bottom_script_block %}
-<script type="text/javascript" src={% static "js/formset.js" %}></script>
 {% endblock %}
     

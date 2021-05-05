@@ -1,0 +1,40 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block top_script_block %}
+{% endblock %}
+            
+{% block main_block %}
+<h5 class="text-left">Add Soil Moisture Readings</h5>
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header"><small>Upload csv file with moisture content reading from sensor with data <b><i>{{order}}</i></b>.</small></div>
+            <div class="card-body">
+                <form class="form-group" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="custom-file">
+                        <label>Upload a File: </label>
+                        <input type="file" name="file">
+                    </div>
+                    <input type="submit" value="Upload" class="btn btn-info btn-block">
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div>
+                        <strong>{{message|safe}}</strong>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+            
+{% block bottom_script_block %}
+{% endblock %}
+                

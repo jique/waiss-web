@@ -1,0 +1,69 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block meta_block %}
+{% endblock %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block dashboard_block %}
+<style>
+  .bg-light-gray {
+    background-color: #d9d9d9;
+  }
+</style>
+{% endblock %}
+
+{% block main_block %}
+<br>
+<div class="container-fluid">
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+      <div class="col-9">
+          <div class="card">
+              <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                  <div class="col-lg-6 d-none d-lg-block bg-light-gray rounded">
+                    <img src={% static "theme/lady_sarai_with_sarai_logo.png" %}>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="p-5">
+                      <div class="text-center">
+                        <img width=70px height=70px src={% static "theme/waiss_logo.png" %}>
+                        <br><br>
+                        <h1 class="h4 text-gray-900 mb-4">Welcome Back, WAISS farmer!</h1>
+                      </div>
+                      {% if form.errors %}
+                      <p>Your username and password didn't match. Please try again.</p>
+                      {% endif %}
+
+                      {% if next %}
+                        {% if user.is_authenticated %}
+                          <p>Your account doesn't have access to this page. To proceed,
+                          please login with an account that has access.</p>
+                        {% else %}
+                          <p>Please login to see this page.</p>
+                        {% endif %}
+                      {% endif %}
+
+                      <form class="user" method="post" action={% url 'login' %}>
+                        {% csrf_token %}
+                          <div>
+                            {{ form|crispy }}
+                          </div>
+                        <hr>
+                        <input type="submit" value="Login" class="btn btn-info btn-user btn-block" />
+                        <input type="hidden" name="next" value="{{ next }}" />
+                      </form>
+                      <div class="text-center"><a class="small" href={% url 'password_reset' %}>Forgot Password?</a></div>
+                      <div class="text-center"><a class="small" href={% url 'waiss:register' %}>Create an Account!</a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+{% endblock %}

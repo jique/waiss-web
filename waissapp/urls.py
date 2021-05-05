@@ -1,19 +1,15 @@
 from django.urls import path
 from . import views
 
+
 app_name = 'waiss'
 
 urlpatterns = [
-     path('dashboard/', views.index, name='index'),
-     path('login/', views.login, name='login'),
-     path('signin/', views.register, name='register'),
-     path('welcome/', views.load_page, name='load_page'),
-     path('computation_option/', views.computation_option, name='simp_advanced'),
+     path('', views.index, name='index'),
+     path('register/', views.register, name='register'),
+     path('accounts/profile', views.profile, name='profile'),
      path('about/', views.about, name='about'),
      path('about-the-calculations/', views.about_calc, name='about_calc'),
-     
-     #SYSTEMS
-     path('calculate-basin-system/', views.basin_calc, name='sys_basin'),
      
      #FIELDUNIT_PARAMETERS
      path('new_fieldunit/', views.new_fieldunit, name='new_fieldunit'),
@@ -66,10 +62,31 @@ urlpatterns = [
      
      #IRRIGATION_PARAMETERS
      path('new_irrigation/', views.new_irrigation, name='new_irrigation'),
-     path('add_irrigation/', views.add_irrigation, name='add_irrigation'),
-     path('edit_irrigation/<str:pk>/', views.edit_irrigation, name='edit_irrigation'),
-     path('list_irrigation/', views.list_irrigation, name='list_irrigation'),
-     path('delete_irrigation/<str:pk>/', views.delete_irrigation, name='delete_irrigation'),
+     path('new_basin/', views.new_basin, name='new_basin'),
+     path('new_border/', views.new_border, name='new_border'),
+     path('new_furrow/', views.new_furrow, name='new_furrow'),
+     path('new_drip/', views.new_drip, name='new_drip'),
+     path('new_sprinkler/', views.new_sprinkler, name='new_sprinkler'),
+     path('add_basin/', views.add_basin, name='add_basin'),
+     path('add_border/', views.add_border, name='add_border'),
+     path('add_drip/', views.add_drip, name='add_drip'),
+     path('add_furrow/', views.add_furrow, name='add_furrow'),
+     path('add_sprinkler/', views.add_sprinkler, name='add_sprinkler'),
+     path('list_basin/', views.list_basin, name='list_basin'),
+     path('list_border/', views.list_border, name='list_border'),
+     path('list_furrow/', views.list_furrow, name='list_furrow'),
+     path('list_sprinkler/', views.list_sprinkler, name='list_sprinkler'),
+     path('list_drip/', views.list_drip, name='list_drip'),
+     path('edit_basin/<str:pk>/', views.edit_basin, name='edit_basin'),
+     path('edit_border/<str:pk>/', views.edit_border, name='edit_border'),
+     path('edit_furrow/<str:pk>/', views.edit_furrow, name='edit_furrow'),
+     path('edit_sprinkler/<str:pk>/', views.edit_sprinkler, name='edit_sprinkler'),
+     path('edit_drip/<str:pk>/', views.edit_drip, name='edit_drip'),
+     path('delete_basin/<str:pk>/', views.delete_basin, name='delete_basin'),
+     path('delete_border/<str:pk>/', views.delete_border, name='delete_border'),
+     path('delete_furrow/<str:pk>/', views.delete_furrow, name='delete_furrow'),
+     path('delete_sprinkler/<str:pk>/', views.delete_sprinkler, name='delete_sprinkler'),
+     path('delete_drip/<str:pk>/', views.delete_drip, name='delete_drip'),
 
      #MESSAGES
      path('messages/', views.list_msgs, name='messages'),
@@ -102,4 +119,6 @@ urlpatterns = [
      path('add_rainfall/', views.add_rainfall, name='add_rainfall'),
      path('edit_rainfall/<str:pk>/', views.edit_rainfall, name='edit_rainfall'),
      path('delete_rainfall/<str:pk>/', views.delete_rainfall, name='delete_rainfall'),
+
+     path('upload_csv/', views.upload_csv, name='upload_csv')
 ]

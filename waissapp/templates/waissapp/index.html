@@ -333,7 +333,16 @@ td.min {
                 <a class="collapse-item" href={% url 'waiss:add_personnel' %}>Farm Manager</a>
                 <a class="collapse-item" href={% url 'waiss:add_crop' %}>Crop</a>
                 <a class="collapse-item" href={% url 'waiss:add_soil' %}>Soil</a>
-                <a class="collapse-item" href={% url 'waiss:add_irrigation' %}>Irrigation System</a>
+                <div class="collapse-item" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
+                  Irrigation
+                  <div class="collapse bg-white collapse-inner rounded" id="collapseExample">
+                    <a class="collapse-item" href={% url 'waiss:add_basin' %}>Basin</a>
+                    <a class="collapse-item" href={% url 'waiss:add_border' %}>Border</a>
+                    <a class="collapse-item" href={% url 'waiss:add_furrow' %}>Furrow</a>
+                    <a class="collapse-item" href={% url 'waiss:add_sprinkler' %}>Sprinkler</a>
+                    <a class="collapse-item" href={% url 'waiss:add_drip' %}>Drip</a>
+                  </div>
+                </div>
                 <a class="collapse-item" href={% url 'waiss:add_fieldunit' %}>Field Unit</a>
                 <a class="collapse-item" href={% url 'waiss:add_calib' %}>Calibration</a>
                 <a class="collapse-item" href={% url 'waiss:add_sensor' %}>Sensors</a>
@@ -363,8 +372,17 @@ td.min {
                 <a class="collapse-item" href={% url 'waiss:list_farm' %}>Farms</a>
                 <a class="collapse-item" href={% url 'waiss:list_personnel' %}>Farm Manager</a>
                 <a class="collapse-item" href={% url 'waiss:list_crop' %}>Crops</a>
-                <a class="collapse-item" href={% url 'waiss:list_soil' %}>Soil Type</a>
-                <a class="collapse-item" href={% url 'waiss:list_irrigation' %}>Irrigation System</a>
+                <a class="collapse-item" href={% url 'waiss:list_soil' %}>Soil</a>
+                <div class="collapse-item" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
+                  Irrigation
+                  <div class="collapse bg-white collapse-inner rounded" id="collapseExample">
+                    <a class="collapse-item" href={% url 'waiss:list_basin' %}>Basin</a>
+                    <a class="collapse-item" href={% url 'waiss:list_border' %}>Border</a>
+                    <a class="collapse-item" href={% url 'waiss:list_furrow' %}>Furrow</a>
+                    <a class="collapse-item" href={% url 'waiss:list_sprinkler' %}>Sprinkler</a>
+                    <a class="collapse-item" href={% url 'waiss:list_drip' %}>Drip</a>
+                  </div>
+                </div>
                 <a class="collapse-item" href={% url 'waiss:list_fieldunit' %}>Field Units</a>
                 <a class="collapse-item" href={% url 'waiss:list_calib' %}>Calibration Constants</a>
                 <a class="collapse-item" href={% url 'waiss:list_sensor' %}>Sensors & MCv Readings</a>
@@ -415,7 +433,7 @@ td.min {
             </button>
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
-              
+              {% if user.is_authenticated %}
               <!-- Nav Item - Search Dropdown (Visible Only XS) -->
               <li class="nav-item dropdown no-arrow d-sm-none">
                 <a class="nav-link dropdown-toggle" href="" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -435,7 +453,9 @@ td.min {
                   </form>
                 </div>
               </li>
-  
+              <li class="nav-item">
+                  <div class="nav-link"><small><span id="date"></span>&nbsp;&nbsp;<span id="time"></span></small></div>
+              </li>
             <!-- Nav Item - Messages -->
             <li class="nav-item">
               <a class="nav-link" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -468,12 +488,12 @@ td.min {
               <!-- Nav Item - User Information -->
               <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
                   <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                  <a class="dropdown-item" href="#">
+                  <a class="dropdown-item" href="{% url 'waiss:profile' %}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                   </a>
@@ -482,12 +502,15 @@ td.min {
                     Settings
                   </a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <a class="dropdown-item" href="{% url 'logout'%}?next={{request.path}}">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Logout
                   </a>
                 </div>
               </li>
+              {% else %}
+              <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+              {% endif %}
             </ul>
           </nav>
           <!-- End of Topbar -->
@@ -513,7 +536,6 @@ td.min {
                     <a class="btn btn-info btn-sm" type="button" href="{% url 'waiss:list_system' %}">Modify System</a>
               </form>
             </div>
-            <div class="col-2 text-right align-bottom"><small><span id="date"></span>&nbsp;|&nbsp;<span id="time"></span></small></div>
           </div>
           <hr>
           <div class="row">
@@ -527,7 +549,7 @@ td.min {
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Crop</div>
                       <small>{{crop_dat}} / {{crop_growingperiod}} days<br> <!--crop_dat based on latest mc_reading-->
                         MAD: {{crop_mad}}%
-                        {% if irrigation_type == "drip" %}| Area Shaded: {{area_shaded}} %{% endif%}
+                        {% if drip %}| Area Shaded: {{area_shaded}} %{% endif%}
                       </small>
                     </div>
                   </div>
@@ -544,11 +566,18 @@ td.min {
                       <div class="mb-0 mr-3 font-weight-bold text-gray-800">{{soil}}</div>
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Soil</div>
                       <small>
-                        {% if irrigation_type == "basin" %}FC: {{soil_fc}} % MCv&nbsp;PWP: {{soil_pwp}} % MCv<br>Intake Family: {{intake_family}}{% endif %}
-                        {% if irrigation_type == "border" %}FC: {{soil_fc}} % MCv&nbsp;PWP: {{soil_pwp}} % MCv<br>Intake Family: {{intake_family}}{% endif %}
-                        {% if irrigation_type == "furrow" %}FC: {{soil_fc}} % MCv&nbsp;PWP: {{soil_pwp}} % MCv<br>Intake Family: {{intake_family}}{% endif %}
-                        {% if irrigation_type == "sprinkler" %}FC: {{soil_fc}} % MCv<br>PWP: {{soil_pwp}} % MCv{% endif %}
-                        {% if irrigation_type == "drip" %}FC: {{soil_fc}} % MCv<br>PWP: {{soil_pwp}} % MCv{% endif %}</small>
+                        {% if basin %}
+                          FC: {{soil_fc}}% &nbsp;PWP: {{soil_pwp}}% MCv<br>Intake Family: {{intake_family}}
+                          {% elif border %}
+                          FC: {{soil_fc}}% &nbsp;PWP: {{soil_pwp}}% MCv<br>Intake Family: {{intake_family}}
+                          {% elif furrow %}
+                          FC: {{soil_fc}}% &nbsp;PWP: {{soil_pwp}}% MCv<br>Intake Family: {{intake_family}}
+                          {% elif sprinkler %}
+                          FC: {{soil_fc}}% MCv<br>PWP: {{soil_pwp}}% MCv
+                          {% elif drip %}
+                          FC: {{soil_fc}}% MCv<br>PWP: {{soil_pwp}}% MCv
+                        {% endif %}
+                      </small>
                     </div>
                   </div>
                 </div>
@@ -561,14 +590,28 @@ td.min {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col">
-                      <div class="mb-0 font-weight-bold text-gray-800">{{irrigation}}</div>
+                      <div class="mb-0 font-weight-bold text-gray-800">
+                        {% if basin %} {{basin}}
+                          {% elif drip %} {{drip}}
+                          {% elif border %} {{border}}
+                          {% elif furrow %} {{furrow}}
+                          {% elif sprinkler %} {{sprinkler}}
+                        {% endif %}</div>
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Irrigation System</div>
-                        <small>type: {{irrigation_type}}<br> unit discharge: 
-                          {% if irrigation_type == "basin" %}{{irrigation_q}} lps{% endif %}
-                          {% if irrigation_type == "border" %}{{irrigation_q}} lps{% endif %}
-                          {% if irrigation_type == "furrow" %}{{irrigation_q}} lps{% endif %}
-                          {% if irrigation_type == "sprinkler" %}{{irrigation_q}} lps{% endif %}
-                          {% if irrigation_type == "drip" %}{{emitter_discharge}} l/day{% endif %}</small>
+                        <small>type: 
+                          {% if basin %} basin
+                          {% elif drip %} drip
+                          {% elif border %} border
+                          {% elif furrow %} furrow
+                          {% elif sprinkler %} sprinkler
+                          {% endif %}
+                          <br> unit discharge: 
+                          {% if not drip %}
+                          {{irrigation_q}} lps
+                          {% else %}
+                          {{irrigation_q}} l/day
+                          {% endif %}
+                        </small>
                     </div>
                   </div>
                 </div>
@@ -663,27 +706,9 @@ td.min {
 {% endblock %}
 
     </div>
-    <!-- End of Content Wrapper -->
+  <!-- End of Content Wrapper -->
   <!-- End of Page Wrapper -->
   
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href={% url 'waiss:login' %}>Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
   
   <script>
     $(function () {

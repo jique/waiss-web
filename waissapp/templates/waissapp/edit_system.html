@@ -36,8 +36,24 @@
                         <div class="col-1"><a href="{% url 'waiss:add_soil' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                     </div>
                     <div class="row">
-                        <div class="col">{{form.irrigation|as_crispy_field }}</div>
-                        <div class="col-1"><a href="{% url 'waiss:add_irrigation' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
+                        <div class="col">{{form.basin|as_crispy_field }}</div>
+                        <div class="col-1"><a href="{% url 'waiss:add_basin' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{form.border|as_crispy_field }}</div>
+                        <div class="col-1"><a href="{% url 'waiss:add_border' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{form.furrow|as_crispy_field }}</div>
+                        <div class="col-1"><a href="{% url 'waiss:add_furrow' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{form.sprinkler|as_crispy_field }}</div>
+                        <div class="col-1"><a href="{% url 'waiss:add_sprinkler' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{form.drip|as_crispy_field }}</div>
+                        <div class="col-1"><a href="{% url 'waiss:add_drip' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
                     </div>
                     <div class="row">
                         <div class="col">{{form.fieldunit|as_crispy_field }}</div>

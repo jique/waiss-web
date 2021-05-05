@@ -40,68 +40,11 @@
         </div>
       </li>
 
-      <!-- Nav Item - Alerts -->
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-bell fa-fw"></i>
-          <!-- Counter - Alerts -->
-          <span class="badge badge-danger badge-counter">3+</span>
-        </a>
-        <!-- Dropdown - Alerts -->
-        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-          <h6 class="dropdown-header">
-            Alerts Center
-          </h6>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="mr-3">
-              <div class="icon-circle bg-primary">
-                <i class="fas fa-file-alt text-white"></i>
-              </div>
-            </div>
-            <div>
-              <div class="small text-gray-500">December 12, 2019</div>
-              <span class="font-weight-bold">A new monthly report is ready to download!</span>
-            </div>
-          </a>
-          <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-        </div>
-      </li>
-
-    <!-- Nav Item - Messages -->
-    <li class="nav-item">
-      <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-envelope fa-fw"></i>
-        <!-- Counter - Messages -->
-        <span class="badge badge-danger badge-counter">5+</span>
-      </a>
-      <!-- Dropdown - Messages -->
-      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-        <h6 class="dropdown-header">
-          Message Center
-        </h6>
-        {% for msgs in final_list %}
-        <a class="dropdown-item d-flex align-items-center" href={% url 'waiss:view-conversation' msgs.number %}>
-          <div class="mr-3">
-            <div class="icon-circle bg-primary">
-              <i class="fas fa-file-alt text-white"></i>
-            </div>
-          </div>
-          <div>
-            <div class="small text-gray-500">{{msgs.timestamp}}</div>
-            <span class="small font-weight-bold">{{msgs.msg}}</span>
-          </div>
-        </a>
-        {% endfor %}
-        <a class="dropdown-item text-center small text-gray-500" href="{% url 'waiss:messages' %}">Show All Alerts</a>
-      </div>
-    </li>
-
-      <div class="topbar-divider d-none d-sm-block"></div>
 
       <!-- Nav Item - User Information -->
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
           <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
         </a>
         <!-- Dropdown - User Information -->
@@ -151,41 +94,48 @@
                 <div class="card-header">
                     <small>Give system name and select previously submitted personnel, crop, soil, irrigation, field unit and calibration equation data.</small>
                 </div>
-                        <div class="card-body">
+                      <div class="card-body">
                         <form class="form-group" action="" method="post">
                             {% csrf_token %}
-                            <div class="row">
-                              <div class="col-11">{{form.name|as_crispy_field }}</div>
-                            </div>
-                            <div class="row">
+                          <div class="row">
+                              <div class="col-5">{{form.name|as_crispy_field }}</div>
+                          </div>
+                          <div class="row">
                               <div class="col">{{form.farm|as_crispy_field }}</div>
-                              <div class="col-1"><a href="{% url 'waiss:new_personnel' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add personnel"></i></a></div>
+                              <div class="col-1"><a href="{% url 'waiss:add_farm' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
+                              <div class="col">{{form.farm_manager|as_crispy_field}}</div>
+                              <div class="col-1"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
+                          </div>
+                          <div class="row">
+                              <div class="col">{{form.crop|as_crispy_field }}</div>
+                              <div class="col-1"><a href="{% url 'waiss:add_crop' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add crop"></i></a></div>
+                              <div class="col">{{form.soil|as_crispy_field }}</div>
+                              <div class="col-1"><a href="{% url 'waiss:add_soil' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                             </div>
-                            <div class="row">
-                                <div class="col">{{form.farm_manager|as_crispy_field }}</div>
-                                <div class="col-1"><a href="{% url 'waiss:new_personnel' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add personnel"></i></a></div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{form.crop|as_crispy_field }}</div>
-                                <div class="col-1"><a href="{% url 'waiss:new_crop' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add crop"></i></a></div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{form.soil|as_crispy_field }}</div>
-                                <div class="col-1"><a href="{% url 'waiss:new_soil' %}"><i class="fas fa-plus"  data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{form.irrigation|as_crispy_field }}</div>
-                                <div class="col-1"><a href="{% url 'waiss:new_irrigation' %}"><i class="fas fa-plus"  data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{form.fieldunit|as_crispy_field }}</div>
-                                <div class="col-1"><a href="{% url 'waiss:new_fieldunit' %}"><i class="fas fa-plus"  data-toggle="tooltip" data-placement="right" title="add field unit"></i></a></div>
-                            </div>
-                            <div class="row">
+                          
+                          <div class="row">
+                              <div class="col">{{form.fieldunit|as_crispy_field }}</div>
+                              <div class="col-1"><a href="{% url 'waiss:add_fieldunit' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                               <div class="col">{{form.calib|as_crispy_field }}</div>
-                              <div class="col-1"><a href="{% url 'waiss:new_calib' %}"><i class="fas fa-plus"  data-toggle="tooltip" data-placement="right" title="add field unit"></i></a></div>
+                              <div class="col-1"><a href="{% url 'waiss:add_calib' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
+                          </div>
+                          <div class="row">
+                            <div class="col">{{form.basin|as_crispy_field }}</div>
+                            <div class="col-1"><a href="{% url 'waiss:add_basin' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
+                            <div class="col">{{form.border|as_crispy_field }}</div>
+                            <div class="col-1"><a href="{% url 'waiss:add_border' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
+                          </div>
+                        <div class="row">
+                            <div class="col">{{form.furrow|as_crispy_field }}</div>
+                            <div class="col-1"><a href="{% url 'waiss:add_furrow' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
+                            <div class="col">{{form.sprinkler|as_crispy_field }}</div>
+                            <div class="col-1"><a href="{% url 'waiss:add_sprinkler' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
                             </div>
+                        <div class="row">
+                            <div class="col-5">{{form.drip|as_crispy_field }}</div>
+                            <div class="col-1"><a href="{% url 'waiss:add_drip' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
                         </div>
+                      </div>
                     </div>
                     <br>
                     <div class="text-center">

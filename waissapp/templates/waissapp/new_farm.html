@@ -19,89 +19,11 @@
     </div>
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
-      
-      <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-      <li class="nav-item dropdown no-arrow d-sm-none">
-        <a class="nav-link dropdown-toggle" href="" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-search fa-fw"></i>
-        </a>
-        <!-- Dropdown - Messages -->
-        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-          <form class="form-inline mr-auto w-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <!-- Nav Item - Alerts -->
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-bell fa-fw"></i>
-          <!-- Counter - Alerts -->
-          <span class="badge badge-danger badge-counter">3+</span>
-        </a>
-        <!-- Dropdown - Alerts -->
-        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-          <h6 class="dropdown-header">
-            Alerts Center
-          </h6>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="mr-3">
-              <div class="icon-circle bg-primary">
-                <i class="fas fa-file-alt text-white"></i>
-              </div>
-            </div>
-            <div>
-              <div class="small text-gray-500">December 12, 2019</div>
-              <span class="font-weight-bold">A new monthly report is ready to download!</span>
-            </div>
-          </a>
-          <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-        </div>
-      </li>
-
-    <!-- Nav Item - Messages -->
-    <li class="nav-item">
-      <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-envelope fa-fw"></i>
-        <!-- Counter - Messages -->
-        <span class="badge badge-danger badge-counter">5+</span>
-      </a>
-      <!-- Dropdown - Messages -->
-      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-        <h6 class="dropdown-header">
-          Message Center
-        </h6>
-        {% for msgs in final_list %}
-        <a class="dropdown-item d-flex align-items-center" href={% url 'waiss:view-conversation' msgs.number %}>
-          <div class="mr-3">
-            <div class="icon-circle bg-primary">
-              <i class="fas fa-file-alt text-white"></i>
-            </div>
-          </div>
-          <div>
-            <div class="small text-gray-500">{{msgs.timestamp}}</div>
-            <span class="small font-weight-bold">{{msgs.msg}}</span>
-          </div>
-        </a>
-        {% endfor %}
-        <a class="dropdown-item text-center small text-gray-500" href="{% url 'waiss:messages' %}">Show All Alerts</a>
-      </div>
-    </li>
-
-      <div class="topbar-divider d-none d-sm-block"></div>
 
       <!-- Nav Item - User Information -->
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
           <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
         </a>
         <!-- Dropdown - User Information -->
@@ -147,38 +69,29 @@
                     <span class="progress-bar-inner" style="background-color: #1abc9c; width: 10%;" data-value="10" data-percentage-value="10"></span>
                 </div>
             </div>
-                <div class="card">
-                <div class="card-header">
-                    <small>Fillout farm information and select previously submitted personnel, crop, soil, irrigation, and field unit data.</small>
+            <form class="form-group" action="" method="post">
+              <div class="card">
+                <div class="card-header"><small>Fillout farm information and select previously submitted personnel, crop, soil, irrigation, and field unit data.</small></div>
+                
+                  <div class="card-body">
+                    {% csrf_token %}
+                    <div class="row"><div class="col">{{ farm_form.name|as_crispy_field }}</div></div>
+                    <div class="row"><div class="col">{{ farm_form.brgy|as_crispy_field }}</div></div>
+                    <div class="row"><div class="col">{{ farm_form.municipality|as_crispy_field }}</div></div>
+                    <div class="row"><div class="col">{{ farm_form.province|as_crispy_field }}</div></div>
+                  </div>
+                </div><br>
+                <div class="text-center">
+                  <input type="submit" value="Submit" class="btn btn-info">
+                  <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Next</a></button>
                 </div>
-                        <div class="card-body">
-                        <form class="form-group" action="" method="post">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col">{{ farm_form.name|as_crispy_field }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{ farm_form.brgy|as_crispy_field }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{ farm_form.province|as_crispy_field }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="text-center">
-                            <input type="submit" value="Submit" class="btn btn-info">
-                            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Next</a></button>
-                    </div>
-                </form>
+              </form>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<br>
+  <br>
 {% endblock %}
 
 {% block bottom_script_block %}

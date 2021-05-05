@@ -1,0 +1,57 @@
+{% extends 'waissapp/index.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block top_script_block %}
+{% endblock %}
+
+{% block main_block %}
+<h5 class="text-left">Sprinkler Irrigation Systems</h5>
+<div class="card shadow mb-4">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+              <th class="align-top"></th>
+              <th class="align-top">Name</th>
+              <th class="align-top ">Unit Discharge (lps)</th>
+              <th class="align-top ">Application Efficiency (%)</th>
+              <th class="align-top">Lateral Spacing (m)</th>
+              <th class="align-top">Sprinkler Spacing (m)</th>
+              <th class="align-top">Nozzle Diameter (cm)</th>
+              <th class="align-top">Operating Pressure (kPa)</th>
+              <th class="align-top">Discharge Coefficient</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for instance in list %}
+            <tr> 
+              <td class="min">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href={% url 'waiss:edit_sprinkler' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
+                    &nbsp;
+                    <a href={% url 'waiss:delete_sprinkler' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                    &nbsp;
+                </div>
+              </td><td class="align-middle min">{{instance.name}}</td>
+              <td class="align-middle ">{{instance.discharge}}</td>
+              <td class="align-middle ">{{instance.ea}}</td>
+              <td class="align-middle ">{{instance.lateral_spacing}}</td>
+              <td class="align-middle ">{{instance.sprinkler_spacing}}</td>
+              <td class="align-middle ">{{instance.nozzle_diameter}}</td>
+              <td class="align-middle ">{{instance.operating_pressure}}</td>
+              <td class="align-middle ">{{instance.discharge_coefficient}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div>
+  <small><em>Add new irrigation system here.</em></small>&nbsp;<a href={% url 'waiss:add_basin' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
+</div>
+{% endblock %}
+
+{% block bottom_script_block %}
+{% endblock %}
+    

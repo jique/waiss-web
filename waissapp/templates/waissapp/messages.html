@@ -142,19 +142,19 @@
             <div class="inbox_msg">
               <div class="inbox_people">
                 <div class="inbox_chat">
-                  {% for msg in joinedlist %}
+                  {% for x in list %}
                   <div class="chat_list">
                     <div class="chat_people">
                       <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>
                       <div class="chat_ib">
-                        <h5>{{msg.number}} <span class="chat_date">{{msg.timestamp}}</span></h5>
+                        <h5>{{x.first_name}} {{x.last_name}}<span class="chat_date">{{msg.timestamp}}</span></h5>
                         <div class="row">
                           <div class="col">
-                            <small>{{ msg.msg}}</small>
+                            <small>{{x.number}}</small>
                           </div>
                           <div class="col-5 small float-right">
-                            <span><a href={% url 'waiss:view-conversation' msg.number %}>View</a></span>
-                            <span><a href={% url 'waiss:messages_delete' msg.id %}>Delete</a></span>
+                            <span><a href={% url 'waiss:view-conversation' x.number %}>View</a></span>
+                            <span><a href={% url 'waiss:messages_delete' x.id %}>Delete</a></span>
                           </div>
                         </div>
                       </div>

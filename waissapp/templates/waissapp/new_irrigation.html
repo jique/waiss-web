@@ -41,68 +41,10 @@
         </div>
       </li>
 
-      <!-- Nav Item - Alerts -->
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-bell fa-fw"></i>
-          <!-- Counter - Alerts -->
-          <span class="badge badge-danger badge-counter">3+</span>
-        </a>
-        <!-- Dropdown - Alerts -->
-        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-          <h6 class="dropdown-header">
-            Alerts Center
-          </h6>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="mr-3">
-              <div class="icon-circle bg-primary">
-                <i class="fas fa-file-alt text-white"></i>
-              </div>
-            </div>
-            <div>
-              <div class="small text-gray-500">December 12, 2019</div>
-              <span class="font-weight-bold">A new monthly report is ready to download!</span>
-            </div>
-          </a>
-          <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-        </div>
-      </li>
-
-    <!-- Nav Item - Messages -->
-    <li class="nav-item">
-      <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-envelope fa-fw"></i>
-        <!-- Counter - Messages -->
-        <span class="badge badge-danger badge-counter">5+</span>
-      </a>
-      <!-- Dropdown - Messages -->
-      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-        <h6 class="dropdown-header">
-          Message Center
-        </h6>
-        {% for msgs in final_list %}
-        <a class="dropdown-item d-flex align-items-center" href={% url 'waiss:view-conversation' msgs.number %}>
-          <div class="mr-3">
-            <div class="icon-circle bg-primary">
-              <i class="fas fa-file-alt text-white"></i>
-            </div>
-          </div>
-          <div>
-            <div class="small text-gray-500">{{msgs.timestamp}}</div>
-            <span class="small font-weight-bold">{{msgs.msg}}</span>
-          </div>
-        </a>
-        {% endfor %}
-        <a class="dropdown-item text-center small text-gray-500" href="{% url 'waiss:messages' %}">Show All Alerts</a>
-      </div>
-    </li>
-
-      <div class="topbar-divider d-none d-sm-block"></div>
-
       <!-- Nav Item - User Information -->
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
           <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
         </a>
         <!-- Dropdown - User Information -->
@@ -136,167 +78,35 @@
     <div class="col-9">
       <div class="card">
         <div class="p-5">
-          <h4 class="display-4" style="font-size: 35px;">Let's get started!</h4>
-          <p class="lead" style="font-size: 15px;">Input required information for each parameters.</p>
-          <div class="progress_bar">
-              <div class="pro-bar">
-                  <small class="progress_bar_title">
-                    Farm | Personnel | Crop | Soil | <span style="color: #1abc9c; font-size: large;"><b> Irrigation</b></span>
-                    <span class="progress_number">50%</span>
-                  </small>
-                  <span class="progress-bar-inner" style="background-color: #1abc9c; width: 50%;" data-value="50" data-percentage-value="50"></span>
-              </div>
-          </div>
-            <div class="card">
-              <div class="card-header">
-                  <small>Select from the 5 types of suface irrigation. Fillout required specifications.</small>
-              </div>
-              <div class="card-body">
-                <div class="card-body">
-                  <div class="col">{{ irrigation_form.name|as_crispy_field}}</div>
-                  <div class="col">{{ irrigation_form.irrigation_system_type|as_crispy_field}}</div>
-                  <div class="col">{{ irrigation_form.discharge|as_crispy_field}}</div>
-                  <div class="col">{{ irrigation_form.emitter_discharge|as_crispy_field }}</div>
-                  <div class="col">{{ irrigation_form.ea|as_crispy_field}}</div>
-                  <div class="col">{{ irrigation_form.area_slope|as_crispy_field}}</div>
-                  <div class="col">{{ irrigation_form.mannings_coeff|as_crispy_field}}</div>
-                  <div class="row">
-                    <div class="col">
-                    </div>
-                    <div class="col-8">
-                      <small>Common Manning's (retardance) coefficient <br>
-                        &emsp;&emsp;<b>Surface</b> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<b>n</b><br>
-                        &emsp;&emsp;Smooth, ban soil surfaces noncultivated, oil-mulch treated citrus	&emsp;&emsp;&emsp;&emsp;0.04 <br>
-                        &emsp;&emsp;Small grain, drill rows parallel to border strip &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; 0.10<br>
-                        &emsp;&emsp;Alfalfa, mint, broadcast small grain and similar crops	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 0.15 <br>
-                        &emsp;&emsp;Dense sod crops, small grain with drill rows across the border strip	&emsp;&emsp;&emsp;0.25 </small>
-                      </div>
-                  </div>
+            <h4 class="display-4" style="font-size: 35px;">Let's get started!</h4>
+            <p class="lead" style="font-size: 15px;">Input required information for each parameters.</p>
+            <div class="progress_bar">
+                <div class="pro-bar">
+                    <small class="progress_bar_title">
+                      Farm | Personnel | Crop | Soil |<span style="color: #1abc9c; font-size: large;"><b> Irrigation</b></span>
+                      <span class="progress_number">50%</span>
+                    </small>
+                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 40%;" data-value="40" data-percentage-value="40"></span>
                 </div>
             </div>
-            <div class="accordion" id="accordion">
-                <form class="form-group" action="" method="post">
-                {% csrf_token %}
-                <div class="card">
-                  <div class="card-header text-center" id="headingOne">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" type="button">
-                        Type 1: Basin Irrigation System
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col">{{ irrigation_form.basin_length|as_crispy_field}}</div>
-                    </div>
-                    </div>
-                  </div>
+            <div class="card mx-auto">
+                <div class="card-header"><small>Choose irrigation system type.</small></div>
+                <div class="card-body">
+                  <p>
+                    <a class="btn btn-success" href="{% url 'waiss:new_basin' %}" type="button">Basin</a>
+                    <a class="btn btn-success" href="{% url 'waiss:new_border' %}" type="button">Border</a>
+                    <a class="btn btn-success" href="{% url 'waiss:new_furrow' %}" type="button">Furrow</a>
+                    <a class="btn btn-success" href="{% url 'waiss:new_drip' %}" type="button">Drip</a>
+                    <a class="btn btn-success" href="{% url 'waiss:new_sprinkler' %}" type="button">Sprinkler</a>
+                  </p>
                 </div>
-                  <div class="card">
-                    <div class="card-header text-center" id="headingTwo">
-                      <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" type="button">
-                          Type 2: Border Irrigation System
-                        </button>
-                      </h5>
-                    </div>
-                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                    <div class="card-body">
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header text-center" id="headingThree">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" type="button">
-                        Type 3: Furrow Irrigation System
-                      </button>
-                    </h5>
-                  </div>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.bln_furrow_type|as_crispy_field}}</div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header text-center" id="headingFour">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" type="button">
-                        Type 4: Sprinkler Irrigation System
-                      </button>
-                    </h5>
-                  </div>
-                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-                      <div class="card-body">
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.lateral_spacing|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.sprinkler_spacing|as_crispy_field }}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header text-center" id="headingFive">
-                      <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive" type="button">
-                          Type 5: Sprinkler Irrigation System
-                        </button>
-                      </h5>
-                    </div>
-                  <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
-                      <div class="card-body">
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.bln_single_lateral|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.emitters_per_plant|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.emitter_spacing|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.plant_spacing|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.row_spacing|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.wetted_dia|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ irrigation_form.EU|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                          <div class="col">{{ irrigation_form.bln_ii|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                          <div class="col"></div>
-                          <div class="col-8">{{ irrigation_form.irrigation_interval|as_crispy_field }}</div>
-                        </div>
-                    </div>
-                  </div>
-              </div>
-              <br>
-              <div class="text-center">
-              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_soil' %} style="color:white">Previous</a></button>
-              <input type="submit" value="Submit" class="btn btn-info">
-              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
-              </div>
-            </form>
-          </div>
-        </div>  
-      </div> 
-    </div> 
+        </div>
+    </div>
+  </div>
 </div>
 <br>
-{% endblock %}
 
+{% endblock %}
 
 {% block bottom_script_block %}
 {% endblock %}

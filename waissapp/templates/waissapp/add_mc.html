@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-lg-12 mx-auto">
         <div class="card mb-4">
-            <div class="card-header"><small>Input soil moisture content readings.</small></div>
+            <div class="card-header"><small>Input soil moisture content readings or </small><a href={% url 'waiss:upload_csv' %}><kbd class="bg-secondary">Upload CSV file</kbd></a></div>
             <div class="card-body">
                 <form class="form-group" action="" method="POST">
                     {% csrf_token %} 
