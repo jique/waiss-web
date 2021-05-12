@@ -58,7 +58,7 @@ class Sensor(models.Model):
 
 class MoistureContent(models.Model):
     sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, null=True)
-    timestamp = models.DateTimeField(verbose_name='Date & Time Measured', null=True)
+    timestamp = models.DateTimeField(verbose_name='Date & Time Measured', null=True, help_text="Format: mm/dd/yyyy hh:mm")
     mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
 
     class Meta:
@@ -167,7 +167,6 @@ class CalibrationConstant(models.Model):
 
 class Crop(models.Model):
     crop = models.CharField(max_length=100, unique=True, null=True,)
-    date_transplanted = models.DateField(verbose_name='Date Transplanted', null=True,)
     growingperiod = models.IntegerField(verbose_name="Growing Period, days", null=True,)
     mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True,)
     drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True,)
@@ -240,12 +239,12 @@ class Basin(models.Model):
 
 class Furrow(models.Model):
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
-    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, blank=True)
-    mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, blank=True)
-    area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True, blank=True)
-    bln_furrow_type = models.BooleanField (verbose_name="It is an open-ended furrow.", null=True, blank=True)
-    furrow_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Spacing", null=True, blank=True)
-    furrow_length = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Length", null=True, blank=True)
+    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
+    mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
+    area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True)
+    bln_furrow_type = models.BooleanField (verbose_name="It is an open-ended furrow.", null=True)
+    furrow_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Spacing", null=True)
+    furrow_length = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Length", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
@@ -257,9 +256,9 @@ class Furrow(models.Model):
 
 class Border(models.Model):
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
-    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, blank=True)
-    mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, blank=True)
-    area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True, blank=True)
+    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
+    mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
+    area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
@@ -271,18 +270,18 @@ class Border(models.Model):
 
 class Drip(models.Model):
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
-    bln_single_lateral = models.BooleanField (verbose_name="Single Straight Lateral", null=True, blank=True)
-    discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Discharge (l/day)", null=True, blank=True)
-    emitters_per_plant = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="No. of Emitters per Plant", null=True, blank=True)
-    emitter_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Spacing (m)", null=True, blank=True)
-    plant_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Plant spacing (m)", null=True, blank=True)
-    row_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Row spacing (m)", null=True, blank=True)
-    wetted_dia = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Wetted diameter (m)", null=True, blank=True)
-    bln_ii = models.BooleanField(verbose_name="Has preferred irrigation interval", null=True, blank=True)
+    bln_single_lateral = models.BooleanField (verbose_name="Single Straight Lateral", null=True)
+    discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Discharge (l/day)", null=True)
+    emitters_per_plant = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="No. of Emitters per Plant", null=True)
+    emitter_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Spacing (m)", null=True)
+    plant_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Plant spacing (m)", null=True)
+    row_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Row spacing (m)", null=True)
+    wetted_dia = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Wetted diameter (m)", null=True)
+    bln_ii = models.BooleanField(verbose_name="Has preferred irrigation interval", null=True)
     irrigation_interval = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Irrigation Interval (days)", null=True, blank=True, help_text="Fillout only if you have preferred irrigation interval based on your farm schedule.")
     EU = models.DecimalField(max_digits=3, decimal_places=3, verbose_name="Design Emission Uniformity", null=True, blank=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True)
     personal = models.BooleanField(default=True)
     
     class Meta:
@@ -341,14 +340,15 @@ class WAISSystems(models.Model):
     farm = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm", null=True)
     farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Farm Manager", null=True)
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True)
+    date_transplanted = models.DateField(verbose_name='Date Transplanted', null=True,)
     soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True)
     calib = models.ForeignKey(CalibrationConstant, on_delete=models.CASCADE, verbose_name="Calibration Equation", null=True)
     basin = models.ForeignKey(Basin, on_delete=models.CASCADE, verbose_name="Basin System", null=True, blank=True)
     border = models.ForeignKey(Border, on_delete=models.CASCADE, verbose_name="Border System", null=True, blank=True)
     furrow = models.ForeignKey(Furrow, on_delete=models.CASCADE, verbose_name="Furrow System", null=True, blank=True)
     drip = models.ForeignKey(Drip, on_delete=models.CASCADE, verbose_name="Drip System", null=True, blank=True)
-    sprinkler = models.ForeignKey(Sprinkler, on_delete=models.CASCADE, verbose_name="Sprinkler System", null=True, blank=True)
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True)    
+    sprinkler = models.ForeignKey(Sprinkler, on_delete=models.CASCADE, verbose_name="Sprinkler System", null=True, blank=True)    
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
@@ -396,14 +396,14 @@ class Rainfall(models.Model):
 
 class Gravimetric(models.Model):
     fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True)
-    timestamp = models.DateTimeField(verbose_name='Date & Time', null=True)
+    timestamp = models.DateTimeField(verbose_name='Date & Time', null=True, help_text="Format: mm/dd/yyyy hh:mm (should be an exact counterpart on MCv datapoints)")
     mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="MCv (%)", null=True)
     note = models.CharField(max_length=100, verbose_name="Remarks", null=True, blank=True)
 
 class PercentShaded(models.Model):
-    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, verbose_name="Crop", null=True, blank=True)
-    area_shaded =  models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area Shaded (%)", null=True, blank=True)
-    date =  models.DateField(verbose_name="Date", null=True, blank=True)
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, verbose_name="Crop", null=True)
+    area_shaded =  models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area Shaded (%)", null=True)
+    date =  models.DateField(verbose_name="Date", null=True)
     class Meta:
         verbose_name_plural = "Percent Area Shaded"
         get_latest_by = "date"

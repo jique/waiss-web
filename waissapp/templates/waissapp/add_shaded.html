@@ -13,22 +13,20 @@
             <div class="card-body">
                 <form class="form-group" action="" method="POST">
                     {% csrf_token %} 
-                    {{ formset.management_form }}
-                    {% for form in formset %}
                     <div class="row">
-                        <div class="col">
+                        <div class="col-3">
                             {{form.crop|as_crispy_field}}
                         </div>
-                        <div class="col">
+                        <div class="col-3">
                             {{form.date|as_crispy_field}}
                         </div>
                         <div class="col">
                             {{form.area_shaded|as_crispy_field}}
                         </div>
                     </div>
-                    {% endfor%}
                     <input type="submit" value="Submit" class="btn btn-info btn-block">
                 </form>
+                <hr>
                 <div class="table-responsive">
                     <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -43,14 +41,9 @@
                         {% for instance in list %}
                         <tr>
                             <td class="min">
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href={% url 'waiss:edit_shaded' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                                    &nbsp;
-                                    <a href={% url 'waiss:delete_shaded' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                                    &nbsp;
-                                </div>
+                                <a href={% url 'waiss:delete_shaded' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
                             </td>             
-                            <td class="align-middle">{{instance.date}}</td>
+                            <td class="align-middle"><a href={% url 'waiss:edit_shaded' instance.id %}>{{instance.date}}</a></td>
                             <td class="align-middle">{{instance.crop}}</td> 
                             <td class="align-middle">{{instance.area_shaded}}</td>
                         </tr>

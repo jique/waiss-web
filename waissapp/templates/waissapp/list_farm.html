@@ -12,29 +12,20 @@
       <div class="table-responsive">
         <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th class="align-top"></th>
                 <th class="align-top">Farm Name</th>
-                <th class="align-top">Province</th>
-                <th class="align-top">Municipality</th>
-                <th class="align-top">Barangay</th>
+                <th class="align-top">Location</th>
             </tr>
         </thead>
         <tbody>
             {% for instance in farm_list %}
-            <tr>
+            <tr class="text-center">
                 <td class="min">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_farm' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                        &nbsp;
-                        <a href={% url 'waiss:delete_farm' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                        &nbsp;
-                    </div>
+                    <a href={% url 'waiss:delete_farm' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
                 </td>
-                <td class="align-middle">{{instance.name}}</td>              
-                <td class="align-middle">{{instance.province}}</td>
-                <td class="align-middle">{{instance.municipality}}</td>
-                <td class="align-middle">{{instance.brgy}}</td>
+                <td class="align-middle"><a href={% url 'waiss:edit_farm' instance.id %}>{{instance.name}}</a></td>              
+                <td class="align-middle">{{instance.brgy|default_if_none:"-"}}, {{instance.municipality|default_if_none:"-"}}, {{instance.province|default_if_none:"-"}}</td>
             </tr>
             {% endfor %}
         </tbody>

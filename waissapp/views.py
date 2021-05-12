@@ -6,7 +6,7 @@ import datetime
 from datetime import date, datetime
 from django import forms
 from django.forms import modelformset_factory
-from .forms import SentMsgsForm, PersonnelForm, SoilForm, CalibForm, CropForm, FarmForm, FieldUnitForm, SensorForm, MCForm, WAISSystemsForm, BasinForm, DripForm, SprinklerForm, FurrowForm, BorderForm, PercentShadedForm, GravimetricForm
+from .forms import SentMsgsForm, PersonnelForm, SoilForm, CalibForm, CropForm, FarmForm, FieldUnitForm, SensorForm, MCForm, WAISSystemsForm, BasinForm, DripForm, SprinklerForm, FurrowForm, BorderForm, PercentShadedForm, GravimetricForm, RainfallForm
 from itertools import chain
 from operator import attrgetter
 import math
@@ -41,7 +41,7 @@ def index(request):
 		
 
 	crop = selected_system.crop # getting crop variables
-	crop_transplanted = crop.date_transplanted
+	crop_transplanted = selected_system.date_transplanted
 	crop_growingperiod = (crop.growingperiod)
 	crop_mad = float(crop.mad)
 
@@ -129,7 +129,6 @@ def index(request):
 			calib_coeff_b = float(calib.coeff_b)
 			calib_coeff_c = float(calib.coeff_c)
 			calib_coeff_d = float(calib.coeff_d)
-			calib_coeff_m = float(calib.coeff_m)
 			mc_return = calib_coeff_d + (calib_coeff_a - calib_coeff_d)/(1.0 + (mc_value/calib_coeff_c)**calib_coeff_b)
 		if calib_eqn == "asymmetrical sigmoidal":
 			calib_coeff_a = float(calib.coeff_a)
@@ -172,6 +171,7 @@ def index(request):
 	crop_model = crop.root_growth_model # for computation of the actual depth of rootzone
 	crop_drz = float(crop.drz)
 	crop_ro = float(crop.root_ini)
+
 	def calculateDRZ(crop_dat):
 		if crop_model == "Borg-Grimes Model": # Borg-Grimes Model
 			sine = 0.5*(math.sin(math.radians(3.03*(crop_dat/crop_growingperiod)-1.47)))
@@ -288,22 +288,21 @@ def index(request):
 			rate = 1.5
 		if intake_family == "sandy_20":
 			rate = 2.0
-		cons_a = -0.1831*rate**2 + 1.4917*rate + 0.486
-		cons_b = 0.0524*math.log(rate) + 0.7822
-		cons_f = 1.7926*rate + 7.0715
-		cons_g = 0.0003*rate + 0.00009
+		cons_a = round(-0.1831*rate**2 + 1.4917*rate + 0.486, 4)
+		cons_b = round(0.0524*math.log(rate) + 0.7822, 3)
+		cons_f = round(1.7926*rate + 7.0715, 2)
+		cons_g = round (0.0003*rate + 0.00009, 7)
 	#BASIN
 	ea = 0
 	if basin != None:
-		irrigation = selected_system.basin
-		irrigation_q = irrigation.discharge
+		irrigation_q = basin.discharge
 		if net_application_depth == 0:
 			irrigation_period = 0
 			total_volume = 0
 		else:
 			unit_discharge =  float(irrigation_q/1000)
-			basin_length = float(irrigation.basin_length)
-			ea = float(irrigation.ea)
+			basin_length = float(basin.basin_length)
+			ea = float(basin.ea)
 
 			if ea == 95:
 				R = 0.16
@@ -340,47 +339,54 @@ def index(request):
 
 	#FURROW
 	if furrow != None:
-		slope = float(irrigation.area_slope)
-		furrow_spacing = float(irrigation.furrow_spacing)
-		furrow_length = float(irrigation.furrow_length)
-		mannings_coeff = float(irrigation.mannings_coeff)
+		irrigation_q = furrow.discharge
+		slope = float(furrow.area_slope)
+		furrow_spacing = float(furrow.furrow_spacing)
+		furrow_length = float(furrow.furrow_length)
+		mannings_coeff = float(furrow.mannings_coeff)
 		discharge = float(irrigation_q)
-		bln_open = irrigation.bln_furrow_type
-		P_adj = 0.265*(discharge*mannings_coeff/slope**0.5)**0.425 + 0.227
-		net_opportunity_time = (((net_application_depth*(furrow_spacing/P_adj))-cons_c)/cons_a)**(1/cons_b)
+		bln_open = furrow.bln_furrow_type
+		P_adj = round(0.265*(discharge*mannings_coeff/slope**0.5)**0.425 + 0.227, 4)
 
-		if bln_open:
-			irrigation_period = net_opportunity_time
+		if net_application_depth == 0:
+			net_opportunity_time = 0
+			advanced_time = 0
+			irrigation_period = 0
 		else:
-			beta = (cons_g * furrow_length)/(discharge*slope**0.5)
-			advanced_time = (furrow_length*(math.e)**beta)/cons_f
-			irrigation_period = net_opportunity_time + advanced_time
-
+			net_opportunity_time = (((net_application_depth*(furrow_spacing/P_adj))-cons_c)/cons_a)**(1/cons_b)
+			if bln_open:
+				irrigation_period = net_opportunity_time
+			else:
+				beta = (cons_g * furrow_length)/(discharge*slope**0.5)
+				advanced_time = (furrow_length*(math.e)**beta)/cons_f
+				irrigation_period = net_opportunity_time + advanced_time
+		
 		irrigation_period = round((irrigation_period), 2)
 		total_volume = irrigation_period * discharge * 60
 
 	#BORDER
 	if border != None:
 		intake_family = soil.intake_family
-		So = float(irrigation.area_slope)
+		So = float(border.area_slope)
 		Fn = net_application_depth
-		n = irrigation.mannings_coeff
+		n = border.mannings_coeff
 		Tn = ((Fn - cons_c)/cons_a)**(1/cons_b)
-		Qu = irrigation.discharge
+		Qu = border.discharge
 		if slope <= 0.004:
 			Tl = ((Qu**0.2)*n)/120*[So+[(0.0094*n*Qu**0.175/[(Tn**0.88)*(So**0.5)])**1.6]]
 		if slope > 0.004:
 			Tl = (Qu**0.2)*(n**1.2)/(120*So**1.6)
 		irrigation_period = Tn - Tl
+
 	#SPRINKLER
 	if sprinkler != None:
-		Sl = float(irrigation.sprinkler_spacing)
-		Sm = float(irrigation.lateral_spacing)
-		ea = float(irrigation.ea)/100
-		if irrigation.bln_sprinkler_discharge == "Yes":
-			d = float(irrigation.nozzle_diameter)
-			P = float(irrigation.operating_pressure)
-			C = float(irrigation.discharge_coefficient)
+		Sl = float(sprinkler.sprinkler_spacing)
+		Sm = float(sprinkler.lateral_spacing)
+		ea = float(sprinkler.ea)/100
+		if sprinkler.bln_sprinkler_discharge == "Yes":
+			d = float(sprinkler.nozzle_diameter)
+			P = float(sprinkler.operating_pressure)
+			C = float(sprinkler.discharge_coefficient)
 			q = 0.1109543178 * C * d**2 * P**0.5 #original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)
 		else:
 			q = float(irrigation_q)
@@ -399,16 +405,15 @@ def index(request):
 	#DRIP
 	if drip != None:
 		area_shaded = PercentShaded.objects.all().filter(crop=crop).latest().area_shaded
-		irrigation = selected_system.drip
-		q = float(irrigation.discharge)
-		bln_single_lateral = irrigation.bln_single_lateral
-		bln_ii = irrigation.bln_ii
-		Np = float(irrigation.emitters_per_plant)
-		Se = float(irrigation.emitter_spacing)
-		Sp = float(irrigation.plant_spacing)
-		So = float(irrigation.row_spacing)
-		w = float(irrigation.wetted_dia)
-		eu = float(irrigation.EU)
+		q = float(drip.discharge)
+		bln_single_lateral = drip.bln_single_lateral
+		bln_ii = drip.bln_ii
+		Np = float(drip.emitters_per_plant)
+		Se = float(drip.emitter_spacing)
+		Sp = float(drip.plant_spacing)
+		So = float(drip.row_spacing)
+		w = float(drip.wetted_dia)
+		eu = float(drip.EU)
 		Etcrop = float(crop.peak_Etcrop)
 		transpiration_ratio = float(crop.transpiration_ratio)
 		Pd = float(area_shaded/100)
@@ -423,7 +428,7 @@ def index(request):
 		gross_application_depth = net_application_depth*transpiration_ratio/eu
 
 		if bln_ii:
-			irrigation_interval = float(irrigation.irrigation_interval)
+			irrigation_interval = float(drip.irrigation_interval)
 		else:
 			Td = Etcrop*(Pd + 0.15*(1 - Pd))
 			irrigation_interval = net_application_depth/Td
@@ -579,6 +584,7 @@ def edit_system(request, pk):
 	if request.method == 'POST':  # data sent by user
 		form = WAISSystemsForm(request.POST, instance=para)
 		if form.is_valid():
+			form.save()  # this will save info to database
 			return redirect('/')
 
 	context = {
@@ -1125,7 +1131,7 @@ def add_furrow(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_basin/')
+			return redirect('/list_furrow/')
 	else:  # display empty form
 		form = FurrowForm()
 
@@ -1601,6 +1607,7 @@ def list_mc(request, name):
 	reversed_list = reversed(sorted(get_mc, key=attrgetter('timestamp')))
 
 	context = {
+		"sensor": sensor_instance,
 		"list": reversed_list,
 	}
 	return render(request, 'waissapp/list_mc.html', context)
@@ -1638,8 +1645,8 @@ def add_rainfall(request):
 	return render(request, 'waissapp/add_rainfall.html', context)
 
 @login_required
-def edit_rainfall(request, name):
-	para = Rainfall.objects.get(id=name)
+def edit_rainfall(request, pk):
+	para = Rainfall.objects.get(id=pk)
 	form = RainfallForm(instance=para)
 
 	if request.method == 'POST':  # data sent by user
@@ -1667,20 +1674,22 @@ def delete_rainfall(request, pk):
 
 @login_required
 def add_shaded(request):
-	PercentShadedFormSet = modelformset_factory(PercentShaded, exclude=(), extra=1)
-	formset = PercentShadedFormSet(queryset=PercentShaded.objects.none())
+
 	queryset = PercentShaded.objects.all()
 	reversed_list = reversed(sorted(queryset, key=attrgetter('date')))
-	if request.method == 'POST':
-		formset = PercentShadedFormSet(request.POST)
-		if formset.is_valid():
-			formset.save()
-			return redirect('/add_shaded/')
+	if request.method == 'POST':  # data sent by user
+		form = PercentShadedForm(request.POST)
+		if form.is_valid():
+			instance = form.save(commit=False)
+			instance.author = request.user
+			instance.personal = True
+			instance.save()
+			return redirect('/list_basin/')
 	else:  # display empty form
-		formset = PercentShadedFormSet(queryset=PercentShaded.objects.none())
+		form = PercentShadedForm
 	
 	context = {
-		"formset": formset,
+		"form": form,
 		"list": reversed_list,
 	}
 	

@@ -5,21 +5,20 @@
 {% endblock %}
             
 {% block main_block %}
-<h5 class="text-left">Add Furrow</h5>
 <div class="row">
-    <div class="col-lg-12">
-        <div class="card mb-4">
-            <div class="card-header"><small></small></div>
+    <div class="col">
+        <div class="card">
+            <div class="card-header"><small><i>Edit Furrow Irrigation System&nbsp;>&nbsp;<b><span class="text-info">{{item}}</span></b></i></small></div>
             <div class="card-body">
                 <form class="form-group" action="" method="post">
                     {% csrf_token %}
-                        <div class="col">{{ form.name|as_crispy_field}}</div>
-                        <div class="col">{{form.discharge|as_crispy_field}}</div>
-                        <div class="col">{{ form.area_slope|as_crispy_field}}</div>
-                        <div class="col">{{ form.mannings_coeff|as_crispy_field}}</div>
-                        <div class="col">{{ form.bln_furrow_type|as_crispy_field}}</div>
-                        <div class="col">{{ form.furrow_spacing|as_crispy_field}}</div>
-                        <div class="col">{{ form.furrow_length|as_crispy_field}}</div>
+                    <div class="col">{{ form.name|as_crispy_field}}</div>
+                    <div class="col">{{form.discharge|as_crispy_field}}</div>
+                    <div class="col">{{ form.area_slope|as_crispy_field}}</div>
+                    <div class="col">{{ form.mannings_coeff|as_crispy_field}}</div>
+                    <div class="col">{{ form.bln_furrow_type|as_crispy_field}}</div>
+                    <div class="col">{{ form.furrow_spacing|as_crispy_field}}</div>
+                    <div class="col">{{ form.furrow_length|as_crispy_field}}</div>
                     <input type="submit" value="Submit" class="btn btn-info btn-block">
                 </form>
             </div>

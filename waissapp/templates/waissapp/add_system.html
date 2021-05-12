@@ -19,16 +19,19 @@
             <div class="card-body">
                 <form class="form-group" action="" method="post">
                     {% csrf_token %}
-                  <div class="row">
-                      <div class="col-5">{{form.name|as_crispy_field }}</div>
-                  </div>
-                  <div class="row">
+                    <div class="row">
+                      <div class="col">{{form.name|as_crispy_field }}</div>
+                      <div class="col-1"></div>
+                      <div class="col">{{form.date_transplanted|as_crispy_field }}</div>
+                      <div class="col-1"></div>
+                    </div>
+                    <div class="row">
                       <div class="col">{{form.farm|as_crispy_field }}</div>
                       <div class="col-1"><a href="{% url 'waiss:add_farm' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                       <div class="col">{{form.farm_manager|as_crispy_field}}</div>
                       <div class="col-1"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
-                  </div>
-                  <div class="row">
+                    </div>
+                    <div class="row">
                       <div class="col">{{form.crop|as_crispy_field }}</div>
                       <div class="col-1"><a href="{% url 'waiss:add_crop' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add crop"></i></a></div>
                       <div class="col">{{form.soil|as_crispy_field }}</div>

@@ -12,11 +12,10 @@
       <div class="table-responsive">
         <table class="table table-md table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th class="align-top"></th>
                     <th class="align-top">Crop</th>
                     <th class="align-top">Root Growth Model</th>
-                    <th class="align-top">Date Transplanted</th>
                     <th class="align-top">Growing Period (days)</th>
                     <th class="align-top">Management Allowable Depletion (MC<sub>v</sub> , %)</th>
                     <th class="align-top">Depth of Rootzone (m)</th>
@@ -36,18 +35,12 @@
                     
             <tbody>
                 {% for instance in crop_list %}
-                <tr> 
+                <tr class="text-center"> 
                     <td class="min">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href={% url 'waiss:edit_crop' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                            &nbsp;
-                            <a href={% url 'waiss:delete_crop' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                            &nbsp;
-                        </div>
+                        <a href={% url 'waiss:delete_crop' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
                     </td> 
-                    <td class="align-middle min">{{instance.crop}}</td>
+                    <td class="align-middle min"><a href={% url 'waiss:edit_crop' instance.id %}>{{instance.crop}}</a></td>
                     <td class="align-middle">{{instance.root_growth_model|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.date_transplanted|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.growingperiod|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.mad|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.drz|default_if_none:"-"}}</td>

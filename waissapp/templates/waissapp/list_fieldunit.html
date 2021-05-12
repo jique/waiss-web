@@ -30,14 +30,9 @@
             {% for instance in fieldunit_list %}
             <tr>
                 <td class="min">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_fieldunit' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                        &nbsp;
-                        <a href={% url 'waiss:delete_fieldunit' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                        &nbsp;
-                    </div>
+                    <a href={% url 'waiss:delete_fieldunit' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
                 </td>
-                <td class="min">{{instance.name}}</td>
+                <td class="min"><a href={% url 'waiss:edit_fieldunit' instance.id %}>{{instance.name}}</a></td>
                 <td>{{instance.usk}}</td>
                 <td>{{instance.number}}</td>
                 <td>{{instance.samples}}</td>

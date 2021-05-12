@@ -29,6 +29,7 @@
                     {% endfor%}
                     <input type="submit" value="Submit" class="btn btn-info btn-block">
                 </form>
+                <hr>
                 <div class="table-responsive">
                     <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -44,14 +45,9 @@
                         {% for instance in list %}
                         <tr>
                             <td class="min">
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href={% url 'waiss:edit_gravimetric' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                                    &nbsp;
-                                    <a href={% url 'waiss:delete_gravimetric' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                                    &nbsp;
-                                </div>
+                                <a href={% url 'waiss:delete_gravimetric' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
                             </td>
-                            <td class="align-middle">{{instance.fieldunit}}</td>              
+                            <td class="align-middle"><a href={% url 'waiss:edit_gravimetric' instance.id %}>{{instance.fieldunit}}</a></td>              
                             <td class="align-middle">{{instance.timestamp}}</td>
                             <td class="align-middle">{{instance.mc_data}}</td>
                             <td class="align-middle">{{instance.note}}</td>

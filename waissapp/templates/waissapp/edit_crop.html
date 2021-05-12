@@ -21,10 +21,10 @@
                     <div class="col">{{crop_form.drz|as_crispy_field}}</div>
                 </div>
                 <div class="row">
-                    <div class="col">{{crop_form.growingperiod|as_crispy_field}}</div>
+                  <div class="col">{{crop_form.root_ini|as_crispy_field}}</div>
                 </div>
                 <div class="row">
-                    <div class="col">{{crop_form.date_transplanted|as_crispy_field}}</div>
+                    <div class="col">{{crop_form.growingperiod|as_crispy_field}}</div>
                 </div>
                 <div class="row">
                     <div class="col">{{crop_form.mad|as_crispy_field}}</div>
@@ -50,7 +50,7 @@
                 </div>
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                   <div class="card-body">
-                      <div class="col">{{crop_form.root_ini|as_crispy_field}}</div>
+                    <div class="col">No more data required! :)</div>
                   </div>
                 </div>
               </div>
@@ -69,13 +69,13 @@
                           <div class="col"><small><i>Linear: MC<sub>v</sub> = (analog_reading)*a + b<br>Quadratic: MC<sub>v</sub> = (analog_reading)<sup>2</sup>*a + (analog_reading)*b + c</i></small></div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{crop_form.root_a|as_crispy_field}}</div>
+                          <div class="col">{{crop_form.root_a|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{crop_form.root_b|as_crispy_field}}</div>
+                          <div class="col">{{crop_form.root_b|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{crop_form.root_c|as_crispy_field}}</div>
+                          <div class="col">{{crop_form.root_c|as_crispy_field}}</div>
                       </div>
                   </div>
                 </div>
@@ -91,27 +91,28 @@
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                   <div class="card-body">
                       <div class="row">
-                          <div class="col-6">{{crop_form.kc_ini|as_crispy_field}}</div>
+                          <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{crop_form.kc_mid|as_crispy_field}}</div>
+                          <div class="col">{{crop_form.kc_mid|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                      <div class="col-6">{{crop_form.kc_end|as_crispy_field}}</div>
+                      <div class="col">{{crop_form.kc_end|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{crop_form.kc_cc_1|as_crispy_field}}</div>
+                          <div class="col">{{crop_form.kc_cc_1|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{crop_form.kc_cc_2|as_crispy_field}}</div>
+                          <div class="col">{{crop_form.kc_cc_2|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                          <div class="col-6">{{crop_form.kc_cc_3|as_crispy_field}}</div>
+                          <div class="col">{{crop_form.kc_cc_3|as_crispy_field}}</div>
                       </div>
                   </div>
                 </div>
               </div>
               <br>
+              {{crop_form.errors}}
               <div class="text-center">
                 <input type="submit" value="Submit" class="btn btn-info">
               </div>

@@ -16,12 +16,6 @@ class SoilForm(ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
 
 class CropForm(forms.ModelForm):
-    date_transplanted = forms.DateField(
-    widget=forms.TextInput(     
-        attrs={'type': 'date'}
-        ),
-    required=True
-    )
     def __init__(self, *args, **kwargs):
         super(CropForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -146,6 +140,12 @@ class SprinklerForm(ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
 
 class WAISSystemsForm(ModelForm):
+    date_transplanted = forms.DateField(
+    widget=forms.TextInput(     
+        attrs={'type': 'date'}
+        ),
+    required=True
+    )
     def __init__(self, *args, **kwargs):
         super(WAISSystemsForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -191,6 +191,12 @@ class RainfallForm(forms.ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
 
 class PercentShadedForm(forms.ModelForm):
+    date = forms.DateField(
+    widget=forms.TextInput(     
+        attrs={'type': 'date'}
+        ),
+    required=True
+    )
     def __init__(self, *args, **kwargs):
         super(PercentShadedForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()

@@ -28,13 +28,9 @@
             {% for instance in list %}
             <tr> 
               <td class="min">
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href={% url 'waiss:edit_sprinkler' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                    &nbsp;
-                    <a href={% url 'waiss:delete_sprinkler' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                    &nbsp;
-                </div>
-              </td><td class="align-middle min">{{instance.name}}</td>
+                <a href={% url 'waiss:delete_sprinkler' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+              </td>
+              <td class="align-middle min"><a href={% url 'waiss:edit_sprinkler' instance.id %}>{{instance.name}}</a></td>
               <td class="align-middle ">{{instance.discharge}}</td>
               <td class="align-middle ">{{instance.ea}}</td>
               <td class="align-middle ">{{instance.lateral_spacing}}</td>

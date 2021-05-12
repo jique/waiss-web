@@ -43,14 +43,9 @@
                         {% for instance in list %}
                         <tr>
                             <td class="min">
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href={% url 'waiss:edit_rainfall' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                                    &nbsp;
-                                    <a href={% url 'waiss:delete_rainfall' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                                    &nbsp;
-                                </div>
+                                <a href={% url 'waiss:delete_rainfall' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
                             </td>             
-                            <td class="align-middle">{{instance.timestamp}}</td>
+                            <td class="align-middle"><a href={% url 'waiss:edit_rainfall' instance.id %}>{{instance.timestamp}}</a></td>
                             <td class="align-middle">{{instance.fieldunit}}</td> 
                             <td class="align-middle">{{instance.amount}}</td>
                         </tr>

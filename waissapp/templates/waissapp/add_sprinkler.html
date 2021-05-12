@@ -18,9 +18,11 @@
                         <div class="col">{{ irrigation_form.lateral_spacing|as_crispy_field }}</div>
                         <div class="col">{{ irrigation_form.sprinkler_spacing|as_crispy_field }}</div>
                         <div class="col">{{ irrigation_form.bln_sprinkler_discharge|as_crispy_field }}</div>
+                        <div class="col-10 mx-auto"><small>Specifications required for sprinkler discharge computation:</small><hr></div>
                         <div class="col-10 mx-auto">{{ irrigation_form.nozzle_diameter|as_crispy_field }}</div>
                         <div class="col-10 mx-auto">{{ irrigation_form.operating_pressure|as_crispy_field }}</div>
                         <div class="col-10 mx-auto">{{ irrigation_form.discharge_coefficient|as_crispy_field }}</div>
+                        <div class="col">{{ irrigation_form.errors }}</div>
                     <input type="submit" value="Submit" class="btn btn-info btn-block">
                 </form>
             </div>

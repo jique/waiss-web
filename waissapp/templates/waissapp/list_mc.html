@@ -6,33 +6,26 @@
 {% endblock %}
 
 {% block main_block %}
-<h5 class="text-left">Moisture Content Readings</h5>
+<h5 class="text-left">Moisture Content Readings: <span class="text-successs"><em>{{sensor}}</em></span></h5>
 <div class="card shadow mb-4">
     <div class="card-body">
     <div class="table-responsive">
         <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th class="align-top "></th>
-                <th class="align-top ">Timestamp</th>
                 <th class="align-top ">Reading</th>
-                <th class="align-top ">Sensor</th>
+                <th class="align-top ">Timestamp</th>
             </tr>
         </thead>
         <tbody>
             {% for item in list %}
-            <tr>
+            <tr class="text-center">
                 <td class="min">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_mc' item.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                        &nbsp;
-                        <a href={% url 'waiss:delete_mc' item.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                        &nbsp;
-                    </div>
+                    <a href={% url 'waiss:delete_mc' item.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
                 </td>
+                <td><a href={% url 'waiss:edit_mc' item.id %}>{{item.mc_data}}</a></td>
                 <td>{{item.timestamp}}</td>
-                <td>{{item.mc_data}}</td>
-                <td>{{item.sensor}}</td>
             </tr>
             {% endfor %}
         </tbody>

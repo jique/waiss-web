@@ -5,11 +5,10 @@
 {% endblock %}
             
 {% block main_block %}
-<h5 class="text-left">Add Basin</h5>
 <div class="row">
     <div class="col-lg-12">
         <div class="card mb-4">
-            <div class="card-header"><small></small></div>
+            <div class="card-header"><small><i>Edit Basin Irrigation System&nbsp;>&nbsp;<b><span class="text-info">{{item}}</span></b></small></i></div>
             <div class="card-body">
                 <form class="form-group" action="" method="post">
                     {% csrf_token %}

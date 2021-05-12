@@ -12,43 +12,74 @@
       <div class="table-responsive">
         <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th class="align-top"></th>
                 <th class="align-top">Name</th>
                 <th class="align-top">Farm</th>
                 <th class="align-top">Farm Manager</th>
                 <th class="align-top">Crop</th>
+                <th class="align-top">Date Planted/Transplanted</th>
                 <th class="align-top">Soil</th>
-                <th class="align-top">Irrigation System</th>
                 <th class="align-top">Field Unit</th>
                 <th class="align-top">Calibration Equation</th>
+                <th class="align-top">Basin</th>
+                <th class="align-top">Border</th>
+                <th class="align-top">Furrow</th>
+                <th class="align-top">Sprinkler</th>
+                <th class="align-top">Drip</th>
             </tr>
         </thead>
         <tbody>
             {% for instance in list %}
-            <tr>
+            <tr class="text-center">
                 <td class="min">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href={% url 'waiss:edit_system' instance.id %}><img class="rounded" src={% static "theme/edit_icon.png" %} style="height: 20px;" alt="edit button" data-toggle="tooltip" data-placement="left" title="edit data"></a>
-                        &nbsp;
                         <a href={% url 'waiss:delete_system' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
-                        &nbsp;
                     </div>
                 </td>
-                <td class="align-middle min">{{instance.name}}</td>              
-                <td class="align-middle min">{{instance.farm}}</td>
-                <td class="align-middle min">{{instance.farm_manager}}</td>
-                <td class="align-middle min">{{instance.crop}}</td>
-                <td class="align-middle min">{{instance.soil}}</td>
-                <td class="align-middle min">{{instance.irrigation}}</td>
-                <td class="align-middle min">{{instance.fieldunit}}</td>
-                <td class="align-middle min">{{instance.calib}}</td>
+                <td class="align-middle min"><a href={% url 'waiss:edit_system' instance.id %}>{{instance.name}}</a></td>              
+                <td class="align-middle min"><a href={% url 'waiss:edit_farm' instance.farm.id %}>{{instance.farm}}</a></td>
+                <td class="align-middle min"><a href={% url 'waiss:edit_personnel' instance.farm_manager.id %}>{{instance.farm_manager.first_name}} {{instance.farm_manager.last_name}}</a></td>
+                <td class="align-middle min"><a href={% url 'waiss:edit_crop' instance.crop.id %}>{{instance.crop}}</a></td>
+                <td class="align-middle min">{{instance.date_transplanted}}</td>
+                <td class="align-middle min"><a href={% url 'waiss:edit_soil' instance.soil.id %}>{{instance.soil}}</a></td>
+                <td class="align-middle min"><a href={% url 'waiss:edit_fieldunit' instance.fieldunit.id %}>{{instance.fieldunit}}</a></td>
+                <td class="align-middle min"><a href={% url 'waiss:edit_calib' instance.calib.id %}>{{instance.calib}}</a></td>
+                <td class="align-middle min">
+                    {% if instance.basin is None %}
+                    {{instance.basin|default_if_none:"-"}}
+                    {% else %}
+                    <a href={% url 'waiss:edit_basin' instance.basin.id %}>{{instance.basin}}</a>
+                    {% endif %}
+                </td>
+                <td class="align-middle min">
+                    {% if instance.border is None %}
+                    {{instance.border|default_if_none:"-"}}
+                    {% else %}
+                    <a href={% url 'waiss:edit_border' instance.border.id %}>{{instance.border|default_if_none:"-"}}</a>
+                    {% endif %}
+                </td>
+                <td class="align-middle min">{% if instance.furrow is None %}{{instance.furrow|default_if_none:"-"}}
+                    {% else %}
+                    <a href={% url 'waiss:edit_furrow' instance.furrow.id %}>{{instance.furrow}}</a>
+                    {% endif %}
+                </td>
+                <td class="align-middle min">{% if instance.sprinkler is None %}{{instance.sprinkler|default_if_none:"-"}}
+                    {% else %}
+                    <a href={% url 'waiss:edit_sprinkler' instance.sprinkler.id %}>{{instance.sprinkler}}</a>
+                    {% endif %}
+                </td>
+                <td class="align-middle min">{% if instance.drip is None %}{{instance.drip|default_if_none:"-"}}
+                    {% else %}
+                    <a href={% url 'waiss:edit_drip' instance.drip.id %}>{{instance.drip}}</a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
-<small><em>Generate new system here.</em></small>&nbsp;<a href={% url 'waiss:add_system' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
+<small><em>Create new system here.</em></small>&nbsp;<a href={% url 'waiss:add_system' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="create new system"></a>
 </div>
 {% endblock %}
 

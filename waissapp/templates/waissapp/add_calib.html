@@ -14,49 +14,48 @@
             <div class="card-body">
                 <form class="django-form" action="" method="post">
                     {% csrf_token %}
-                    <div class="card-body">
                       <div class="row">
-                          <div class="col">{{calib_form.name|as_crispy_field}}</div>
+                          <div class="col-8">{{calib_form.name|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                          <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>
-                          <div class="col-5"><br>&emsp;&emsp;<span class="text-success"><small><b>Equation Standard Form</b></small></span></div>
+                          <div class="col-8">{{calib_form.calib_equation|as_crispy_field}}</div>
+                          <div class="col"><br><span class="text-success"><b>Equation Standard Form</b></span></div>
                       </div>
                       <div class="col">
                           <div class="row">
-                              <div class="col-6">{{calib_form.coeff_a|as_crispy_field}}</div>
-                              <div class="col-6 text-center"><small><i>Linear: MC<sub>v</sub> = a(reading) + b<br>
+                              <div class="col-8">{{calib_form.coeff_a|as_crispy_field}}</div>
+                              <div class="col"><small><i>Linear: MC<sub>v</sub> = a(reading) + b<br>
                                 Quadratic: MC<sub>v</sub> = a(reading)<sup>2</sup> + b(reading) + c</i></small>
                               </div>
                           </div>
                           <div class="row">
-                              <div class="col-6">{{calib_form.coeff_b|as_crispy_field}}</div>
-                              <div class="col-6 text-center"><small><i>Exponential: MC<sub>v</sub> = ae<sup>b</sup>(reading)<br>
+                              <div class="col-8">{{calib_form.coeff_b|as_crispy_field}}</div>
+                              <div class="col"><small><i>Exponential: MC<sub>v</sub> = ae<sup>b</sup>(reading)<br>
                                 Logarithmic: MC<sub>v</sub> = aln(reading) + b</i></small>
                               </div>
                           </div>
                           <div class="row">
-                              <div class="col-6">{{calib_form.coeff_c|as_crispy_field}}</div>
-                              <div class="col-6 text-center"><small><i>Symmetrical Sigmoidal: MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</i></small>
+                              <div class="col-8">{{calib_form.coeff_c|as_crispy_field}}</div>
+                              <div class="col"><small><i>Symmetrical Sigmoidal: MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</i></small>
                                   <br><small><i>Assymmetrical Sigmoidal: <br>
                                     MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></i></small>
                               </div>
                           </div>
                           <div class="row">
-                              <div class="col-6">{{calib_form.coeff_d|as_crispy_field}}</div>
+                              <div class="col-8">{{calib_form.coeff_d|as_crispy_field}}</div>
                           </div>
                           <div class="row">
-                              <div class="col-6">{{calib_form.coeff_m|as_crispy_field}}</div>
+                              <div class="col-8">{{calib_form.coeff_m|as_crispy_field}}</div>
                           </div>
                       </div>
                       <div class="row">
-                          <div class="col">{{calib_form.date_tested|as_crispy_field}}</div>
+                          <div class="col-8">{{calib_form.date_tested|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                          <div class="col">{{calib_form.tested_by|as_crispy_field}}</div>
+                          <div class="col-8">{{calib_form.tested_by|as_crispy_field}}</div>
                       </div>
                       <div class="row">
-                          <div class="col">{{calib_form.errors}}</div>
+                          <div class="col-8">{{calib_form.errors}}</div>
                       </div>
                     <input type="submit" value="Submit" class="btn btn-info btn-block">
                 </form>

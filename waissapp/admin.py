@@ -77,7 +77,7 @@ class WAISSystemsInline(admin.TabularInline):
     model = WAISSystems
     
 class WAISSystemsAdmin(admin.ModelAdmin):
-    list_display =('name', 'farm', 'farm_manager', 'crop', 'soil', 'basin', 'border', 'furrow', 'drip', 'sprinkler', 'fieldunit', 'calib', 'timestamp')
+    list_display =('name', 'farm', 'farm_manager', 'crop', 'date_transplanted', 'soil', 'fieldunit', 'calib', 'basin', 'border', 'furrow', 'drip', 'sprinkler', 'timestamp')
 
 class PercentShadedInline(admin.TabularInline):
     model = PercentShaded
