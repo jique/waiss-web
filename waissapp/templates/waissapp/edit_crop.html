@@ -30,13 +30,20 @@
                     <div class="col">{{crop_form.mad|as_crispy_field}}</div>
                 </div>
                 <div class="row">
+                  <div class="col">{{crop_form.root_growth_model|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><small>Additional for drip irrigation system,</small></div>
+                  <br>
+                  <br>
+                </div>
+                <div class="row">
+                  <div class="col-1"></div>
                   <div class="col">{{crop_form.peak_Etcrop|as_crispy_field}}</div>
                 </div>
                 <div class="row">
+                  <div class="col-1"></div>
                   <div class="col">{{crop_form.transpiration_ratio|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                  <div class="col">{{crop_form.root_growth_model|as_crispy_field}}</div>
                 </div>
             </div>
             <div id="accordion">
@@ -90,6 +97,10 @@
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                   <div class="card-body">
+                      <div class="row">
+                        <div class="col"><center><img src={% static "theme/kc.png" %}></center></div>
+                      </div>
+                      <br>
                       <div class="row">
                           <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
                       </div>

@@ -84,64 +84,85 @@
             <div class="progress_bar">
                 <div class="pro-bar">
                     <small class="progress_bar_title">
-                        Farm | Personnel | Crop | Soil | Irrigation | Field Unit | Calibration | <span style="color: #1abc9c; font-size: large;"><b>System</b></span>
-                        <span class="progress_number">80%</span>
+                        Farm | Personnel | Crop | Soil | Calibration | Irrigation | Field Unit | Sensor | <span style="color: #1abc9c; font-size: large;"><b>System</b></span>
+                        <span class="progress_number">90%</span>
                     </small>
-                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 80%;" data-value="80" data-percentage-value="80"></span>
+                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 90%;" data-value="90" data-percentage-value="90"></span>
                 </div>
             </div>
                 <div class="card">
                 <div class="card-header">
-                    <small>Give system name and select previously submitted personnel, crop, soil, irrigation, field unit and calibration equation data.</small>
+                    <small><i>WAISS Creation</i></small>
                 </div>
                       <div class="card-body">
                         <form class="form-group" action="" method="post">
                             {% csrf_token %}
                           <div class="row">
-                              <div class="col-5">{{form.name|as_crispy_field }}</div>
+                              <div class="col">{{form.name|as_crispy_field }}</div>
+                              <div class="col-1"></div>
                           </div>
                           <div class="row">
                               <div class="col">{{form.farm|as_crispy_field }}</div>
                               <div class="col-1"><a href="{% url 'waiss:add_farm' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
-                              <div class="col">{{form.farm_manager|as_crispy_field}}</div>
-                              <div class="col-1"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
+                          </div>
+                          <div class="row">
+                            <div class="col">{{form.farm_manager|as_crispy_field}}</div>
+                            <div class="col-1"><a href="{% url 'waiss:add_personnel' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                           </div>
                           <div class="row">
                               <div class="col">{{form.crop|as_crispy_field }}</div>
                               <div class="col-1"><a href="{% url 'waiss:add_crop' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add crop"></i></a></div>
-                              <div class="col">{{form.soil|as_crispy_field }}</div>
-                              <div class="col-1"><a href="{% url 'waiss:add_soil' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
-                            </div>
-                          
+                          </div>
                           <div class="row">
-                              <div class="col">{{form.fieldunit|as_crispy_field }}</div>
-                              <div class="col-1"><a href="{% url 'waiss:add_fieldunit' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
+                            <div class="col">{{form.soil|as_crispy_field }}</div>
+                            <div class="col-1"><a href="{% url 'waiss:add_soil' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
+                          </div>
+                          <div class="row">
                               <div class="col">{{form.calib|as_crispy_field }}</div>
                               <div class="col-1"><a href="{% url 'waiss:add_calib' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
                           </div>
                           <div class="row">
+                            <div class="col">{{form.fieldunit|as_crispy_field }}</div>
+                            <div class="col-1"><a href="{% url 'waiss:add_fieldunit' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add soil"></i></a></div>
+                          </div>
+                          <div class="row">
+                            <div class="col"><small>Fillout only 1 irrigation system,</small>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-1"></div>
                             <div class="col">{{form.basin|as_crispy_field }}</div>
                             <div class="col-1"><a href="{% url 'waiss:add_basin' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
+                          </div>
+                          <div class="row">
+                            <div class="col-1"></div>
                             <div class="col">{{form.border|as_crispy_field }}</div>
                             <div class="col-1"><a href="{% url 'waiss:add_border' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
                           </div>
-                        <div class="row">
+                          <div class="row">
+                            <div class="col-1"></div>
                             <div class="col">{{form.furrow|as_crispy_field }}</div>
                             <div class="col-1"><a href="{% url 'waiss:add_furrow' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
+                          </div>
+                          <div class="row">
+                            <div class="col-1"></div>
                             <div class="col">{{form.sprinkler|as_crispy_field }}</div>
                             <div class="col-1"><a href="{% url 'waiss:add_sprinkler' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
                             </div>
-                        <div class="row">
-                            <div class="col-5">{{form.drip|as_crispy_field }}</div>
+                          <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col">{{form.drip|as_crispy_field }}</div>
                             <div class="col-1"><a href="{% url 'waiss:add_drip' %}"><i class="fas fa-plus" data-toggle="tooltip" data-placement="right" title="add irrigation system"></i></a></div>
-                        </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">{{form.errors }}</div></div>
                       </div>
                     </div>
                     <br>
                     <div class="text-center">
-                            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
+                            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_sensor' %} style="color:white">Previous</a></button>
                             <input type="submit" value="Submit" class="btn btn-info">
-                            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_sensor' %} style="color:white">Next</a></button>
+                            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_mc' %} style="color:white">Next</a></button>
                     </div>
                 </form>
             </div>

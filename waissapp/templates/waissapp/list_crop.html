@@ -37,7 +37,7 @@
                 {% for instance in crop_list %}
                 <tr class="text-center"> 
                     <td class="min">
-                        <a href={% url 'waiss:delete_crop' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                        <a data-toggle="modal" href="{{ instance.id }}/delete" data-target="#exampleModalCenter-{{ instance.id }}"><img class="rounded" src={% static "theme/delete_icon.png" %} style="height: 20px;"></a>
                     </td> 
                     <td class="align-middle min"><a href={% url 'waiss:edit_crop' instance.id %}>{{instance.crop}}</a></td>
                     <td class="align-middle">{{instance.root_growth_model|default_if_none:"-"}}</td>
@@ -56,6 +56,29 @@
                     <td class="align-middle">{{instance.root_c|default_if_none:"-"}}</td>
                     <td class="align-middle">{{instance.root_ini|default_if_none:"-"}}</td>
                 </tr>
+                <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter-{{ instance.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Delete Crop</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <small><em>Are you sure you want to delete crop <b>"{{instance.crop}}"</b>?<br>
+                        Deleting <b>"{{instance.crop}}"</b> will also delete the systems where it is used.</em></small>
+                    </div>
+                    <div class="modal-footer">
+                        <form class="form-group" action="" method="post">
+                            {% csrf_token %}
+                            <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+                            <button type="submit" class="btn btn-danger" name="id" value="{{instance.id}}">Confirm</button>
+                        </form>
+                    </div>
+                  </div>
+                </div>
                 {% endfor %}
             </tbody>
         </table>
@@ -67,5 +90,8 @@
 {% endblock %}
 
 {% block bottom_script_block %}
+<script type="text/javascript">
+    $('#exampleModalCenter-{{ instance.id }}').modal(options)
+</script>
 {% endblock %}
     

@@ -84,17 +84,17 @@
             <div class="progress_bar">
                 <div class="pro-bar">
                     <small class="progress_bar_title">
-                        Farm | Personnel | Crop | Soil | Irrigation | Field Unit | <span style="color: #1abc9c; font-size: large;"><b>Calibration</b></span>
-                        <span class="progress_number">70%</span>
+                        Farm | Personnel | Crop | Soil | <span style="color: #1abc9c; font-size: large;"><b>Calibration</b></span>
+                        <span class="progress_number">50%</span>
                     </small>
-                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 70%;" data-value="70" data-percentage-value="70"></span>
+                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 50%;" data-value="50" data-percentage-value="50"></span>
                 </div>
             </div>
             <div class="card">
               <form class="form-group" action="" method="post">
                 {% csrf_token %}
                 <div class="card-header">
-                    <small>Fillout calibration equation coefficients.</small>
+                    <small><i>Calibration Equation & Coefficients</i></small>
                 </div>
                 <div class="card-body">
                   <div class="row">
@@ -144,9 +144,9 @@
           </div>
           <br>
           <div class="text-center">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Previous</a></button>
+            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_soil' %} style="color:white">Previous</a></button>
             <input type="submit" value="Submit" class="btn btn-info">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_system' %} style="color:white">Next</a></button>
+            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_irrigation' %} style="color:white">Next</a></button>
           </div>
         </form>
       </div>

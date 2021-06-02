@@ -84,15 +84,15 @@
                   <div class="progress_bar">
                       <div class="pro-bar">
                           <small class="progress_bar_title">
-                            Farm | Personnel | Crop | Soil | Irrigation | Field Unit | Calibration | System | <span style="color: #1abc9c; font-size: large;"><b>Sensor</b></span>
-                            <span class="progress_number">90%</span>
+                            Farm | Personnel | Crop | Soil | Calibration| Irrigation | Field Unit | <span style="color: #1abc9c; font-size: large;"><b>Sensor</b></span>
+                            <span class="progress_number">80%</span>
                           </small>
-                          <span class="progress-bar-inner" style="background-color: #1abc9c; width: 90%;" data-value="90" data-percentage-value="90"></span>
+                          <span class="progress-bar-inner" style="background-color: #1abc9c; width: 80%;" data-value="80" data-percentage-value="80"></span>
                       </div>
                   </div>
                     <div class="card">
                         <div class="card-header">
-                            <small>Fillout sensor & depth.</small>
+                            <small><i>Sensor & Depth</i></small>
                         </div>
                         <div class="card-body">
                             <form  class="form-group" action="" method="POST">
@@ -115,9 +115,9 @@
                     </div>
                     <br>
                     <div class="text-center">
-                        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_system' %} style="color:white">Previous</a></button>
+                        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Previous</a></button>
                         <input type="submit" value="Submit" class="btn btn-info">
-                        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_mc' %} style="color:white">Next</a></button>
+                        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_system' %} style="color:white">Next</a></button>
                     </div>
                 </form>
             </div>

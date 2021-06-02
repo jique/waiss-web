@@ -40,21 +40,19 @@ class FieldUnit(models.Model):
         return self.name
     class Meta:
         verbose_name_plural = "6. Field Units"
+        ordering = ('name',)
 
 class Sensor(models.Model):
     name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True)
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
-    depth = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Depth, m", null=True, blank=True)
-
-    timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
-    personal = models.BooleanField(default=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True)
+    depth = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Depth, m", null=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name_plural = "8. Sensors"
+        ordering = ('name',)
 
 class MoistureContent(models.Model):
     sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, null=True)
@@ -68,7 +66,7 @@ class MoistureContent(models.Model):
         return str(self.sensor)
 
 class Soil(models.Model):
-    soiltype = models.CharField(max_length=25, verbose_name="Name")
+    soiltype = models.CharField(max_length=25, verbose_name="Soil")
     fc = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Field Capacity (% vol)", null=True)
     pwp = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Permanent Wilting Point (% vol)", null=True)
 
@@ -124,7 +122,7 @@ class Soil(models.Model):
         ordering = ('soiltype',)
 
 class CalibrationConstant(models.Model):
-    name = models.CharField(max_length=25, verbose_name="Name", unique=True, null=True)
+    name = models.CharField(max_length=25, verbose_name="File Name", unique=True, null=True)
     LINEAR = 'linear'
     QUADRATIC = 'quadratic'
     SYMMETRICAL_SIGMOIDAL = 'symmetrical sigmoidal'
@@ -148,8 +146,8 @@ class CalibrationConstant(models.Model):
         verbose_name="Equation Form", null=True,
     )
 
-    coeff_a = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" a", null=True, blank=True)
-    coeff_b = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" b", null=True, blank=True)
+    coeff_a = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" a", null=True)
+    coeff_b = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" b", null=True)
     coeff_c = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" c", null=True, blank=True)
     coeff_d = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" d", null=True, blank=True)
     coeff_m = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" m", null=True, blank=True)
@@ -164,14 +162,15 @@ class CalibrationConstant(models.Model):
         
     class Meta:
         verbose_name_plural = "7. Calibration Equations"
+        ordering = ('name',)
 
 class Crop(models.Model):
     crop = models.CharField(max_length=100, unique=True, null=True,)
     growingperiod = models.IntegerField(verbose_name="Growing Period, days", null=True,)
     mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True,)
     drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True,)
-    peak_Etcrop = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm/day)", null=True, blank=True, help_text="required for drip irrigation system only")
-    transpiration_ratio = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Transpiration Ratio", null=True, blank=True, help_text="required for drip irrigation system only")
+    peak_Etcrop = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm/day)", null=True, blank=True)
+    transpiration_ratio = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Transpiration Ratio", null=True, blank=True)
 
     rooting = [
         ("Borg-Grimes Model", 'Borg-Grimes Model'),
@@ -179,7 +178,7 @@ class Crop(models.Model):
         ("Inverse Kc", 'Inverse Kc'),
     ]
 
-    root_growth_model = models.CharField(choices=rooting, max_length=30, verbose_name="Root Growth Model", null=True,)
+    root_growth_model = models.CharField(choices=rooting, max_length=30, verbose_name="Root Growth Model", null=True, help_text="Fillout additional information below.")
     kc_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (ini)", null=True, blank=True)
     kc_mid = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (med)", null=True, blank=True)
     kc_end = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (end)", null=True, blank=True)
@@ -212,10 +211,9 @@ class Crop(models.Model):
 
 
 class Basin(models.Model):
-    name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
-    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, blank=True)
-    basin_length = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Basin Length (m)", null=True, blank=True)
-    #this has database, pwede na tanggalin pag nalagay na sa views.py ang values ng R
+    name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
+    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
+    basin_length = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Basin Length (m)", null=True)
     EFF_CHOICES = [
         (50, '50'),
         (55, '55'),
@@ -227,7 +225,7 @@ class Basin(models.Model):
         (90, '90'),
         (95, '95'),
     ]
-    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", blank=True, null=True)
+    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
@@ -238,7 +236,7 @@ class Basin(models.Model):
         return self.name
 
 class Furrow(models.Model):
-    name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
+    name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True)
@@ -255,11 +253,11 @@ class Furrow(models.Model):
         return self.name
 
 class Border(models.Model):
-    name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
+    name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True)
-    timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
+    timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     
@@ -269,7 +267,7 @@ class Border(models.Model):
         return self.name
 
 class Drip(models.Model):
-    name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
+    name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
     bln_single_lateral = models.BooleanField (verbose_name="Single Straight Lateral", null=True)
     discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Discharge (l/day)", null=True)
     emitters_per_plant = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="No. of Emitters per Plant", null=True)
@@ -290,7 +288,7 @@ class Drip(models.Model):
         return self.name
 
 class Sprinkler(models.Model):
-    name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
+    name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, blank=True)
     EFF_CHOICES = [
         (50, '50'),
@@ -303,9 +301,9 @@ class Sprinkler(models.Model):
         (90, '90'),
         (95, '95'),
     ]
-    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", blank=True, null=True)
-    lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True, blank=True)
-    sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True, blank=True)
+    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True)
+    lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True)
+    sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True)
     bln_sprinkler_discharge = models.BooleanField(verbose_name="Compute Sprinkler Discharge", null=True, blank=True)
     nozzle_diameter = models.DecimalField(max_digits=5, decimal_places=4, verbose_name="Nozzle Diameter (cm)", null=True, blank=True)
     operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True, blank=True)
@@ -324,6 +322,8 @@ class Farm(models.Model):
     province = models.CharField(max_length=50, null="True", blank="True")
     municipality = models.CharField(max_length=50, null="True", blank="True")
     brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True", blank="True")
+    lat = models.CharField(max_length=50, verbose_name="Latitude", null="True", blank="True")
+    long = models.CharField(max_length=50, verbose_name="Longitude", null="True", blank="True")
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
@@ -331,6 +331,7 @@ class Farm(models.Model):
     class Meta:
         verbose_name_plural = "1. Farms"
         ordering = ('name',)
+        get_latest_by = "timestamp"
 
     def __str__(self):
         return self.name

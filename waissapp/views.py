@@ -27,7 +27,6 @@ def index(request):
 	reversed_list =reversed(llist)
 	
 	current_user = request.user
-	
 	form = WAISSystems.objects.filter(author=current_user) # for_dropdown_select_options
 	
 	if request.method == 'POST':  # for sending the selected WAISS_system by the user
@@ -201,7 +200,7 @@ def index(request):
 				Kc_adj = kc_mid
 			krz = float((Kc_adj - kc_ini)/(kc_mid - kc_ini))
 			drz = float(crop_ro + krz*(crop_drz - crop_ro))*1000
-		return drz
+		return round(drz)
 	
 	drz_collection = []
 
@@ -444,7 +443,8 @@ def index(request):
 	soil_fc = soil.fc
 	soil_pwp = soil.pwp
 	crop_mad = round(crop.mad * 100)
-	total_volume = round((total_volume/1000),4)
+	total_volume = round(total_volume)
+	
 	context = {
 		"final_list": reversed_list,
 		"form": form,
@@ -568,9 +568,17 @@ def add_system(request):
 	}
 	return render(request, 'waissapp/add_system.html', context)
 
+@login_required
 def list_system(request):
 	current_user = request.user
 	queryset = WAISSystems.objects.filter(author=current_user)
+
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = WAISSystems.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_system/')
+
 	context = {
 		"list":queryset,
 	}
@@ -592,17 +600,6 @@ def edit_system(request, pk):
 		"item":para,
 	}
 	return render(request, 'waissapp/edit_system.html', context)
-
-@login_required
-def delete_system(request, pk):
-	para = WAISSystems.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_system/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_system.html', context)
 
 #CALIB
 @login_required
@@ -638,6 +635,11 @@ def list_calib(request):
 	queryset_2 = CalibrationConstant.objects.filter(personal=False)
 	new_list = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
 	
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = CalibrationConstant.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_calib/')
 	context = {
 		"calib_list":new_list,
 	}
@@ -659,17 +661,6 @@ def edit_calib(request, pk):
 		"item":para,
 	}
 	return render(request, 'waissapp/edit_calib.html', context)
-
-@login_required
-def delete_calib(request, pk):
-	para = CalibrationConstant.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_calib/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_calib.html', context)
 #END#CALIB_PARAMETERS
 
 #CROP_PARAMETERS
@@ -707,6 +698,13 @@ def list_crop(request):
 	queryset_1 = Crop.objects.filter(author=current_user)
 	queryset_2 = Crop.objects.filter(personal=False)
 	new_list = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
+
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = Crop.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_crop/')
+
 	context = {
 		"crop_list":new_list,
 	}
@@ -728,17 +726,6 @@ def edit_crop(request, pk):
 		"item": para,
 	}
 	return render(request, 'waissapp/edit_crop.html', context)
-
-@login_required
-def delete_crop(request, pk):
-	para = Crop.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_crop/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_crop.html', context)
 #END#CROP_PARAMETERS
 
 #SOIL_PARAMETERS
@@ -751,7 +738,7 @@ def new_soil(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/new_irrigation/')
+			return redirect('/new_calib/')
 	else:  # display empty form
 		form = SoilForm()
 
@@ -778,6 +765,12 @@ def list_soil(request):
 	queryset_2 = Soil.objects.filter(personal=False)
 	new_list = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
 	
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = Soil.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_soil/')
+
 	context = {
 		"soil_list":new_list,
 	}
@@ -799,17 +792,6 @@ def edit_soil(request, pk):
 		"item":para,
 	}
 	return render(request, 'waissapp/edit_soil.html', context)
-
-@login_required
-def delete_soil(request, pk):
-	para = Soil.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_soil/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_soil.html', context)
 #END#SOIL_PARAMETERS
 
 #FIELDUNIT_PARAMETERS
@@ -849,6 +831,12 @@ def list_fieldunit(request):
 	queryset_2 = FieldUnit.objects.filter(personal=False)
 	new_list = chain(queryset_1, queryset_2)
 	
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = FieldUnit.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_fieldunit/')
+
 	context = {
 		"fieldunit_list":new_list,
 	}
@@ -870,17 +858,6 @@ def edit_fieldunit(request, pk):
 		"item":para,
 	}
 	return render(request, 'waissapp/edit_fieldunit.html', context)
-
-@login_required
-def delete_fieldunit(request, pk):
-	para = FieldUnit.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_fieldunit/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_fieldunit.html', context)
 #END#FIELDUNIT_PARAMETERS
 
 #SENSOR_PARAMETERS
@@ -927,6 +904,12 @@ def list_sensor(request):
 	queryset_2 = CalibrationConstant.objects.filter(personal=False)
 	new_list = chain(queryset_1, queryset_2)
 
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = Sensor.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_sensor/')
+
 	context = {
 		"sensor_list":new_list,
 	}
@@ -949,23 +932,22 @@ def edit_sensor(request, pk):
 		"item": para,
 	}
 	return render(request, 'waissapp/edit_sensor.html', context)
-
-@login_required
-def delete_sensor(request, pk):
-	para = Sensor.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_sensor/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_sensor.html', context)
 #END#SENSOR_PARAMETERS
 
 #FARM_PARAMETERS
 @login_required
 def new_farm(request):
-	if request.method == 'POST':  # data sent by user
+	current_user = request.user
+	list = Farm.objects.filter(author=current_user) # for_dropdown_select_options
+	form = FarmForm()
+	if request.method=='POST' and 'btnform1' in request.POST:  # for sending the selected WAISS_system by the user
+		selected_data = request.POST['selected_data']
+		selected_data = Farm.objects.get(name=selected_data)
+		form = FarmForm(request.POST, selected_data.id)
+	else:
+		selected_data = Farm.objects.latest()
+
+	if request.method == 'POST' and 'btnform2' in request.POST:  # data sent by user
 		form = FarmForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
@@ -977,7 +959,9 @@ def new_farm(request):
 		form = FarmForm()
 	
 	context = {
-		"farm_form":form,
+		"list": list,
+		"farm_form": form,
+		"selected_data": selected_data,
 	}
 
 	return render(request, 'waissapp/new_farm.html', context)
@@ -1002,7 +986,13 @@ def list_farm(request):
 	queryset_1 = Farm.objects.filter(author=current_user)
 	queryset_2 = Farm.objects.filter(personal=False)
 	new_list = chain(queryset_1, queryset_2)
-	
+
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = Farm.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_farm/')
+
 	context = {
 		"farm_list":new_list,
 	}
@@ -1024,17 +1014,6 @@ def edit_farm(request, pk):
 		"item": para,
 	}
 	return render(request, 'waissapp/edit_farm.html', context)
-
-@login_required
-def delete_farm(request, pk):
-	para = Farm.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_farm/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_farm.html', context)
 #END#FARM_PARAMETERS
 
 #PERSONNEL_PARAMETERS
@@ -1073,6 +1052,13 @@ def list_personnel(request):
 	queryset_1 = Personnel.objects.filter(author=current_user)
 	queryset_2 = Personnel.objects.filter(personal=False)
 	new_list = chain(queryset_1, queryset_2)
+
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = Personnel.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_personnel/')
+
 	context = {
 		"personnel_list": new_list,
 	}
@@ -1094,17 +1080,6 @@ def edit_personnel(request, pk):
 		"item": para,
 	}
 	return render(request, 'waissapp/edit_personnel.html', context)
-
-@login_required
-def delete_personnel(request, pk):
-	para = Personnel.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_personnel/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_personnel.html', context)
 #END_OF_PERSONNEL_PARAMETERS
 
 @login_required
@@ -1261,66 +1236,18 @@ def new_sprinkler(request):
 
 	return render(request, 'waissapp/new_sprinkler.html', {'irrigation_form': form})
 
-@login_required
-def delete_basin(request, pk):
-	para = Basin.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_basin/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_basin.html', context)
-
-@login_required
-def delete_border(request, pk):
-	para = Border.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_border/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_border.html', context)
-
-@login_required
-def delete_furrow(request, pk):
-	para = Furrow.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_furrow/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_furrow.html', context)
-
-@login_required
-def delete_drip(request, pk):
-	para = Drip.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_drip/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_drip.html', context)
-
-@login_required
-def delete_sprinkler(request, pk):
-	para = Sprinkler.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_sprinkler/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_sprinkler.html', context)
-
 def list_basin(request):
 	current_user = request.user
 	queryset_1 = Basin.objects.filter(author=current_user)
 	queryset_2 = Basin.objects.filter(personal=False)
 	new_list = chain(queryset_1, queryset_2)
+
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = Basin.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_basin/')
+
 	context = {
 		"list": new_list,
 	}
@@ -1331,6 +1258,13 @@ def list_border(request):
 	queryset_1 = Border.objects.filter(author=current_user)
 	queryset_2 = Border.objects.filter(personal=False)
 	new_list = chain(queryset_1, queryset_2)
+
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = Border.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_border/')
+
 	context = {
 		"list": new_list,
 	}
@@ -1341,6 +1275,13 @@ def list_furrow(request):
 	queryset_1 = Furrow.objects.filter(author=current_user)
 	queryset_2 = Furrow.objects.filter(personal=False)
 	new_list = chain(queryset_1, queryset_2)
+
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = Furrow.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_furrow/')
+
 	context = {
 		"list": new_list,
 	}
@@ -1351,6 +1292,13 @@ def list_sprinkler(request):
 	queryset_1 = Sprinkler.objects.filter(author=current_user)
 	queryset_2 = Sprinkler.objects.filter(personal=False)
 	new_list = chain(queryset_1, queryset_2)
+
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = Sprinkler.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_sprinkler/')
+
 	context = {
 		"list": new_list,
 	}
@@ -1361,6 +1309,13 @@ def list_drip(request):
 	queryset_1 = Drip.objects.filter(author=current_user)
 	queryset_2 = Drip.objects.filter(personal=False)
 	new_list = chain(queryset_1, queryset_2)
+
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = Drip.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_drip/')
+
 	context = {
 		"list": new_list,
 	}
@@ -1606,22 +1561,17 @@ def list_mc(request, name):
 	get_mc = MoistureContent.objects.filter(sensor=sensor_instance)
 	reversed_list = reversed(sorted(get_mc, key=attrgetter('timestamp')))
 
+	if request.method == 'POST':
+		pk=request.POST.get('id')
+		para = MoistureContent.objects.get(id=pk)
+		para.delete()
+		return redirect('/list_sensor/')
+
 	context = {
 		"sensor": sensor_instance,
 		"list": reversed_list,
 	}
 	return render(request, 'waissapp/list_mc.html', context)
-
-@login_required
-def delete_mc(request, pk):
-	para = MoistureContent.objects.get(id=pk)
-	if request.method == 'POST':
-		para.delete()
-		return redirect('/list_sensor/')
-	context = {
-		"item":para	
-	}
-	return render(request, 'waissapp/delete_mc.html', context)
 
 @login_required
 def add_rainfall(request):
@@ -1674,7 +1624,6 @@ def delete_rainfall(request, pk):
 
 @login_required
 def add_shaded(request):
-
 	queryset = PercentShaded.objects.all()
 	reversed_list = reversed(sorted(queryset, key=attrgetter('date')))
 	if request.method == 'POST':  # data sent by user

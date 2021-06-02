@@ -69,24 +69,55 @@
                     <span class="progress-bar-inner" style="background-color: #1abc9c; width: 10%;" data-value="10" data-percentage-value="10"></span>
                 </div>
             </div>
-            <form class="form-group" action="" method="post">
               <div class="card">
-                <div class="card-header"><small>Fillout farm information and select previously submitted personnel, crop, soil, irrigation, and field unit data.</small></div>
-                
-                  <div class="card-body">
+                <div class="card-header"><small><i>Name & Location</i></small></div>
+                <div class="card-body">
+                  <form method="post">
                     {% csrf_token %}
-                    <div class="row"><div class="col">{{ farm_form.name|as_crispy_field }}</div></div>
-                    <div class="row"><div class="col">{{ farm_form.brgy|as_crispy_field }}</div></div>
-                    <div class="row"><div class="col">{{ farm_form.municipality|as_crispy_field }}</div></div>
-                    <div class="row"><div class="col">{{ farm_form.province|as_crispy_field }}</div></div>
-                  </div>
-                </div><br>
-                <div class="text-center">
-                  <input type="submit" value="Submit" class="btn btn-info">
-                  <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Next</a></button>
+                      <div class="row">
+                        <div class="col">{{ farm_form.name|as_crispy_field }}</div>
+                      </div>
+                      <div class="row">
+                          <div class="col">{{ farm_form.brgy|as_crispy_field }}</div>
+                          <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
+                          <div class="col">{{ farm_form.province|as_crispy_field }}</div>
+                      </div>
+                      <div class="row">
+                          <div class="col">{{ farm_form.lat|as_crispy_field }}</div>
+                          <div class="col">{{ farm_form.long|as_crispy_field }}</div>
+                      </div>
+                      <div class="row">
+                          <div class="col">{{ farm_form.errors }}</div>
+                      </div>
+                      </div>
+                    </div><br>
+                    <div class="text-center">
+                      <input type="submit" value="Submit" class="btn btn-info" name="btnform2">
+                      <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Next</a></button>
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
+              </div>
+              <!--
+              <div class="card">
+                <div class="card-body">
+                  <form method="post">
+                    {% csrf_token %}
+                  <label class="mb-0 font-weight-bold text-gray-800">Database: </label>
+                  <select name="selected_data" id="selected_data" class="btn btn-secondary btn-sm">
+                    <option>{{selected_data}}</option>
+                    {% for data in list %}
+                    <option value="{{data.name}}">{{data}}</option>
+                    {% endfor %}
+                  </select>
+                  <input class="btn btn-info btn-sm" type="submit" value="Load" name="btnform1">
+                  <div class="row">
+                    <div class="col">{{ selected_data.name }}</div>
+                  </div>
+                  </form>
+              </div>
+              </div>
+            -->
           </div>
         </div>
       </div>

@@ -28,7 +28,7 @@
             {% for instance in list %}
             <tr> 
               <td class="min">
-                <a href={% url 'waiss:delete_sprinkler' instance.id %}><img class="rounded"  src={% static "theme/delete_icon.png" %} style="height: 20px;" alt="delete button" data-toggle="tooltip" data-placement="right" title="delete data"></a>
+                <a data-toggle="modal" href="{{ instance.id }}/delete" data-target="#exampleModalCenter-{{ instance.id }}"><img class="rounded" src={% static "theme/delete_icon.png" %} style="height: 20px;"></a>
               </td>
               <td class="align-middle min"><a href={% url 'waiss:edit_sprinkler' instance.id %}>{{instance.name}}</a></td>
               <td class="align-middle ">{{instance.discharge}}</td>
@@ -39,15 +39,41 @@
               <td class="align-middle ">{{instance.operating_pressure}}</td>
               <td class="align-middle ">{{instance.discharge_coefficient}}</td>
             </tr>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter-{{ instance.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Delete Sprinkler</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <small><em>Are you sure you want to delete sprinkler <b>"{{instance.name}}"</b>?<br>
+                      Deleting <b>"{{instance.name}}"</b> will also delete the systems where it is used.</em></small>
+                  </div>
+                  <div class="modal-footer">
+                      <form class="form-group" action="" method="post">
+                          {% csrf_token %}
+                          <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+                          <button type="submit" class="btn btn-danger" name="id" value="{{instance.id}}">Confirm</button>
+                      </form>
+                  </div>
+                </div>
+              </div>
             {% endfor %}
         </tbody>
     </table>
 </div>
 <div>
-  <small><em>Add new irrigation system here.</em></small>&nbsp;<a href={% url 'waiss:add_basin' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
+  <small><em>Add new irrigation system here.</em></small>&nbsp;<a href={% url 'waiss:add_sprinkler' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
 </div>
 {% endblock %}
 
 {% block bottom_script_block %}
+<script type="text/javascript">
+  $('#exampleModalCenter-{{ instance.id }}').modal(options)
+</script>
 {% endblock %}
     

@@ -90,7 +90,7 @@
                 </div>
             </div>
             <div class="card mx-auto">
-                <div class="card-header"><small>Fillout the soil type & it's physical properties.</small></div>
+                <div class="card-header"><small><i>Soil & Physical Properties</i></small></div>
                 <div class="card-body">
                     <form class="form-group" action="" method="post">
                     {% csrf_token %}
@@ -118,7 +118,7 @@
                 <div class="text-center">
                     <button type="button" class="btn btn-success"><a href={% url 'waiss:new_crop' %} style="color:white">Previous</a></button>
                     <input type="submit" value="Submit" class="btn btn-info">
-                    <button type="button" class="btn btn-success"><a href={% url 'waiss:new_irrigation' %} style="color:white">Next</a></button>
+                    <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Next</a></button>
                 </div>
             </form>
         </div>

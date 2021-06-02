@@ -651,10 +651,19 @@ td.min {
                   <div class="text-center">
                     <img src={% static "theme/Advisory.png" %}>
                     <br><br>
-                    <div class="mb-0 mr-3 font-weight-bold text-gray-800">{% if mc_ave < MC_TO_IRRIGATE %}IRRIGATE{% endif %}{% if not mc_ave < MC_TO_IRRIGATE %}IRRIGATION NOT NEEDED{% endif %}<hr style="margin-left:0 ; padding:0; line-height:1px;"></div>
-                    <div><span class="small">Irrigation Period</span>: <b>{{irrigation_period}} mins</b></div>
-                    <div><span class="small">Volume</span>: <b>{{total_volume}} m<sup>3</sup>{% if irrigation_type == "drip" %}/plant{% endif %}</b></div>
-                    <div><span class="small">Net Application Depth</span>: {{net_application_depth}} mm</div><hr>
+                    <div class="mb-0 mr-3 font-weight-bold text-gray-800">
+                      <i>
+                        {% if mc_ave < MC_TO_IRRIGATE %}
+                        Irrigate for {{irrigation_period}} mins <br>
+                        <div class="small">or<br>Volume : {{total_volume}} liter {% if drip != None %}/ plant{% endif %}</div>
+                        <div class="small">F<sub>n</sub> : {{net_application_depth}} mm</div>
+                        {% endif %}
+                        {% if not mc_ave < MC_TO_IRRIGATE %} irrigation not needed
+                        <br><br><br><br><br>
+                        {% endif %}
+                      </i>
+                    </div>
+                    <hr>
                     <div class="small">Latest MC<sub>v</sub>: {{mc_ave}} % </div> 
                     <div class="small">MC<sub>v</sub> to irrigate: {{MC_TO_IRRIGATE}} %</div>
                     <div class="small">Effective DRZ: {{drz}} mm</div>

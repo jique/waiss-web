@@ -38,7 +38,7 @@ class SensorInline(admin.TabularInline):
     extra=0
 
 class SensorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'depth', 'fieldunit', 'timestamp')
+    list_display = ('name', 'depth', 'fieldunit')
     inlines = [MoistureContentInline]
 
 class FarmInline(admin.TabularInline):
@@ -46,7 +46,7 @@ class FarmInline(admin.TabularInline):
 
 class FarmAdmin(admin.ModelAdmin):
     ordering = ["name"]
-    list_display=('name', 'brgy', 'municipality', 'province', 'timestamp')
+    list_display=('name', 'brgy', 'municipality', 'province', 'lat', 'long', 'author', 'personal', 'timestamp')
 
 class FieldUnitAdmin(admin.ModelAdmin):
     list_display = ('name', 'author', 'personal', 'timestamp')
@@ -71,7 +71,7 @@ class CalibrationConstantInline(admin.TabularInline):
     model = CalibrationConstant
     
 class CalibrationConstantAdmin(admin.ModelAdmin):
-    list_display =('name', 'calib_equation', 'coeff_a', 'coeff_b', 'coeff_c', 'coeff_d', 'coeff_m', 'timestamp')
+    list_display =('name', 'calib_equation', 'coeff_a', 'coeff_b', 'coeff_c', 'coeff_d', 'coeff_m', 'author', 'personal', 'timestamp')
 
 class WAISSystemsInline(admin.TabularInline):
     model = WAISSystems

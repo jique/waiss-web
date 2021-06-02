@@ -91,7 +91,7 @@
               </div>
           </div>
                 <div class="card">
-                  <div class="card-header"><small>Fillout only 1 out of the 3 Root Growth Models below depending on you available data.</small></div>
+                  <div class="card-header"><small><i>Crop & Characteristics</i></small></div>
                     <div class="card-body">
                         <form class="form-group" action="" method="post">
                             {% csrf_token %}
@@ -108,20 +108,24 @@
                                 <div class="col">{{crop_form.growingperiod|as_crispy_field}}</div>
                             </div>
                             <div class="row">
-                                <div class="col">{{crop_form.peak_Etcrop|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{crop_form.transpiration_ratio|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
                                 <div class="col">{{crop_form.mad|as_crispy_field}}</div>
+                            </div>
+                            <div class="row">
+                              <div class="col"><small>Additional for drip irrigation system,</small></div>
+                              <br>
+                              <br>
+                            </div>
+                            <div class="row">
+                              <div class="col-1"></div>
+                              <div class="col">{{crop_form.peak_Etcrop|as_crispy_field}}</div>
+                            </div>
+                            <div class="row">
+                              <div class="col-1"></div>
+                              <div class="col">{{crop_form.transpiration_ratio|as_crispy_field}}</div>
                             </div>
                             <div class="row">
                               <div class="col">{{crop_form.root_growth_model|as_crispy_field}}</div>
                             </div>
-                            <div class="row">
-                              <div class="col">{{crop_form.errors}}</div>
-                          </div>
                           </div>
                         </div>
                       <div id="accordion">
@@ -133,9 +137,9 @@
                               </button>
                             </h5>
                           </div>
-                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
-                                <div class="col">Yey! No more data required. :)</div>
+                                <div class="col"><small><i>Yey! No more data required.</i></small></div>
                             </div>
                           </div>
                         </div>
@@ -178,6 +182,10 @@
                           <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                             <div class="card-body">
                                 <div class="row">
+                                  <div class="col"><center><img src={% static "theme/kc.png" %}></center></div>
+                                </div>
+                                <br>
+                                <div class="row">
                                     <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
                                 </div>
                                 <div class="row">
@@ -198,6 +206,17 @@
                             </div>
                           </div>
                         </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col">{{crop_form.source|as_crispy_field}}</div>
+                            </div>
+                            <div class="row">
+                              <div class="col">{{crop_form.errors}}</div>
+                            </div>
+                          </div>
+                        </div>
+                        
                         <br>
                         <div class="text-center">
                         <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Previous</a></button>
