@@ -402,10 +402,15 @@ def index(request):
 		intake_family = None
 	#END
 	area_shaded = 0
-	q = 0
+	q= 0
 	#DRIP
 	if drip != None:
-		area_shaded = PercentShaded.objects.all().filter(crop=crop).latest().area_shaded
+		area_shaded = len(PercentShaded.objects.filter(crop=crop))
+		print(area_shaded)
+		if area_shaded == 0:
+			area_shaded = float(20)
+		else:
+			area_shaded = PercentShaded.objects.filter(crop=crop).latest().area_shaded
 		q = float(drip.discharge)
 		bln_single_lateral = drip.bln_single_lateral
 		bln_ii = drip.bln_ii
@@ -831,7 +836,7 @@ def new_fieldunit(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/new_calib/')
+			return redirect('/new_sensor/')
 	else:  # display empty form
 		form = FieldUnitForm()
 
