@@ -973,16 +973,6 @@ def edit_sensor(request, id):
 #FARM_PARAMETERS
 @login_required
 def new_farm(request):
-	current_user = request.user
-	list = Farm.objects.filter(author=current_user) # for_dropdown_select_options
-	form = FarmForm()
-	if request.method=='POST' and 'btnform1' in request.POST:  # for sending the selected WAISS_system by the user
-		selected_data = request.POST['selected_data']
-		selected_data = Farm.objects.get(name=selected_data)
-		form = FarmForm(request.POST, selected_data.id)
-	else:
-		selected_data = Farm.objects.latest()
-
 	if request.method == 'POST' and 'btnform2' in request.POST:  # data sent by user
 		form = FarmForm(request.POST)
 		if form.is_valid():
@@ -993,14 +983,8 @@ def new_farm(request):
 			return redirect('/new_personnel/')
 	else:  # display empty form
 		form = FarmForm()
-	
-	context = {
-		"list": list,
-		"farm_form": form,
-		"selected_data": selected_data,
-	}
 
-	return render(request, 'waissapp/new_farm.html', context)
+	return render(request, 'waissapp/new_farm.html', {'farm_form': form})
 
 def save_all_farm(request,form,template_name):
 	data = dict()
