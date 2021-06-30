@@ -1,0 +1,42 @@
+{% load static %}
+{% for farm in farms %}
+<tr class="text-center"> 
+    <td class="align-middle ">{{forloop.counter}}</td>
+    <td class="align-middle">{{farm.name}}</td>
+    <td class="align-middle">{{farm.brgy}}</td>
+    <td class="align-middle">{{farm.municipality}}</td>
+    <td class="align-middle">{{farm.province}}</td>
+    <td class="align-middle">{{farm.lat}}</td>
+    <td class="align-middle">{{farm.long}}</td>
+    <td class="min">
+      <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_farm' farm.id %}"><i class="fas fa-edit"></i></button>
+      <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ farm.id }}"><i class="fas fa-trash"></i></button>
+    </td>
+  </tr>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal-{{ farm.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Delete farm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <small><em>Are you sure you want to delete farm <b>"{{farm.name}}"</b>?<br>
+              Deleting <b>"{{farm.name}}"</b> will also delete the systems where it is used.</em></small>
+          </div>
+          <div class="modal-footer">
+              <form class="form-group" action="" method="post">
+                  {% csrf_token %}
+                  <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+                  <button type="submit" class="btn btn-danger" name="deleteModal" value="{{farm.id}}">Confirm</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Delete Modal -->
+</tr>
+{% endfor %}

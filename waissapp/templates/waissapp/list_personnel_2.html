@@ -1,0 +1,38 @@
+{% load static %}
+{% for personnel in personnels %}
+<tr class="text-center">
+    <td class="align-middle">{{forloop.counter}}</td>
+    <td class="align-middle">{{personnel.last_name}}</td>
+    <td class="">{{personnel.first_name}}</td>
+    <td class="">{{personnel.number}}</td>
+    <td class="min">
+      <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_personnel' personnel.id %}"><i class="fas fa-edit"></i></button>
+      <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ personnel.id }}"><i class="fas fa-trash"></i></button>
+    </td>
+</tr>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal-{{ personnel.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete personnel</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <small><em>Are you sure you want to delete personnel <b>"{{personnel.first_name}} {{personnel.last_name}}"</b>?<br>
+            Deleting <b>"{{personnel.first_name}} {{personnel.last_name}}"</b> will also delete the systems that he/she manages.</em></small>
+        </div>
+        <div class="modal-footer">
+            <form class="form-group" action="" method="post">
+                {% csrf_token %}
+                <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="submit" class="btn btn-danger" name="deleteModal" value="{{personnel.id}}">Confirm</button>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Delete Modal -->
+{% endfor %}

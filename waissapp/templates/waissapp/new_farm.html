@@ -79,25 +79,28 @@
                       </div>
                       <div class="row">
                           <div class="col">{{ farm_form.brgy|as_crispy_field }}</div>
-                          <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
-                          <div class="col">{{ farm_form.province|as_crispy_field }}</div>
                       </div>
                       <div class="row">
-                          <div class="col">{{ farm_form.lat|as_crispy_field }}</div>
+                        <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col">{{ farm_form.province|as_crispy_field }}</div>
+                      </div>
+                      <div class="row">
                           <div class="col">{{ farm_form.long|as_crispy_field }}</div>
                       </div>
                       <div class="row">
-                          <div class="col">{{ farm_form.errors }}</div>
+                        <div class="col">{{ farm_form.long|as_crispy_field }}</div>
                       </div>
-                      </div>
-                    </div><br>
-                    <div class="text-center">
-                      <input type="submit" value="Submit" class="btn btn-info" name="btnform2">
-                      <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Next</a></button>
-                    </div>
-                  </form>
                 </div>
+              </div><br>
+              <div class="text-center">
+                <input type="submit" value="Submit" class="btn btn-info" name="btnform2">
+                <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Next</a></button>
               </div>
+              </form>
+            </div>
+        </div>
               <!--
               <div class="card">
                 <div class="card-body">

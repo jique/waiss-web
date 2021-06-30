@@ -1,42 +1,22 @@
-{% extends 'waissapp/index.html'%}
-{% load static %}
 {% load crispy_forms_tags %}
-
-{% block top_script_block %}
-{% endblock %}
-
-{% block main_block %}
-<div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-header"><i><small>Edit Farm&nbsp;>&nbsp;<b><span class="text-info">{{item}}</span></b></small></i></div>
-            <div class="card-body">
-                <form class="form-group" action="" method="post">
-                    <br>
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col">{{ farm_form.name|as_crispy_field }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ farm_form.brgy|as_crispy_field }}</div>
-                        <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
-                        <div class="col">{{ farm_form.province|as_crispy_field }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ farm_form.lat|as_crispy_field }}</div>
-                        <div class="col">{{ farm_form.long|as_crispy_field }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ farm_form.errors }}</div>
-                    </div>
-                    <input type="submit" value="Submit" class="btn btn-info btn-block">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block bottom_script_block %}
-{% endblock %}
-    
+<form class="update-form" method="post" data-url="{% url 'waiss:edit_farm' form.instance.id %}">
+    {% csrf_token %}
+    <div class="modal-header">
+		<h5 class="modal-title">Update Farm</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+        <div class="col">{{form.name|as_crispy_field }}</div>
+        <div class="col">{{form.brgy|as_crispy_field }}</div>
+        <div class="col">{{form.municipality|as_crispy_field }}</div>
+        <div class="col">{{form.province|as_crispy_field }}</div>
+        <div class="col">{{form.lat|as_crispy_field }}</div>
+        <div class="col">{{form.long|as_crispy_field }}</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-info">Save Changes</button>
+	</div>
+</form>

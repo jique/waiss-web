@@ -1,0 +1,37 @@
+{% load static %}
+{% for gravi in gravis %}
+<tr class="text-center"> 
+    <td class="align-middle">{{forloop.counter}}</td>
+    <td class="align-middle">{{gravi.fieldunit}}</td>
+    <td class="align-middle">{{gravi.mc_data}}</td>
+    <td class="align-middle">{{gravi.timestamp}}</td>
+    <td class="min">
+      <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_gravi' gravi.id %}"><i class="fas fa-edit"></i></button>
+      <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ gravi.id }}"><i class="fas fa-trash"></i></button>
+    </td>
+  </tr>
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal-{{ gravi.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete gravi</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <small><em>Are you sure you want to delete gravi <b>"{{gravi.name}}"</b>?<br>
+            Deleting <b>"{{gravi.name}}"</b> will also delete the systems where it is used.</em></small>
+        </div>
+        <div class="modal-footer">
+            <form class="form-group" action="" method="post">
+                {% csrf_token %}
+                <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="submit" class="btn btn-danger" name="deleteModal" value="{{gravi.id}}">Confirm</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}

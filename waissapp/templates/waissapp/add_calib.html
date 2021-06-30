@@ -1,70 +1,58 @@
-{% extends 'waissapp/index.html'%}
-{% load static %}
 {% load crispy_forms_tags %}
-
-{% block top_script_block %}
-{% endblock %}
-
-{% block main_block %}
-<h5 class="text-left">Add Calibration Equation</h5>
-<div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-header"><small>Input sensors calibration constants generated.</small></div>
-            <div class="card-body">
-                <form class="django-form" action="" method="post">
-                    {% csrf_token %}
-                      <div class="row">
-                          <div class="col-8">{{calib_form.name|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col-8">{{calib_form.calib_equation|as_crispy_field}}</div>
-                          <div class="col"><br><span class="text-success"><b>Equation Standard Form</b></span></div>
-                      </div>
-                      <div class="col">
-                          <div class="row">
-                              <div class="col-8">{{calib_form.coeff_a|as_crispy_field}}</div>
-                              <div class="col"><small><i>Linear: MC<sub>v</sub> = a(reading) + b<br>
+<form class="create-form" method="post" data-url="{% url 'waiss:add_calib' %}">
+	{% csrf_token %}
+	<div class="modal-header">
+	        <h5 class="modal-title" >Create Calibration Equation</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+                <div class="col">{{form.name|as_crispy_field}}</div>
+                <div class="col">{{form.calib_equation|as_crispy_field}}</div>
+                <div class="col">
+                        <div class="row">
+                                <div class="col"></div>
+                                <div class="col">{{form.coeff_a|as_crispy_field}}</div>
+                                <div class="col">{{form.coeff_b|as_crispy_field}}</div>
+                                
+                        </div>
+                </div>
+                
+                <div class="col">
+                        <div class="row">
+                                <div class="col"></div>
+                                <div class="col">{{form.coeff_c|as_crispy_field}}</div>
+                                <div class="col">{{form.coeff_d|as_crispy_field}}</div>
+                        </div>
+                </div>
+                <div class="col">
+                        <div class="row">
+                                <div class="col"></div>
+                                <div class="col">{{form.coeff_m|as_crispy_field}}</div>
+                                <div class="col"></div>
+                        </div>
+                </div>
+               
+                <div class="col">{{form.date_tested|as_crispy_field}}</div>
+                <div class="col">{{form.tested_by|as_crispy_field}}</div>
+                <span class="text-center">
+                        <div class="col"><span class="text-success"><b>Equation Standard Form</b></span></div>
+                        <div class="col"><small><i>Linear: MC<sub>v</sub> = a(reading) + b<br>
                                 Quadratic: MC<sub>v</sub> = a(reading)<sup>2</sup> + b(reading) + c</i></small>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-8">{{calib_form.coeff_b|as_crispy_field}}</div>
-                              <div class="col"><small><i>Exponential: MC<sub>v</sub> = ae<sup>b</sup>(reading)<br>
+                        </div>
+                        <div class="col"><small><i>Exponential: MC<sub>v</sub> = ae<sup>b</sup>(reading)<br>
                                 Logarithmic: MC<sub>v</sub> = aln(reading) + b</i></small>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-8">{{calib_form.coeff_c|as_crispy_field}}</div>
-                              <div class="col"><small><i>Symmetrical Sigmoidal: MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</i></small>
-                                  <br><small><i>Assymmetrical Sigmoidal: <br>
-                                    MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></i></small>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-8">{{calib_form.coeff_d|as_crispy_field}}</div>
-                          </div>
-                          <div class="row">
-                              <div class="col-8">{{calib_form.coeff_m|as_crispy_field}}</div>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-8">{{calib_form.date_tested|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col-8">{{calib_form.tested_by|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col-8">{{calib_form.errors}}</div>
-                      </div>
-                    <input type="submit" value="Submit" class="btn btn-info btn-block">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block bottom_script_block %}
-{% endblock %}
-        
+                        </div>
+                        <div class="col">
+                                <small><i>Symmetrical Sigmoidal: MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</i></small>
+                                <br><small><i>Assymmetrical Sigmoidal:
+                                MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></i></small>
+                        </div>
+                </span>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-primary">Add</button>
+	</div>
+</form>

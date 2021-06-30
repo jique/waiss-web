@@ -1,0 +1,52 @@
+{% load static %}
+{% for crop in crops %}
+<tr class="text-center">
+    <td class="align-middle">{{forloop.counter}}</td>
+    <td class="align-middle min">{{crop.crop}}</td>
+    <td class="align-middle">{{crop.root_growth_model}}</td>
+    <td class="align-middle">{{crop.growingperiod}}</td>
+    <td class="align-middle">{{crop.mad}}</td>
+    <td class="align-middle">{{crop.drz}}</td>
+    <td class="align-middle">{{crop.kc_ini|default_if_none:"-"}}</td>
+    <td class="align-middle">{{crop.kc_mid|default_if_none:"-"}}</td>
+    <td class="align-middle">{{crop.kc_end|default_if_none:"-"}}</td>
+    <td class="align-middle">{{crop.kc_cc_1|default_if_none:"-"}}</td>
+    <td class="align-middle">{{crop.kc_cc_2|default_if_none:"-"}}</td>
+    <td class="align-middle">{{crop.kc_cc_3|default_if_none:"-"}}</td>
+    <td class="align-middle">{{crop.eqnform|default_if_none:"-"}}</td>
+    <td class="align-middle">{{crop.root_a|default_if_none:"-"}}</td>
+    <td class="align-middle">{{crop.root_b|default_if_none:"-"}}</td>
+    <td class="align-middle">{{crop.root_c|default_if_none:"-"}}</td>
+    <td class="align-middle">{{crop.root_ini|default_if_none:"-"}}</td>
+    <td class="align-middle min">{{crop.source|default_if_none:"-"}}</td>
+    <td class="min">
+      <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_crop' crop.id %}"><i class="fas fa-edit"></i></button>
+      <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ crop.id }}"><i class="fas fa-trash"></i></button>
+    </td>
+</tr>
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal-{{ crop.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete Crop</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <small><em>Are you sure you want to delete crop <b>"{{crop.crop}}"</b>?<br>
+            Deleting <b>"{{crop.crop}}"</b> will also delete the systems where it is used.</em></small>
+        </div>
+        <div class="modal-footer">
+            <form class="form-group" action="" method="post">
+                {% csrf_token %}
+                <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="submit" class="btn btn-danger" name="deleteModal" value="{{crop.id}}">Confirm</button>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Delete Modal -->
+{% endfor %}

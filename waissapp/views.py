@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect
 from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, WAISSystems, PercentShaded, Rainfall, Gravimetric, Basin, Furrow, Border, Drip, Sprinkler
 from django.utils import timezone
 import datetime
@@ -17,6 +17,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 import io, csv
 from .decorators import unauthenticated_user
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 @login_required
@@ -550,6 +552,22 @@ def new_system(request):
 	}
 	return render(request, 'waissapp/new_system.html', context)
 
+def save_all_system(request,form,template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            systems = WAISSystems.objects.all()
+            data['list_system'] = render_to_string('waissapp/list_system_2.html',{'systems':systems})
+        else:
+            data['form_is_valid'] = False
+    context = {
+    'form':form
+    }
+    data['html_form'] = render_to_string(template_name,context,request=request)
+    return JsonResponse(data)
+
 @login_required
 def add_system(request):
 	if request.method == 'POST':  # data sent by user
@@ -559,47 +577,34 @@ def add_system(request):
 			new_system.author = request.user
 			new_system.personal = True
 			new_system.save()
-			return redirect('/')
 	else:  # display empty form
 		form = WAISSystemsForm()
-	
-	context = {
-		"form": form,
-	}
-	return render(request, 'waissapp/add_system.html', context)
+	return save_all_system(request, form, 'waissapp/add_system.html')
 
 @login_required
 def list_system(request):
 	current_user = request.user
-	queryset = WAISSystems.objects.filter(author=current_user)
+	systems = WAISSystems.objects.filter(author=current_user)
 
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = WAISSystems.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_system/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"list":queryset,
+		"systems": systems,
 	}
 	return render(request, 'waissapp/list_system.html', context)
 
 @login_required
-def edit_system(request, pk):
-	para = WAISSystems.objects.get(id=pk)
-	form = WAISSystemsForm(instance=para)
-
+def edit_system(request, id):
+	system = get_object_or_404(WAISSystems, id=id)
 	if request.method == 'POST':  # data sent by user
-		form = WAISSystemsForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/')
-
-	context = {
-		"form":form,
-		"item":para,
-	}
-	return render(request, 'waissapp/edit_system.html', context)
+		form = WAISSystemsForm(request.POST, instance=system)
+	else:
+		form = WAISSystemsForm(instance=system)
+	return save_all_system(request, form, 'waissapp/edit_system.html')
 
 #CALIB
 @login_required
@@ -615,6 +620,23 @@ def new_calib(request):
 	else:  # display empty form
 		form = CalibForm()
 	return render(request, 'waissapp/new_calib.html', {'calib_form': form})
+
+def save_all_calib(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			calibs = CalibrationConstant.objects.all()
+			data['list_calib'] = render_to_string('waissapp/list_calib_2.html',{'calibs':calibs})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
 @login_required
 def add_calib(request):
 	if request.method == 'POST':  # data sent by user
@@ -624,43 +646,36 @@ def add_calib(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_calib/')
 	else:  # display empty form
 		form = CalibForm()
-	return render(request, 'waissapp/add_calib.html', {'calib_form': form})
+	return save_all_calib(request, form, 'waissapp/add_calib.html')
 
 def list_calib(request):
 	current_user = request.user
 	queryset_1 = CalibrationConstant.objects.filter(author=current_user)
 	queryset_2 = CalibrationConstant.objects.filter(personal=False)
-	new_list = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
-	
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	calibs = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
+
+	#delete
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = CalibrationConstant.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_calib/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 	context = {
-		"calib_list":new_list,
+		"calibs": calibs,
 	}
 	return render(request, 'waissapp/list_calib.html', context)
 
 @login_required
-def edit_calib(request, pk):
-	para = CalibrationConstant.objects.get(id=pk)
-	form = CalibForm(instance=para)
-
+def edit_calib(request, id):
+	calib = get_object_or_404(CalibrationConstant,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = CalibForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_calib/')
-
-	context = {
-		"calib_form":form,
-		"item":para,
-	}
-	return render(request, 'waissapp/edit_calib.html', context)
+		form = CalibForm(request.POST, instance=calib)
+	else:
+		form = CalibForm(instance=calib)
+	return save_all_calib(request, form, 'waissapp/edit_calib.html')
 #END#CALIB_PARAMETERS
 
 #CROP_PARAMETERS
@@ -678,6 +693,22 @@ def new_crop(request):
 		form = CropForm()
 	return render(request, 'waissapp/new_crop.html', {'crop_form': form})
 
+def save_all_crop(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			crops = Crop.objects.all()
+			data['list_crop'] = render_to_string('waissapp/list_crop_2.html',{'crops':crops})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
 @login_required
 def add_crop(request):
 	if request.method == 'POST':  # data sent by user
@@ -687,45 +718,35 @@ def add_crop(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_crop/')
 	else:  # display empty form
 		form = CropForm()
-
-	return render(request, 'waissapp/add_crop.html', {'form': form})
+	return save_all_crop(request, form, 'waissapp/add_crop.html')
 
 def list_crop(request):
 	current_user = request.user
 	queryset_1 = Crop.objects.filter(author=current_user)
 	queryset_2 = Crop.objects.filter(personal=False)
-	new_list = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
+	crops = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
 
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = Crop.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_crop/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"crop_list":new_list,
+		"crops": crops,
 	}
 	return render(request, 'waissapp/list_crop.html', context)
 
 @login_required
-def edit_crop(request, pk):
-	para = Crop.objects.get(id=pk)
-	form = CropForm(instance=para)
-
+def edit_crop(request, id):
+	crop = get_object_or_404(Crop,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = CropForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_crop/')
-
-	context = {
-		"crop_form":form,
-		"item": para,
-	}
-	return render(request, 'waissapp/edit_crop.html', context)
+		form = CropForm(request.POST, instance=crop)
+	else:
+		form = CropForm(instance=crop)
+	return save_all_crop(request, form, 'waissapp/edit_crop.html')
 #END#CROP_PARAMETERS
 
 #SOIL_PARAMETERS
@@ -744,6 +765,22 @@ def new_soil(request):
 
 	return render(request, 'waissapp/new_soil.html', {'soil_form': form})
 
+def save_all_soil(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			soils = Soil.objects.all()
+			data['list_soil'] = render_to_string('waissapp/list_soil_2.html',{'soils':soils})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
 @login_required
 def add_soil(request):
 	if request.method == 'POST':  # data sent by user
@@ -753,45 +790,35 @@ def add_soil(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_soil/')
 	else:  # display empty form
 		form = SoilForm()
-
-	return render(request, 'waissapp/add_soil.html', {'soil_form': form})
+	return save_all_soil(request, form, 'waissapp/add_soil.html')
 
 def list_soil(request):
 	current_user = request.user
 	queryset_1 = Soil.objects.filter(author=current_user)
 	queryset_2 = Soil.objects.filter(personal=False)
-	new_list = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
+	soils = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
 	
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = Soil.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_soil/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"soil_list":new_list,
+		"soils":soils,
 	}
 	return render(request, 'waissapp/list_soil.html', context)
 
 @login_required
-def edit_soil(request, pk):
-	para = Soil.objects.get(id=pk)
-	form = SoilForm(instance=para)
-
+def edit_soil(request, id):
+	soil = get_object_or_404(Soil,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = SoilForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_soil/')
-
-	context = {
-		"soil_form":form,
-		"item":para,
-	}
-	return render(request, 'waissapp/edit_soil.html', context)
+		form = SoilForm(request.POST, instance=soil)
+	else:
+		form = SoilForm(instance=soil)
+	return save_all_soil(request, form, 'waissapp/edit_soil.html')
 #END#SOIL_PARAMETERS
 
 #FIELDUNIT_PARAMETERS
@@ -810,6 +837,22 @@ def new_fieldunit(request):
 
 	return render(request, 'waissapp/new_fieldunit.html', {'fieldunit_form': form})
 
+def save_all_fieldunit(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			fieldunits = FieldUnit.objects.all()
+			data['list_fieldunit'] = render_to_string('waissapp/list_fieldunit_2.html',{'fieldunits':fieldunits})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
 @login_required
 def add_fieldunit(request):
 	if request.method == 'POST':  # data sent by user
@@ -819,45 +862,36 @@ def add_fieldunit(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_fieldunit/')
 	else:  # display empty form
 		form = FieldUnitForm()
 
-	return render(request, 'waissapp/add_fieldunit.html', {'fieldunit_form': form})
+	return save_all_fieldunit(request, form, 'waissapp/add_fieldunit.html')
 
 def list_fieldunit(request):
 	current_user = request.user
 	queryset_1 = FieldUnit.objects.filter(author=current_user)
 	queryset_2 = FieldUnit.objects.filter(personal=False)
-	new_list = chain(queryset_1, queryset_2)
+	fieldunits = chain(queryset_1, queryset_2)
 	
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = FieldUnit.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_fieldunit/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"fieldunit_list":new_list,
+		"fieldunits": fieldunits,
 	}
 	return render(request, 'waissapp/list_fieldunit.html', context)
 
 @login_required
-def edit_fieldunit(request, pk):
-	para = FieldUnit.objects.get(id=pk)
-	form = FieldUnitForm(instance=para)
-
+def edit_fieldunit(request, id):
+	fieldunit = get_object_or_404(FieldUnit,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = FieldUnitForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_fieldunit/')
-
-	context = {
-		"fieldunit_form":form,
-		"item":para,
-	}
-	return render(request, 'waissapp/edit_fieldunit.html', context)
+		form = FieldUnitForm(request.POST, instance=fieldunit)
+	else:
+		form = FieldUnitForm(instance=fieldunit)
+	return save_all_fieldunit(request, form, 'waissapp/add_fieldunit.html')
 #END#FIELDUNIT_PARAMETERS
 
 #SENSOR_PARAMETERS
@@ -879,59 +913,61 @@ def new_sensor(request):
 
 	return render(request, 'waissapp/new_sensor.html', context)
 
+def save_all_sensor(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			sensors = Sensor.objects.all()
+			data['list_sensor'] = render_to_string('waissapp/list_sensor_2.html',{'sensors':sensors})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
 @login_required
 def add_sensor(request):
-	SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3)
-	formset = SensorFormSet(queryset=Sensor.objects.none())
 	if request.method == 'POST':
-		formset = SensorFormSet(request.POST)
-		if formset.is_valid():
-			formset.save()
-			return redirect('/list_sensor/')
+		form = SensorForm(request.POST)
+		if form.is_valid():
+			form.save()
 	else:  # display empty form
-		formset = SensorFormSet(queryset=Sensor.objects.none())
+		form = SensorForm()
 	
-	context = {
-		"formset": formset,
-	}
-	
-	return render(request, 'waissapp/add_sensor.html', context)
+	return save_all_sensor(request, form, 'waissapp/add_sensor.html')
 
 def list_sensor(request):
 	current_user = request.user
 	get_fieldunit = FieldUnit.objects.filter(author=current_user)
 	queryset_1 = Sensor.objects.filter(fieldunit__in=get_fieldunit)
 	queryset_2 = CalibrationConstant.objects.filter(personal=False)
-	new_list = chain(queryset_1, queryset_2)
+	sensors = chain(queryset_1, queryset_2)
 
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = Sensor.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_sensor/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"sensor_list":new_list,
+		"sensors":sensors,
 	}
 
 	return render(request, 'waissapp/list_sensor.html', context)
 
 @login_required
-def edit_sensor(request, pk):
-	para = Sensor.objects.get(id=pk)
-	form = SensorForm(instance=para)
-
+def edit_sensor(request, id):
+	sensor = get_object_or_404(Sensor,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = SensorForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_sensor/')
+		form = SensorForm(request.POST, instance=sensor)
+	else:
+		form = SensorForm(instance=sensor)
+	return save_all_sensor(request, form, 'waissapp/add_sensor.html')
 
-	context = {
-		"sensor_form":form,
-		"item": para,
-	}
-	return render(request, 'waissapp/edit_sensor.html', context)
 #END#SENSOR_PARAMETERS
 
 #FARM_PARAMETERS
@@ -966,6 +1002,22 @@ def new_farm(request):
 
 	return render(request, 'waissapp/new_farm.html', context)
 
+def save_all_farm(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			farms = Farm.objects.all()
+			data['list_farm'] = render_to_string('waissapp/list_farm_2.html',{'farms':farms})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
 @login_required
 def add_farm(request):
 	if request.method == 'POST':  # data sent by user
@@ -975,48 +1027,55 @@ def add_farm(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_farm/')
 	else:  # display empty form
 		form = FarmForm()
-	return render(request, 'waissapp/add_farm.html', {'farm_form': form})
+	return save_all_farm(request, form, 'waissapp/add_farm.html')
+
+@login_required
+def edit_farm(request, id):
+	farm = get_object_or_404(Farm,id=id)
+	if request.method == 'POST':  # data sent by user
+		form = FarmForm(request.POST, instance=farm)
+	else:
+		form = FarmForm(instance=farm)
+	return save_all_farm(request, form, 'waissapp/edit_farm.html')
 
 @login_required
 def list_farm(request):
 	current_user = request.user
 	queryset_1 = Farm.objects.filter(author=current_user)
 	queryset_2 = Farm.objects.filter(personal=False)
-	new_list = chain(queryset_1, queryset_2)
+	farms = chain(queryset_1, queryset_2)
 
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = Farm.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_farm/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"farm_list":new_list,
+		"farms": farms,
 	}
 	return render(request, 'waissapp/list_farm.html', context)
-
-@login_required
-def edit_farm(request, pk):
-	para = Farm.objects.get(id=pk)
-	form = FarmForm(instance=para)
-
-	if request.method == 'POST':  # data sent by user
-		form = FarmForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_farm/')
-
-	context = {
-		"farm_form":form,
-		"item": para,
-	}
-	return render(request, 'waissapp/edit_farm.html', context)
 #END#FARM_PARAMETERS
 
 #PERSONNEL_PARAMETERS
+def save_all_personnel(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			personnels = Personnel.objects.all()
+			data['list_personnel'] = render_to_string('waissapp/list_personnel_2.html',{'personnels':personnels})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
 @login_required
 def new_personnel(request):
 	if request.method == 'POST':  # data sent by user
@@ -1041,45 +1100,36 @@ def add_personnel(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_personnel/')
 	else:  # display empty form
 		form = PersonnelForm()
 		
-	return render(request, 'waissapp/add_personnel.html', {'personnel_form': form})
+	return save_all_personnel(request, form, 'waissapp/add_personnel.html')
 
 def list_personnel(request):
 	current_user = request.user
 	queryset_1 = Personnel.objects.filter(author=current_user)
 	queryset_2 = Personnel.objects.filter(personal=False)
-	new_list = chain(queryset_1, queryset_2)
+	personnels = chain(queryset_1, queryset_2)
 
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST'and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = Personnel.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_personnel/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"personnel_list": new_list,
+		"personnels": personnels,
 	}
 	return render(request, 'waissapp/list_personnel.html', context)
 
 @login_required
-def edit_personnel(request, pk):
-	para = Personnel.objects.get(id=pk)
-	form = PersonnelForm(instance=para)
-
+def edit_personnel(request, id):
+	personnel = get_object_or_404(Personnel,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = PersonnelForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_personnel/')
-
-	context = {
-		"personnel_form":form,
-		"item": para,
-	}
-	return render(request, 'waissapp/edit_personnel.html', context)
+		form = PersonnelForm(request.POST, instance=personnel)
+	else:
+		form = PersonnelForm(instance=personnel)
+	return save_all_personnel(request, form, 'waissapp/edit_personnel.html')
 #END_OF_PERSONNEL_PARAMETERS
 
 @login_required
@@ -1091,11 +1141,10 @@ def add_basin(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_basin/')
 	else:  # display empty form
 		form = BasinForm()
 
-	return render(request, 'waissapp/add_basin.html', {'irrigation_form': form})
+	return save_all(request, form, 'waissapp/add_basin.html')
 
 @login_required
 def add_furrow(request):
@@ -1106,11 +1155,10 @@ def add_furrow(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_furrow/')
 	else:  # display empty form
 		form = FurrowForm()
 
-	return render(request, 'waissapp/add_furrow.html', {'irrigation_form': form})
+	return save_all_furrow(request, form, 'waissapp/add_furrow.html')
 
 @login_required
 def add_border(request):
@@ -1121,11 +1169,9 @@ def add_border(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_border/')
 	else:  # display empty form
 		form = BorderForm()
-
-	return render(request, 'waissapp/add_border.html', {'irrigation_form': form})
+	return save_all_border(request, form, 'waissapp/add_border.html')
 
 @login_required
 def add_drip(request):
@@ -1136,11 +1182,9 @@ def add_drip(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_drip/')
 	else:  # display empty form
 		form = DripForm()
-
-	return render(request, 'waissapp/add_drip.html', {'irrigation_form': form})
+	return save_all_drip(request, form, 'waissapp/add_drip.html')
 
 @login_required
 def add_sprinkler(request):
@@ -1151,11 +1195,9 @@ def add_sprinkler(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/list_sprinkler/')
 	else:  # display empty form
 		form = SprinklerForm()
-
-	return render(request, 'waissapp/add_sprinkler.html', {'irrigation_form': form})
+	return save_all_sprinkler(request, form, 'waissapp/add_sprinkler.html')
 
 @login_required
 def new_irrigation(request):
@@ -1240,16 +1282,16 @@ def list_basin(request):
 	current_user = request.user
 	queryset_1 = Basin.objects.filter(author=current_user)
 	queryset_2 = Basin.objects.filter(personal=False)
-	new_list = chain(queryset_1, queryset_2)
+	basins = chain(queryset_1, queryset_2)
 
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = Basin.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_basin/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"list": new_list,
+		"basins": basins,
 	}
 	return render(request, 'waissapp/list_basin.html', context)
 
@@ -1257,16 +1299,16 @@ def list_border(request):
 	current_user = request.user
 	queryset_1 = Border.objects.filter(author=current_user)
 	queryset_2 = Border.objects.filter(personal=False)
-	new_list = chain(queryset_1, queryset_2)
+	borders = chain(queryset_1, queryset_2)
 
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = Border.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_border/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"list": new_list,
+		"borders": borders,
 	}
 	return render(request, 'waissapp/list_border.html', context)
 
@@ -1274,16 +1316,16 @@ def list_furrow(request):
 	current_user = request.user
 	queryset_1 = Furrow.objects.filter(author=current_user)
 	queryset_2 = Furrow.objects.filter(personal=False)
-	new_list = chain(queryset_1, queryset_2)
+	furrows = chain(queryset_1, queryset_2)
 
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = Furrow.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_furrow/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"list": new_list,
+		"furrows": furrows,
 	}
 	return render(request, 'waissapp/list_furrow.html', context)
 
@@ -1291,16 +1333,16 @@ def list_sprinkler(request):
 	current_user = request.user
 	queryset_1 = Sprinkler.objects.filter(author=current_user)
 	queryset_2 = Sprinkler.objects.filter(personal=False)
-	new_list = chain(queryset_1, queryset_2)
+	sprinklers = chain(queryset_1, queryset_2)
 
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = Sprinkler.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_sprinkler/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"list": new_list,
+		"sprinklers": sprinklers,
 	}
 	return render(request, 'waissapp/list_sprinkler.html', context)
 
@@ -1308,103 +1350,143 @@ def list_drip(request):
 	current_user = request.user
 	queryset_1 = Drip.objects.filter(author=current_user)
 	queryset_2 = Drip.objects.filter(personal=False)
-	new_list = chain(queryset_1, queryset_2)
+	drips = chain(queryset_1, queryset_2)
 
-	if request.method == 'POST':
-		pk=request.POST.get('id')
+	if request.method == 'POST' and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
 		para = Drip.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_drip/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"list": new_list,
+		"drips": drips,
 	}
 	return render(request, 'waissapp/list_drip.html', context)
 
-@login_required
-def edit_basin(request, pk):
-	para = Basin.objects.get(id=pk)
-	form = BasinForm(instance=para)
-
-	if request.method == 'POST':  # data sent by user
-		form = BasinForm(request.POST, instance=para)
+def save_all(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
 		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_basin/')
-
+			form.save()
+			data['form_is_valid'] = True
+			basins = Basin.objects.all()
+			data['list_basin'] = render_to_string('waissapp/list_basin_2.html',{'basins':basins})
+		else:
+			data['form_is_valid'] = False
 	context = {
-		"form":form,
-		"item": para,
+	'form':form
 	}
-	return render(request, 'waissapp/edit_basin.html', context)
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
+def save_all_border(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			borders = Border.objects.all()
+			data['list_border'] = render_to_string('waissapp/list_border_2.html',{'borders':borders})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
+def save_all_furrow(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			furrows = Furrow.objects.all()
+			data['list_furrow'] = render_to_string('waissapp/list_furrow_2.html',{'furrows':furrows})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
+def save_all_drip(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			drips = Drip.objects.all()
+			data['list_drip'] = render_to_string('waissapp/list_drip_2.html',{'drips':drips})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
+def save_all_sprinkler(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			sprinklers = Sprinkler.objects.all()
+			data['list_sprinkler'] = render_to_string('waissapp/list_sprinkler_2.html',{'sprinklers':sprinklers})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
 
 @login_required
-def edit_border(request, pk):
-	para = Border.objects.get(id=pk)
-	form = BorderForm(instance=para)
-
+def edit_basin(request, id):
+	basin = get_object_or_404(Basin,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = BorderForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_border/')
-
-	context = {
-		"form":form,
-		"item": para,
-	}
-	return render(request, 'waissapp/edit_border.html', context)
+		form = BasinForm(request.POST, instance=basin)
+	else:
+		form = BasinForm(instance=basin)
+	return save_all(request, form, 'waissapp/edit_basin.html')
 
 @login_required
-def edit_furrow(request, pk):
-	para = Furrow.objects.get(id=pk)
-	form = FurrowForm(instance=para)
-
+def edit_border(request, id):
+	border = get_object_or_404(Border,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = FurrowForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_furrow/')
-
-	context = {
-		"form":form,
-		"item": para,
-	}
-	return render(request, 'waissapp/edit_furrow.html', context)
+		form = BorderForm(request.POST, instance=border)
+	else:
+		form = BorderForm(instance=border)
+	return save_all_border(request, form, 'waissapp/edit_border.html')
+	
+@login_required
+def edit_furrow(request, id):
+	furrow = get_object_or_404(Furrow,id=id)
+	if request.method == 'POST':  # data sent by user
+		form = FurrowForm(request.POST, instance=furrow)
+	else:
+		form = FurrowForm(instance=furrow)
+	return save_all_furrow(request, form, 'waissapp/edit_furrow.html')
 
 @login_required
-def edit_drip(request, pk):
-	para = Drip.objects.get(id=pk)
-	form = DripForm(instance=para)
-
+def edit_drip(request, id):
+	drip = get_object_or_404(Drip,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = DripForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_drip/')
-
-	context = {
-		"form": form,
-		"item": para,
-	}
-	return render(request, 'waissapp/edit_drip.html', context)
+		form = DripForm(request.POST, instance=drip)
+	else:
+		form = DripForm(instance=drip)
+	return save_all_drip(request, form, 'waissapp/edit_drip.html')
 
 @login_required
-def edit_sprinkler(request, pk):
-	para = Sprinkler.objects.get(id=pk)
-	form = SprinklerForm(instance=para)
-
+def edit_sprinkler(request, id):
+	sprinkler = get_object_or_404(Sprinkler,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = SprinklerForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/list_sprinkler/')
-
-	context = {
-		"form":form,
-		"item": para,
-	}
-	return render(request, 'waissapp/edit_sprinkler.html', context)
+		form = SprinklerForm(request.POST, instance=sprinkler)
+	else:
+		form = Sprinkler(instance=sprinkler)
+	return save_all_sprinkler(request, form, 'waissapp/edit_sprinkler.html')
 
 #Messages
 @login_required
@@ -1439,7 +1521,7 @@ def delete_msgs(request, pk): #deleteconversation
 
 	if request.method == 'POST':
 		para.delete()
-		return redirect('/messages/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 	context = {
 		"item":para,
 	}
@@ -1495,22 +1577,31 @@ def new_mc(request):
 
 	return render(request, 'waissapp/new_mc.html', context)
 
+def save_all_mc(request,form,template_name):
+	data = dict()
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+			mcs = MoistureContent.objects.all()
+			data['list_mc'] = render_to_string('waissapp/list_mc_2.html',{'mcs':mcs})
+		else:
+			data['form_is_valid'] = False
+	context = {
+	'form':form
+	}
+	data['html_form'] = render_to_string(template_name,context,request=request)
+	return JsonResponse(data)
+
 @login_required
 def add_mc(request):
-	DataFormSet = modelformset_factory(MoistureContent, exclude=(), extra=3)
-	formset = DataFormSet(queryset=MoistureContent.objects.none())
 	if request.method == 'POST':
-		formset = DataFormSet(request.POST)
-		if formset.is_valid():
-			formset.save()
-			return redirect('/add_mc/')
+		form = MCForm(request.POST)
+		if form.is_valid():
+			form.save()
 	else:  # display empty form
-		formset = DataFormSet(queryset=MoistureContent.objects.none())
-	
-	context = {
-		"formset": formset,
-	}
-	return render(request, 'waissapp/add_mc.html', context)
+		form = MCForm()
+	return save_all_mc(request, form, 'waissapp/add_mc.html')
 
 @login_required
 def upload_csv(request):
@@ -1540,83 +1631,89 @@ def upload_csv(request):
 	return render (request, 'waissapp/upload_csv.html', context)
 
 @login_required
-def edit_mc(request, name):
-	para = MoistureContent.objects.get(id=name)
-	form = MCForm(instance=para)
-
+def edit_mc(request, id):
+	mc = get_object_or_404(MoistureContent,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = MCForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/')
-
-	context = {
-		"form":form,
-		"item": para,
-	}
-	return render(request, 'waissapp/edit_mc.html', context)
+		form = MCForm(request.POST, instance=mc)
+	else:
+		form = MCForm(instance=mc)
+	return save_all_mc(request, form, 'waissapp/add_mc.html')
 
 def list_mc(request, name):
 	sensor_instance = Sensor.objects.get(name=name)
 	get_mc = MoistureContent.objects.filter(sensor=sensor_instance)
-	reversed_list = reversed(sorted(get_mc, key=attrgetter('timestamp')))
+	mcs = reversed(sorted(get_mc, key=attrgetter('timestamp')))
 
 	if request.method == 'POST':
 		pk=request.POST.get('id')
 		para = MoistureContent.objects.get(id=pk)
 		para.delete()
-		return redirect('/list_sensor/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"sensor": sensor_instance,
-		"list": reversed_list,
+		"mcs": mcs,
 	}
 	return render(request, 'waissapp/list_mc.html', context)
 
+def save_all_rainfall(request,form,template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            rainfalls = Rainfall.objects.all()
+            data['list_rainfall'] = render_to_string('waissapp/list_rainfall_2.html',{'rainfalls':rainfalls})
+        else:
+            data['form_is_valid'] = False
+    context = {
+    'form':form
+    }
+    data['html_form'] = render_to_string(template_name,context,request=request)
+    return JsonResponse(data)
+
 @login_required
 def add_rainfall(request):
-	RainfallFormSet = modelformset_factory(Rainfall, exclude=(), extra=1)
-	formset = RainfallFormSet(queryset=Rainfall.objects.none())
-	queryset = Rainfall.objects.all()
-	reversed_list = reversed(sorted(queryset, key=attrgetter('timestamp')))
-
-	if request.method == 'POST':
-		formset = RainfallFormSet(request.POST)
-		if formset.is_valid():
-			formset.save()
-			return redirect('/add_rainfall/')
+	if request.method == 'POST':  # data sent by user
+		form = RainfallForm(request.POST)
+		if form.is_valid():
+			instance = form.save(commit=False)
+			instance.author = request.user
+			instance.personal = True
+			instance.save()
 	else:  # display empty form
-		formset = RainfallFormSet(queryset=Rainfall.objects.none())
-	
-	context = {
-		"formset": formset,
-		"list": reversed_list,
-	}
-	return render(request, 'waissapp/add_rainfall.html', context)
+		form = RainfallForm()
+	return save_all_rainfall(request, form, 'waissapp/add_rainfall.html')
 
 @login_required
-def edit_rainfall(request, pk):
-	para = Rainfall.objects.get(id=pk)
-	form = RainfallForm(instance=para)
-
+def edit_rainfall(request, id):
+	rainfall = get_object_or_404(Rainfall,id=id)
 	if request.method == 'POST':  # data sent by user
-		form = RainfallForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/')
+		form = BorderForm(request.POST, instance=rainfall)
+	else:
+		form = BorderForm(instance=rainfall)
+	return save_all_rainfall(request, form, 'waissapp/edit_rainfall.html')
+
+def list_rainfall(request):
+	queryset = Rainfall.objects.all()
+	rainfalls = reversed(sorted(queryset, key=attrgetter('timestamp')))
+
+	if request.method == 'POST'and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
+		para = Rainfall.objects.get(id=pk)
+		para.delete()
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	context = {
-		"form":form,
-		"item": para,
+		"rainfalls": rainfalls,
 	}
-	return render(request, 'waissapp/edit_rainfall.html', context)
+	return render(request, 'waissapp/list_rainfall.html', context)
 
 @login_required
 def delete_rainfall(request, pk):
 	para = Rainfall.objects.get(id=pk)
 	if request.method == 'POST':
 		para.delete()
-		return redirect('/add_rainfall/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 	context = {
 		"item":para	
 	}
@@ -1666,54 +1763,67 @@ def delete_shaded(request, pk):
 	para = PercentShaded.objects.get(id=pk)
 	if request.method == 'POST':
 		para.delete()
-		return redirect('/add_shaded/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 	context = {
 		"item":para	
 	}
 	return render(request, 'waissapp/delete_shaded.html', context)
 
-@login_required
-def add_gravimetric(request):
-	GravimetricFormSet = modelformset_factory(Gravimetric, exclude=(), extra=1)
-	formset = GravimetricFormSet(queryset=Gravimetric.objects.none())
-	queryset = Gravimetric.objects.all()
-	reversed_list = reversed(sorted(queryset, key=attrgetter('timestamp')))
-	if request.method == 'POST':
-		formset = GravimetricFormSet(request.POST)
-		if formset.is_valid():
-			formset.save()
-			return redirect('/add_gravimetric/')
+def save_all_gravi(request,form,template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            gravis = Gravimetric.objects.all()
+            data['list_gravi'] = render_to_string('waissapp/list_gravi_2.html',{'gravis':gravis})
+        else:
+            data['form_is_valid'] = False
+    context = {
+    'form':form
+    }
+    data['html_form'] = render_to_string(template_name,context,request=request)
+    return JsonResponse(data)
+
+def add_gravi(request):
+	if request.method == 'POST':  # data sent by user
+		form = GravimetricForm(request.POST)
+		if form.is_valid():
+			form.save()
 	else:  # display empty form
-		formset = GravimetricFormSet(queryset=Gravimetric.objects.none())
-	
-	context = {
-		"formset": formset,
-		"list": reversed_list,
-	}
-	
-	return render(request, 'waissapp/add_gravimetric.html', context)
+		form = GravimetricForm()
+	return save_all_gravi(request, form, 'waissapp/add_gravi.html')
 
 @login_required
-def edit_gravimetric(request, pk):
-	para = Gravimetric.objects.get(id=pk)
-	form = GravimetricForm(instance=para)
+def edit_gravi(request, id):
+	gravi = get_object_or_404(Gravimetric, id=id)
 	if request.method == 'POST':  # data sent by user
-		form = GravimetricForm(request.POST, instance=para)
-		if form.is_valid():
-			form.save()  # this will save info to database
-			return redirect('/')
+		form = GravimetricForm(request.POST, instance=gravi)
+	else: 
+		form = GravimetricForm(instance=gravi)
+	return save_all_gravi(request, form, 'waissapp/edit_gravi.html')
+
+def list_gravi(request):
+	queryset = Gravimetric.objects.all()
+	gravis = reversed(sorted(queryset, key=attrgetter('timestamp')))
+
+	if request.method == 'POST'and 'deleteModal' in request.POST:
+		pk=request.POST.get('deleteModal')
+		para = Gravimetric.objects.get(id=pk)
+		para.delete()
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 	context = {
-		"form":form,
-		"item": para,
+		"gravis": gravis,
 	}
-	return render(request, 'waissapp/edit_gravimetric.html', context)
+	return render(request, 'waissapp/list_gravi.html', context)
 
 @login_required
 def delete_gravimetric(request, pk):
 	para = Gravimetric.objects.get(id=pk)
 	if request.method == 'POST':
 		para.delete()
-		return redirect('/add_gravimetric/')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 	context = {
 		"item":para	
 	}

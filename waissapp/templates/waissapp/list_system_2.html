@@ -1,0 +1,76 @@
+{% load static %}
+{% for system in systems %}
+<tr class="text-center">
+    <td class="align-middle">{{forloop.counter}}</td>
+    <td class="align-middle">{{system.name}}</td>
+    <td class="align-middle">{{system.farm}}</td>
+    <td class="align-middle">{{system.farm_manager.first_name}} {{system.farm_manager.last_name}}</td>
+    <td class="align-middle">{{system.crop}}</td>
+    <td class="align-middle">{{system.date_transplanted}}</td>
+    <td class="align-middle">{{system.soil}}</td>
+    <td class="align-middle">{{system.fieldunit}}</td>
+    <td class="align-middle">{{system.calib}}</td>
+    <td class="align-middle">
+        {% if system.basin is None %}
+        {{system.basin|default_if_none:"-"}}
+        {% else %}
+        <a href={% url 'waiss:edit_basin' system.basin.id %}>{{system.basin}}</a>
+        {% endif %}
+    </td>
+    <td class="align-middle">
+        {% if system.border is None %}
+        {{system.border|default_if_none:"-"}}
+        {% else %}
+        <a href={% url 'waiss:edit_border' system.border.id %}>{{system.border|default_if_none:"-"}}</a>
+        {% endif %}
+    </td>
+    <td class="align-middle">
+        {% if system.furrow is None %}
+        {{system.furrow|default_if_none:"-"}}
+        {% else %}
+        <a href={% url 'waiss:edit_furrow' system.furrow.id %}>{{system.furrow}}</a>
+        {% endif %}
+    </td>
+    <td class="align-middle">
+        {% if system.sprinkler is None %}
+        {{system.sprinkler|default_if_none:"-"}}
+        {% else %}
+        <a href={% url 'waiss:edit_sprinkler' system.sprinkler.id %}>{{system.sprinkler}}</a>
+        {% endif %}
+    </td>
+    <td class="align-middle">
+        {% if system.drip is None %}{{system.drip|default_if_none:"-"}}
+        {% else %}
+        <a href={% url 'waiss:edit_drip' system.drip.id %}>{{system.drip}}</a>
+        {% endif %}
+    </td>
+    <td class="align-middle">
+      <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_system' system.id %}"><i class="fas fa-edit"></i></button>
+      <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ system.id }}"><i class="fas fa-trash"></i></button>
+    </td>
+  </tr>
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteModal-{{ system.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete system</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <small><em>Are you sure you want to delete system <b>"{{system.name}}"</b>?</em></small>
+        </div>
+        <div class="modal-footer">
+            <form class="form-group" action="" method="post">
+                {% csrf_token %}
+                <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="submit" class="btn btn-danger" name="deleteModal" value="{{system.id}}">Confirm</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Delete Modal -->
+  {% endfor %}

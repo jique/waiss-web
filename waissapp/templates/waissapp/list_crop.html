@@ -2,96 +2,51 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block top_script_block %}
-{% endblock %}
-
 {% block main_block %}
-<h5 class="text-left">Crops</h5>
+<h6 class="text-left"><kbd class="bg-gradient-info">Crops</kbd>
+  <button class="btn show-form" data-url="{% url 'waiss:add_crop' %}">
+  <img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data">
+  </button>
+</h6>
 <div class="card shadow mb-4">
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-md table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr class="text-center">
-                    <th class="align-top"></th>
-                    <th class="align-top">Crop</th>
-                    <th class="align-top">Root Growth Model</th>
-                    <th class="align-top">Growing Period (days)</th>
-                    <th class="align-top">Management Allowable Depletion (MC<sub>v</sub> , %)</th>
-                    <th class="align-top">Depth of Rootzone (m)</th>
-                    <th class="align-top">K<sub>c(ini)</sub></th>
-                    <th class="align-top">K<sub>c(mid)</sub></th>
-                    <th class="align-top">K<sub>c(end)</sub></th>
-                    <th class="align-top">K<sub>c</sub> curve cutoff (1)</th>
-                    <th class="align-top">K<sub>c</sub> curve cutoff (2)</th>
-                    <th class="align-top">K<sub>c</sub> curve cutoff (3)</th>
-                    <th class="align-top">Equation Form</sub></th>
-                    <th class="align-top"> a</sub></th>
-                    <th class="align-top"> b</th>
-                    <th class="align-top"> c</th>
-                    <th class="align-top">Root Depth during Transplanting (m)</th>
-                </tr>
-            </thead>
-                    
-            <tbody>
-                {% for instance in crop_list %}
-                <tr class="text-center"> 
-                    <td class="min">
-                        <a data-toggle="modal" href="{{ instance.id }}/delete" data-target="#exampleModalCenter-{{ instance.id }}"><img class="rounded" src={% static "theme/delete_icon.png" %} style="height: 20px;"></a>
-                    </td> 
-                    <td class="align-middle min"><a href={% url 'waiss:edit_crop' instance.id %}>{{instance.crop}}</a></td>
-                    <td class="align-middle">{{instance.root_growth_model|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.growingperiod|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.mad|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.drz|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.kc_ini|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.kc_mid|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.kc_end|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.kc_cc_1|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.kc_cc_2|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.kc_cc_3|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.eqnform|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.root_a|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.root_b|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.root_c|default_if_none:"-"}}</td>
-                    <td class="align-middle">{{instance.root_ini|default_if_none:"-"}}</td>
-                </tr>
-                <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter-{{ instance.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Delete Crop</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        <small><em>Are you sure you want to delete crop <b>"{{instance.crop}}"</b>?<br>
-                        Deleting <b>"{{instance.crop}}"</b> will also delete the systems where it is used.</em></small>
-                    </div>
-                    <div class="modal-footer">
-                        <form class="form-group" action="" method="post">
-                            {% csrf_token %}
-                            <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
-                            <button type="submit" class="btn btn-danger" name="id" value="{{instance.id}}">Confirm</button>
-                        </form>
-                    </div>
-                  </div>
-                </div>
-                {% endfor %}
-            </tbody>
-        </table>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-md table-hover border-bottom-secondary crop-table" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr class="text-center">
+              <th class="align-top">#</th>
+              <th class="align-top">Crop</th>
+              <th class="align-top">Root Growth Model</th>
+              <th class="align-top">Growing Period (days)</th>
+              <th class="align-top">Management Allowable Depletion (MC<sub>v</sub> , %)</th>
+              <th class="align-top">Depth of Rootzone (m)</th>
+              <th class="align-top">K<sub>c(ini)</sub></th>
+              <th class="align-top">K<sub>c(mid)</sub></th>
+              <th class="align-top">K<sub>c(end)</sub></th>
+              <th class="align-top">K<sub>c curve cutoff 1</sub></th>
+              <th class="align-top">K<sub>c curve cutoff 2</sub></th>
+              <th class="align-top">K<sub>c curve cutoff 3</sub></th>
+              <th class="align-top">Equation Form</sub></th>
+              <th class="align-top"> a</sub></th>
+              <th class="align-top"> b</th>
+              <th class="align-top"> c</th>
+              <th class="align-top">Root Depth during Transplanting (m)</th>
+              <th class="align-top">Source</th>
+              <th class="align-top">Actions</th>
+          </tr>
+        </thead> 
+        <tbody>
+          {% include "waissapp/list_crop_2.html" %}
+        </tbody>
+    </table>
+    <!-- Create/Update Modal -->
+    <div class="modal fade" id="modal-crop">
+      <div class="modal-dialog">
+        <div class="modal-content"></div>
+      </div>
     </div>
-    <small><em>Add new crop data here.</em></small>&nbsp;<a href={% url 'waiss:add_crop' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
-    </div>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>  
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
 </div>
-  <!-- /.container-fluid -->
-{% endblock %}
-
-{% block bottom_script_block %}
-<script type="text/javascript">
-    $('#exampleModalCenter-{{ instance.id }}').modal(options)
-</script>
-{% endblock %}
-    
+{% endblock %}  

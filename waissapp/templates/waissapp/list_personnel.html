@@ -6,66 +6,37 @@
 {% endblock %}
 
 {% block main_block %}
-<h5 class="text-left">Farm Managers</h5>
+<h6 class="text-left"><kbd class="bg-gradient-info">Farm Managers</kbd>
+  <button class="btn show-form" data-url="{% url 'waiss:add_personnel' %}">
+  <img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data">
+  </button>
+</h6>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover border-bottom-secondary personnel-table" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr class="text-center">
-                <th class=""></th>
+                <th class="">#</th>
                 <th class="">Last Name</th>
                 <th class="">First Name</th>
                 <th class="">Mobile Number</th>
+                <th class="">Actions</th>
             </tr>
         </thead>
             
         <tbody>
-            {% for instance in personnel_list %}
-            <tr class="text-center">
-                <td class="min">
-                    <a data-toggle="modal" href="{{ instance.id }}/delete" data-target="#exampleModalCenter-{{ instance.id }}"><img class="rounded" src={% static "theme/delete_icon.png" %} style="height: 20px;"></a>
-                </td> 
-                <td class=""><a href={% url 'waiss:edit_personnel' instance.id %}>{{instance.last_name}}</a></td>
-                <td class="">{{instance.first_name}}</td>
-                <td class="">{{instance.number}}</td>
-            </tr>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter-{{ instance.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Delete Personnel</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        <small><em>Are you sure you want to delete personnel <b>"{{instance.first_name}} {{instance.last_name}}"</b>?<br>
-                        Deleting <b>"{{instance.first_name}} {{instance.last_name}}"</b> will also delete the systems that he/she manages.</em></small>
-                    </div>
-                    <div class="modal-footer">
-                        <form class="form-group" action="" method="post">
-                            {% csrf_token %}
-                            <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
-                            <button type="submit" class="btn btn-danger" name="id" value="{{instance.id}}">Confirm</button>
-                        </form>
-                    </div>
-                  </div>
-                </div>
-            {% endfor %}
+          {% include "waissapp/list_personnel_2.html" %}
         </tbody>
     </table>
-</div>
-<div>
-    <small><em>Add new farm manager here.</em></small><a href={% url 'waiss:add_personnel' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
-</div>
+    <!-- Create/Update Modal -->
+    <div class="modal fade" id="modal-personnel">
+      <div class="modal-dialog">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>  
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
 </div>
 {% endblock %}
-
-{% block bottom_script_block %}
-<script type="text/javascript">
-    $('#exampleModalCenter-{{ instance.id }}').modal(options)
-</script>
-{% endblock %}
-    

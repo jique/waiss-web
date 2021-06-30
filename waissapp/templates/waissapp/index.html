@@ -60,12 +60,6 @@
           return i;
         }
     </script>
-    <script>
-      //Data Table
-      $(document).ready( function () {
-        $('#dataTable').DataTable();
-      } );
-    </script>
     
     <title>
         {% block title_block %}
@@ -309,102 +303,72 @@ td.min {
   
         <!-- Divider -->
         <hr class="sidebar-divider">
-  
-        <!-- Heading -->
-        <div class="sidebar-heading">
-          Input
-        </div>
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
-          <a class="nav-link " href="{% url 'waiss:add_system' %}">
+          <a class="nav-link " href="{% url 'waiss:list_system' %}">
             <i class="fas fa-clipboard-list"></i>
-            <span class="text-gray-100">Create System</span>
+            <span class="text-gray-100">Systems</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'waiss:list_farm' %}">
+            <i class="fas fa-map-marked-alt"></i>
+            <span class="text-gray-100">Farms</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'waiss:list_personnel' %}">
+            <i class="fas fa-users"></i>
+            <span class="text-gray-100">Farm Managers</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'waiss:list_crop' %}">
+            <i class="fas fa-seedling"></i>
+            <span class="text-gray-100">Crops</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'waiss:list_soil' %}">
+            <i class="fas fa-layer-group"></i>
+            <span class="text-gray-100">Soils</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParam" aria-expanded="true" aria-controls="collapseParam">
-            <i class="fas fa-plus-square"></i>
-            <span class="text-gray-100">Parameters</span>
+            <i class="fas fa-cloud-rain"></i>
+            <span class="text-gray-100">Irrigation Systems</span>
           </a>
-          <div id="collapseParam" class="collapse" aria-labelledby="headingParam" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href={% url 'waiss:add_farm' %}>Farm</a>
-                <a class="collapse-item" href={% url 'waiss:add_personnel' %}>Farm Manager</a>
-                <a class="collapse-item" href={% url 'waiss:add_crop' %}>Crop</a>
-                <a class="collapse-item" href={% url 'waiss:add_soil' %}>Soil</a>
-                <div class="collapse-item" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
-                  Irrigation
-                  <div class="collapse bg-white collapse-inner rounded" id="collapseExample">
-                    <a class="collapse-item" href={% url 'waiss:add_basin' %}>Basin</a>
-                    <a class="collapse-item" href={% url 'waiss:add_border' %}>Border</a>
-                    <a class="collapse-item" href={% url 'waiss:add_furrow' %}>Furrow</a>
-                    <a class="collapse-item" href={% url 'waiss:add_sprinkler' %}>Sprinkler</a>
-                    <a class="collapse-item" href={% url 'waiss:add_drip' %}>Drip</a>
-                  </div>
-                </div>
-                <a class="collapse-item" href={% url 'waiss:add_fieldunit' %}>Field Unit</a>
-                <a class="collapse-item" href={% url 'waiss:add_calib' %}>Calibration</a>
-                <a class="collapse-item" href={% url 'waiss:add_sensor' %}>Sensors</a>
-                <a class="collapse-item" href={% url 'waiss:add_mc' %}>MCv Readings</a>
+            <div id="collapseParam" class="collapse" aria-labelledby="headingParam" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                  <a class="collapse-item" href={% url 'waiss:list_basin' %}>Basin</a>
+                  <a class="collapse-item" href={% url 'waiss:list_border' %}>Border</a>
+                  <a class="collapse-item" href={% url 'waiss:list_furrow' %}>Furrow</a>
+                  <a class="collapse-item" href={% url 'waiss:list_sprinkler' %}>Sprinkler</a>
+                  <a class="collapse-item" href={% url 'waiss:list_drip' %}>Drip</a>
+              </div>
             </div>
-          </div>
         </li>
-  
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-  
-        <!-- Heading -->
-        <div class="sidebar-heading">
-          Database
-        </div>
-  
-        <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDatabase" aria-expanded="true" aria-controls="collapseDatabase">
-            <i class="fas fa-fw fa-database"></i>
-            <span class="text-gray-100">Database</span>
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFU" aria-expanded="true" aria-controls="collapseParam">
+            <i class="fas fa-broadcast-tower"></i>
+            <span class="text-gray-100">Field Units</span>
           </a>
-          <div id="collapseDatabase" class="collapse" aria-labelledby="headingDatabase" data-parent="#accordionSidebar">
+          <div id="collapseFU" class="collapse" aria-labelledby="headingParam" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href={% url 'waiss:list_system' %}>Systems</a>
-                <hr>
-                <a class="collapse-item" href={% url 'waiss:list_farm' %}>Farms</a>
-                <a class="collapse-item" href={% url 'waiss:list_personnel' %}>Farm Manager</a>
-                <a class="collapse-item" href={% url 'waiss:list_crop' %}>Crops</a>
-                <a class="collapse-item" href={% url 'waiss:list_soil' %}>Soil</a>
-                <div class="collapse-item" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
-                  Irrigation
-                  <div class="collapse bg-white collapse-inner rounded" id="collapseExample">
-                    <a class="collapse-item" href={% url 'waiss:list_basin' %}>Basin</a>
-                    <a class="collapse-item" href={% url 'waiss:list_border' %}>Border</a>
-                    <a class="collapse-item" href={% url 'waiss:list_furrow' %}>Furrow</a>
-                    <a class="collapse-item" href={% url 'waiss:list_sprinkler' %}>Sprinkler</a>
-                    <a class="collapse-item" href={% url 'waiss:list_drip' %}>Drip</a>
-                  </div>
-                </div>
                 <a class="collapse-item" href={% url 'waiss:list_fieldunit' %}>Field Units</a>
-                <a class="collapse-item" href={% url 'waiss:list_calib' %}>Calibration Constants</a>
-                <a class="collapse-item" href={% url 'waiss:list_sensor' %}>Sensors & MCv Readings</a>
+                <a class="collapse-item" href={% url 'waiss:list_sensor' %}>Sensors & Readings</a>
+                <a class="collapse-item" href={% url 'waiss:list_gravi' %}>Gravimetric MC<sub>V</sub></a>
+                <a class="collapse-item" href={% url 'waiss:list_rainfall' %}>Rainfall</a>
             </div>
           </div>
         </li>
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-  
-        <!-- Heading -->
-        <div class="sidebar-heading">
-          About
-        </div>
-
         <li class="nav-item">
-          <a class="nav-link" href={% url 'waiss:about' %}><i class="fas fa-address-card"></i>
-            <span class="text-gray-100">About Us</span>
+          <a class="nav-link " href="{% url 'waiss:list_calib' %}">
+            <i class="fas fa-chart-line"></i>
+            <span class="text-gray-100">Calibration Constants</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href={% url 'waiss:about_calc' %}><i class="fas fa-square-root-alt"></i>
-          <span class="text-gray-100">About the Calculations</span></a>
         </li>
 
         <!-- Divider -->
@@ -649,12 +613,12 @@ td.min {
               <div class="card border-left-primary shadow mb-4">
                 <div class="card-body">
                   <div class="text-center">
-                    <img src={% static "theme/Advisory.png" %}>
-                    <br><br>
+                    <img src={% static "theme/waiss_logo.png" %} width=80px height=80px>
+                    <br>
                     <div class="mb-0 mr-3 font-weight-bold text-gray-800">
                       <i>
                         {% if mc_ave < MC_TO_IRRIGATE %}
-                        Irrigate for {{irrigation_period}} mins <br>
+                        Irrigate for {{irrigation_period}} mins <br><br>
                         <div class="small">or<br>Volume : {{total_volume}} liter {% if drip != None %}/ plant{% endif %}</div>
                         <div class="small">F<sub>n</sub> : {{net_application_depth}} mm</div>
                         {% endif %}
@@ -691,7 +655,7 @@ td.min {
         </a>
         <ul class="icon-ul">
           <li class="icon-li">
-            <a href={% url 'waiss:add_gravimetric' %} class="icon-a"><img src={% static "theme/microwave-white-18dp.svg" %} class="my-float icon-i" title="add gravimetric soil moisture content"></a>
+            <button class="btn show-form icon-a" data-url="{% url 'waiss:add_gravi' %}"><img src={% static "theme/microwave-white-18dp.svg" %} class="my-float icon-i" title="add gravimetric soil moisture content"></button>
           </li>
           <li class="icon-li">
             <a href={% url 'waiss:add_shaded' %} class="icon-a"><i class="fa fa-sun my-float icon-i" title="add percent shaded area"></i></a>
@@ -703,11 +667,18 @@ td.min {
             <a href={% url 'waiss:add_rainfall' %} class="icon-a"><i class="fas fa-oil-can my-float icon-i" title="add rainfall/irrigation"></i></a>
           </li>
         </ul>
+        <!-- Create/Update Modal -->
+        <div class="modal fade" id="modal-gravi">
+          <div class="modal-dialog">
+            <div class="modal-content"></div>
+          </div>
+        </div>
+        <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>  
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/modal.js' %}"></script>
 {% endblock %}
         </div>
         <!-- /.container-fluid -->
-
-      </div>
       <!-- End of Main Content -->
 {% block footer_block %}
       <!-- Footer -->

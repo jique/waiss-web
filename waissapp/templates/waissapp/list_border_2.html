@@ -1,0 +1,38 @@
+{% load static %}
+{% for border in borders %}
+<tr class="text-center">
+    <td class="align-middle ">{{forloop.counter}}</td>
+    <td class="align-middle">{{border.name}}</td>
+    <td class="align-middle ">{{border.discharge}}</td>
+    <td class="align-middle ">{{border.mannings_coeff}}</td>
+    <td class="align-middle ">{{border.area_slope}}</td>
+    <td class="min">
+      <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_border' border.id %}"><i class="fas fa-edit"></i></button>
+      <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ border.id }}"><i class="fas fa-trash"></i></button></td>
+</tr>
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteModal-{{ border.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete Border</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <small><em>Are you sure you want to delete border <b>"{{border.name}}"</b>?<br>
+            Deleting <b>"{{border.name}}"</b> will also delete the systems where it is used.</em></small>
+        </div>
+        <div class="modal-footer">
+            <form class="form-group" action="" method="post">
+                {% csrf_token %}
+                <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="submit" class="btn btn-danger" name="deleteModal" value="{{border.id}}">Confirm</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Delete Modal -->
+{% endfor %}

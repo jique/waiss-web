@@ -1,48 +1,25 @@
-{% extends 'waissapp/index.html'%}
-{% load static %}
 {% load crispy_forms_tags %}
-{% block top_script_block %}
-{% endblock %}
-            
-{% block main_block %}
-<div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-header"><small><i>Edit Field Unit&nbsp;>&nbsp;<b><span class="text-info">{{item}}</span></b></small></i></div>
-            <div class="card-body">
-                <form class="form-group" action="" method="post">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.name|as_crispy_field }}</div>
-                        <div class="col"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.usk|as_crispy_field}}</div>
-                        <div class="col">{{ fieldunit_form.number|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.timestart|as_crispy_field}}</div>
-                        <div class="col">{{ fieldunit_form.timestop|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.sensorintegrationtime|as_crispy_field}}</div>
-                        <div class="col">{{ fieldunit_form.delay|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.samples|as_crispy_field}}</div>
-                        <div class="col">{{ fieldunit_form.clockcorrection|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.errors}}</div>
-                    </div>
-                  <input type="submit" value="Submit" class="btn btn-info btn-block">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block bottom_script_block %}
-{% endblock %}
-    
+<form class="update-form" method="post" data-url="{% url 'waiss:edit_fieldunit' form.instance.id %}">
+    {% csrf_token %}
+    <div class="modal-header">
+		<h5 class="modal-title">Update Fieldunit</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+		</div>
+		<div class="modal-body">
+			<div class="col">{{form.name|as_crispy_field }}</div>
+            <div class="col">{{form.usk|as_crispy_field}}</div>
+            <div class="col">{{form.number|as_crispy_field}}</div>
+            <div class="col">{{form.timestart|as_crispy_field}}</div>
+            <div class="col">{{form.timestop|as_crispy_field}}</div>
+            <div class="col">{{form.sensorintegrationtime|as_crispy_field}}</div>
+            <div class="col">{{form.delay|as_crispy_field}}</div>
+            <div class="col">{{form.samples|as_crispy_field}}</div>
+            <div class="col">{{form.clockcorrection|as_crispy_field}}</div>
+		</div>
+		<div class="modal-footer">
+		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-info">Save Changes</button>
+	</div>
+</form>

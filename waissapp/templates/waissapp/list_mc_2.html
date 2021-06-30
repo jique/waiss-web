@@ -1,0 +1,38 @@
+{% load static %}
+{% for mc in mcs %}
+<tr class="text-center">
+  <td class="align-middle ">{{forloop.counter}}</td>
+  <td class="align-middle ">{{mc.sensor}}</td>
+  <td class="align-middle ">{{mc.mc_data}}</td>
+  <td class="align-middle ">{{mc.timestamp}}</td>
+  <td class="min">
+    <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_mc' mc.id %}"><i class="fas fa-edit"></i></button>
+    <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ mc.id }}"><i class="fas fa-trash"></i></button>
+  </td>
+</tr>
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal-{{ mc.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete mc</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <small><em>Are you sure you want to delete mc <b>"{{mc.mc_data}}"</b>?<br>
+          Make sure to delete MC data with the same date & time from other sensors.</em></small>
+      </div>
+      <div class="modal-footer">
+          <form class="form-group" action="" method="post">
+              {% csrf_token %}
+              <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+              <button type="submit" class="btn btn-danger" name="deleteModal" value="{{mc.id}}">Confirm</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal -->
+{% endfor %}

@@ -18,7 +18,7 @@ class ReceivedMsgsInline(admin.TabularInline):
     model = ReceivedMsgs
 
 class ReceivedMsgsAdmin(admin.ModelAdmin):
-    list_display = ('number', 'msg', 'timestamp')
+    list_display = ('number', 'msg', 'author', 'personal', 'timestamp')
     ordering = ['timestamp']
     
 class FieldUnitInline(admin.TabularInline):
@@ -116,7 +116,7 @@ class BasinInline(admin.TabularInline):
     model = Basin
 
 class BasinAdmin(admin.ModelAdmin):
-    list_display =('name', 'discharge', 'basin_length', 'ea', 'author', 'personal', 'timestamp')
+    list_display =('name', 'basin_length', 'discharge', 'ea', 'author', 'personal', 'timestamp')
 
 class BorderInline(admin.TabularInline):
     model = Border

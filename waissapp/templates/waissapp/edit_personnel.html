@@ -1,35 +1,19 @@
-{% extends 'waissapp/index.html'%}
-{% load static %}
 {% load crispy_forms_tags %}
-
-{% block top_script_block %}
-{% endblock %}
-
-{% block main_block %}
-<div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-header"><i><small>Edit Farm Manager&nbsp;>&nbsp;<b><span class="text-info">{{item.first_name}} {{item.last_name}}</span></b></small></i></div>
-            <div class="card-body">
-                <form class="form-group" action="" method="post">   
-                    {% csrf_token %} 
-                    <div class="row">
-                        <div class="col">{{personnel_form.first_name|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{personnel_form.last_name|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{personnel_form.number|as_crispy_field}}</div>
-                    </div>
-                    <input type="submit" value="Save" class="btn btn-info btn-block">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block bottom_script_block %}
-{% endblock %}
-        
+<form class="update-form" method="post" data-url="{% url 'waiss:edit_personnel' form.instance.id %}">
+    {% csrf_token %}
+    <div class="modal-header">
+		<h5 class="modal-title">Update Personnel</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+        <div class="col">{{form.last_name|as_crispy_field }}</div>
+        <div class="col">{{form.first_name|as_crispy_field }}</div>
+        <div class="col">{{form.number|as_crispy_field }}</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-info">Save Changes</button>
+	</div>
+</form>

@@ -1,30 +1,18 @@
-{% extends 'waissapp/index.html'%}
-{% load static %}
 {% load crispy_forms_tags %}
-{% block top_script_block %}
-{% endblock %}
-            
-{% block main_block %}
-<h5 class="text-left">Add Rainfall/Irrigation</h5>
-<div class="row">
-    <div class="col-lg-12 mx-auto">
-        <div class="card mb-4">
-            <div class="card-header"><small>Input rainfall/irrigation data. Make sure to put the same date and time with a point in the soil moisture content readings.</small></div>
-            <div class="card-body">
-                <form class="form-group" action="" method="post">
-                    {% csrf_token %}
-                        <div class="col">{{form.fieldunit|as_crispy_field}}</div>
-                        <div class="col">{{form.timestamp|as_crispy_field}}</div>
-                        <div class="col">{{ form.amount|as_crispy_field}}</div>
-                        <div class="col">{{ form.errors}}</div>
-                    <input type="submit" value="Submit" class="btn btn-info btn-block">
-                </form>
-            </div>
-        </div>
+<form class="update-form" method="post" data-url="{% url 'waiss:edit_rainfall' form.instance.id %}">
+    {% csrf_token %}
+    <div class="modal-header">
+      <h5 class="modal-title">Update Rainfall</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+	</div>
+	<div class="modal-body">
+        <div class="col">{{form.fieldunit|as_crispy_field}}</div>
+        <div class="col">{{form.timestamp|as_crispy_field}}</div>
+        <div class="col">{{form.amount|as_crispy_field}}</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-info">Save Changes</button>
     </div>
-</div>
-{% endblock %}
-            
-{% block bottom_script_block %}
-{% endblock %}
-                
+</form>

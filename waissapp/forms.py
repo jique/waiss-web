@@ -20,8 +20,8 @@ class CropForm(forms.ModelForm):
         super(CropForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8'
+        self.helper.label_class = 'col-lg-6'
+        self.helper.field_class = 'col-lg-6'
     class Meta:
         model = Crop
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
@@ -34,8 +34,8 @@ class FieldUnitForm(forms.ModelForm):
         super(FieldUnitForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8'
+        self.helper.label_class = 'col-lg-6'
+        self.helper.field_class = 'col-lg-6'
     class Meta:
         model = FieldUnit
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
@@ -56,8 +56,8 @@ class SensorForm(ModelForm):
         super(SensorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8' 
+        self.helper.label_class = 'col-lg-6'
+        self.helper.field_class = 'col-lg-6' 
     class Meta:
         model = Sensor
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
@@ -67,13 +67,19 @@ class MCForm(forms.ModelForm):
         super(MCForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8' 
+        self.helper.label_class = 'col-lg-6'
+        self.helper.field_class = 'col-lg-6' 
     class Meta:
         model = MoistureContent
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
 
 class FarmForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(FarmForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-4'
+        self.helper.field_class = 'col-lg-8' 
     class Meta:
         model = Farm
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
@@ -83,8 +89,8 @@ class BasinForm(ModelForm):
         super(BasinForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8' 
+        self.helper.label_class = 'col-lg-6'
+        self.helper.field_class = 'col-lg-6' 
     class Meta:
         model = Basin
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
@@ -94,8 +100,8 @@ class BorderForm(ModelForm):
         super(BorderForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8' 
+        self.helper.label_class = 'col-lg-6'
+        self.helper.field_class = 'col-lg-6' 
     class Meta:
         model = Border
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
@@ -105,8 +111,8 @@ class FurrowForm(ModelForm):
         super(FurrowForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8' 
+        self.helper.label_class = 'col-lg-6'
+        self.helper.field_class = 'col-lg-6' 
     class Meta:
         model = Furrow
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
@@ -116,8 +122,8 @@ class DripForm(ModelForm):
         super(DripForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8' 
+        self.helper.label_class = 'col-lg-6'
+        self.helper.field_class = 'col-lg-6' 
     class Meta:
         model = Drip
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
@@ -127,8 +133,8 @@ class SprinklerForm(ModelForm):
         super(SprinklerForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8' 
+        self.helper.label_class = 'col-lg-6'
+        self.helper.field_class = 'col-lg-6' 
     class Meta:
         model = Sprinkler
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form

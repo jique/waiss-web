@@ -2,23 +2,24 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block top_script_block %}
-{% endblock %}
-
 {% block main_block %}
-<h5 class="text-left">Systems</h5>
+<h6 class="text-left"><kbd class="bg-gradient-info">WAISS</kbd>
+  <button class="btn show-form" data-url="{% url 'waiss:add_system' %}">
+  <img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data">
+  </button>
+</h6>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover border-bottom-secondary system-table" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr class="text-center">
-                <th class="align-top"></th>
+              <th class="align-top">#</th>
                 <th class="align-top">Name</th>
                 <th class="align-top">Farm</th>
                 <th class="align-top">Farm Manager</th>
                 <th class="align-top">Crop</th>
-                <th class="align-top">Date Planted/Transplanted</th>
+                <th class="align-top">Date Transplanted</th>
                 <th class="align-top">Soil</th>
                 <th class="align-top">Field Unit</th>
                 <th class="align-top">Calibration Equation</th>
@@ -27,84 +28,21 @@
                 <th class="align-top">Furrow</th>
                 <th class="align-top">Sprinkler</th>
                 <th class="align-top">Drip</th>
+                <th class="align-top">Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for instance in list %}
-            <tr class="text-center">
-                <td class="min">
-                    <a data-toggle="modal" href="{{ instance.id }}/delete" data-target="#exampleModalCenter-{{ instance.id }}"><img class="rounded" src={% static "theme/delete_icon.png" %} style="height: 20px;"></a>
-                </td>
-                <td class="align-middle min"><a href={% url 'waiss:edit_system' instance.id %}>{{instance.name}}</a></td>              
-                <td class="align-middle min"><a href={% url 'waiss:edit_farm' instance.farm.id %}>{{instance.farm}}</a></td>
-                <td class="align-middle min"><a href={% url 'waiss:edit_personnel' instance.farm_manager.id %}>{{instance.farm_manager.first_name}} {{instance.farm_manager.last_name}}</a></td>
-                <td class="align-middle min"><a href={% url 'waiss:edit_crop' instance.crop.id %}>{{instance.crop}}</a></td>
-                <td class="align-middle min">{{instance.date_transplanted}}</td>
-                <td class="align-middle min"><a href={% url 'waiss:edit_soil' instance.soil.id %}>{{instance.soil}}</a></td>
-                <td class="align-middle min"><a href={% url 'waiss:edit_fieldunit' instance.fieldunit.id %}>{{instance.fieldunit}}</a></td>
-                <td class="align-middle min"><a href={% url 'waiss:edit_calib' instance.calib.id %}>{{instance.calib}}</a></td>
-                <td class="align-middle min">
-                    {% if instance.basin is None %}
-                    {{instance.basin|default_if_none:"-"}}
-                    {% else %}
-                    <a href={% url 'waiss:edit_basin' instance.basin.id %}>{{instance.basin}}</a>
-                    {% endif %}
-                </td>
-                <td class="align-middle min">
-                    {% if instance.border is None %}
-                    {{instance.border|default_if_none:"-"}}
-                    {% else %}
-                    <a href={% url 'waiss:edit_border' instance.border.id %}>{{instance.border|default_if_none:"-"}}</a>
-                    {% endif %}
-                </td>
-                <td class="align-middle min">{% if instance.furrow is None %}{{instance.furrow|default_if_none:"-"}}
-                    {% else %}
-                    <a href={% url 'waiss:edit_furrow' instance.furrow.id %}>{{instance.furrow}}</a>
-                    {% endif %}
-                </td>
-                <td class="align-middle min">{% if instance.sprinkler is None %}{{instance.sprinkler|default_if_none:"-"}}
-                    {% else %}
-                    <a href={% url 'waiss:edit_sprinkler' instance.sprinkler.id %}>{{instance.sprinkler}}</a>
-                    {% endif %}
-                </td>
-                <td class="align-middle min">{% if instance.drip is None %}{{instance.drip|default_if_none:"-"}}
-                    {% else %}
-                    <a href={% url 'waiss:edit_drip' instance.drip.id %}>{{instance.drip}}</a>
-                    {% endif %}
-                </td>
-            </tr>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter-{{ instance.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Delete System</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        <small><em>Are you sure you want to delete system <b>"{{instance.name}}"</b>?<br></em></small>
-                    </div>
-                    <div class="modal-footer">
-                        <form class="form-group" action="" method="post">
-                            {% csrf_token %}
-                            <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
-                            <button type="submit" class="btn btn-danger" name="id" value="{{instance.id}}">Confirm</button>
-                        </form>
-                    </div>
-                  </div>
-                </div>
-            {% endfor %}
+            {% include "waissapp/list_system_2.html" %}
         </tbody>
     </table>
+    <!-- Create/Update Modal -->
+    <div class="modal fade" id="modal-system">
+      <div class="modal-dialog">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>  
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
 </div>
-<small><em>Create new system here.</em></small>&nbsp;<a href={% url 'waiss:add_system' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="create new system"></a>
-</div>
-{% endblock %}
-
-{% block bottom_script_block %}
-<script type="text/javascript">
-    $('#exampleModalCenter-{{ instance.id }}').modal(options)
-</script>
 {% endblock %}

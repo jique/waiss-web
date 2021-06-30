@@ -1,0 +1,44 @@
+{% load static %}
+{% for sprinkler in sprinklers %}
+<tr class="text-center"> 
+    <td class="align-middle">{{forloop.counter}}</td>
+    <td class="align-middle">{{sprinkler.name}}</td>
+    <td class="align-middle">{{sprinkler.discharge}}</td>
+    <td class="align-middle">{{sprinkler.ea}}</td>
+    <td class="align-middle">{{sprinkler.lateral_spacing}}</td>
+    <td class="align-middle">{{sprinkler.sprinkler_spacing}}</td>
+    <td class="align-middle">{{sprinkler.nozzle_diameter}}</td>
+    <td class="align-middle">{{sprinkler.operating_pressure}}</td>
+    <td class="align-middle">{{sprinkler.discharge_coefficient}}</td>
+    <td class="align-middle min">
+        <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_sprinkler' sprinkler.id %}"><i class="fas fa-edit"></i></button>
+        <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ sprinkler.id }}"><i class="fas fa-trash"></i></button>
+    </td>
+  </tr>
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteModal-{{ sprinkler.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete Sprinkler</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <small><em>Are you sure you want to delete sprinkler <b>"{{sprinkler.name}}"</b>?<br>
+            Deleting <b>"{{sprinkler.name}}"</b> will also delete the systems where it is used.</em></small>
+        </div>
+        <div class="modal-footer">
+            <form class="form-group" action="" method="post">
+                {% csrf_token %}
+                <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="submit" class="btn btn-danger" name="deleteModal" value="{{sprinkler.id}}">Confirm</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Delete Modal -->
+<tr> 
+{% endfor %}

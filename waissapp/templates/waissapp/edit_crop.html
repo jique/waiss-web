@@ -1,139 +1,46 @@
-{% extends 'waissapp/index.html'%}
-{% load static %}
 {% load crispy_forms_tags %}
-
-{% block top_script_block %}
-{% endblock %}
-
-{% block main_block %}
-<div class="row">
-    <div class="col">
-        <div class="card">
-        <div class="card-header"><small><i>Edit Crop&nbsp;>&nbsp;<b><span class="text-info">{{item}}</span></b></small></i></div>
-        <div class="card-body">
-            <p><small><i>Select from the 3 Root Growth models based on your available data,  to be used in the computation.</i></small></p>
-            <form class="form-group" action="" method="post">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col">{{crop_form.crop|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                    <div class="col">{{crop_form.drz|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                  <div class="col">{{crop_form.root_ini|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                    <div class="col">{{crop_form.growingperiod|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                    <div class="col">{{crop_form.mad|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                  <div class="col">{{crop_form.root_growth_model|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                  <div class="col"><small>Additional for drip irrigation system,</small></div>
-                  <br>
-                  <br>
-                </div>
-                <div class="row">
-                  <div class="col-1"></div>
-                  <div class="col">{{crop_form.peak_Etcrop|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                  <div class="col-1"></div>
-                  <div class="col">{{crop_form.transpiration_ratio|as_crispy_field}}</div>
-                </div>
-            </div>
-            <div id="accordion">
-              <div class="card">
-                <div class="card-header" id="headingOne">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" type="button">
-                      Root Growth Model 1: Borg-Grimes Model
-                    </button>
-                  </h5>
-                </div>
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                  <div class="card-body">
-                    <div class="col">No more data required! :)</div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="headingTwo">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" type="button">
-                      Root Growth Model 2: User-Defined
-                    </button>
-                  </h5>
-                </div>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                  <div class="card-body">
-                      <div class="row">
-                          <div class="col">{{crop_form.eqnform|as_crispy_field}}</div>
-                          <div class="col"><small><i>Linear: MC<sub>v</sub> = (analog_reading)*a + b<br>Quadratic: MC<sub>v</sub> = (analog_reading)<sup>2</sup>*a + (analog_reading)*b + c</i></small></div>
-                      </div>
-                      <div class="row">
-                          <div class="col">{{crop_form.root_a|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col">{{crop_form.root_b|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col">{{crop_form.root_c|as_crispy_field}}</div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="headingThree">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" type="button">
-                      Root Growth Model 3: Inverse K<sub>c</sub>
-                    </button>
-                  </h5>
-                </div>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                  <div class="card-body">
-                      <div class="row">
-                        <div class="col"><center><img src={% static "theme/kc.png" %}></center></div>
-                      </div>
-                      <br>
-                      <div class="row">
-                          <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col">{{crop_form.kc_mid|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                      <div class="col">{{crop_form.kc_end|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col">{{crop_form.kc_cc_1|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col">{{crop_form.kc_cc_2|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col">{{crop_form.kc_cc_3|as_crispy_field}}</div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-              <br>
-              {{crop_form.errors}}
-              <div class="text-center">
-                <input type="submit" value="Submit" class="btn btn-info">
-              </div>
-              <br>
-            </form>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block bottom_script_block %}
-{% endblock %}
+<form class="update-form" method="post" data-url="{% url 'waiss:edit_crop' form.instance.id %}">
+    {% csrf_token %}
+    <div class="modal-header">
+      <h5 class="modal-title">Update Crop</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+		</div>
+		<div class="modal-body">
+			<small>Fillout only 1 out of the 3 Root Growth Models below depending on you available data.</small>
+      <br><br>
+      <div class="col">{{form.crop|as_crispy_field}}</div>
+      <div class="col">{{form.drz|as_crispy_field}}</div>
+      <div class="col">{{form.root_ini|as_crispy_field}}</div>
+      <div class="col">{{form.growingperiod|as_crispy_field}}</div>
+      <div class="col">{{form.mad|as_crispy_field}}</div>
+      <div class="col">{{form.root_growth_model|as_crispy_field}}</div>
+      <div class="col"><small>Additional for drip irrigation system,</small>
+      <div class="col">{{form.peak_Etcrop|as_crispy_field}}</div>
+      <div class="col">{{form.transpiration_ratio|as_crispy_field}}</div>
+      Root Growth Model 1: Borg-Grimes Model
+      Root Growth Model 2: User-Defined
+      <div class="col">{{form.eqnform|as_crispy_field}}</div>
+      <div class="col">{{form.root_a|as_crispy_field}}</div>
+      <div class="col">{{form.root_b|as_crispy_field}}</div>
+      <div class="col">{{form.root_c|as_crispy_field}}</div>
+      <small><i>Linear: MC<sub>v</sub> = (analog_reading)*a + b<br>
+        Quadratic: MC<sub>v</sub> = (analog_reading)<sup>2</sup>*a + (analog_reading)*b + c</i>
+      </small>
+      Root Growth Model 3: Inverse K<sub>c</sub>
+      <div class="col">{{form.kc_ini|as_crispy_field}}</div>
+      <div class="col">{{form.kc_mid|as_crispy_field}}</div>
+      <div class="col">{{form.kc_end|as_crispy_field}}</div>
+      <div class="col">{{form.kc_cc_1|as_crispy_field}}</div>
+      <div class="col">{{form.kc_cc_2|as_crispy_field}}</div>
+      <div class="col">{{form.kc_cc_3|as_crispy_field}}</div>
+      <div class="col">{{form.source|as_crispy_field}}</div>
+		</div>
+		<div class="modal-footer">
+		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-info">Save Changes</button>
+	</div>
+</form>
+                
     

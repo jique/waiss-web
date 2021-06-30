@@ -2,62 +2,37 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block top_script_block %}
-{% endblock %}
-
 {% block main_block %}
-<h5 class="text-left">Moisture Content Readings: <span class="text-successs"><em>{{sensor}}</em></span></h5>
+<h6 class="text-left"><kbd class="bg-gradient-info">Moisture Content Readings (Raw)</kbd>
+  <button class="btn show-form" data-url="{% url 'waiss:add_mc' %}">
+  <img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data">
+  </button>
+</h6>
 <div class="card shadow mb-4">
     <div class="card-body">
-    <div class="table-responsive">
-        <table class="table table-hover border-bottom-secondary" id="dataTable" width="100%" cellspacing="0">
+      <div class="table-responsive">
+        <table class="table table-hover border-bottom-secondary mc-table" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr class="text-center">
-                <th class="align-top "></th>
-                <th class="align-top ">Reading</th>
-                <th class="align-top ">Timestamp</th>
+              <th class="align-top">#</th>
+              <th class="align-top">Sensor</th>
+              <th class="align-top ">Reading</th>
+              <th class="align-top ">Timestamp</th>
+              <th class="align-top">Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in list %}
-            <tr class="text-center">
-                <td class="min">
-                    <a data-toggle="modal" href="{{ item.id }}/delete" data-target="#exampleModalCenter-{{ item.id }}"><img class="rounded" src={% static "theme/delete_icon.png" %} style="height: 20px;"></a>
-                </td>
-                <td><a href={% url 'waiss:edit_mc' item.id %}>{{item.mc_data}}</a></td>
-                <td>{{item.timestamp}}</td>
-            </tr>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter-{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Delete Field Unit</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        <small><em>Are you sure you want to delete soil moisture content data <b>"{{item.timestamp}} {{item.mc_data}}"</b>?<br>
-                        Make sure to delete other soil moisture content data with the same date & time from the same sensor or the system will give you wrong computation!</em></small>
-                    </div>
-                    <div class="modal-footer">
-                        <form class="form-group" action="" method="post">
-                            {% csrf_token %}
-                            <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
-                            <button type="submit" class="btn btn-danger" name="id" value="{{item.id}}">Confirm</button>
-                        </form>
-                    </div>
-                  </div>
-                </div>
-            {% endfor %}
+            {% include "waissapp/list_mc_2.html" %}
         </tbody>
     </table>
+    <!-- Create/Update Modal -->
+    <div class="modal fade" id="modal-mc">
+      <div class="modal-dialog">
+        <div class="modal-content"></div>
+      </div>
     </div>
-    <small><em>Add new reading here.</em></small>&nbsp;<a href={% url 'waiss:add_mc' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>  
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
 </div>
 {% endblock %}
-
-{% block bottom_script_block %}
-{% endblock %}
-    

@@ -57,7 +57,7 @@ class Sensor(models.Model):
 class MoistureContent(models.Model):
     sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, null=True)
     timestamp = models.DateTimeField(verbose_name='Date & Time Measured', null=True, help_text="Format: mm/dd/yyyy hh:mm")
-    mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Analog Reading", null=True)
+    mc_data = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Analog Reading", null=True)
 
     class Meta:
         verbose_name_plural = "9. Moisture Content"
@@ -167,37 +167,38 @@ class CalibrationConstant(models.Model):
 class Crop(models.Model):
     crop = models.CharField(max_length=100, unique=True, null=True,)
     growingperiod = models.IntegerField(verbose_name="Growing Period, days", null=True,)
-    mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True,)
+    root_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True, blank=True)
     drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True,)
-    peak_Etcrop = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm/day)", null=True, blank=True)
-    transpiration_ratio = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Transpiration Ratio", null=True, blank=True)
-
+    mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True,)
     rooting = [
         ("Borg-Grimes Model", 'Borg-Grimes Model'),
         ("User-Defined", 'User-Defined'),
         ("Inverse Kc", 'Inverse Kc'),
     ]
-
     root_growth_model = models.CharField(choices=rooting, max_length=30, verbose_name="Root Growth Model", null=True, help_text="Fillout additional information below.")
+    
+    peak_Etcrop = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm/day)", null=True, blank=True)
+    transpiration_ratio = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Transpiration Ratio", null=True, blank=True)
+   
+    CHOICES = [
+        ("linear", 'linear'),
+        ("quadratic", 'quadratic'),
+    ]
+    eqnform = models.CharField(choices=CHOICES, max_length=20, verbose_name="Equation Form", null=True, blank=True)                          
+    root_a = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" a", null=True, blank=True)
+    root_b = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" b", null=True, blank=True)
+    root_c = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" c", null=True, blank=True)
+    
     kc_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (ini)", null=True, blank=True)
-    kc_mid = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (med)", null=True, blank=True)
+    kc_mid = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (mid)", null=True, blank=True)
     kc_end = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (end)", null=True, blank=True)
     kc_cc_1 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 1", null=True, blank=True)
     kc_cc_2 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 2", null=True, blank=True)
     kc_cc_3 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 3", null=True, blank=True)
     source = models.CharField(max_length=30, verbose_name="Data Source", null=True, blank=True)
 
-    CHOICES = [
-        ("linear", 'linear'),
-        ("quadratic", 'quadratic'),
-    ]
 
-    eqnform = models.CharField(choices=CHOICES, max_length=20, verbose_name="Equation Form", null=True, blank=True)                          
-    root_a = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" a", null=True, blank=True)
-    root_b = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" b", null=True, blank=True)
-    root_c = models.DecimalField(max_digits=15, decimal_places=5, verbose_name=" c", null=True, blank=True)
-    root_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True, blank=True)
-    
+
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
@@ -212,8 +213,8 @@ class Crop(models.Model):
 
 class Basin(models.Model):
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
+    basin_length = models.DecimalField(max_digits=20, decimal_places=1, verbose_name="Basin Length (m)", null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
-    basin_length = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Basin Length (m)", null=True)
     EFF_CHOICES = [
         (50, '50'),
         (55, '55'),
