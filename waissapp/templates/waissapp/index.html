@@ -31,253 +31,22 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-    <script>
-      //Update clock
-      function startTime() {
-        var today = new Date();
-        var h = today.getHours();
-        var m = today.getMinutes();
-        var s = today.getSeconds();
-        var ampm = h >= 12 ? 'PM' : 'AM';
-        m = checkTime(m);
-        s = checkTime(s);
-        h = h % 12;
-        h = h ? h : 12; // the hour '0' should be '12'
+    <link href={% static "css/footer.css" %} rel="stylesheet" type="text/css">
+    <link href={% static "css/progress-bar.css" %} rel="stylesheet" type="text/css">
+    <link href={% static "css/highcharts.css" %} rel="stylesheet" type="text/css">
+    <script src={% static "js/clock.js" %}></script>
 
-        document.getElementById('time').innerHTML = h + ":" + m + ":" + s + ' ' + ampm;
-
-        var month = today.getMonth() + 1;
-        var day = today.getDate();
-        var year = today.getFullYear();
-
-        document.getElementById('date').innerHTML = month + '/' + day + '/' + year;
-
-        var t = setTimeout(startTime, 500);
-        }
-        console.log(startTime(new Date));
-        function checkTime(i) {
-          if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
-          return i;
-        }
-    </script>
-    
     <title>
         {% block title_block %}
-        WAISS
+        WAISS: Dashboard
         {% endblock %}
     </title>
 </head>
 
 <body id="page-top" onload="startTime()">
 
-  {% block style_block%}
-  <style>
-  .topbar {
-    height: 50px;
-  }
-  .progress_bar .pro-bar {
-      background: hsl(0, 0%, 97%);
-      box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.1) inset;
-      height:4px;
-      margin-bottom: 12px;
-      margin-top: 50px;
-      position: relative;
-    }
-    .progress_bar .progress_bar_title{
-    color: hsl(218, 4%, 50%);
-    font-size: 15px;
-    font-weight: 300;
-    position: relative;
-    top: -28px;
-    z-index: 1;
-}
-.progress_bar .progress_number{
-    float: right;
-    margin-top: -24px;
-}
-.progress_bar .progress-bar-inner {
-    background-color: hsl(0, 0%, 88%);
-    display: block;
-    width: 0;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: width 1s linear 0s;
-}
-.progress_bar .progress-bar-inner:before {
-    content: "";
-    background-color: hsl(0, 0%, 100%);
-    border-radius: 50%;
-    width: 4px;
-    height: 4px;
-    position: absolute;
-    right: 1px;
-    top: 0;
-    z-index: 1;
-}
-.progress_bar .progress-bar-inner:after {
-    content: "";
-    width: 14px;
-    height: 14px;
-    background-color: inherit;
-    border-radius: 50%;
-    position: absolute;
-    right: -4px;
-    top: -5px;
-}
-td {
-    width: auto;
-}
-
-td.min {
-    width: 1%;
-    white-space: nowrap;
-}
-
-.highcharts-figure, .highcharts-data-table table {
-    min-width: 310px; 
-    max-width: 800px;
-    margin: 0;
-}
-
-.highcharts-data-table table {
-  font-family: Verdana, sans-serif;
-  border-collapse: collapse;
-  border: 1px solid #EBEBEB;
-  margin: 10px auto;
-  text-align: center;
-  width: 100%;
-  max-width: 500px;
-}
-.highcharts-data-table caption {
-  padding: 1em 0;
-  font-size: 1.2em;
-  color: #555;
-}
-.highcharts-data-table th {
-	font-weight: 600;
-  padding: 0.5em;
-}
-.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
-  padding: 0.5em;
-}
-.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
-    background: #f8f8f8;
-}
-.highcharts-data-table tr:hover {
-    background: #f1f7ff;
-}
-.label-container{
-	position:fixed;
-	bottom:48px;
-	right:105px;
-	display:table;
-	visibility: hidden;
-}
-
-.label-text{
-	color:#FFF;
-	background:rgba(51,51,51,0.5);
-	display:table-cell;
-	vertical-align:middle;
-	padding:10px;
-	border-radius:3px;
-}
-
-.label-arrow{
-	display:table-cell;
-	vertical-align:middle;
-	color: white;
-	opacity:0.5;
-}
-
-.float{
-	position:fixed;
-	width:60px;
-	height:60px;
-	bottom:40px;
-	right:40px;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-	z-index:1000;
-	animation: bot-to-top 2s ease-out;
-}
-
-.icon-ul{
-	position:fixed;
-	right:40px;
-	padding-bottom:20px;
-	bottom:50px;
-	z-index:100;
-}
-
-.icon-li{
-	list-style:none;
-	margin-bottom:10px;
-}
-
-.icon-a{
-	background-color:#5bc0de;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-	width:40px;
-	height:40px;
-	display:block;
-}
-
-.icon-ul:hover{
-	visibility:visible!important;
-	opacity:1!important;
-}
-
-.my-float{
-	font-size:20px;
-	margin-top:10px;
-}
-
-.icon-a#menu-share + .icon-ul{
-  visibility: hidden;
-}
-
-.icon-a#menu-share:hover + .icon-ul{
-  visibility: visible;
-  animation: scale-in 0.5s;
-}
-
-.icon-a#menu-share .icon-i{
-	animation: rotate-in 0.5s;
-}
-
-.icon-a#menu-share:hover > .icon-i{
-	animation: rotate-out 0.5s;
-}
-
-@keyframes bot-to-top {
-    0%   {bottom:-40px}
-    50%  {bottom:40px}
-}
-
-@keyframes scale-in {
-    from {transform: scale(0);opacity: 0;}
-    to {transform: scale(1);opacity: 1;}
-}
-
-@keyframes rotate-in {
-    from {transform: rotate(0deg);}
-    to {transform: rotate(90deg);}
-}
-
-@keyframes rotate-out {
-    from {transform: rotate(90deg);}
-    to {transform: rotate(0deg);}
-}
-</style>
-  {% endblock %}
+{% block style_block%}
+{% endblock %}
 
   {% block dashboard_block %}
     <!-- Page Wrapper -->
@@ -361,6 +130,9 @@ td.min {
                 <a class="collapse-item" href={% url 'waiss:list_sensor' %}>Sensors & Readings</a>
                 <a class="collapse-item" href={% url 'waiss:list_gravi' %}>Gravimetric MC<sub>V</sub></a>
                 <a class="collapse-item" href={% url 'waiss:list_rainfall' %}>Rainfall</a>
+                {% if drip %}
+                <a class="collapse-item" href={% url 'waiss:list_shaded' %}>Percent Shaded Area</a>
+                {% endif %}
             </div>
           </div>
         </li>
@@ -497,7 +269,7 @@ td.min {
                       {% endfor %}
                     </select>
                     <input class="btn btn-info btn-sm" type="submit" value="Generate Irrigation Advisory">
-                    <a class="btn btn-info btn-sm" type="button" href="{% url 'waiss:list_system' %}">Modify System</a>
+                    <a class="btn btn-info btn-sm" type="button" href="">Modify System</a>
               </form>
             </div>
           </div>
@@ -520,7 +292,6 @@ td.min {
                 </div>
               </div>
             </div>
-
             <!-- Soil Card -->
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-info shadow">
@@ -630,7 +401,8 @@ td.min {
                     <hr>
                     <div class="small">Latest MC<sub>v</sub>: {{mc_ave}} % </div> 
                     <div class="small">MC<sub>v</sub> to irrigate: {{MC_TO_IRRIGATE}} %</div>
-                    <div class="small">Effective DRZ: {{drz}} mm</div>
+                    <div class="small">Effective DRZ: {{drz}} mm</div><br>
+                    <div class="small"><i>Transplanted last <b>{{crop_transplanted}}.</b></i></div>
                   </div>
                 </div>
               </div>
@@ -655,16 +427,15 @@ td.min {
         </a>
         <ul class="icon-ul">
           <li class="icon-li">
-            <button class="btn show-form icon-a" data-url="{% url 'waiss:add_gravi' %}"><img src={% static "theme/microwave-white-18dp.svg" %} class="my-float icon-i" title="add gravimetric soil moisture content"></button>
+            <button class="btn show-form icon-a" data-url="{% url 'waiss:add_gravi' %}"><img src={% static "theme/microwave-white-18dp.svg" %} title="add gravimetric soil moisture content"></button>
           </li>
+          {% if drip %}
           <li class="icon-li">
-            <a href={% url 'waiss:add_shaded' %} class="icon-a"><i class="fa fa-sun my-float icon-i" title="add percent shaded area"></i></a>
+            <button class="btn show-form icon-a" data-url="{% url 'waiss:add_shaded' %}"><i class="fa fa-sun" title="add percent shaded area"></i></button>
           </li>
+          {% endif%}
           <li class="icon-li">
-            <a href={% url 'waiss:add_mc' %} class="icon-a"><i class="fas fa-tint my-float icon-i" title="add soil moisture reading"></i></a>
-          </li>
-          <li class="icon-li">
-            <a href={% url 'waiss:add_rainfall' %} class="icon-a"><i class="fas fa-oil-can my-float icon-i" title="add rainfall/irrigation"></i></a>
+            <button class="btn show-form icon-a" data-url="{% url 'waiss:add_rainfall' %}"><i class="fas fa-oil-can" title="add rainfall/irrigation"></i></button>
           </li>
         </ul>
         <!-- Create/Update Modal -->
@@ -676,25 +447,96 @@ td.min {
         <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>  
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <script src="{% static 'js/modal.js' %}"></script>
+</div>
+</div>
+</div>
 {% endblock %}
-        </div>
+</div>
+</div>
+</div>
         <!-- /.container-fluid -->
-      <!-- End of Main Content -->
-{% block footer_block %}
-      <!-- Footer -->
-      <!-- End of Footer -->
-{% endblock %}
+        
+  {% block footer_block %}
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container-fluid col-sm-10">
+      <div class="row">
+        <div class="col-sm-4 mr-auto">
+          <h6>About Sarai</h6>
+          <p class="text-justify">Project SARAi aims to develop a national crop forecasting and monitoring system for nine priority crops: rice, corn, banana, coconut, coffee, cacao, sugarcane, tomato, and soybean. This project is funded by DOST-PCAARRD.</p>
+        </div>
 
+        <div class="col-sm-3 mr-auto ml-auto">
+          <h6>Connect with us</h6>
+          <ul class="footer-links">
+            <li><i class="fa fa-phone mr-2" style="font-size:20px"></i>+63 (049) 536 2302,+63 (049) 536 2836</li>
+            <li><i class="fa fa-envelope mr-2" style="font-size:15px"></i>project.sarai.uplb@gmail.com</li>
+            <li><i class="fa fa-map-marker mr-2" style="font-size:20px"></i>SESAM UPLB, College, Laguna Philippines 4031</li>
+          </ul>
+          <ul class="social-icons">
+            <li><a class="facebook" href="https://www.facebook.com/projectsarai/" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+            <li><a class="twitter" href="https://twitter.com/projectsarai_ph" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+            <li><a class="youtube" href="https://www.youtube.com/channel/UCJtzNfVmoqFZGCF326VaTZw" title="Youtube"><i class="fa fa-youtube"></i></a></li>
+          </ul>
+        </div>
+        
+        <div class="col-sm-4 ml-auto">
+          <h6>Links</h6>
+          <div class="row">
+            <div class="col-4 col-sm-4">
+              <ul class="footer-links">
+                <li><a href="https://sarai.ph/about-us">About Us</a></li>
+                <li><a href="https://sarai.ph/weather-monitoring">Monitoring</a></li>
+                <li><a href="https://sarai.ph/rainfall-outlook">Rainfall Outlook</a></li>
+                <li><a href="">Rice</a></li>
+              </ul>
+              </div>
+              <div class="col-4 col-sm-4">
+              <ul class="footer-links">
+                <li><a href="">Corn</a></li>
+                <li><a href="">Banana</a></li>
+                <li><a href="">Sugarcane</a></li>
+                <li><a href="">Tomato</a></li>
+              </ul>
+              </div>
+              <div class="col-4 col-sm-4">
+              <ul class="footer-links">
+                <li><a href="">Coffee</a></li>
+                <li><a href="">Cacao</a></li>
+                <li><a href="">Coconut</a></li>
+                <li><a href="">Soybean</a></li>
+              </ul>
+              </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="container-fluid col-sm-10">
+      <div class="row">
+        <div class="col-md-8 col-sm-6 col-xs-12">
+          <p class="copyright-text">Copyright © 2021 All Rights Reserved by 
+       <a href="#" style="color: #D0D0CD">Project SARAI</a>.
+          </p>
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-xs-12" style="text-align:right">
+            <a href="https://www.statuscake.com" title="Website Uptime Monitoring"><img src="https://app.statuscake.com/button/index.php?Track=9BZpQGPpQT&amp;Days=30&amp;Design=1"></a>
+        </div>
+      </div>
+    </div>
+</footer>
+  <!-- End of Footer -->
+{% endblock %}
+      <!-- End of Main Content -->
     </div>
   <!-- End of Content Wrapper -->
   <!-- End of Page Wrapper -->
-  
   
   <script>
     $(function () {
     $('[data-toggle="tooltip"]').tooltip()
     })
-    
     $('.dropdown-toggle').dropdown()
     $('.collapse').collapse()
   </script>

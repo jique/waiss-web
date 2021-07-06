@@ -1,237 +1,150 @@
-{% extends 'waissapp/index.html'%}
+{% extends 'waissapp/sarai-header.html'%}
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block meta_block %}
-  <title>Welcome!</title>
-{% endblock %}
-
-{% block top_script_block %}
-{% endblock %}
-
-{% block dashboard_block %}
-  <!-- Topbar -->
-  <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-    <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
-      <div class="sidebar-brand-icon">
-        <a href="{% url 'waiss:index' %}"><img src={% static "theme/waiss_logo.png" %} width=50px height=50px></a>
-      </div>
-      <div class="sidebar-brand-text mx-3">WAISS</div>
-    </div>
-    <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
-      
-      <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-      <li class="nav-item dropdown no-arrow d-sm-none">
-        <a class="nav-link dropdown-toggle" href="" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-search fa-fw"></i>
-        </a>
-        <!-- Dropdown - Messages -->
-        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-          <form class="form-inline mr-auto w-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
+{% block form_block %}
+<div class="progress_bar">
+  <div class="pro-bar">
+      <small class="progress_bar_title">
+          Farm | Personnel | <span style="color: #1abc9c; font-size: large;"><b> Crop</b></span>
+          <span class="progress_number">30%</span>
+      </small>
+      <span class="progress-bar-inner" style="background-color: #1abc9c; width: 30%;" data-value="30" data-percentage-value="30"></span>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header"><small><i>Crop & Characteristics</i></small></div>
+    <div class="card-body">
+        <form class="form-group" action="" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">{{crop_form.crop|as_crispy_field}}</div>
             </div>
-          </form>
-        </div>
-      </li>
-
-      <!-- Nav Item - User Information -->
-      <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
-          <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-        </a>
-        <!-- Dropdown - User Information -->
-        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-            Profile
-          </a>
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-            Settings
-          </a>
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-            Activity Log
-          </a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-            Logout
-          </a>
-        </div>
-      </li>
-    </ul>
-  </nav>
-{% endblock %}
-
-{% block main_block %}
-<div class="container-fluid">
-  <!-- Outer Row -->
-  <div class="row justify-content-center">
-    <div class="col-9">
-      <div class="card">
-        <div class="p-5">
-          <h4 class="display-4" style="font-size: 35px;">Let's get started!</h4>
-          <p class="lead" style="font-size: 15px;">Input required information for each parameters.</p>
-          <div class="progress_bar">
-              <div class="pro-bar">
-                  <small class="progress_bar_title">
-                      Farm | Personnel | <span style="color: #1abc9c; font-size: large;"><b> Crop</b></span>
-                      <span class="progress_number">30%</span>
-                  </small>
-                  <span class="progress-bar-inner" style="background-color: #1abc9c; width: 30%;" data-value="30" data-percentage-value="30"></span>
-              </div>
+            <div class="row">
+                <div class="col">{{crop_form.drz|as_crispy_field}}</div>
+            </div>
+            <div class="row">
+              <div class="col">{{crop_form.root_ini|as_crispy_field}}</div>
+            </div>
+            <div class="row">
+                <div class="col">{{crop_form.growingperiod|as_crispy_field}}</div>
+            </div>
+            <div class="row">
+                <div class="col">{{crop_form.mad|as_crispy_field}}</div>
+            </div>
+            <div class="row">
+              <div class="col"><small>Additional for drip irrigation system,</small></div>
+              <br>
+              <br>
+            </div>
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col">{{crop_form.peak_Etcrop|as_crispy_field}}</div>
+            </div>
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col">{{crop_form.transpiration_ratio|as_crispy_field}}</div>
+            </div>
+            <div class="row">
+              <div class="col">{{crop_form.root_growth_model|as_crispy_field}}</div>
+            </div>
           </div>
-                <div class="card">
-                  <div class="card-header"><small><i>Crop & Characteristics</i></small></div>
-                    <div class="card-body">
-                        <form class="form-group" action="" method="post">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col">{{crop_form.crop|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{crop_form.drz|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                              <div class="col">{{crop_form.root_ini|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{crop_form.growingperiod|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">{{crop_form.mad|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                              <div class="col"><small>Additional for drip irrigation system,</small></div>
-                              <br>
-                              <br>
-                            </div>
-                            <div class="row">
-                              <div class="col-1"></div>
-                              <div class="col">{{crop_form.peak_Etcrop|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                              <div class="col-1"></div>
-                              <div class="col">{{crop_form.transpiration_ratio|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                              <div class="col">{{crop_form.root_growth_model|as_crispy_field}}</div>
-                            </div>
-                          </div>
-                        </div>
-                      <div id="accordion">
-                        <div class="card">
-                          <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" type="button">
-                                Root Growth Model 1: Borg-Grimes Model
-                              </button>
-                            </h5>
-                          </div>
-                          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                                <div class="col"><small><i>Yey! No more data required.</i></small></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" type="button">
-                                Root Growth Model 2: User-Defined
-                              </button>
-                            </h5>
-                          </div>
-                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">{{crop_form.eqnform|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{crop_form.root_a|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{crop_form.root_b|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{crop_form.root_c|as_crispy_field}}</div>
-                                </div>
-                                <small><i>Linear: MC<sub>v</sub> = (analog_reading)*a + b<br>
-                                    Quadratic: MC<sub>v</sub> = (analog_reading)<sup>2</sup>*a + (analog_reading)*b + c</i>
-                                </small>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header" id="headingThree">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" type="button">
-                                Root Growth Model 3: Inverse K<sub>c</sub>
-                              </button>
-                            </h5>
-                          </div>
-                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                            <div class="card-body">
-                                <div class="row">
-                                  <div class="col"><center><img src={% static "theme/kc.png" %}></center></div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{crop_form.kc_mid|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                <div class="col">{{crop_form.kc_end|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{crop_form.kc_cc_1|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{crop_form.kc_cc_2|as_crispy_field}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">{{crop_form.kc_cc_3|as_crispy_field}}</div>
-                                </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col">{{crop_form.source|as_crispy_field}}</div>
-                            </div>
-                            <div class="row">
-                              <div class="col">{{crop_form.errors}}</div>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <br>
-                        <div class="text-center">
-                        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Previous</a></button>
-                        <input type="submit" value="Submit" class="btn btn-info">
-                        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_soil' %} style="color:white">Next</a></button>
-                      </form>
-                    </div>
+        </div>
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" type="button">
+                Root Growth Model 1: Borg-Grimes Model
+              </button>
+            </h5>
+          </div>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <div class="col"><small><i>Yey! No more data required.</i></small></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" type="button">
+                Root Growth Model 2: User-Defined
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">{{crop_form.eqnform|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{crop_form.root_a|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{crop_form.root_b|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{crop_form.root_c|as_crispy_field}}</div>
+                </div>
+                <small><i>Linear: MC<sub>v</sub> = (analog_reading)*a + b<br>
+                    Quadratic: MC<sub>v</sub> = (analog_reading)<sup>2</sup>*a + (analog_reading)*b + c</i>
+                </small>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" type="button">
+                Root Growth Model 3: Inverse K<sub>c</sub>
+              </button>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <div class="row">
+                  <div class="col"><center><img src={% static "theme/kc.png" %}></center></div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{crop_form.kc_mid|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                <div class="col">{{crop_form.kc_end|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{crop_form.kc_cc_1|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{crop_form.kc_cc_2|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{crop_form.kc_cc_3|as_crispy_field}}</div>
                 </div>
             </div>
+          </div>
         </div>
-      </div>
-</div>
-<br>
-{% endblock %}
-
-
-{% block bottom_script_block %}
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">{{crop_form.source|as_crispy_field}}</div>
+            </div>
+            <div class="row">
+              <div class="col">{{crop_form.errors}}</div>
+            </div>
+          </div>
+        </div>
+        
+        <br>
+        <div class="text-center">
+        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Previous</a></button>
+        <input type="submit" value="Submit" class="btn btn-info">
+        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_soil' %} style="color:white">Next</a></button>
+      </form>
+    </div>
+  </div>
 {% endblock %}

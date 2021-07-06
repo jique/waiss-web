@@ -70,23 +70,23 @@ class Soil(models.Model):
     fc = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Field Capacity (% vol)", null=True)
     pwp = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Permanent Wilting Point (% vol)", null=True)
 
-    clay_005= 'clay_005)'
-    clay_01= 'clay_01'
-    clay_015= 'clay_015'
-    clay_loam_02=  'clay_loam_02'
-    clay_loam_025= 'clay_loam_025'
-    clay_loam_03= 'clay_loam_03'
-    silty_035= 'silty_035'
-    silty_04= 'silty_04'
-    silty_loam_045= 'silty_loam_045'
-    silty_loam_05= 'silty_loam_05'
-    silty_loam_06 = 'silty_loam_06'
-    silty_loam_07= 'silty_loam_07'
-    sandy_loam_08= 'sandy_loam_08'
-    sandy_loam_09= 'sandy_loam_09'
-    sandy_loam_10 = 'sandy_loam_10'
-    sandy_15= 'sandy_15'
-    sandy_20= 'sandy_20'
+    clay_005= 'clay (0.05)'
+    clay_01= 'clay (0.1)'
+    clay_015= 'clay (0.15)'
+    clay_loam_02=  'clay loam (0.2)'
+    clay_loam_025= 'clay loam (0.25)'
+    clay_loam_03= 'clay loam (0.3)'
+    silty_035= 'silty (0.35)'
+    silty_04= 'silty (0.4)'
+    silty_loam_045= 'silty loam (0.45)'
+    silty_loam_05= 'silty loam (0.5)'
+    silty_loam_06 = 'silty loam (0.6)'
+    silty_loam_07= 'silty loam (0.7)'
+    sandy_loam_08= 'sandy loam (0.8)'
+    sandy_loam_09= 'sandy loam (0.9)'
+    sandy_loam_10 = 'sandy loam (1.0)'
+    sandy_15= 'sandy (1.5)'
+    sandy_20= 'sandy (2.0)'
 
     choices = [
         (clay_005, 'clay (0.5)'),
@@ -403,7 +403,7 @@ class Gravimetric(models.Model):
     note = models.CharField(max_length=100, verbose_name="Remarks", null=True, blank=True)
 
 class PercentShaded(models.Model):
-    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, verbose_name="Crop", null=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Crop", null=True)
     area_shaded =  models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area Shaded (%)", null=True)
     date =  models.DateField(verbose_name="Date", null=True)
     class Meta:

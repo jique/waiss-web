@@ -2,6 +2,8 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block title_block %} WAISS: Gravimetric MCvs {% endblock %}
+
 {% block main_block %}
 <h6 class="text-left"><kbd class="bg-gradient-info">Gravimetric Soil Moisture Content</kbd>
   <button class="btn show-form" data-url="{% url 'waiss:add_gravi' %}">

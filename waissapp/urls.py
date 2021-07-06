@@ -1,12 +1,10 @@
 from django.urls import path
-from . import views
-from django.conf.urls import url, include
-
+from . import views, computations
 
 app_name = 'waiss'
 
 urlpatterns = [
-     path('', views.index, name='index'),
+     path('', computations.index, name='index'),
      path('register/', views.register, name='register'),
      path('accounts/profile', views.profile, name='profile'),
      path('about/', views.about, name='about'),
@@ -97,9 +95,9 @@ urlpatterns = [
      path('list_system/', views.list_system, name='list_system'),
 
      #Other Data
-     path('add_percent_shaded/', views.add_shaded, name='add_shaded'),
-     path('edit_percent_shaded/<str:pk>/', views.edit_shaded, name='edit_shaded'),
-     path('delete_percent_shaded/<str:pk>/', views.delete_shaded, name='delete_shaded'),
+     path('add_shaded/', views.add_shaded, name='add_shaded'),
+     path('edit_shaded/<str:id>/update', views.edit_shaded, name='edit_shaded'),
+     path('list_shaded/', views.list_shaded, name='list_shaded'),
 
      path('add_gravi/', views.add_gravi, name='add_gravi'),
      path('edit_gravi/<str:id>/update', views.edit_gravi, name='edit_gravi'),
@@ -109,5 +107,7 @@ urlpatterns = [
      path('edit_rainfall/<str:id>/update', views.edit_rainfall, name='edit_rainfall'),
      path('list_rainfall/', views.list_rainfall, name='list_rainfall'),
 
-     path('upload_csv/', views.upload_csv, name='upload_csv')
+     path('upload_csv/', views.upload_csv, name='upload_csv'),
+     path('options/', views.options, name='simp_advanced'),
+     path('sarai-header/', views.sarai_header, name='sarai_header')
 ]

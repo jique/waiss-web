@@ -83,7 +83,7 @@ class PercentShadedInline(admin.TabularInline):
     model = PercentShaded
 
 class PercentShadedAdmin(admin.ModelAdmin):
-    list_display =('crop', 'area_shaded', 'date')
+    list_display =('fieldunit', 'area_shaded', 'date')
 
 class RainfallInline(admin.TabularInline):
     model = Rainfall

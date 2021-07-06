@@ -2,6 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block title_block %} WAISS: Systems {% endblock %}
 {% block main_block %}
 <h6 class="text-left"><kbd class="bg-gradient-info">WAISS</kbd>
   <button class="btn show-form" data-url="{% url 'waiss:add_system' %}">

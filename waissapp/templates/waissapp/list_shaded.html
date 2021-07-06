@@ -2,34 +2,33 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block title_block %} WAISS: Sensors {% endblock %}
+{% block title_block %} WAISS: Percent Area Shaded {% endblock %}
 
 {% block main_block %}
-<h6 class="text-left"><kbd class="bg-gradient-info">Sensors</kbd>
-  <button class="btn show-form" data-url="{% url 'waiss:add_sensor' %}">
+<h6 class="text-left"><kbd class="bg-gradient-info">Percent Area Shaded</kbd>
+  <button class="btn show-form" data-url="{% url 'waiss:add_shaded' %}">
   <img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data">
   </button>
 </h6>
 <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover border-bottom-secondary sensor-table" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-hover border-bottom-secondary shaded-table" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr class="text-center">
-              <th class="align-top">#</th>
-              <th class="align-top ">Sensor</th>
-              <th class="align-top ">Field Unit</th>
-              <th class="align-top ">Depth (m)</th>
-              <th> MC<sub>V</sub> Data</th>
-              <th class="align-top">Actions</th>
+                <th class="align-top">#</th>
+                <th class="align-top">Date & Time</th>
+                <th class="align-top">Field Unit</th>
+                <th class="align-top">Area Shaded (%)</th>
+                <th class="align-top">Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% include "waissapp/list_sensor_2.html" %}
+            {% include "waissapp/list_shaded_2.html" %}
         </tbody>
     </table>
     <!-- Create/Update Modal -->
-    <div class="modal fade" id="modal-sensor">
+    <div class="modal fade" id="modal-shaded">
       <div class="modal-dialog">
         <div class="modal-content"></div>
       </div>

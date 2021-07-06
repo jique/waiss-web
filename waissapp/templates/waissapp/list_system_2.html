@@ -2,46 +2,46 @@
 {% for system in systems %}
 <tr class="text-center">
     <td class="align-middle">{{forloop.counter}}</td>
-    <td class="align-middle">{{system.name}}</td>
-    <td class="align-middle">{{system.farm}}</td>
-    <td class="align-middle">{{system.farm_manager.first_name}} {{system.farm_manager.last_name}}</td>
-    <td class="align-middle">{{system.crop}}</td>
-    <td class="align-middle">{{system.date_transplanted}}</td>
-    <td class="align-middle">{{system.soil}}</td>
-    <td class="align-middle">{{system.fieldunit}}</td>
-    <td class="align-middle">{{system.calib}}</td>
+    <td class="align-middle min">{{system.name}}</td>
+    <td class="align-middle"><button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_farm' system.farm.id %}">{{system.farm}}</button></td>
+    <td class="align-middle"><button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_personnel' system.farm_manager.id %}">{{system.farm_manager.first_name}} {{system.farm_manager.last_name}}</button></td>
+    <td class="align-middle"><button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_crop' system.crop.id %}">{{system.crop}}</button></td>
+    <td class="align-middle"><button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_system' system.id %}">{{system.date_transplanted}}</button></td>
+    <td class="align-middle"><button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_soil' system.soil.id %}">{{system.soil}}</button></td>
+    <td class="align-middle"><button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_fieldunit' system.fieldunit.id %}">{{system.fieldunit}}</button></td>
+    <td class="align-middle"><button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_calib' system.calib.id %}">{{system.calib}}</button></td>
     <td class="align-middle">
         {% if system.basin is None %}
         {{system.basin|default_if_none:"-"}}
         {% else %}
-        <a href={% url 'waiss:edit_basin' system.basin.id %}>{{system.basin}}</a>
+        <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_basin' system.basin.id %}">{{system.basin}}</button>
         {% endif %}
     </td>
     <td class="align-middle">
         {% if system.border is None %}
         {{system.border|default_if_none:"-"}}
         {% else %}
-        <a href={% url 'waiss:edit_border' system.border.id %}>{{system.border|default_if_none:"-"}}</a>
+        <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_border' system.border.id %}>{{system.border|default_if_none:"-"}}</button>
         {% endif %}
     </td>
     <td class="align-middle">
         {% if system.furrow is None %}
         {{system.furrow|default_if_none:"-"}}
         {% else %}
-        <a href={% url 'waiss:edit_furrow' system.furrow.id %}>{{system.furrow}}</a>
+        <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_furrow' system.furrow.id %}">{{system.furrow}}</button>
         {% endif %}
     </td>
     <td class="align-middle">
         {% if system.sprinkler is None %}
         {{system.sprinkler|default_if_none:"-"}}
         {% else %}
-        <a href={% url 'waiss:edit_sprinkler' system.sprinkler.id %}>{{system.sprinkler}}</a>
+        <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_sprinkler' system.sprinkler.id %}">{{system.sprinkler}}</button>
         {% endif %}
     </td>
     <td class="align-middle">
         {% if system.drip is None %}{{system.drip|default_if_none:"-"}}
         {% else %}
-        <a href={% url 'waiss:edit_drip' system.drip.id %}>{{system.drip}}</a>
+        <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_drip' system.drip.id %}">{{system.drip}}</button>
         {% endif %}
     </td>
     <td class="align-middle">

@@ -1,133 +1,47 @@
-{% extends 'waissapp/index.html'%}
+{% extends 'waissapp/sarai-header.html'%}
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block meta_block %}
-{% endblock%}
-
-{% block top_script_block %}
-{% endblock %}
-
-{% block dashboard_block %}
-  <!-- Topbar -->
-  <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-    <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
-      <div class="sidebar-brand-icon">
-        <a href="{% url 'waiss:index' %}"><img src={% static "theme/waiss_logo.png" %} width=50px height=50px></a>
-      </div>
-      <div class="sidebar-brand-text mx-3">WAISS</div>
-    </div>
-    <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
-
-      <!-- Nav Item - User Information -->
-      <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
-          <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-        </a>
-        <!-- Dropdown - User Information -->
-        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-            Profile
-          </a>
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-            Settings
-          </a>
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-            Activity Log
-          </a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-            Logout
-          </a>
-        </div>
-      </li>
-    </ul>
-  </nav>
-{% endblock %}
-
-{% block main_block %}
-<div class="container-fluid">
-  <!-- Outer Row -->
-  <div class="row justify-content-center">
-    <div class="col-9">
-      <div class="card">
-        <div class="p-5">
-            <h4 class="display-4" style="font-size: 35px;">Let's get started!</h4>
-            <p class="lead" style="font-size: 15px;">Input required information for each parameters.</p>
-            <div class="progress_bar">
-                <div class="pro-bar">
-                    <small class="progress_bar_title">
-                        <span style="color: #1abc9c; font-size: large;"><b>Farm</b></span>
-                        <span class="progress_number">10%</span>
-                    </small>
-                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 10%;" data-value="10" data-percentage-value="10"></span>
-                </div>
-            </div>
-              <div class="card">
-                <div class="card-header"><small><i>Name & Location</i></small></div>
-                <div class="card-body">
-                  <form method="post">
-                    {% csrf_token %}
-                      <div class="row">
-                        <div class="col">{{ farm_form.name|as_crispy_field }}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col">{{ farm_form.brgy|as_crispy_field }}</div>
-                      </div>
-                      <div class="row">
-                        <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
-                      </div>
-                      <div class="row">
-                        <div class="col">{{ farm_form.province|as_crispy_field }}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col">{{ farm_form.long|as_crispy_field }}</div>
-                      </div>
-                      <div class="row">
-                        <div class="col">{{ farm_form.long|as_crispy_field }}</div>
-                      </div>
-                </div>
-              </div><br>
-              <div class="text-center">
-                <input type="submit" value="Submit" class="btn btn-info" name="btnform2">
-                <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Next</a></button>
-              </div>
-              </form>
-            </div>
-        </div>
-              <!--
-              <div class="card">
-                <div class="card-body">
-                  <form method="post">
-                    {% csrf_token %}
-                  <label class="mb-0 font-weight-bold text-gray-800">Database: </label>
-                  <select name="selected_data" id="selected_data" class="btn btn-secondary btn-sm">
-                    <option>{{selected_data}}</option>
-                    {% for data in list %}
-                    <option value="{{data.name}}">{{data}}</option>
-                    {% endfor %}
-                  </select>
-                  <input class="btn btn-info btn-sm" type="submit" value="Load" name="btnform1">
-                  <div class="row">
-                    <div class="col">{{ selected_data.name }}</div>
-                  </div>
-                  </form>
-              </div>
-              </div>
-            -->
+{% block form_block %}
+<div class="progress_bar">
+  <div class="pro-bar">
+      <small class="progress_bar_title">
+          <span style="color: #1abc9c; font-size: large;"><b>Farm</b></span>
+          <span class="progress_number">10%</span>
+      </small>
+      <span class="progress-bar-inner" style="background-color: #1abc9c; width: 10%;" data-value="10" data-percentage-value="10"></span>
+  </div>
+</div>
+<form method="post">
+{% csrf_token %}
+<div class="card">
+  <div class="card-header"><small><i>Name & Location</i></small></div>
+  
+    <div class="card-body">
+          <div class="row">
+            <div class="col">{{ farm_form.name|as_crispy_field }}</div>
           </div>
-        </div>
-      </div>
+          <div class="row">
+              <div class="col">{{ farm_form.brgy|as_crispy_field }}</div>
+          </div>
+          <div class="row">
+            <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
+          </div>
+          <div class="row">
+            <div class="col">{{ farm_form.province|as_crispy_field }}</div>
+          </div>
+          <div class="row">
+              <div class="col">{{ farm_form.long|as_crispy_field }}</div>
+          </div>
+          <div class="row">
+            <div class="col">{{ farm_form.long|as_crispy_field }}</div>
+          </div>
     </div>
-  <br>
-{% endblock %}
-
-{% block bottom_script_block %}
+</div><br>
+<div class="text-center">
+  <input type="submit" value="Submit" class="btn btn-info" name="btnform2">
+  <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Next</a></button>
+</div>
+</form>
 {% endblock %}
     
