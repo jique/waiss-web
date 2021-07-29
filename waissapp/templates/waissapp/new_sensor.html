@@ -7,15 +7,13 @@
     <div class="pro-bar">
         <small class="progress_bar_title">
           Farm | Personnel | Crop | Soil | Calibration| Irrigation | Field Unit | <span style="color: #1abc9c; font-size: large;"><b>Sensor</b></span>
-          <span class="progress_number">80%</span>
+          <span class="progress_number">88%</span>
         </small>
-        <span class="progress-bar-inner" style="background-color: #1abc9c; width: 80%;" data-value="80" data-percentage-value="80"></span>
+        <span class="progress-bar-inner" style="background-color: #1abc9c; width: 88%;" data-value="88" data-percentage-value="88"></span>
     </div>
 </div>
-  <div class="card">
-      <div class="card-header">
-          <small><i>Sensor & Depth</i></small>
-      </div>
+  <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
+      <div class="card-header rounded-0 border-0"><small>Sensor & Depth</small></div>
       <div class="card-body">
           <form  class="form-group" action="" method="POST">
               {{formset.management_form}}
@@ -25,12 +23,12 @@
                 <div class="col">
                     {{form.fieldunit|as_crispy_field}}
                 </div>
-                  <div class="col">
-                      {{form.name|as_crispy_field}}
-                  </div>
-                  <div class="col">
-                      {{form.depth|as_crispy_field}}
-                  </div>
+                <div class="col">
+                    {{form.name|as_crispy_field}}
+                </div>
+                <div class="col">
+                    {{form.depth|as_crispy_field}}
+                </div>
               </div>
               {% endfor%}
       </div>

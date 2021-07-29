@@ -6,145 +6,229 @@
 <div class="progress_bar">
   <div class="pro-bar">
       <small class="progress_bar_title">
-          Farm | Personnel | <span style="color: #1abc9c; font-size: large;"><b> Crop</b></span>
-          <span class="progress_number">30%</span>
+        Farm | Personnel | <span style="color: #1abc9c; font-size: large;"><b> Crop</b></span>
+          <span class="progress_number">33%</span>
       </small>
-      <span class="progress-bar-inner" style="background-color: #1abc9c; width: 30%;" data-value="30" data-percentage-value="30"></span>
+      <span class="progress-bar-inner" style="background-color: #1abc9c; width: 33%;" data-value="33" data-percentage-value="33"></span>
   </div>
 </div>
-<div class="card">
-  <div class="card-header"><small><i>Crop & Characteristics</i></small></div>
+<div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
+  <div class="card-header border-0 rounded-0"><small>Crop & Characteristics</small></div>
     <div class="card-body">
-        <form class="form-group" action="" method="post">
+      <div class="row">
+        <div class="col-4">
+          {% if crop_list %}
+          <form method="post" class="form-group">
             {% csrf_token %}
+            <small>Existing Crops</small>
+            <select class="form-control" id="selected_crop" name="selected_crop">
+              <option value="">{{selected_crop}}</option>
+              {% for crop in crop_list %}
+              <option value="{{crop.crop}}">{{crop.crop}}</option>
+              {% endfor %}
+            </select>
+            <small class="text-danger float-right"><i>{{error_msg}}</i></small>
+            <hr>
+            <p class="text-right">
+              <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData"></input>
+            </p>
+            
+          </form>
+        {% endif %}
+        </div>
+        <div class="col">
+          <form method="post" class="form-group">
+            {% csrf_token %}
+            <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+            {{crop_form.crop|as_crispy_field}}
+            {{crop_form.drz|as_crispy_field}}
+            {{crop_form.root_ini|as_crispy_field}}
+            {{crop_form.growingperiod|as_crispy_field}}
+            {{crop_form.mad|as_crispy_field}}
             <div class="row">
-                <div class="col">{{crop_form.crop|as_crispy_field}}</div>
-            </div>
-            <div class="row">
-                <div class="col">{{crop_form.drz|as_crispy_field}}</div>
-            </div>
-            <div class="row">
-              <div class="col">{{crop_form.root_ini|as_crispy_field}}</div>
-            </div>
-            <div class="row">
-                <div class="col">{{crop_form.growingperiod|as_crispy_field}}</div>
-            </div>
-            <div class="row">
-                <div class="col">{{crop_form.mad|as_crispy_field}}</div>
-            </div>
-            <div class="row">
-              <div class="col"><small>Additional for drip irrigation system,</small></div>
-              <br>
-              <br>
-            </div>
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col">{{crop_form.peak_Etcrop|as_crispy_field}}</div>
-            </div>
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col">{{crop_form.transpiration_ratio|as_crispy_field}}</div>
-            </div>
-            <div class="row">
-              <div class="col">{{crop_form.root_growth_model|as_crispy_field}}</div>
+              <div class="col">
+                {{crop_form.root_growth_model|as_crispy_field}}
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> 
+                  <div class="panel panel-default">
+                    <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-2"></div>
+                          <div class="col">
+                            <hr>
+                            <i><b>Borg-Grimes Model</b></i> <br>
+                            <small>No additional information required!</small>
+                            <hr>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-2"></div>
+                          <div class="col">
+                            <hr>
+                            <i><b>Inverse K<sub>c</sub></b></i><br>
+                            <div class="row">
+                              <div class="col-2"></div>
+                                <div class="col">
+                                {{crop_form.kc_ini|as_crispy_field}}
+                                {{crop_form.kc_mid|as_crispy_field}}
+                                {{crop_form.kc_end|as_crispy_field}}
+                                {{crop_form.kc_cc_1|as_crispy_field}}
+                                {{crop_form.kc_cc_2|as_crispy_field}}
+                                {{crop_form.kc_cc_3|as_crispy_field}}
+                              </div>
+                            </div>
+                            <hr>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-2"></div>
+                          <div class="col">
+                            <hr>
+                            <i><b>User-Defined Equation</b></i> <br>
+                            {{crop_form.eqnform|as_crispy_field}}
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                              <div class="panel panel-default">
+                                <div id="panel1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                  <div class="panel-body">
+                                    <div class="row">
+                                      <div class="col-2"></div>
+                                      <div class="col">
+                                      <small>MC<sub>v</sub> = (reading)*a + b</small>
+                                      {{crop_form.root_a|as_crispy_field}}
+                                      {{crop_form.root_b|as_crispy_field}}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="panel panel-default">
+                                <div id="panel2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                  <div class="panel-body">
+                                    <div class="row">
+                                      <div class="col-2"></div>
+                                      <div class="col">
+                                        <small>MC<sub>v</sub> = (reading)<sup>2</sup>*a + (reading)*b + c</small>
+                                        {{crop_form.root_a|as_crispy_field}}
+                                        {{crop_form.root_b|as_crispy_field}}
+                                        {{crop_form.root_c|as_crispy_field}}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div><!--coefficients panel-->
+                            <hr>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div><!--user-defined panel-->
+                </div><!--root growth panel-->
+              </div>
+            </div><!--root growth row-->
+        <div class="row">
+          <div class="col">
+            {{crop_form.select_drip|as_crispy_field}}
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <hr>
+                    {{crop_form.peak_Etcrop|as_crispy_field}}
+                    {{crop_form.transpiration_ratio|as_crispy_field}}
+                    <hr>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      <div id="accordion">
-        <div class="card">
-          <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" type="button">
-                Root Growth Model 1: Borg-Grimes Model
-              </button>
-            </h5>
-          </div>
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-            <div class="card-body">
-                <div class="col"><small><i>Yey! No more data required.</i></small></div>
-            </div>
-          </div>
+        <div class="row">
+          <div class="col">{{crop_form.source|as_crispy_field}}</div>
         </div>
-        <div class="card">
-          <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" type="button">
-                Root Growth Model 2: User-Defined
-              </button>
-            </h5>
-          </div>
-          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">{{crop_form.eqnform|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                    <div class="col">{{crop_form.root_a|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                    <div class="col">{{crop_form.root_b|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                    <div class="col">{{crop_form.root_c|as_crispy_field}}</div>
-                </div>
-                <small><i>Linear: MC<sub>v</sub> = (analog_reading)*a + b<br>
-                    Quadratic: MC<sub>v</sub> = (analog_reading)<sup>2</sup>*a + (analog_reading)*b + c</i>
-                </small>
-            </div>
-          </div>
+        <div class="row">
+          <div class="col">{{crop_form.errors}}</div>
         </div>
-        <div class="card">
-          <div class="card-header" id="headingThree">
-            <h5 class="mb-0">
-              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" type="button">
-                Root Growth Model 3: Inverse K<sub>c</sub>
-              </button>
-            </h5>
+        <hr>
+        <div class="text-right">
+            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Previous</a></button>
+            <input type="submit" value="Submit" class="btn btn-info" name="btn_submit">
+            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_soil' %} style="color:white">Next</a></button>
           </div>
-          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-            <div class="card-body">
-                <div class="row">
-                  <div class="col"><center><img src={% static "theme/kc.png" %}></center></div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col">{{crop_form.kc_ini|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                    <div class="col">{{crop_form.kc_mid|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                <div class="col">{{crop_form.kc_end|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                    <div class="col">{{crop_form.kc_cc_1|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                    <div class="col">{{crop_form.kc_cc_2|as_crispy_field}}</div>
-                </div>
-                <div class="row">
-                    <div class="col">{{crop_form.kc_cc_3|as_crispy_field}}</div>
-                </div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col">{{crop_form.source|as_crispy_field}}</div>
-            </div>
-            <div class="row">
-              <div class="col">{{crop_form.errors}}</div>
-            </div>
-          </div>
-        </div>
-        
-        <br>
-        <div class="text-center">
-        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Previous</a></button>
-        <input type="submit" value="Submit" class="btn btn-info">
-        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_soil' %} style="color:white">Next</a></button>
-      </form>
+        </form>
+      </div>
+    </div>
     </div>
   </div>
+</div>
+</div>
+<script>
+  $( document ).ready(function() {
+        showHide();
+        $("#id_eqnform").change(function () {
+                showHide();
+        });
+    });
+    function showHide() {
+      var checkedValue = $("#id_eqnform").val();
+      if (checkedValue == "linear") {
+        $("#panel1").collapse('show');
+        $("#panel2").collapse('hide');
+      } else if (checkedValue == "quadratic") {
+        $("#panel1").collapse('hide');
+        $("#panel2").collapse('show');
+      }
+    };
+  
+  $( document ).ready(function() {
+    showHide2();
+      $("#id_root_growth_model").change(function () {
+          showHide2();
+        });
+    });
+    function showHide2() {
+      var checkedValue = $("#id_root_growth_model").val();
+      if (checkedValue == "Borg-Grimes Model") {
+        $("#collapse1").collapse('show');
+        $("#collapse2").collapse('hide');
+        $("#collapse3").collapse('hide');
+      } else if (checkedValue == "Inverse Kc") {
+        $("#collapse1").collapse('hide');
+        $("#collapse2").collapse('show');
+        $("#collapse3").collapse('hide');
+
+      } else if (checkedValue == "User-Defined") {
+        $("#collapse1").collapse('hide');
+        $("#collapse2").collapse('hide');
+        $("#collapse3").collapse('show');
+      }
+    };
+  $( document ).ready(function() {
+    showHide3();
+      $("#id_select_drip").change(function () {
+        showHide3();
+      });
+    });
+    function showHide3() {
+      var checkedValue = $("#id_select_drip").val();
+      if (checkedValue == "yes") {
+        $("#collapseOne").collapse('show');
+      } else if (checkedValue == "no") {
+        $("#collapseOne").collapse('hide');
+      }
+    };
+</script>
 {% endblock %}
+

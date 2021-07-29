@@ -6,34 +6,60 @@
 <div class="progress_bar">
   <div class="pro-bar">
       <small class="progress_bar_title">
-          Farm | <span style="color: #1abc9c; font-size: large;"><b>Personnel</b></span>
-          <span class="progress_number">20%</span>
+        Farm | <span style="color: #1abc9c; font-size: large;"><b>Personnel</b></span>
+          <span class="progress_number">22%</span>
       </small>
-      <span class="progress-bar-inner" style="background-color: #1abc9c; width: 20%;" data-value="20" data-percentage-value="20"></span>
+      <span class="progress-bar-inner" style="background-color: #1abc9c; width: 22%;" data-value="22" data-percentage-value="22"></span>
   </div>
 </div>
-<form class="form-group" action="" method="post">
-{% csrf_token %} 
-<div class="card">
-    <div class="card-header"><small><i>Name & Mobile Number to whom advisories are sent</i></small></div>
+
+<div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
+    <div class="card-header border-0 rounded-0"><small>Name & Mobile Number to whom advisories are sent.</small></div>
     <div class="card-body">
-      
       <div class="row">
-          <div class="col">{{personnel_form.first_name|as_crispy_field}}</div>
-      </div>
-      <div class="row">
-          <div class="col">{{personnel_form.last_name|as_crispy_field}}</div>
-      </div>
-      <div class="row">
-          <div class="col">{{personnel_form.number|as_crispy_field}}</div>
+        <div class="col-4">
+          {% if personnel_list %}
+          <form method="post" class="form-group">
+            {% csrf_token %}
+            <small>Existing Personnels</small>
+            <select class="form-control" id="selected_personnel" name="selected_personnel">
+              <option value={{selected_id}}>{{selected_personnel}}</option>
+              {% for personnel in personnel_list %}
+              <option value="{{personnel.id}}">{{personnel.first_name}} {{personnel.last_name}}</option>
+              {% endfor %}
+            </select>
+            <small class="text-danger float-right"><i>{{error_msg}}</i></small>
+            <hr>
+            <p class="text-right">
+              <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData"></input>
+            </p>
+          </form>
+        {% endif %}
+        </div>
+        <div class="col">
+          <form method="post" class="form-group">
+            {% csrf_token %}
+            <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+            <div class="row">
+                <div class="col">{{personnel_form.first_name|as_crispy_field}}</div>
+            </div>
+            <div class="row">
+                <div class="col">{{personnel_form.last_name|as_crispy_field}}</div>
+            </div>
+            <div class="row">
+                <div class="col">{{personnel_form.number|as_crispy_field}}</div>
+            </div>
+            <hr>
+            <div class="text-right">
+              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_farm' %} style="color:white">Previous</a></button>
+              <input type="submit" value="Submit" class="btn btn-info" name="btn_submit">
+              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_crop' %} style="color:white">Next</a></button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
+  </div>
 </div>
-<br>
-<div class="text-center">
-  <button type="button" class="btn btn-success"><a href={% url 'waiss:new_farm' %} style="color:white">Previous</a></button>
-  <input type="submit" value="Submit" class="btn btn-info">
-  <button type="button" class="btn btn-success"><a href={% url 'waiss:new_crop' %} style="color:white">Next</a></button>
 </div>
-</form>
 {% endblock %}

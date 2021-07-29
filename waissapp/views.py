@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import HttpResponseRedirect
 from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, WAISSystems, PercentShaded, Rainfall, Gravimetric, Basin, Furrow, Border, Drip, Sprinkler
 import datetime
@@ -18,7 +18,6 @@ import io, csv
 from .decorators import unauthenticated_user
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-
 
 @unauthenticated_user
 def register(request):
@@ -50,9 +49,14 @@ def profile(request):
 def about(request):
 	return render(request, 'waissapp/about.html')
 
+def home(request):
+	return render(request, 'waissapp/home_page.html')
+
+def home_waiss(request):
+	return render(request, 'waissapp/home_page_waiss.html')
+
 def sarai_header(request):
 	return render(request, 'waissapp/sarai-header.html')
-
 
 def about_calc(request):
 	return render(request, 'waissapp/about_calc.html')
@@ -63,19 +67,70 @@ def options(request):
 
 @login_required
 def new_system(request):
+	fieldunit = request.session.get('fieldunit_ses')
+	if fieldunit == None:
+		return redirect('/new_fieldunit/')
+		
+	#sessions
+	basin_ses = request.session.get('basin_ses', None)
+	border_ses = request.session.get('border_ses', None)
+	furrow_ses = request.session.get('furrow_ses', None)
+	drip_ses = request.session.get('drip_ses', None)
+	sprinkler_ses = request.session.get('sprinkler_ses', None)
+	
+	id =request.session.get('WAISS_ses', None)
+	if id == None:
+		form = WAISSystemsForm(request.POST or None)
+	else:
+		WAISS_ses = WAISSystems.objects.get(id=id)
+		form = WAISSystemsForm(request.POST or None, instance=WAISS_ses)
+		
 	if request.method == 'POST':  # data sent by user
-		form = WAISSystemsForm(request.POST)
-		if form.is_valid():
-			new_system = form.save(commit=False)
-			new_system.author = request.user
-			new_system.personal = True
-			new_system.save()
-			return redirect('/new_sensor/')
-	else:  # display empty form
-		form = WAISSystemsForm()
+		if id == None:
+			form = WAISSystemsForm(request.POST)
+			if form.is_valid:
+				form.save()
+				del request.session['WAISS_ses']
+				del request.session['fieldunit_ses']
+				del request.session['calib_ses']
+				del request.session['basin_ses']
+				del request.session['border_ses']
+				del request.session['furrow_ses']
+				del request.session['sprinkler_ses']
+				del request.session['drip_ses']
+				del request.session['soil_ses']
+				del request.session['crop_ses']
+				del request.session['personnel_ses']
+				del request.session['farm_ses']
+		else:
+			WAISS_ses = WAISSystems.objects.get(id=id)
+			form = WAISSystemsForm(request.POST, instance=WAISS_ses)
+			if form.is_valid():
+				instance = form.save(commit=False)
+				instance.author = request.user
+				instance.personal = True
+				instance.save()
+				del request.session['WAISS_ses']
+				del request.session['fieldunit_ses']
+				del request.session['calib_ses']
+				del request.session['basin_ses']
+				del request.session['border_ses']
+				del request.session['furrow_ses']
+				del request.session['sprinkler_ses']
+				del request.session['drip_ses']
+				del request.session['soil_ses']
+				del request.session['crop_ses']
+				del request.session['personnel_ses']
+				del request.session['farm_ses']
+				return redirect('/dashboard/')
 	
 	context = {
 		"form": form,
+		"basin_ses": basin_ses,
+		"border_ses": border_ses,
+		"furrow_ses": furrow_ses,
+		"drip_ses": drip_ses,
+		"sprinkler_ses": sprinkler_ses
 	}
 	return render(request, 'waissapp/new_system.html', context)
 
@@ -136,17 +191,43 @@ def edit_system(request, id):
 #CALIB
 @login_required
 def new_calib(request):
-	if request.method == 'POST':  # data sent by user
+	calib_name = request.session.get('calib_ses', None) #Session
+	if calib_name == None:
+		form = CalibForm()
+		selected_calib = '--choose--'
+	else:
+		calib_name = CalibrationConstant.objects.get(name=calib_name)
+		form = CalibForm(instance=calib_name)
+		selected_calib = calib_name
+	calib_list = CalibrationConstant.objects.all() #Loading database
+	error_msg =""
+	if request.method == 'POST' and 'loadData' in request.POST:
+		pk=request.POST.get('selected_calib')
+		if pk == "":
+			error_msg = "Select from the dropdown!"
+		else:
+			id = CalibrationConstant.objects.get(name=pk)
+			form = CalibForm(instance=id)
+			selected_calib = id
+
+	if request.method == 'POST' and 'btn_submit' in request.POST:  #Saving database
 		form = CalibForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
-			return redirect('/new_system/')
-	else:  # display empty form
-		form = CalibForm()
-	return render(request, 'waissapp/new_calib.html', {'calib_form': form})
+			request.session['calib_ses'] = instance.name
+			return redirect('/new_irrigation/')
+	
+	context = {
+		'calib_form': form,
+		'calib_list': calib_list,
+		'selected_calib': selected_calib,
+		"error_msg": error_msg
+	}
+
+	return render(request, 'waissapp/new_calib.html', context)
 
 def save_all_calib(request,form,template_name):
 	data = dict()
@@ -208,17 +289,43 @@ def edit_calib(request, id):
 #CROP_PARAMETERS
 @login_required
 def new_crop(request):
-	if request.method == 'POST':  # data sent by user
+	crop_name = request.session.get('crop_ses', None) #Session
+	if crop_name == None:
+		form = CropForm()
+		selected_crop = '--choose--'
+	else:
+		crop_name = Crop.objects.get(crop=crop_name)
+		form = CropForm(instance=crop_name)
+		selected_crop = crop_name
+	crop_list = Crop.objects.all()
+	error_msg = ""
+	if request.method == 'POST' and 'loadData' in request.POST:
+		pk=request.POST.get('selected_crop')
+		if pk == "":
+			error_msg = "Select from the dropdown!"
+		else:
+			id = Crop.objects.get(crop=pk)
+			form = CropForm(instance=id)
+			selected_crop = id
+
+	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = CropForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
+			request.session['crop_ses'] = instance.crop
 			return redirect('/new_soil/')
-	else:  # display empty form
-		form = CropForm()
-	return render(request, 'waissapp/new_crop.html', {'crop_form': form})
+
+	context = {
+		'crop_form': form,
+		'crop_list': crop_list,
+		'selected_crop': selected_crop,
+		"error_msg": error_msg
+	}
+
+	return render(request, 'waissapp/new_crop.html', context)
 
 def save_all_crop(request,form,template_name):
 	data = dict()
@@ -279,18 +386,45 @@ def edit_crop(request, id):
 #SOIL_PARAMETERS
 @login_required
 def new_soil(request):
-	if request.method == 'POST':  # data sent by user
+	soil_name = request.session.get('soil_ses', None) #Session
+	if soil_name == None:
+		form = SoilForm()
+		selected_soil = '--choose--'
+	else:
+		soil_name = Soil.objects.get(soiltype=soil_name)
+		form = SoilForm(instance=soil_name)
+		selected_soil = soil_name
+
+	soil_list = Soil.objects.all()
+	error_msg=""
+	if request.method == 'POST' and 'loadData' in request.POST:
+		pk=request.POST.get('selected_soil')
+		if pk == "":
+			error_msg = "Select from the dropdown!"
+		else:
+			
+			id = Soil.objects.get(soiltype=pk)
+			form = SoilForm(instance=id)
+			selected_soil = id
+
+	if request.method == 'POST' and 'btn_submit' in request.POST: # data sent by user
 		form = SoilForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
+			request.session['soil_ses'] = instance.soiltype
 			return redirect('/new_calib/')
-	else:  # display empty form
-		form = SoilForm()
 
-	return render(request, 'waissapp/new_soil.html', {'soil_form': form})
+	context = {
+		'soil_form': form,
+		'soil_list': soil_list,
+		'selected_soil': selected_soil,
+		"error_msg": error_msg
+	}
+
+	return render(request, 'waissapp/new_soil.html', context)
 
 def save_all_soil(request,form,template_name):
 	data = dict()
@@ -326,7 +460,6 @@ def list_soil(request):
 	queryset_1 = Soil.objects.filter(author=current_user)
 	queryset_2 = Soil.objects.filter(personal=False)
 	soils = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
-	
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Soil.objects.get(id=pk)
@@ -351,18 +484,78 @@ def edit_soil(request, id):
 #FIELDUNIT_PARAMETERS
 @login_required
 def new_fieldunit(request):
+	fieldunit = request.session.get('fieldunit_ses')
+	form = FieldUnitForm(request.POST or None)
 	if request.method == 'POST':  # data sent by user
-		form = FieldUnitForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
+			instance.timestart = '8:00'
+			instance.timestop = '17:00'
+			instance.fieldunitstatus =  True
+			instance.withirrigation = True
+			instance.automaticthreshold = True
+			instance.samples = 10
+			instance.sensorintegrationtime = 10
+			instance.delay = 10
+			instance.clockcorrection = 0
 			instance.save()
-			return redirect('/new_sensor/')
-	else:  # display empty form
-		form = FieldUnitForm()
+			request.session['fieldunit_ses'] = instance.name
+	
+	WAISSform = WAISSystemsForm(request.POST or None)#CREATION OF WAISS
+	if request.method == 'POST':
+		if WAISSform.is_valid():
+			instance = WAISSform.save(commit=False)
+			instance.author = request.user
+			instance.personal = True
+			instance.fieldunit = FieldUnit.objects.get(name=request.session.get('fieldunit_ses'))
+			instance.name = request.session.get('fieldunit_ses')
 
-	return render(request, 'waissapp/new_fieldunit.html', {'fieldunit_form': form})
+			farm = request.session.get('farm_ses')
+			if farm != None:
+				instance.farm = Farm.objects.get(name=farm)
+			farm_manager = request.session.get('personnel_ses')
+			if farm_manager != None:
+				instance.farm_manager = Personnel.objects.get(id=farm_manager)
+			crop = request.session.get('crop_ses')
+			if crop != None:
+				instance.crop = Crop.objects.get(crop=crop)
+			soil = request.session.get('soil_ses')
+			if soil != None:
+				instance.soil = Soil.objects.get(soiltype=soil)
+			calib = request.session.get('calib_ses')
+			if calib != None:
+				instance.calib = CalibrationConstant.objects.get(name=calib)
+			basin = Basin.objects.filter(name=request.session.get('basin_ses'))
+			if basin.exists():
+				instance.basin = Basin.objects.get(name=request.session.get('basin_ses'))
+			border = Border.objects.filter(name=request.session.get('border_ses'))
+			if border.exists():
+				instance.border = Border.objects.get(name=request.session.get('border_ses'))
+			furrow = Furrow.objects.filter(name=request.session.get('furrow_ses'))
+			if furrow.exists():
+				instance.furrow = Furrow.objects.get(name=request.session.get('furrow_ses'))
+			sprinkler = Sprinkler.objects.filter(name=request.session.get('sprinkler_ses'))
+			if sprinkler.exists():
+				instance.sprinkler = Sprinkler.objects.get(name=request.session.get('sprinkler_ses'))
+			drip = Border.objects.filter(name=request.session.get('drip_ses'))
+			if drip.exists():
+				instance.drip = Drip.objects.get(name=request.session.get('drip_ses'))
+
+			instance.save()
+			request.session['WAISS_ses'] = instance.id
+			return redirect('/new_sensor/')
+		else:
+			print("error")
+	
+	context ={
+		"fieldunit_form": form,
+		"WAISSform": WAISSform,
+		"fieldunit": fieldunit
+	}
+
+	return render(request, 'waissapp/new_fieldunit.html', context)
 
 def save_all_fieldunit(request,form,template_name):
 	data = dict()
@@ -424,13 +617,19 @@ def edit_fieldunit(request, id):
 #SENSOR_PARAMETERS
 @login_required
 def new_sensor(request):
+	fieldunit = request.session.get('fieldunit_ses')
+	print(fieldunit)
+	if fieldunit == None:
+		return redirect('/new_fieldunit/')
+
 	SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3)
+	#initial_fieldunit = FieldUnit.objects.get(name=request.session.get('fieldunit_ses'))
 	formset = SensorFormSet(queryset=Sensor.objects.none())
 	if request.method == 'POST':
 		formset = SensorFormSet(request.POST)
 		if formset.is_valid():
 			formset.save()
-			return redirect('/new_mc/')
+			return redirect('/new_system/')
 	else:  # display empty form
 		formset = SensorFormSet(queryset=Sensor.objects.none())
 	
@@ -500,18 +699,43 @@ def edit_sensor(request, id):
 #FARM_PARAMETERS
 @login_required
 def new_farm(request):
-	if request.method == 'POST' and 'btnform2' in request.POST:  # data sent by user
+	farm_name = request.session.get('farm_ses', None) #Session
+	if farm_name == None:
+		form = FarmForm()
+		selected_farm = '--choose--'
+	else:
+		farm_name = Farm.objects.get(name=farm_name)
+		form = FarmForm(instance=farm_name)
+		selected_farm = farm_name
+
+	farm_list = Farm.objects.all() #Loading database
+	error_msg =""
+	if request.method == 'POST' and 'loadData' in request.POST:
+		pk=request.POST.get('selected_farm')
+		if pk == "":
+			error_msg = "Select from the dropdown!"
+		else:
+			id = Farm.objects.get(name=pk)
+			form = FarmForm(instance=id)
+			selected_farm = id
+
+	if request.method == 'POST' and 'btn_submit' in request.POST:  #Saving database
 		form = FarmForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
+			instance.select_coordinates = "No"
 			instance.save()
-			return redirect('/new_personnel/')
-	else:  # display empty form
-		form = FarmForm()
-
-	return render(request, 'waissapp/new_farm.html', {'farm_form': form})
+			request.session['farm_ses'] = instance.name
+			return HttpResponseRedirect('/new_personnel/')
+	context = {
+		'farm_form': form,
+		'farm_list': farm_list,
+		'selected_farm': selected_farm,
+		"error_msg": error_msg
+	}
+	return render(request, 'waissapp/new_farm.html', context)
 
 def save_all_farm(request,form,template_name):
 	data = dict()
@@ -589,18 +813,45 @@ def save_all_personnel(request,form,template_name):
 
 @login_required
 def new_personnel(request):
-	if request.method == 'POST':  # data sent by user
+	personnel_name = request.session.get('personnel_ses', None) #Session
+	if personnel_name == None:
+		form = PersonnelForm()
+		selected_personnel = '--choose--'
+		selected_id = None
+	else:
+		personnel_name = Personnel.objects.get(id=personnel_name)
+		form = PersonnelForm(instance=personnel_name)
+		selected_personnel = str(personnel_name.first_name) + ' ' + str(personnel_name.last_name)
+		selected_id = personnel_name.id
+	personnel_list = Personnel.objects.all()
+	error_msg = ""
+	if request.method == 'POST' and 'loadData' in request.POST:
+		pk=request.POST.get('selected_personnel')
+		if pk == 'None':
+			error_msg = "Select from the dropdown!"
+		else:
+			id = Personnel.objects.get(id=pk)
+			form = PersonnelForm(instance=id)
+			selected_personnel = str(id.first_name) + ' ' + str(id.last_name)
+			selected_id = id.id
+	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = PersonnelForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
+			request.session['personnel_ses'] = instance.id
 			return redirect('/new_crop/')
-	else:  # display empty form
-		form = PersonnelForm()
+	context = {
+		'personnel_form': form,
+		'personnel_list': personnel_list,
+		'selected_personnel': selected_personnel,
+		'selected_id': selected_id,
+		'error_msg': error_msg
+	}
 
-	return render(request, 'waissapp/new_personnel.html', {'personnel_form': form})
+	return render(request, 'waissapp/new_personnel.html', context)
 
 @login_required
 def add_personnel(request):
@@ -712,82 +963,212 @@ def add_sprinkler(request):
 
 @login_required
 def new_irrigation(request):
-	return render(request, 'waissapp/new_irrigation.html')
+	#basin
+	basin_name = request.session.get('basin_ses', None) #Session
+	if basin_name == None:
+		basin = BasinForm()
+		selected_basin = '--choose--'
+	else:
+		basin_name = Basin.objects.get(name=basin_name)
+		basin = BasinForm(instance=basin_name)
+		selected_basin = basin_name
+	
+	select_ses = None
+	basin_list = Basin.objects.all() #Dropdown database
+	error_msg = ""
+	bln_irrigation = ""
+	bln_irrigation_text = ""
+	select_irrigation = ""
+	if request.method == 'POST' and 'loadData_basin' in request.POST: #load data
+		pk = request.POST.get('selected_basin')
+		if pk == "":
+			error_msg = "Select from the dropdown!"
+			bln_irrigation = True
+			bln_irrigation_text = "Yes, I do!"
+			select_irrigation = "basin"
+		else:
+			id = Basin.objects.get(name=pk)
+			basin = BasinForm(instance=id)
+			selected_basin = id
+			select_ses = 'basin'
 
-@login_required
-def new_basin(request):
-	if request.method == 'POST':  # data sent by user
-		form = BasinForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
+	if request.method == 'POST' and 'submit-basin' in request.POST:  #submit data
+		basin = BasinForm(request.POST)
+		if basin.is_valid():
+			instance = basin.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
+			instance.bln_irrigation = True
+			instance.select_irrigation = "basin"
 			instance.save()
+			request.session['basin_ses'] = instance.name
 			return redirect('/new_fieldunit/')
-	else:  # display empty form
-		form = BasinForm()
-
-	return render(request, 'waissapp/new_basin.html', {'form': form})
-
-@login_required
-def new_furrow(request):
-	if request.method == 'POST':  # data sent by user
-		form = FurrowForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
+		else:
+			bln_irrigation = True
+			bln_irrigation_text = "Yes, I do!"
+			select_irrigation = "basin"
+	#border
+	border_name = request.session.get('border_ses', None)
+	if border_name == None:
+		border = BorderForm()
+		selected_border = '--choose--'
+	else:
+		border_name = Border.objects.get(name=border_name)
+		border = BorderForm(request.POST or None, instance=border_name)
+		selected_border = border_name
+	border_list = Border.objects.all() #Loading database
+	if request.method == 'POST' and 'loadData_border' in request.POST:
+		pk=request.POST.get('selected_border')
+		if pk == "":
+			error_msg = "Select from the dropdown!"
+			bln_irrigation = True
+			bln_irrigation_text = "Yes, I do!"
+			select_irrigation = "border"
+		else:
+			id = Border.objects.get(name=pk)
+			border = BorderForm(instance=id)
+			selected_border = id
+			select_ses = 'border'
+	if request.method == 'POST' and 'submit-border' in request.POST:
+		border = BorderForm(request.POST)
+		if border.is_valid():
+			instance = border.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
+			instance.bln_irrigation = True
+			instance.select_irrigation = "border"
 			instance.save()
+			request.session['border_ses'] = instance.name
 			return redirect('/new_fieldunit/')
-	else:  # display empty form
-		form = FurrowForm()
-
-	return render(request, 'waissapp/new_furrow.html', {'irrigation_form': form})
-
-@login_required
-def new_border(request):
-	if request.method == 'POST':  # data sent by user
-		form = BorderForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
+	#furrow
+	furrow_name = request.session.get('furrow_ses', None)
+	if furrow_name == None:
+		furrow = FurrowForm()
+		selected_furrow = '--choose--'
+	else:
+		furrow_name = Furrow.objects.get(name=furrow_name)
+		furrow = FurrowForm(request.POST or None, instance=furrow_name)
+		selected_furrow = furrow_name
+	furrow_list = Furrow.objects.all() #Loading database
+	if request.method == 'POST' and 'loadData_furrow' in request.POST:
+		pk = request.POST.get('selected_furrow')
+		if pk=="":
+			error_msg = "Select from the dropdown!"
+			bln_irrigation = True
+			bln_irrigation_text = "Yes, I do!"
+			select_irrigation = "furrow"
+		else:
+			id = Furrow.objects.get(name=pk)
+			furrow = FurrowForm(instance=id)
+			selected_furrow = id
+			select_ses = 'furrow'
+	if request.method == 'POST' and 'submit-furrow' in request.POST:
+		furrow = FurrowForm(request.POST)
+		if furrow.is_valid():
+			instance = furrow.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
+			instance.bln_irrigation = True
+			instance.select_irrigation = "furrow"
 			instance.save()
+			request.session['furrow_ses'] = instance.name
 			return redirect('/new_fieldunit/')
-	else:  # display empty form
-		form = BorderForm()
-
-	return render(request, 'waissapp/new_border.html', {'irrigation_form': form})
-
-@login_required
-def new_drip(request):
-	if request.method == 'POST':  # data sent by user
-		form = DripForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
+		else:
+			bln_irrigation = True
+			bln_irrigation_text = "Yes, I do!"
+			select_irrigation = "furrow"
+	
+	sprinkler_name = request.session.get('sprinkler_ses', None)
+	if sprinkler_name == None:
+		sprinkler = SprinklerForm()
+		selected_sprinkler = "--choose--"
+	else:
+		sprinkler_name = Sprinkler.objects.get(name=sprinkler_name)
+		sprinkler = SprinklerForm(request.POST or None, instance=sprinkler_name)
+		selected_sprinkler = sprinkler_name
+	sprinkler_list = Sprinkler.objects.all() #Loading database
+	if request.method == 'POST' and 'loadData_sprinkler' in request.POST:
+		pk=request.POST.get('selected_sprinkler')
+		if pk=="":
+			error_msg = "Select from the dropdown!"
+			bln_irrigation = True
+			bln_irrigation_text = "Yes, I do!"
+			select_irrigation = "sprinkler"
+		else:
+			id = Sprinkler.objects.get(name=pk)
+			sprinkler = SprinklerForm(instance=id)
+			selected_sprinkler = id
+			select_ses = 'sprinkler'
+	if request.method == 'POST' and 'submit-sprinkler' in request.POST:
+		sprinkler = SprinklerForm(request.POST)
+		if sprinkler.is_valid():
+			instance = sprinkler.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
+			instance.bln_irrigation = True
+			instance.select_irrigation = "sprinkler"
 			instance.save()
+			request.session['sprinkler_ses'] = instance.name
 			return redirect('/new_fieldunit/')
-	else:  # display empty form
-		form = DripForm()
-
-	return render(request, 'waissapp/new_drip.html', {'irrigation_form': form})
-
-@login_required
-def new_sprinkler(request):
-	if request.method == 'POST':  # data sent by user
-		form = SprinklerForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
+	#drip
+	drip_name = request.session.get('drip_ses', None)
+	if drip_name == None:
+		drip = DripForm()
+		selected_drip = "--choose--"
+	else:
+		drip_name = Drip.objects.get(name=drip_name)
+		drip = DripForm(request.POST or None, instance=drip_name)
+		selected_drip = drip_name
+	drip_list = Drip.objects.all() #Loading database
+	if request.method == 'POST' and 'loadData_drip' in request.POST:
+		pk=request.POST.get('selected_drip')
+		if pk=="":
+			error_msg = "Select from the dropdown!"
+			bln_irrigation = True
+			bln_irrigation_text = "Yes, I do!"
+			select_irrigation = "drip"
+		else:
+			id = Drip.objects.get(name=pk)
+			drip = DripForm(instance=id)
+			selected_drip = id
+			select_ses = 'drip'
+	if request.method == 'POST' and 'submit-drip' in request.POST:
+		drip = DripForm(request.POST)
+		if drip.is_valid():
+			instance = drip.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
+			instance.bln_irrigation = True
+			instance.select_irrigation = "drip"
 			instance.save()
-			return redirect('/list_new_fieldunit/')
-	else:  # display empty form
-		form = SprinklerForm()
+			request.session['drip_ses'] = instance.name
+			return redirect('/new_fieldunit/')
+	
+	context = {
+		"basin" : basin,
+		"border" : border,
+		"furrow" : furrow,
+		"sprinkler" : sprinkler,
+		"drip" : drip,
+		"selected_basin": selected_basin,
+		"selected_border": selected_border,
+		"selected_furrow": selected_furrow,
+		"selected_sprinkler": selected_sprinkler,
+		"selected_drip": selected_drip,
+		"basin_list": basin_list,
+		"border_list": border_list,
+		"furrow_list": furrow_list,
+		"sprinkler_list": sprinkler_list,
+		"drip_list": drip_list,
+		"select_ses": select_ses,
+		"error_msg": error_msg,
+		"bln_irrigation": bln_irrigation,
+		"bln_irrigation_text": bln_irrigation_text,
+		"select_irrigation": select_irrigation
+	}
+	return render(request, 'waissapp/new_irrigation.html', context)
 
-	return render(request, 'waissapp/new_sprinkler.html', {'irrigation_form': form})
+@login_required
 
 def list_basin(request):
 	current_user = request.user

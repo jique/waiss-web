@@ -4,11 +4,13 @@ from . import views, computations
 app_name = 'waiss'
 
 urlpatterns = [
-     path('', computations.index, name='index'),
-     path('register/', views.register, name='register'),
+     path('dashboard/', computations.index, name='index'),
+     path('accounts/register/', views.register, name='register'),
      path('accounts/profile', views.profile, name='profile'),
      path('about/', views.about, name='about'),
      path('about-the-calculations/', views.about_calc, name='about_calc'),
+     path('', views.home, name='home_page'),
+     path('waiss/', views.home_waiss, name='home_page_waiss'),
      
      #FIELDUNIT_PARAMETERS
      path('new_fieldunit/', views.new_fieldunit, name='new_fieldunit'),
@@ -55,11 +57,6 @@ urlpatterns = [
      
      #IRRIGATION_PARAMETERS
      path('new_irrigation/', views.new_irrigation, name='new_irrigation'),
-     path('new_basin/', views.new_basin, name='new_basin'),
-     path('new_border/', views.new_border, name='new_border'),
-     path('new_furrow/', views.new_furrow, name='new_furrow'),
-     path('new_drip/', views.new_drip, name='new_drip'),
-     path('new_sprinkler/', views.new_sprinkler, name='new_sprinkler'),
      path('add_basin/', views.add_basin, name='add_basin'),
      path('add_border/', views.add_border, name='add_border'),
      path('add_drip/', views.add_drip, name='add_drip'),

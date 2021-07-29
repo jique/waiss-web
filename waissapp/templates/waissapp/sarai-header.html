@@ -24,17 +24,9 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href={% static "css/sb-admin-2.min.css" %} rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href={% static "vendor/datatables/dataTables.bootstrap4.min.css" %} rel="stylesheet">
-
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
     <link href={% static "css/footer.css" %} rel="stylesheet" type="text/css">
     <link href={% static "css/progress-bar.css" %} rel="stylesheet" type="text/css">
-    <link href={% static "css/highcharts.css" %} rel="stylesheet" type="text/css">
-    <script src={% static "js/clock.js" %}></script>
 
     <title>
         {% block title_block %}
@@ -45,14 +37,12 @@
 
 <body id="page-top" onload="startTime()">
 
-{% block style_block%}
-{% endblock %}
-
 {% block sarai_nav_block %}
-<!-- Topbar -->
-<nav class="navbar sticky-top border-bottom navbar-expand-lg navbar-light bg-white">
-    <a class="navbar-brand" href="#"><img src={% static "theme/sarai_logo.png" %} class="logo" height="45" alt="sarai_logo"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+<div class="nav-holder border-bottom bg-light">
+  <!-- Top bar-->
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light top-bar bg-light container">
+      <a class="navbar-brand" href="#"><img src={% static "theme/sarai_logo.png" %} class="logo" height="45" alt="sarai_logo"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -92,108 +82,90 @@
       <a class="navbar-brand" href="#"><img src={% static "theme/dost-logo.png" %} height="50px;"></a>
       <a class="navbar-brand" href="#"><img src={% static "theme/dost-pcaarrd-logo.png" %} height="50px;"></a>
       <a class="navbar-brand" href="#"><img src={% static "theme/uplb-logo.png" %} height="50px;"></a>
-    </div>
+      </div>
   </nav>
-  <br>
-<!-- Topbar -->
-{% endblock %}
-{% block waiss_nav_block %}
-<!-- Begin Page Content -->
-<div class="container-fluid">
-  <!-- Outer Row -->
-  <div class="row justify-content-center">
-    <div class="col-9">
-      <div class="card">
-        <nav class="navbar navbar-expand navbar-light bg-white mb-4 static-top border-bottom rounded">
-          <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
-            <div class="sidebar-brand-icon">
-              <a href="{% url 'waiss:index' %}"><img src={% static "theme/waiss_logo.png" %} width=50px height=50px></a>
-            </div>
-            <div class="sidebar-brand-text mx-3">WAISS</div>
-          </div>
-          <!-- WAISS navbar-->
-          <ul class="navbar-nav ml-auto">
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
-                <img class="img-profile rounded-circle" src={% static "theme/lady_sarai.png" %} width=50px height=50px>
-              </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'logout'%}?next={{request.path}}">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
-                </a>
-              </div>
-            </li>
-          </ul>
-        </nav>
-        <!-- WAISS navbar-->
-{% endblock %}
-{% block main_block %}
-        <div class="p-5">
-            {% block header_block %}
-            <h4 class="display-4" style="font-size: 35px;">Let's get started!</h4>
-            <p class="lead" style="font-size: 15px;">Input required information for each parameters.</p>
-            {% endblock %}
-
-            {% block form_block %}
-            {% endblock %}
+</div>
+<!-- Top bar end-->
+<!-- Navbar Start-->
+<header class="nav-holder make-sticky">
+  <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+      <div class="container">
+        <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
+          <div class="sidebar-brand-icon">
+            <img src={% static "all/logo/WAISS-logo-with-def.png" %} height=64px>
           </div>
         </div>
+        <!-- WAISS navbar-->
+        <ul class="navbar-nav text-left">
+          <!-- Nav Item - User Information -->
+          <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
+              <img class="img-profile rounded-circle" src={% static "theme/lady_sarai.png" %} width=50px height=50px>
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+              <a class="dropdown-item" href={%url 'waiss:index' %}>
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                Dashboard
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout'%}?next={{request.path}}">
+                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
       </div>
-    </div>
-  <br>
+  </div>
+</header>
+<!-- Navbar End-->
 {% endblock %}
-<!-- Begin Page Content -->
-</div>
-<!-- /.container-fluid -->
+
+<section style="background: url(/static/base/imgs/corns.jpg) center center repeat; background-size: cover;" class="bar background-white relative-positioned">
+  <div style="background-color: rgba(79, 191, 168, 0.9)">
+    <div class="container">
+      <!-- Outer Row -->
+      <div class="row justify-content-center">
+        <div class="col-9"><br>
+          <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
+            <div class="p-5">
+                {% block header_block %}
+                <h4 class="display-4" style="color: #1abc9c; font-size: 35px;">Let's get started! <span></span></h4>
+                <p class="lead" style="font-size: 15px;">Input required information for each parameters.</p>
+                {% endblock %}
+
+                {% block form_block %}
+                {% endblock %}
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
         
 {% block footer_block %}
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container-fluid col-sm-10">
       <div class="row">
-        <div class="col-sm-4 mr-auto">
-          <h6>About Sarai</h6>
-          <p class="text-justify">Project SARAi aims to develop a national crop forecasting and monitoring system for nine priority crops: rice, corn, banana, coconut, coffee, cacao, sugarcane, tomato, and soybean. This project is funded by DOST-PCAARRD.</p>
+        <div class="col-sm-5 mr-auto">
+            <h6>Project 2.3 - Smart Technologies for Crop Water Management</h6>
+            <p class="text-justify"></p>
         </div>
-
+        <div class="col-sm-4 mr-auto">
+            <h6>Connect with us</h6>
+            <ul class="footer-links">
+                <li><i class="fa fa-phone mr-2" style="font-size:20px"></i>+63 (049) 536 2387</li>
+                <li><i class="fa fa-envelope mr-2" style="font-size:15px"></i>watermgmt2.3.sarai@gmail.com</li>
+                <li><i class="fa fa-map-marker mr-2" style="font-size:20px"></i>Land and Water Resources Division Institute of Agricultural and Biosystems Engineering CEAT UPLB, College, Laguna Philippines 4031</li>
+            </ul>
+        </div>
         <div class="col-sm-3 mr-auto ml-auto">
-          <h6>Connect with us</h6>
+          <h6>Connect with SARAi</h6>
           <ul class="footer-links">
             <li><i class="fa fa-phone mr-2" style="font-size:20px"></i>+63 (049) 536 2302,+63 (049) 536 2836</li>
             <li><i class="fa fa-envelope mr-2" style="font-size:15px"></i>project.sarai.uplb@gmail.com</li>
@@ -205,49 +177,18 @@
             <li><a class="youtube" href="https://www.youtube.com/channel/UCJtzNfVmoqFZGCF326VaTZw" title="Youtube"><i class="fa fa-youtube"></i></a></li>
           </ul>
         </div>
-        
-        <div class="col-sm-4 ml-auto">
-          <h6>Links</h6>
-          <div class="row">
-            <div class="col-4 col-sm-4">
-              <ul class="footer-links">
-                <li><a href="https://sarai.ph/about-us">About Us</a></li>
-                <li><a href="https://sarai.ph/weather-monitoring">Monitoring</a></li>
-                <li><a href="https://sarai.ph/rainfall-outlook">Rainfall Outlook</a></li>
-                <li><a href="">Rice</a></li>
-              </ul>
-              </div>
-              <div class="col-4 col-sm-4">
-              <ul class="footer-links">
-                <li><a href="">Corn</a></li>
-                <li><a href="">Banana</a></li>
-                <li><a href="">Sugarcane</a></li>
-                <li><a href="">Tomato</a></li>
-              </ul>
-              </div>
-              <div class="col-4 col-sm-4">
-              <ul class="footer-links">
-                <li><a href="">Coffee</a></li>
-                <li><a href="">Cacao</a></li>
-                <li><a href="">Coconut</a></li>
-                <li><a href="">Soybean</a></li>
-              </ul>
-              </div>
-          </div>
-        </div>
       </div>
       <hr>
     </div>
     <div class="container-fluid col-sm-10">
       <div class="row">
         <div class="col-md-8 col-sm-6 col-xs-12">
-          <p class="copyright-text">Copyright © 2021 All Rights Reserved by 
-       <a href="#" style="color: #D0D0CD">Project SARAI</a>.
-          </p>
+          <p class="copyright-text">Copyright © 2021 All Rights Reserved by SARAI 2.3 | Crop Water Technologies.</p>
         </div>
 
         <div class="col-md-4 col-sm-6 col-xs-12" style="text-align:right">
-            <a href="https://www.statuscake.com" title="Website Uptime Monitoring"><img src="https://app.statuscake.com/button/index.php?Track=9BZpQGPpQT&amp;Days=30&amp;Design=1"></a>
+            <p class="credits">Template design by <a href="https://bootstrapious.com/snippets">Bootstrapious </a>&  <a href="https://fity.cz/">Fity</a></p>
+            <!-- Please do not remove the backlink to us unless you purchase the Attribution-free License at https://bootstrapious.com/donate. Thank you. -->
         </div>
       </div>
     </div>
@@ -259,24 +200,11 @@
   <!-- End of Content Wrapper -->
   <!-- End of Page Wrapper -->
   
-  <script>
-    $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-    })
-    
-    $('.dropdown-toggle').dropdown()
-    $('.collapse').collapse()
-  </script>
   <!-- Bootstrap core JavaScript-->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
   <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-  <!-- Page level plugins -->
-  <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
-  <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-  <!-- Page level custom scripts -->
-  <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
 
 {% block bottom_script_block %}
 {% endblock %}

@@ -3,25 +3,443 @@
 {% load crispy_forms_tags %}
 
 {% block form_block %}
-            <div class="progress_bar">
-                <div class="pro-bar">
-                    <small class="progress_bar_title">
-                      Farm | Personnel | Crop | Soil | Calibration |<span style="color: #1abc9c; font-size: large;"><b> Irrigation</b></span>
-                      <span class="progress_number">50%</span>
-                    </small>
-                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 40%;" data-value="40" data-percentage-value="40"></span>
-                </div>
+<div class="progress_bar">
+  <div class="pro-bar">
+      <small class="progress_bar_title">
+        Farm | Personnel | Crop | Soil | Calibration |<span style="color: #1abc9c; font-size: large;"><b> Irrigation</b></span>
+        <span class="progress_number">66%</span>
+      </small>
+      <span class="progress-bar-inner" style="background-color: #1abc9c; width: 66%;" data-value="66" data-percentage-value="66"></span>
+  </div>
+</div>
+
+<div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
+  <div class="card-header rounded-0 border-0"><small>Irrigation System</small></div>
+  <div class="card-body">
+    {% if select_ses == None %}
+    <div class="row">
+      <div class="col">
+        <label>Do you have an irrigation system?&emsp;</label>
+      </div>
+      <div class="col">
+        <select class="form-control" id="id_bln_irrigation" name="bln_irrigation">
+          <option value={{bln_irrigation}}>{{bln_irrigation_text}}</option>
+          <option value="True">Yes, I do!</option>
+          <option value="False">No, I don't!</option>
+        </select>
+      </div>
+    </div>
+    <form class="form-group">
+      {% csrf_token %}
+    {% elif select_ses == 'basin' %}
+      {{basin.bln_irrigation|as_crispy_field}}
+    {% elif select_ses == 'border' %}
+      {{border.bln_irrigation|as_crispy_field}}
+    {% elif select_ses == 'furrow' %}
+      {{furrow.bln_irrigation|as_crispy_field}}
+    {% elif select_ses == 'sprinkler' %}
+      {{sprinkler.bln_irrigation|as_crispy_field}}
+    {% elif select_ses == 'drip' %}
+      {{drip.bln_irrigation|as_crispy_field}}
+    {% endif %}
+    </form>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <div class="text-center">
+              <!--No irrigation system-->
+              <hr>
+              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
+              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
             </div>
-            <div class="card mx-auto">
-                <div class="card-header"><small><i>Irrigation System Type</i></small></div>
-                <div class="card-body">
-                  <p>
-                    <a class="btn btn-success" href="{% url 'waiss:new_basin' %}" type="button">Basin</a>
-                    <a class="btn btn-success" href="{% url 'waiss:new_border' %}" type="button">Border</a>
-                    <a class="btn btn-success" href="{% url 'waiss:new_furrow' %}" type="button">Furrow</a>
-                    <a class="btn btn-success" href="{% url 'waiss:new_drip' %}" type="button">Drip</a>
-                    <a class="btn btn-success" href="{% url 'waiss:new_sprinkler' %}" type="button">Sprinkler</a>
-                  </p>
-                </div>
+          </div>
         </div>
+      </div>
+    <div class="panel panel-default">
+      <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="panel-body">
+          {% if select_ses == None %}
+          <div class="row">
+            <div class="col">
+              <label>What kind of irrigation system?&emsp;</label>
+            </div>
+            <div class="col">
+              <select class="form-control" id="id_select_irrigation" name="select_irrigation">
+                <option value={{select_irrigation}}>{{select_irrigation}}</option>
+                <option value="basin">basin</option>
+                <option value="border">border</option>
+                <option value="furrow">furrow</option>
+                <option value="sprinkler">sprinkler</option>
+                <option value="drip">drip</option>
+              </select>
+            </div>
+          </div>
+          <form class="form-group">
+          {% csrf_token %}
+          {% elif select_ses == 'basin' %}
+            {{basin.select_irrigation|as_crispy_field}}
+          {% elif select_ses == 'border' %}
+            {{border.select_irrigation|as_crispy_field}}
+          {% elif select_ses == 'furrow' %}
+            {{furrow.select_irrigation|as_crispy_field}}
+          {% elif select_ses == 'sprinkler' %}
+            {{sprinkler.select_irrigation|as_crispy_field}}
+          {% elif select_ses == 'drip' %}
+            {{drip.select_irrigation|as_crispy_field}}
+          {% endif %}
+          </form>
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <hr>
+                  <div class="row">
+                    <div class="col-4">
+                      {% if basin_list %}
+                        <form method="post" class="form-group">
+                          {% csrf_token %}
+                          <small>Existing Basins</small>
+                          <select class="form-control" id="selected_basin" name="selected_basin">
+                            <option value="">{{selected_basin}}</option>
+                            {% for basin in basin_list %}
+                            <option value={{basin.name}}>{{basin.name}}</option>
+                            {% endfor %}
+                          </select>
+                          <small class="text-danger float-right"><i>{{error_msg}}</i></small>
+                          <hr>
+                          <p class="text-right">
+                            <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData_basin"></input>
+                          </p>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                      <form class="form-group" action="" method="post">
+                        {% csrf_token %}
+                        <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+                        <div class="col">{{basin.name|as_crispy_field}}</div>
+                        <div class="col">{{basin.basin_length|as_crispy_field}}</div>
+                        <div class="col">{{basin.discharge|as_crispy_field}}</div>
+                        <div class="col">{{basin.ea|as_crispy_field}}</div>
+                        {{basin.errors}}
+                        <hr>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
+                            <input type="submit" value="Submit" class="btn btn-info" name="submit-basin">
+                            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                  <hr>
+                  <div class="row">
+                    <div class="col-4">
+                      {% if border_list %}
+                      <form method="post" class="form-group">
+                        {% csrf_token %}
+                        <small>Existing Borders</small>
+                        <select class="form-control" id="selected_border" name="selected_border">
+                          <option value="">{{selected_border}}</option>
+                          {% for border in border_list %}
+                          <option value="{{border.name}}">{{border.name}}</option>
+                          {% endfor %}
+                        </select>
+                        <small class="text-danger float-right"><i>{{error_msg}}</i></small>
+                        <hr>
+                        <p class="text-right">
+                          <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData_border"></input>
+                        </p>
+                      </form>
+                      {% endif %}
+                  </div>
+                  <div class="col">
+                    <form class="form-group" action="" method="post">
+                      {% csrf_token %}
+                      <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+                      <div class="col">{{border.name|as_crispy_field}}</div>
+                      <div class="col">{{border.discharge|as_crispy_field}}</div>
+                      <div class="col">{{border.area_slope|as_crispy_field}}</div>
+                      <div class="col">{{border.mannings_coeff|as_crispy_field}}</div>
+                      <hr>
+                      <div class="text-right">
+                          <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
+                          <input type="submit" value="Submit" class="btn btn-info" name="submit-border">
+                          <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+                      </div>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                  <hr>
+                  <div class="row">
+                    <div class="col-4">
+                      {% if furrow_list %}
+                      <form method="post" class="form-group">
+                        {% csrf_token %}
+                        <small>Existing Furrows</small>
+                        <select class="form-control" id="selected_furrow" name="selected_furrow">
+                          <option value="">{{selected_furrow}}</option>
+                          {% for furrow in furrow_list %}
+                          <option value="{{furrow.name}}">{{furrow.name}}</option>
+                          {% endfor %}
+                        </select>
+                        <small class="text-danger float-right"><i>{{error_msg}}</i></small>
+                        <hr>
+                        <p class="text-right">
+                          <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData_furrow"></input>
+                        </p>
+                      </form>
+                      {% endif %}
+                  </div>
+                  <div class="col">
+                    <form class="form-group" action="" method="post">
+                      {% csrf_token %}
+                      <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+                      <div class="col">{{furrow.name|as_crispy_field}}</div>
+                      <div class="col">{{furrow.discharge|as_crispy_field}}</div>
+                      <div class="col">{{furrow.area_slope|as_crispy_field}}</div>
+                      <div class="col">{{furrow.mannings_coeff|as_crispy_field}}</div>
+                      <div class="col">{{furrow.bln_furrow_type|as_crispy_field}}</div>
+                      <div class="col">{{furrow.furrow_spacing|as_crispy_field}}</div>
+                      <div class="col">{{furrow.furrow_length|as_crispy_field}}</div>
+                      <hr>
+                      <div class="text-right">
+                          <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
+                          <input type="submit" value="Submit" class="btn btn-info" name="submit-furrow">
+                          <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                  <hr>
+                  <div class="row">
+                    <div class="col-4">
+                      {% if sprinkler_list %}
+                      <form method="post" class="form-group">
+                        {% csrf_token %}
+                        <small>Existing Sprinklers</small>
+                        <select class="form-control" id="selected_sprinkler" name="selected_sprinkler">
+                          <option value="">{{selected_sprinkler}}</option>
+                          {% for sprinkler in sprinkler_list %}
+                          <option value="{{sprinkler.name}}">{{sprinkler.name}}</option>
+                          {% endfor %}
+                        </select>
+                        <small class="text-danger float-right"><i>{{error_msg}}</i></small>
+                        <hr>
+                        <p class="text-right">
+                          <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData_sprinkler"></input>
+                        </p>
+                      </form>
+                      {% endif %}
+                  </div>
+                  <div class="col">
+                    <form class="form-group" action="" method="post">
+                      {% csrf_token %}
+                      <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+                      <div class="col">{{ sprinkler.name|as_crispy_field}}</div>
+                      <div class="col">{{ sprinkler.lateral_spacing|as_crispy_field }}</div>
+                      <div class="col">{{ sprinkler.sprinkler_spacing|as_crispy_field }}</div>
+                      <div class="col">{{ sprinkler.ea|as_crispy_field }}</div>
+                      <div class="col">
+                        <label><b>Do you know the sprinkler discharge?&emsp;</b></label>
+                        <select class="form-control" id="with_q_bln" name="with_q_bln">
+                          <option>---</option>
+                          <option value="yes">Yes, I do!</option>
+                          <option value="no">No, I don't!</option>
+                        </select>
+                      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                          <div id="collapseYes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                              <br>
+                              <div class="row">
+                                <div class="col">
+                                  {{ sprinkler.discharge|as_crispy_field}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="panel panel-default">
+                          <div id="collapseNo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                              <br>
+                              <div class="row">
+                                <div class="col">
+                                  {{ sprinkler.nozzle_diameter|as_crispy_field }}
+                                  {{ sprinkler.operating_pressure|as_crispy_field }}<!--Use ave discharge coefficient (0.96)-->
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="text-right">
+                          <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
+                          <input type="submit" value="Submit" class="btn btn-info" name="submit-sprinkler">
+                          <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+                      </div>
+                    </form>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                  <hr>
+                  <div class="row">
+                    <div class="col-4">
+                      {% if drip_list %}
+                      <form method="post" class="form-group">
+                        {% csrf_token %}
+                        <small>Existing Drips</small>
+                        <select class="form-control" id="selected_drip" name="selected_drip">
+                          <option value="">{{selected_drip}}</option>
+                          {% for drip in drip_list %}
+                          <option value="{{drip.name}}">{{drip.name}}</option>
+                          {% endfor %}
+                        </select>
+                        <small class="text-danger float-right"><i>{{error_msg}}</i></small>
+                        <hr>
+                        <p class="text-right">
+                          <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData_drip"></input>
+                        </p>
+                      </form>
+                      {% endif %}
+                    </div>
+                    <div class="col">
+                      <form class="form-group" action="" method="post">
+                        {% csrf_token %}
+                        <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+                        <div class="col">{{ drip.name|as_crispy_field}}</div>
+                        <div class="col">{{ drip.discharge|as_crispy_field}}</div>
+                        <div class="col">{{ drip.bln_single_lateral|as_crispy_field }}</div>
+                        <div class="col">{{ drip.emitters_per_plant|as_crispy_field }}</div>
+                        <div class="col">{{ drip.emitter_spacing|as_crispy_field }}</div>
+                        <div class="col">{{ drip.plant_spacing|as_crispy_field }}</div>
+                        <div class="col">{{ drip.row_spacing|as_crispy_field }}</div>
+                        <div class="col">{{ drip.wetted_dia|as_crispy_field }}</div>
+                        <div class="col">{{ drip.EU|as_crispy_field }}</div>
+                        <div class="col">{{ drip.bln_ii|as_crispy_field }}</div>
+                        <div class="col">{{ drip.irrigation_interval|as_crispy_field }}</div>
+                        <hr>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
+                            <input type="submit" value="Submit" class="btn btn-info" name="submit-drip">
+                            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+                        </div>
+                      </form>
+                    </div><!--form col div-->
+                  </div><!--row drip div-->
+                </div><!--panel-body div-->
+              </div>
+            </div><!--panel div-->
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  $( document ).ready(function() {
+        showHide();
+        $("#id_bln_irrigation").change(function () {
+                showHide();
+        });
+    });
+    function showHide() {
+      var checkedValue = $("#id_bln_irrigation").val();
+      if (checkedValue == "False") {
+        $("#collapseOne").collapse('show');
+        $("#collapseTwo").collapse('hide');
+      } else if (checkedValue == "True") {
+        $("#collapseOne").collapse('hide');
+        $("#collapseTwo").collapse('show');
+      }
+    };
+  $( document ).ready(function() {
+    showHide2();
+      $("#id_select_irrigation").change(function () {
+        showHide2();
+      });
+    });
+    function showHide2() {
+      var checkedValue = $("#id_select_irrigation").val();
+      if (checkedValue == "basin") {
+        $("#collapse1").collapse('show');
+            $("#collapse2").collapse('hide');
+            $("#collapse3").collapse('hide');
+            $("#collapse4").collapse('hide');
+            $("#collapse5").collapse('hide');
+        } else if (checkedValue == "border") {
+            $("#collapse1").collapse('hide');
+            $("#collapse2").collapse('show');
+            $("#collapse3").collapse('hide');
+            $("#collapse4").collapse('hide');
+            $("#collapse5").collapse('hide');
+        } else if (checkedValue == "furrow") {
+            $("#collapse1").collapse('hide');
+            $("#collapse2").collapse('hide');
+            $("#collapse3").collapse('show');
+            $("#collapse4").collapse('hide');
+            $("#collapse5").collapse('hide');
+        } else if (checkedValue == "sprinkler") {
+            $("#collapse1").collapse('hide');
+            $("#collapse2").collapse('hide');
+            $("#collapse3").collapse('hide');
+            $("#collapse4").collapse('show');
+            $("#collapse5").collapse('hide');
+        } else if (checkedValue == "drip") {
+            $("#collapse1").collapse('hide');
+            $("#collapse2").collapse('hide');
+            $("#collapse3").collapse('hide');
+            $("#collapse4").collapse('hide');
+            $("#collapse5").collapse('show');
+        }
+    };
+  $( document ).ready(function() {
+    showHide3();
+      $("#id_bln_irrigation").change(function () {
+        showHide3();
+      });
+    });
+    function showHide3() {
+    var checkedValue = $("#with_q_bln").val();
+    if (checkedValue == "yes") {
+      $('#id_discharge').attr('required', '');
+      $("#collapseYes").collapse('show');
+      $("#collapseNo").collapse('hide');
+    } else if (checkedValue == "no") {
+      $("#collapseYes").collapse('hide');
+      $("#collapseNo").collapse('show');
+      $('#id_nozzle_diameter').attr('required', '');
+      $('#id_operating_pressure').attr('required', '');
+    }
+    };
+</script>
 {% endblock %}

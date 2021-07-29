@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    #'leaflet',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +55,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'waiss.urls'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+#GDAL_LIBRARY_PATH = r'C:\Users\jaqlo\sarai-waiss\Lib\site-packages\django\contrib\gis\gdal\libgal.py'
 
+SESSION_ENGINE ='django.contrib.sessions.backends.file'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -73,7 +76,7 @@ TEMPLATES = [
 ]
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 WSGI_APPLICATION = 'waiss.wsgi.application'
 

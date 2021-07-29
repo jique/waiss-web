@@ -3,46 +3,71 @@
 {% load crispy_forms_tags %}
 
 {% block form_block %}
-            <div class="progress_bar">
-                <div class="pro-bar">
-                    <small class="progress_bar_title">
-                      Farm | Personnel | Crop | <span style="color: #1abc9c; font-size: large;"><b> Soil</b></span>
-                      <span class="progress_number">40%</span>
-                    </small>
-                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 40%;" data-value="40" data-percentage-value="40"></span>
+<div class="progress_bar">
+    <div class="pro-bar">
+        <small class="progress_bar_title">
+          Farm | Personnel | Crop | <span style="color: #1abc9c; font-size: large;"><b> Soil</b></span>
+          <span class="progress_number">44%</span>
+        </small>
+        <span class="progress-bar-inner" style="background-color: #1abc9c; width: 44%;" data-value="44" data-percentage-value="44"></span>
+    </div>
+</div>
+<div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
+    <div class="card-header rounded-0 border-0"><small>Soil & Physical Properties</small></div>
+    <div class="card-body">
+        <div class="row">
+          <div class="col-4">
+            {% if soil_list %}
+            <form method="post" class="form-group">
+              {% csrf_token %}
+              <small>Existing Soils</small>
+              <select class="form-control" id="selected_soil" name="selected_soil">
+                <option value="">{{selected_soil}}</option>
+                {% for soil in soil_list %}
+                <option value="{{soil.soiltype}}">{{soil.soiltype}}</option>
+                {% endfor %}
+              </select>
+              <small class="text-danger float-right"><i>{{error_msg}}</i></small>
+              <hr>
+              <p class="text-right">
+                <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData"></input>
+              </p>
+            </form>
+            {% endif %}
+          </div>
+          <div class="col">
+            <form class="form-group" action="" method="post">
+            {% csrf_token %}
+              <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+                <div class="row">
+                    <div class="col">{{soil_form.soiltype|as_crispy_field}}</div>
                 </div>
-            </div>
-            <div class="card mx-auto">
-                <div class="card-header"><small><i>Soil & Physical Properties</i></small></div>
-                <div class="card-body">
-                    <form class="form-group" action="" method="post">
-                    {% csrf_token %}
-                        <div class="row">
-                            <div class="col">{{soil_form.soiltype|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{soil_form.fc|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{soil_form.pwp|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                          <div class="col">{{soil_form.intake_family|as_crispy_field}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ soil_form.source|as_crispy_field }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{ soil_form.errors }}</div>
-                        </div>
-                    </div>
+                <div class="row">
+                    <div class="col">{{soil_form.fc|as_crispy_field}}</div>
                 </div>
-                <br>
-                <div class="text-center">
+                <div class="row">
+                    <div class="col">{{soil_form.pwp|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                <div class="col">{{soil_form.intake_family|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ soil_form.source|as_crispy_field }}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ soil_form.errors }}</div>
+                </div>
+                <hr>
+                <div class="text-right">
                     <button type="button" class="btn btn-success"><a href={% url 'waiss:new_crop' %} style="color:white">Previous</a></button>
-                    <input type="submit" value="Submit" class="btn btn-info">
+                    <input type="submit" value="Submit" class="btn btn-info" name="btn_submit">
                     <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Next</a></button>
                 </div>
             </form>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

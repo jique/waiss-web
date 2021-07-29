@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.http import request
 
 class Personnel(models.Model):
     first_name = models.CharField(max_length=30, null=True)
@@ -19,12 +20,12 @@ class Personnel(models.Model):
         ordering = ('last_name',)
     
 class FieldUnit(models.Model):
-    name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Field Unit Name")
-    usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True, blank=True)
-    number = models.IntegerField(verbose_name="Field Unit Number", null=True, blank=True)
-    fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", default=True)
-    withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", default=True)
-    automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", default=True)
+    name = models.CharField(max_length=100, null=True, verbose_name="Field Unit Name", unique=True)
+    usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True)
+    number = models.IntegerField(verbose_name="Field Unit Number", null=True)
+    fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status")
+    withirrigation = models.BooleanField(verbose_name="With Irrigation (?)")
+    automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)")
     samples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True, blank=True)
     sensorintegrationtime = models.IntegerField(verbose_name='Sensor Integration Time (ms)', null=True, blank=True)
     timestart = models.TimeField(verbose_name='Starting Time', null=True, blank=True)
@@ -43,8 +44,8 @@ class FieldUnit(models.Model):
         ordering = ('name',)
 
 class Sensor(models.Model):
-    name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True)
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True)
+    name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True, unique=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
     depth = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Depth, m", null=True)
 
     def __str__(self):
@@ -66,7 +67,7 @@ class MoistureContent(models.Model):
         return str(self.sensor)
 
 class Soil(models.Model):
-    soiltype = models.CharField(max_length=25, verbose_name="Soil")
+    soiltype = models.CharField(max_length=25, verbose_name="Soil", unique=True)
     fc = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Field Capacity (% vol)", null=True)
     pwp = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Permanent Wilting Point (% vol)", null=True)
 
@@ -107,7 +108,7 @@ class Soil(models.Model):
         (sandy_15 , 'sandy (1.5)'),
         (sandy_20 , 'sandy (2.0)')
     ]
-
+    bln_surface_irrigation = models.BooleanField(default=False)
     intake_family = models.CharField(max_length=30,choices=choices,verbose_name="Intake Family",null=True, blank=True, help_text="The number indicates the intake rate of the soil. Required for surface irrigations- basin, border, and furrow.")
     source = models.CharField(max_length=30, verbose_name="Data Source", null=True, blank=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
@@ -123,26 +124,18 @@ class Soil(models.Model):
 
 class CalibrationConstant(models.Model):
     name = models.CharField(max_length=25, verbose_name="File Name", unique=True, null=True)
-    LINEAR = 'linear'
-    QUADRATIC = 'quadratic'
-    SYMMETRICAL_SIGMOIDAL = 'symmetrical sigmoidal'
-    ASYMMETRICAL_SIGMOIDAL = 'asymmetrical sigmoidal'
-    EXPONENTIAL = 'exponential'
-    LOGARITHMIC = 'logarithmic'
-
     CALIBRATION_EQUATION_CHOICES = [
-        (LINEAR, 'Linear'),
-        (QUADRATIC, 'Quadratic'),
-        (EXPONENTIAL, 'Exponential'),
-        (LOGARITHMIC, 'Logarithmic'),
-        (SYMMETRICAL_SIGMOIDAL, 'Symmetrical Sigmoidal'),
-        (ASYMMETRICAL_SIGMOIDAL, 'Asymmetrical Sigmoidal'),
+        ("linear", 'Linear'),
+        ("quadratic", 'Quadratic'),
+        ("exponential", 'Exponential'),
+        ("logarithmic", 'Logarithmic'),
+        ("symmetrical sigmoidal", 'Symmetrical Sigmoidal'),
+        ("asymmetrical sigmoidal", 'Asymmetrical Sigmoidal'),
     ]
 
     calib_equation = models.CharField(
         max_length=30,
         choices=CALIBRATION_EQUATION_CHOICES,
-        default=LINEAR,
         verbose_name="Equation Form", null=True,
     )
 
@@ -165,7 +158,7 @@ class CalibrationConstant(models.Model):
         ordering = ('name',)
 
 class Crop(models.Model):
-    crop = models.CharField(max_length=100, unique=True, null=True,)
+    crop = models.CharField(max_length=100, unique=True, null=True)
     growingperiod = models.IntegerField(verbose_name="Growing Period, days", null=True,)
     root_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True, blank=True)
     drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True,)
@@ -175,8 +168,12 @@ class Crop(models.Model):
         ("User-Defined", 'User-Defined'),
         ("Inverse Kc", 'Inverse Kc'),
     ]
-    root_growth_model = models.CharField(choices=rooting, max_length=30, verbose_name="Root Growth Model", null=True, help_text="Fillout additional information below.")
-    
+    root_growth_model = models.CharField(choices=rooting, max_length=30, verbose_name="Root Growth Model", null=True)
+    yes_no = [
+        ("yes", 'Yes, I will!'),
+        ("no", 'No, I wont.'),
+    ]
+    select_drip = models.CharField(choices=yes_no, max_length=3, verbose_name="Are you going to use a drip irrigation system?", null="True", blank=True)
     peak_Etcrop = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm/day)", null=True, blank=True)
     transpiration_ratio = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Transpiration Ratio", null=True, blank=True)
    
@@ -212,6 +209,19 @@ class Crop(models.Model):
 
 
 class Basin(models.Model):
+    yes_no = [
+        ("True", 'Yes, I do!'),
+        ("False", 'No, I dont.'),
+    ]
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True)
+    type_irrig = [
+        ("basin", 'basin'),
+        ("border", 'border'),
+        ("furrow", 'furrow'),
+        ("sprinkler", 'sprinkler'),
+        ("drip", 'drip'),
+    ]
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Irrigation System Type", null=True, blank=True)
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
     basin_length = models.DecimalField(max_digits=20, decimal_places=1, verbose_name="Basin Length (m)", null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
@@ -237,6 +247,19 @@ class Basin(models.Model):
         return self.name
 
 class Furrow(models.Model):
+    yes_no = [
+        ("True", 'Yes, I do!'),
+        ("False", 'No, I dont.'),
+    ]
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True)
+    type_irrig = [
+        ("basin", 'basin'),
+        ("border", 'border'),
+        ("furrow", 'furrow'),
+        ("sprinkler", 'sprinkler'),
+        ("drip", 'drip'),
+    ]
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True)
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
@@ -254,6 +277,19 @@ class Furrow(models.Model):
         return self.name
 
 class Border(models.Model):
+    yes_no = [
+        ("True", 'Yes, I do!'),
+        ("False", 'No, I dont.'),
+    ]
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True)
+    type_irrig = [
+        ("basin", 'basin'),
+        ("border", 'border'),
+        ("furrow", 'furrow'),
+        ("sprinkler", 'sprinkler'),
+        ("drip", 'drip'),
+    ]
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True)
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
@@ -268,6 +304,19 @@ class Border(models.Model):
         return self.name
 
 class Drip(models.Model):
+    yes_no = [
+        ("True", 'Yes, I do!'),
+        ("False", 'No, I dont.'),
+    ]
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null="True", blank=True)
+    type_irrig = [
+        ("basin", 'basin'),
+        ("border", 'border'),
+        ("furrow", 'furrow'),
+        ("sprinkler", 'sprinkler'),
+        ("drip", 'drip'),
+    ]
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True)
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
     bln_single_lateral = models.BooleanField (verbose_name="Single Straight Lateral", null=True)
     discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Discharge (l/day)", null=True)
@@ -289,6 +338,19 @@ class Drip(models.Model):
         return self.name
 
 class Sprinkler(models.Model):
+    yes_no = [
+        ("True", 'Yes, I do!'),
+        ("False", 'No, I dont.'),
+    ]
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null="True", blank=True)
+    type_irrig = [
+        ("basin", 'basin'),
+        ("border", 'border'),
+        ("furrow", 'furrow'),
+        ("sprinkler", 'sprinkler'),
+        ("drip", 'drip'),
+    ]
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True)
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, blank=True)
     EFF_CHOICES = [
@@ -305,10 +367,8 @@ class Sprinkler(models.Model):
     ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True)
     lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True)
     sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True)
-    bln_sprinkler_discharge = models.BooleanField(verbose_name="Compute Sprinkler Discharge", null=True, blank=True)
     nozzle_diameter = models.DecimalField(max_digits=5, decimal_places=4, verbose_name="Nozzle Diameter (cm)", null=True, blank=True)
     operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True, blank=True)
-    discharge_coefficient = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Discharge Coefficient", null=True, blank=True, help_text="Common values: 0.95 - 0.98")
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
@@ -319,12 +379,17 @@ class Sprinkler(models.Model):
         return self.name
 
 class Farm(models.Model):
-    name = models.CharField(max_length=20)
-    province = models.CharField(max_length=50, null="True", blank="True")
-    municipality = models.CharField(max_length=50, null="True", blank="True")
-    brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True", blank="True")
-    lat = models.CharField(max_length=50, verbose_name="Latitude", null="True", blank="True")
-    long = models.CharField(max_length=50, verbose_name="Longitude", null="True", blank="True")
+    name = models.CharField(max_length=20, unique="True")
+    province = models.CharField(max_length=50, null="True")
+    municipality = models.CharField(max_length=50, null="True")
+    brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True")
+    yes_no = [
+        ("yes", 'Yes, I do!'),
+        ("no", 'No, I dont.'),
+    ]
+    select_coordinates = models.CharField(choices=yes_no, max_length=3, verbose_name="Do you have the coordinates of your farm?", null="True", blank=True)
+    lat = models.DecimalField(decimal_places=4, verbose_name="Latitude", null="True", blank="True", max_digits=6)
+    long = models.DecimalField(decimal_places=4, verbose_name="Longitude", null="True", blank="True", max_digits=7)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
@@ -338,14 +403,14 @@ class Farm(models.Model):
         return self.name
 
 class WAISSystems(models.Model):
-    name = models.CharField(max_length=50)
-    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm", null=True)
-    farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Farm Manager", null=True)
-    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True)
-    date_transplanted = models.DateField(verbose_name='Date Transplanted', null=True,)
-    soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True)
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True)
-    calib = models.ForeignKey(CalibrationConstant, on_delete=models.CASCADE, verbose_name="Calibration Equation", null=True)
+    name = models.CharField(max_length=50, unique=True, blank=True)
+    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm", null=True, blank=True)
+    farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Farm Manager", null=True, blank=True)
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True, blank=True)
+    date_transplanted = models.DateField(verbose_name='Date Transplanted', null=True, blank=True)
+    soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True, blank=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
+    calib = models.ForeignKey(CalibrationConstant, on_delete=models.CASCADE, verbose_name="Calibration Equation", null=True, blank=True)
     basin = models.ForeignKey(Basin, on_delete=models.CASCADE, verbose_name="Basin System", null=True, blank=True)
     border = models.ForeignKey(Border, on_delete=models.CASCADE, verbose_name="Border System", null=True, blank=True)
     furrow = models.ForeignKey(Furrow, on_delete=models.CASCADE, verbose_name="Furrow System", null=True, blank=True)

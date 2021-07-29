@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import login_required
 def index(request):
 	receivedmsgs = ReceivedMsgs.objects.all() #for message center
 	sentmsgs = SentMsgs.objects.all()
-	llist = sorted(chain(receivedmsgs, sentmsgs), key=attrgetter('timestamp'))
-	reversed_list =reversed(llist)
+	msgs_list = sorted(chain(receivedmsgs, sentmsgs), key=attrgetter('timestamp'))
+	reversed_list =reversed(msgs_list)
 	
 	current_user = request.user
 	form = WAISSystems.objects.filter(author=current_user) # for_dropdown_select_options
@@ -39,17 +39,33 @@ def index(request):
 	calib_eqn = calib.calib_equation
 
 	fieldunit = selected_system.fieldunit  # getting fieldunit variables
-	sensor_1 = Sensor.objects.all().filter(fieldunit=fieldunit)[:1]  # getting sensors
-	sensor_2 = Sensor.objects.all().filter(fieldunit=fieldunit)[1:2]
-	sensor_3 = Sensor.objects.all().filter(fieldunit=fieldunit)[2:3]
-
-	mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
-	mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2)
-	mc_3 = MoistureContent.objects.all().filter(sensor=sensor_3)
-
-	mc_1_sorted = sorted(mc_1, key=attrgetter('timestamp')) # sorting mc analog readings based on inputted datetime
-	mc_2_sorted = sorted(mc_2, key=attrgetter('timestamp'))
-	mc_3_sorted = sorted(mc_3, key=attrgetter('timestamp'))
+	query_sensors = Sensor.objects.all().filter(fieldunit=fieldunit)
+	num_sensors = len(query_sensors)
+	if num_sensors == 1:
+		sensor_1 = Sensor.objects.all().filter(fieldunit=fieldunit)[:1]
+		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
+		mc_1_sorted = sorted(mc_1, key=attrgetter('timestamp')) # sorting mc analog readings based on inputted datetime
+	if num_sensors == 2:
+		sensor_1 = Sensor.objects.all().filter(fieldunit=fieldunit)[:1]  # getting sensors
+		sensor_2 = Sensor.objects.all().filter(fieldunit=fieldunit)[1:2]
+		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
+		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2)
+		mc_1_sorted = sorted(mc_1, key=attrgetter('timestamp')) # sorting mc analog readings based on inputted datetime
+		mc_2_sorted = sorted(mc_2, key=attrgetter('timestamp'))
+	if num_sensors == 3:
+		sensor_1 = Sensor.objects.all().filter(fieldunit=fieldunit)[:1]  # getting sensors
+		sensor_2 = Sensor.objects.all().filter(fieldunit=fieldunit)[1:2]
+		sensor_3 = Sensor.objects.all().filter(fieldunit=fieldunit)[2:3]
+		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
+		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2)
+		mc_3 = MoistureContent.objects.all().filter(sensor=sensor_3)
+		mc_1_sorted = sorted(mc_1, key=attrgetter('timestamp')) # sorting mc analog readings based on inputted datetime
+		mc_2_sorted = sorted(mc_2, key=attrgetter('timestamp'))
+		mc_3_sorted = sorted(mc_3, key=attrgetter('timestamp'))
+	if num_sensors == 0:
+		error_msg_no_sensor_data = "Please add sensors!"
+	else: 
+		error_msg_excess_sensor_data = "Number of sensors is should be between 1 and 3 only. Please recheck your your database and delete the extra sensor."
 
 	mc_list = list(mc_1_sorted)	# for inserting rainfall data on the graph
 	rainfall = Rainfall.objects.all().filter(fieldunit=fieldunit)
@@ -87,9 +103,27 @@ def index(request):
 				gravimetric_collection.append(p_amount)
 				break
 	MC_TO_IRRIGATE = round((((soil_fc - soil_pwp)* crop_mad) + soil_pwp)*100, 2) # mc to initiate irrigation advisory
-	mci_1 = float(mc_1.latest().mc_data)
-	mci_2 = float(mc_2.latest().mc_data)
-	mci_3 = float(mc_3.latest().mc_data)
+	if len(mc_1) == 0:
+		depth_1 = ""
+		depth_2	= ""
+		depth_3	= ""
+		pass
+	else:
+		if num_sensors == 1:
+			mci_1 = float(mc_1.latest().mc_data)
+			depth_1 = float(sensor_1.get().depth)*1000
+		if num_sensors == 2:
+			mci_1 = float(mc_1.latest().mc_data)
+			mci_2 = float(mc_2.latest().mc_data)
+			depth_1 = float(sensor_1.get().depth)*1000
+			depth_2 = float(sensor_2.get().depth)*1000
+		if num_sensors == 3:
+			mci_1 = float(mc_1.latest().mc_data)
+			mci_2 = float(mc_2.latest().mc_data)
+			mci_3 = float(mc_3.latest().mc_data)
+			depth_1 = float(sensor_1.get().depth)*1000
+			depth_2 = float(sensor_2.get().depth)*1000
+			depth_3 = float(sensor_3.get().depth)*1000
 	
 	def calculateMC(mc_value): # Convert analog reading to MCv
 		float(mc_value)
@@ -132,27 +166,42 @@ def index(request):
 	series_pwp = []
 	series_mc_ave = []
 
-	for mc_obj in mc_1_sorted:
-		mc_value = float(mc_obj.mc_data)
-		mc_collection_1.append(calculateMC(mc_value))
-		series_fc.append(round(soil_fc*100, 2))
-		series_pwp.append(round(soil_pwp*100, 2))
-	
-	for mc_obj in mc_2_sorted:
-		mc_value = float(mc_obj.mc_data)
-		mc_collection_2.append(calculateMC(mc_value))
-	
-	for mc_obj in mc_3_sorted:
-		mc_value = float(mc_obj.mc_data)
-		mc_collection_3.append(calculateMC(mc_value))
-
-	mci_1 = calculateMC(mci_1)
-	mci_2 = calculateMC(mci_2)
-	mci_3 = calculateMC(mci_3)
-
-	depth_1 = float(sensor_1.get().depth)*1000
-	depth_2 = float(sensor_2.get().depth)*1000
-	depth_3 = float(sensor_3.get().depth)*1000
+	if len(mc_1) == 0:
+		pass
+	else:
+		if num_sensors == 1:
+			for mc_obj in mc_1_sorted:
+				mc_value = float(mc_obj.mc_data)
+				mc_collection_1.append(calculateMC(mc_value))
+				series_fc.append(round(soil_fc*100, 2))
+				series_pwp.append(round(soil_pwp*100, 2))
+			mci_1 = calculateMC(mci_1)
+		if num_sensors == 2:
+			for mc_obj in mc_1_sorted:
+				mc_value = float(mc_obj.mc_data)
+				mc_collection_1.append(calculateMC(mc_value))
+				series_fc.append(round(soil_fc*100, 2))
+				series_pwp.append(round(soil_pwp*100, 2))
+			for mc_obj in mc_2_sorted:
+				mc_value = float(mc_obj.mc_data)
+				mc_collection_2.append(calculateMC(mc_value))
+			mci_1 = calculateMC(mci_1)
+			mci_2 = calculateMC(mci_2)
+		if num_sensors ==3:
+			for mc_obj in mc_1_sorted:
+				mc_value = float(mc_obj.mc_data)
+				mc_collection_1.append(calculateMC(mc_value))
+				series_fc.append(round(soil_fc*100, 2))
+				series_pwp.append(round(soil_pwp*100, 2))
+			for mc_obj in mc_2_sorted:
+				mc_value = float(mc_obj.mc_data)
+				mc_collection_2.append(calculateMC(mc_value))
+			for mc_obj in mc_3_sorted:
+				mc_value = float(mc_obj.mc_data)
+				mc_collection_3.append(calculateMC(mc_value))
+			mci_1 = calculateMC(mci_1)
+			mci_2 = calculateMC(mci_2)
+			mci_3 = calculateMC(mci_3)
 
 	crop_model = crop.root_growth_model # for computation of the actual depth of rootzone
 	crop_drz = float(crop.drz)
@@ -191,53 +240,14 @@ def index(request):
 	
 	drz_collection = []
 
-	for mc_obj in mc_1_sorted:
-		mc_date = mc_obj.timestamp.date()
-		crop_dat = ((mc_date - crop_transplanted).days)
-		drz_collection.append(calculateDRZ(crop_dat))
-
-	drz = calculateDRZ(crop_dat)
-
-	def calculateMC_AVE(drz, mc_a, mc_b, mc_c): #Calculating average MCv
-		if drz <= depth_1:
-			mc_ave = mc_a
-		if drz > depth_1 and drz <= depth_2:
-			mc_ave = ((mc_a*depth_1) + (mc_b*(drz-depth_1)))/(drz)
-		else:
-			mc_ave = ((mc_a*depth_1) + (mc_b*(depth_2-depth_1)) + (mc_c*(depth_3-depth_2)))/(depth_3)
-		return round(mc_ave, 2)
-	
-	mc_ave_collection = []
-
-	for (drz, mc_a, mc_b, mc_c) in zip(drz_collection, mc_collection_1, mc_collection_2, mc_collection_3):
-		mc_ave_collection.append(calculateMC_AVE(drz, mc_a, mc_b, mc_c))
-
-	mc_ave = calculateMC_AVE(drz, mc_a, mc_b, mc_c)
-
-	def calculateFn(x, y): #Calculate net application depth (Fn)
-		if y > MC_TO_IRRIGATE:
-			net_application_depth = 0
-		else:
-			net_application_depth = float((soil_fc - y/100)*x)
-		return round(net_application_depth)
-
-	Fn_collection = []
-	
-	for (x, y) in zip(drz_collection, mc_ave_collection):
-		Fn_collection.append(calculateFn(x, y))
-	
-	net_application_depth = calculateFn(x, y)
-
-	#IRRIGATION SYSTEM
-
+	intake_family = soil.intake_family
+	irrigation_q = ""
 	basin = selected_system.basin
 	border = selected_system.border
 	furrow = selected_system.furrow
 	drip = selected_system.drip
 	sprinkler = selected_system.sprinkler
-
 	if furrow != None or basin != None or border != None:
-		intake_family = soil.intake_family
 		cons_c = 7.0
 		rate = 0.05
 		if intake_family == "clay_005":
@@ -278,165 +288,219 @@ def index(request):
 		cons_b = round(0.0524*math.log(rate) + 0.7822, 3)
 		cons_f = round(1.7926*rate + 7.0715, 2)
 		cons_g = round (0.0003*rate + 0.00009, 7)
-	#BASIN
-	ea = 0
 	if basin != None:
 		irrigation_q = basin.discharge
-		if net_application_depth == 0:
-			irrigation_period = 0
-			total_volume = 0
-		else:
-			unit_discharge =  float(irrigation_q/1000)
-			basin_length = float(basin.basin_length)
-			ea = float(basin.ea)
-
-			if ea == 95:
-				R = 0.16
-			if ea == 90:
-				R = 0.28
-			if ea == 85:
-				R =	0.4
-			if ea == 80:
-				R = 0.58
-			if ea == 75:
-				R = 0.8
-			if ea == 70:
-				R = 1.08
-			if ea == 0.65:
-				R = 1.45
-			if ea == 60:
-				R = 1.9
-			if ea == 0.55:
-				R = 2.45
-			if ea == 50:
-				R = 3.2
-
-			inflow_time = ((net_application_depth * basin_length)/(600.0*ea*unit_discharge))
-			net_opportunity_time = ((net_application_depth - cons_c)/cons_a)**(1.0/cons_b)
-			advanced_time = (net_opportunity_time * R)
-			
-			print(inflow_time, advanced_time)
-			if inflow_time >= advanced_time:
-				irrigation_period = (inflow_time)
-			else:
-				irrigation_period = (advanced_time)
-			
-			total_volume = irrigation_period * unit_discharge*60*1000
-
-	#FURROW
 	if furrow != None:
 		irrigation_q = furrow.discharge
-		slope = float(furrow.area_slope)
-		furrow_spacing = float(furrow.furrow_spacing)
-		furrow_length = float(furrow.furrow_length)
-		mannings_coeff = float(furrow.mannings_coeff)
-		discharge = float(irrigation_q)
-		bln_open = furrow.bln_furrow_type
-		P_adj = round(0.265*(discharge*mannings_coeff/slope**0.5)**0.425 + 0.227, 4)
-
-		if net_application_depth == 0:
-			net_opportunity_time = 0
-			advanced_time = 0
-			irrigation_period = 0
-		else:
-			net_opportunity_time = (((net_application_depth*(furrow_spacing/P_adj))-cons_c)/cons_a)**(1/cons_b)
-			if bln_open:
-				irrigation_period = net_opportunity_time
-			else:
-				beta = (cons_g * furrow_length)/(discharge*slope**0.5)
-				advanced_time = (furrow_length*(math.e)**beta)/cons_f
-				irrigation_period = net_opportunity_time + advanced_time
-		
-		irrigation_period = round((irrigation_period), 2)
-		total_volume = irrigation_period * discharge * 60
-
-	#BORDER
 	if border != None:
-		intake_family = soil.intake_family
-		So = float(border.area_slope)
-		Fn = net_application_depth
-		n = border.mannings_coeff
-		Tn = ((Fn - cons_c)/cons_a)**(1/cons_b)
-		Qu = border.discharge
-		if slope <= 0.004:
-			Tl = ((Qu**0.2)*n)/120*[So+[(0.0094*n*Qu**0.175/[(Tn**0.88)*(So**0.5)])**1.6]]
-		if slope > 0.004:
-			Tl = (Qu**0.2)*(n**1.2)/(120*So**1.6)
-		irrigation_period = Tn - Tl
-
-	#SPRINKLER
+		irrigation_q = border.discharge
+		Qu = irrigation_q
 	if sprinkler != None:
-		Sl = float(sprinkler.sprinkler_spacing)
-		Sm = float(sprinkler.lateral_spacing)
-		ea = float(sprinkler.ea)/100
-		if sprinkler.bln_sprinkler_discharge == "Yes":
-			d = float(sprinkler.nozzle_diameter)
-			P = float(sprinkler.operating_pressure)
-			C = float(sprinkler.discharge_coefficient)
-			q = 0.1109543178 * C * d**2 * P**0.5 #original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)
-		else:
-			q = float(irrigation_q)
-		
-		Etcrop = float(crop.peak_Etcrop)
-		irrigation_interval = round(net_application_depth/Etcrop)
-		gross_application_depth = net_application_depth/ea
-		#if discharge is known
-		application_rate = q*3600/(Sl*Sm) #mm/hr
-		irrigation_period = round((gross_application_depth/application_rate)*60,2) #(min) time of operation
-		total_volume = round(q * irrigation_period * 60)
-		intake_family = None
-	#END
-	area_shaded = 0
-	q= 0
-	#DRIP
+		irrigation_q = sprinkler.discharge
 	if drip != None:
-		area_shaded = len(PercentShaded.objects.filter(fieldunit=fieldunit))
-		print(area_shaded)
-		if area_shaded == 0:
-			area_shaded = float(20)
-		else:
-			area_shaded = PercentShaded.objects.filter(fieldunit=fieldunit).latest().area_shaded
-		q = float(drip.discharge)
-		bln_single_lateral = drip.bln_single_lateral
-		bln_ii = drip.bln_ii
-		Np = float(drip.emitters_per_plant)
-		Se = float(drip.emitter_spacing)
-		Sp = float(drip.plant_spacing)
-		So = float(drip.row_spacing)
-		w = float(drip.wetted_dia)
-		eu = float(drip.EU)
-		Etcrop = float(crop.peak_Etcrop)
-		transpiration_ratio = float(crop.transpiration_ratio)
-		Pd = float(area_shaded/100)
+		irrigation_q = drip.discharge
+	ea = ""
+	crop_dat = 0
+	mc_ave_collection = []
+	Fn_collection = []
+	drz = ""
+	mci_1 = ""
+	mci_2 = ""
+	mci_3 = ""
+	mc_ave = ""
+	net_application_depth = ""
+	irrigation_period = ""
+	total_volume = ""
+	area_shaded = ""
+	if len(mc_1) == 0:
+		pass
+	else:
+		for mc_obj in mc_1_sorted:
+			mc_date = mc_obj.timestamp.date()
+			crop_dat = ((mc_date - crop_transplanted).days)
+			drz_collection.append(calculateDRZ(crop_dat))
+
+		drz = calculateDRZ(crop_dat)
+
+		def calculateMC_AVE(drz, mc_a, mc_b, mc_c): #Calculating average MCv
+			if drz <= depth_1:
+				mc_ave = mc_a
+			if drz > depth_1 and drz <= depth_2:
+				mc_ave = ((mc_a*depth_1) + (mc_b*(drz-depth_1)))/(drz)
+			else:
+				mc_ave = ((mc_a*depth_1) + (mc_b*(depth_2-depth_1)) + (mc_c*(depth_3-depth_2)))/(depth_3)
+			return round(mc_ave, 2)
+
+		for (drz, mc_a, mc_b, mc_c) in zip(drz_collection, mc_collection_1, mc_collection_2, mc_collection_3):
+			mc_ave_collection.append(calculateMC_AVE(drz, mc_a, mc_b, mc_c))
+
+		mc_ave = calculateMC_AVE(drz, mc_a, mc_b, mc_c)
+
+		def calculateFn(x, y): #Calculate net application depth (Fn)
+			if y > MC_TO_IRRIGATE:
+				net_application_depth = 0
+			else:
+				net_application_depth = float((soil_fc - y/100)*x)
+			return round(net_application_depth)
+
 		
-		if bln_single_lateral:
-			Pw = (Np*Se*w/(Sp*So))
-		else:
-			Se = 0.8*Se
-			Pw = (Np*Se*(Se + w)/(2*Sp*So))
+		for (x, y) in zip(drz_collection, mc_ave_collection):
+			Fn_collection.append(calculateFn(x, y))
+		
+		net_application_depth = calculateFn(x, y)
 
-		net_application_depth = net_application_depth * Pw
-		gross_application_depth = net_application_depth*transpiration_ratio/eu
+		#IRRIGATION SYSTEM
+		#BASIN
+		if basin != None:
+			if net_application_depth == 0:
+				irrigation_period = 0
+				total_volume = 0
+			else:
+				unit_discharge =  float(irrigation_q/1000)
+				basin_length = float(basin.basin_length)
+				ea = float(basin.ea)
 
-		if bln_ii:
-			irrigation_interval = float(drip.irrigation_interval)
-		else:
-			Td = Etcrop*(Pd + 0.15*(1 - Pd))
-			irrigation_interval = net_application_depth/Td
-		gross_volume_per_plant = (gross_application_depth*Sp*So/irrigation_interval) #(L/day)
-		irrigation_period = (gross_volume_per_plant/(Np*q))*24*60
-		total_volume = gross_volume_per_plant
-		intake_family = None
-		irrigation_q = q
+				if ea == 95:
+					R = 0.16
+				if ea == 90:
+					R = 0.28
+				if ea == 85:
+					R =	0.4
+				if ea == 80:
+					R = 0.58
+				if ea == 75:
+					R = 0.8
+				if ea == 70:
+					R = 1.08
+				if ea == 0.65:
+					R = 1.45
+				if ea == 60:
+					R = 1.9
+				if ea == 0.55:
+					R = 2.45
+				if ea == 50:
+					R = 3.2
+
+				inflow_time = ((net_application_depth * basin_length)/(600.0*ea*unit_discharge))
+				net_opportunity_time = ((net_application_depth - cons_c)/cons_a)**(1.0/cons_b)
+				advanced_time = (net_opportunity_time * R)
+				
+				print(inflow_time, advanced_time)
+				if inflow_time >= advanced_time:
+					irrigation_period = (inflow_time)
+				else:
+					irrigation_period = (advanced_time)
+				
+				total_volume = irrigation_period * unit_discharge*60*1000
+
+		#FURROW
+		if furrow != None:
+			slope = float(furrow.area_slope)
+			furrow_spacing = float(furrow.furrow_spacing)
+			furrow_length = float(furrow.furrow_length)
+			mannings_coeff = float(furrow.mannings_coeff)
+			discharge = float(irrigation_q)
+			bln_open = furrow.bln_furrow_type
+			P_adj = round(0.265*(discharge*mannings_coeff/slope**0.5)**0.425 + 0.227, 4)
+
+			if net_application_depth == 0:
+				net_opportunity_time = 0
+				advanced_time = 0
+				irrigation_period = 0
+			else:
+				net_opportunity_time = (((net_application_depth*(furrow_spacing/P_adj))-cons_c)/cons_a)**(1/cons_b)
+				if bln_open:
+					irrigation_period = net_opportunity_time
+				else:
+					beta = (cons_g * furrow_length)/(discharge*slope**0.5)
+					advanced_time = (furrow_length*(math.e)**beta)/cons_f
+					irrigation_period = net_opportunity_time + advanced_time
+			
+			irrigation_period = round((irrigation_period), 2)
+			total_volume = irrigation_period * discharge * 60
+
+		#BORDER
+		if border != None:
+			So = float(border.area_slope)
+			Fn = net_application_depth
+			n = border.mannings_coeff
+			Tn = ((Fn - cons_c)/cons_a)**(1/cons_b)
+			if slope <= 0.004:
+				Tl = ((Qu**0.2)*n)/120*[So+[(0.0094*n*Qu**0.175/[(Tn**0.88)*(So**0.5)])**1.6]]
+			if slope > 0.004:
+				Tl = (Qu**0.2)*(n**1.2)/(120*So**1.6)
+			irrigation_period = Tn - Tl
+
+		#SPRINKLER
+		if sprinkler != None:
+			Sl = float(sprinkler.sprinkler_spacing)
+			Sm = float(sprinkler.lateral_spacing)
+			ea = float(sprinkler.ea)/100
+			if sprinkler.bln_sprinkler_discharge == "Yes":
+				d = float(sprinkler.nozzle_diameter)
+				P = float(sprinkler.operating_pressure)
+				C = float(sprinkler.discharge_coefficient)
+				q = 0.1109543178 * C * d**2 * P**0.5 #original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)
+			else:
+				q = float(irrigation_q)
+			
+			Etcrop = float(crop.peak_Etcrop)
+			irrigation_interval = round(net_application_depth/Etcrop)
+			gross_application_depth = net_application_depth/ea
+			#if discharge is known
+			application_rate = q*3600/(Sl*Sm) #mm/hr
+			irrigation_period = round((gross_application_depth/application_rate)*60,2) #(min) time of operation
+			total_volume = round(q * irrigation_period * 60)
+			intake_family = None
+		#END
+		#DRIP
+		if drip != None:
+			area_shaded = len(PercentShaded.objects.filter(fieldunit=fieldunit))
+			print(area_shaded)
+			if area_shaded == 0:
+				area_shaded = float(20)
+			else:
+				area_shaded = PercentShaded.objects.filter(fieldunit=fieldunit).latest().area_shaded
+			q = float(drip.discharge)
+			bln_single_lateral = drip.bln_single_lateral
+			bln_ii = drip.bln_ii
+			Np = float(drip.emitters_per_plant)
+			Se = float(drip.emitter_spacing)
+			Sp = float(drip.plant_spacing)
+			So = float(drip.row_spacing)
+			w = float(drip.wetted_dia)
+			eu = float(drip.EU)
+			Etcrop = float(crop.peak_Etcrop)
+			transpiration_ratio = float(crop.transpiration_ratio)
+			Pd = float(area_shaded/100)
+			
+			if bln_single_lateral:
+				Pw = (Np*Se*w/(Sp*So))
+			else:
+				Se = 0.8*Se
+				Pw = (Np*Se*(Se + w)/(2*Sp*So))
+
+			net_application_depth = net_application_depth * Pw
+			gross_application_depth = net_application_depth*transpiration_ratio/eu
+
+			if bln_ii:
+				irrigation_interval = float(drip.irrigation_interval)
+			else:
+				Td = Etcrop*(Pd + 0.15*(1 - Pd))
+				irrigation_interval = net_application_depth/Td
+			gross_volume_per_plant = (gross_application_depth*Sp*So/irrigation_interval) #(L/day)
+			irrigation_period = (gross_volume_per_plant/(Np*q))*24*60
+			total_volume = gross_volume_per_plant
+			intake_family = None
 		
 	#FOR DISPLAY
-	net_application_depth = round(net_application_depth, 2)
-	irrigation_period = round(irrigation_period)
+		net_application_depth = round(net_application_depth, 2)
+		irrigation_period = round(irrigation_period)
+		total_volume = round(total_volume)
 	soil_fc = soil.fc
 	soil_pwp = soil.pwp
 	crop_mad = round(crop.mad * 100)
-	total_volume = round(total_volume)
-	
+		
 	context = {
 		"final_list": reversed_list,
 		"form": form,

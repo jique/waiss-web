@@ -3,73 +3,188 @@
 {% load crispy_forms_tags %}
 
 {% block form_block %}
-            <div class="progress_bar">
-                <div class="pro-bar">
-                    <small class="progress_bar_title">
-                        Farm | Personnel | Crop | Soil | <span style="color: #1abc9c; font-size: large;"><b>Calibration</b></span>
-                        <span class="progress_number">50%</span>
-                    </small>
-                    <span class="progress-bar-inner" style="background-color: #1abc9c; width: 50%;" data-value="50" data-percentage-value="50"></span>
-                </div>
+<div class="progress_bar">
+    <div class="pro-bar">
+        <small class="progress_bar_title">
+            Farm | Personnel | Crop | Soil | <span style="color: #1abc9c; font-size: large;"><b>Calibration</b></span>
+            <span class="progress_number">55%</span>
+        </small>
+        <span class="progress-bar-inner" style="background-color: #1abc9c; width: 55%;" data-value="55" data-percentage-value="55"></span>
+    </div>
+</div>
+<div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
+    <div class="card-header rounded-0 border-0"><small>Sensors Calibration Equation</small></div>
+      <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                {% if calib_list %}
+                <form method="post" class="form-group">
+                    {% csrf_token %}
+                    <small>Existing Calibration Equations </small>
+                    <select class="form-control" id="selected_calib" name="selected_calib">
+                      <option value="">{{selected_calib}}</option>
+                      {% for calib in calib_list %}
+                      <option value="{{calib.name}}">{{calib.name}}</option>
+                      {% endfor %}
+                    </select>
+                    <small class="text-danger float-right"><i>{{error_msg}}</i></small>
+                    <hr>
+                    <p class="text-right">
+                      <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData"></input>
+                    </p>
+                </form>
+                {% endif %}
             </div>
-            <div class="card">
-              <form class="form-group" action="" method="post">
-                {% csrf_token %}
-                <div class="card-header">
-                    <small><i>Calibration Equation & Coefficients</i></small>
+            <div class="col">
+                <form method="post" class="from-group form-group-sm">
+                  {% csrf_token %}
+                  <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+                  <div class="row">
+                      <div class="col">{{calib_form.name|as_crispy_field}}</div>
+                  </div>
+                  <div class="row">
+                      <div class="col">{{calib_form.calib_equation|as_crispy_field}}</div>
+                  </div>
+                  <div class="row">
+                      <div class="col-4"></div>
+                      <div class="col">
+                          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div id="collapse1" class="panel-collapse collapse active" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                        <small><b>MC<sub>v</sub> = a * (reading) + b</b></small><hr>
+                                        {{calib_form.coeff_a|as_crispy_field}}
+                                        {{calib_form.coeff_b|as_crispy_field}} <hr>
+                                        </div>
+                                    </div>
+                              </div>
+                              <div class="panel panel-default">
+                                <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        <small><b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></small><hr>
+                                        {{calib_form.coeff_a|as_crispy_field}}
+                                        {{calib_form.coeff_b|as_crispy_field}}
+                                        {{calib_form.coeff_c|as_crispy_field}}<hr>
+                                    </div>
+                                </div>
+                              </div>
+                                <div class="panel panel-default">
+                                    <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                        <div class="panel-body">
+                                            <small><b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></small><hr>
+                                            {{calib_form.coeff_a|as_crispy_field}}
+                                            {{calib_form.coeff_b|as_crispy_field}}<hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                  <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                        <div class="panel-body">
+                                            <small><b>MC<sub>v</sub> = a * ln(reading) + b</b></small><hr>
+                                            {{calib_form.coeff_a|as_crispy_field}}
+                                            {{calib_form.coeff_b|as_crispy_field}}<hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                        <div class="panel-body">
+                                            <small><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></small><hr>
+                                            {{calib_form.coeff_a|as_crispy_field}}
+                                            {{calib_form.coeff_b|as_crispy_field}}
+                                            {{calib_form.coeff_c|as_crispy_field}}
+                                            {{calib_form.coeff_d|as_crispy_field}}<hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div id="collapse6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                        <div class="panel-body">
+                                            <small><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></small><hr>
+                                            {{calib_form.coeff_a|as_crispy_field}}
+                                            {{calib_form.coeff_b|as_crispy_field}}
+                                            {{calib_form.coeff_c|as_crispy_field}}
+                                            {{calib_form.coeff_d|as_crispy_field}}
+                                            {{calib_form.coeff_m|as_crispy_field}}<hr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col">{{calib_form.date_tested|as_crispy_field}}</div>
                 </div>
-                <div class="card-body">
-                  <div class="row">
-                      <div class="col-7">{{calib_form.name|as_crispy_field}}</div>
-                  </div>
-                  <div class="row">
-                      <div class="col-7">{{calib_form.calib_equation|as_crispy_field}}</div>
-                      <div class="col"><br><span class="text-success"><small><b>Equation Standard Form</b></small></span></div>
-                  </div>
-                  <div class="col">
-                      <div class="row">
-                          <div class="col-7">{{calib_form.coeff_a|as_crispy_field}}</div>
-                          <div class="col"><small><i>Linear: MC<sub>v</sub> = a(reading) + b<br>
-                            Quadratic: MC<sub>v</sub> = a(reading)<sup>2</sup> + b(reading) + c</i></small>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-7">{{calib_form.coeff_b|as_crispy_field}}</div>
-                          <div class="col"><small><i>Exponential: MC<sub>v</sub> = ae<sup>b</sup>(reading)<br>
-                            Logarithmic: MC<sub>v</sub> = aln(reading) + b</i></small>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-7">{{calib_form.coeff_c|as_crispy_field}}</div>
-                          <div class="col"><small><i>Symmetrical Sigmoidal: MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</i></small>
-                              <br><small><i>Assymmetrical Sigmoidal: <br>
-                                MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></i></small>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-7">{{calib_form.coeff_d|as_crispy_field}}</div>
-                      </div>
-                      <div class="row">
-                          <div class="col-7">{{calib_form.coeff_m|as_crispy_field}}</div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-7">{{calib_form.date_tested|as_crispy_field}}</div>
-                  </div>
-                  <div class="row">
-                      <div class="col-7">{{calib_form.tested_by|as_crispy_field}}</div>
-                  </div>
-                  <div class="row">
-                      <div class="col-7">{{calib_form.errors}}</div>
-                  </div>
-              </div>
-          </div>
-          <br>
-          <div class="text-center">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_soil' %} style="color:white">Previous</a></button>
-            <input type="submit" value="Submit" class="btn btn-info">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_irrigation' %} style="color:white">Next</a></button>
-          </div>
-        </form>
-      </div>
+                <div class="row">
+                    <div class="col">{{calib_form.tested_by|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{calib_form.errors}}</div>
+                </div>
+                <div class="text-right">
+                    <button type="button" class="btn btn-success"><a href={% url 'waiss:new_soil' %} style="color:white">Previous</a></button>
+                    <input type="submit" value="Submit" class="btn btn-info" name='btn_submit'>
+                    <button type="button" class="btn btn-success"><a href={% url 'waiss:new_irrigation' %} style="color:white">Next</a></button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+<script>
+    $( document ).ready(function() {
+        showHide();
+        $("#id_calib_equation").change(function () {
+                showHide();
+        });
+    });
+    function showHide() {
+        var checkedValue = $("#id_calib_equation").val();
+            if (checkedValue == "linear") {
+                $("#collapse1").collapse('show');
+                $("#collapse2").collapse('hide');
+                $("#collapse3").collapse('hide');
+                $("#collapse4").collapse('hide');
+                $("#collapse5").collapse('hide');
+                $("#collapse6").collapse('hide');
+            } else if (checkedValue == "quadratic") {
+                $("#collapse1").collapse('hide');
+                $("#collapse2").collapse('show');
+                $("#collapse3").collapse('hide');
+                $("#collapse4").collapse('hide');
+                $("#collapse5").collapse('hide');
+                $("#collapse6").collapse('hide');
+            } else if (checkedValue == "exponential") {
+                $("#collapse1").collapse('hide');
+                $("#collapse2").collapse('hide');
+                $("#collapse3").collapse('show');
+                $("#collapse4").collapse('hide');
+                $("#collapse5").collapse('hide');
+                $("#collapse6").collapse('hide');
+            } else if (checkedValue == "logarithmic") {
+                $("#collapse1").collapse('hide');
+                $("#collapse2").collapse('hide');
+                $("#collapse3").collapse('hide');
+                $("#collapse4").collapse('show');
+                $("#collapse5").collapse('hide');
+                $("#collapse6").collapse('hide');
+            } else if (checkedValue == "symmetrical sigmoidal") {
+                $("#collapse1").collapse('hide');
+                $("#collapse2").collapse('hide');
+                $("#collapse3").collapse('hide');
+                $("#collapse4").collapse('hide');
+                $("#collapse5").collapse('show');
+                $("#collapse6").collapse('hide');
+            } else if (checkedValue == "asymmetrical sigmoidal") {
+                $("#collapse1").collapse('hide');
+                $("#collapse2").collapse('hide');
+                $("#collapse3").collapse('hide');
+                $("#collapse4").collapse('hide');
+                $("#collapse5").collapse('hide');
+                $("#collapse6").collapse('show');
+            }
+        };
+</script>
 {% endblock %}

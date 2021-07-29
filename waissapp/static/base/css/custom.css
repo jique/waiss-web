@@ -1,0 +1,46 @@
+/* your styles go here */
+#main-logo {
+    width: 220px;
+}
+#small-logo {
+    width: 180px;
+}
+.stakeholder-icon{
+    width: 150px;
+}
+
+.side-pic{
+    height: 400px;
+}
+
+.credits{
+    font-size: 7px !important;
+}
+
+.notes{
+    font-size: 10px;
+}
+
+html, body {
+    overflow-x: hidden !important;
+} 
+
+.overlay{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background: rgba(255,255,255,0.8) url('../img/photos/Ellipsis-3.6s-200px.gif') center no-repeat;
+}
+/* Turn off scrollbar when body element has the loading class */
+body.loading{
+  overflow: hidden;   
+}
+/* Make spinner image visible when body element has the loading class */
+body.loading .overlay{
+  display: block;
+}
+  

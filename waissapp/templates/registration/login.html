@@ -1,55 +1,51 @@
-{% extends 'waissapp/sarai-header.html'%}
+{% extends 'waissapp/home_page.html'%}
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block waiss_nav_block %}
+{% block title_block %}
+WAISS Login
+{% endblock %}
+{% block collapse_button %}
 {% endblock %}
 
-{% block header_block %}
-{% endblock %}
-
-{% block form_block %}
-<div class="card col-9 mx-auto border-0">
-  <div class="card-body p-0">
-    <!-- Nested Row within Card Body -->
-    <div class="row">
-      <div class="col-lg-6 d-none d-lg-block rounded">
-        <img src={% static "theme/fieldunit.jpg" %} width="458px" class="rounded-left">
-      </div>
-      <div class="col-lg-6 border rounded-right">
-        <div class="p-5">
-          <div class="text-center">
-            <img width=70px height=70px src={% static "theme/waiss_logo.png" %}>
-            <br><br>
-            <h1 class="h4 text-gray-900 mb-4">Welcome Back, WAISS farmer!</h1>
-          </div>
-          {% if form.errors %}
-          <p>Your username and password didn't match. Please try again.</p>
-          {% endif %}
-
-          {% if next %}
-            {% if user.is_authenticated %}
-              <p>Your account doesn't have access to this page. To proceed,
-              please login with an account that has access.</p>
-            {% else %}
-              <p>Please login to see this page.</p>
-            {% endif %}
-          {% endif %}
-
-          <form class="user" method="post" action={% url 'login' %}>
-            {% csrf_token %}
-              <div>
-                {{ form|crispy }}
+{% block sections_block %}
+<section style="background: url(/static/base/imgs/corns.jpg) center center repeat; background-size: cover;" class="bar background-white relative-positioned">
+  <div class="container">
+      <!-- Carousel Start-->
+      <div class="home-carousel">
+          <div class="dark-mask mask-primary"></div>
+          <div class="container">
+            <div class="item">
+              <div class="row">
+                <div class="col-md-7 text-center">
+                  <img src=/static/base/imgs/laptop-2.png alt="" class="img-fluid">
+                  <h3>Water Advisory For Irrigation Scheduling System</h3>
+                  <p>Smart. Accurate. Innovation.<br>Easy. User-friendly. Accessible.</p>
+                </div>
+                <div class="col-md-4 border rounded" style="background-color: rgba(251, 251, 251, 0.5)">
+                  <div class="container">
+                    <div class="text-center"><br>
+                      <h4>Welcome Back, WAISS farmer!</h4><br>
+                    </div>
+                    <form class="form-group" method="post" action={% url 'login' %}>
+                      {% csrf_token %}
+                        <div>
+                          {{ form|crispy }}
+                        </div>
+                      <hr>
+                      <input type="submit" value="Login" class="btn btn-info btn-user btn-block" />
+                      <input type="hidden" name="next" value="{{ next }}" />
+                    </form>
+                    <div class="text-center"><a class="small" href={% url 'password_reset' %}>Forgot Password?</a></div>
+                    <div class="text-center"><a class="small" href={% url 'waiss:register' %}>Create an Account!</a></div>
+                    <br>
+                  </div>
+                </div>
               </div>
-            <hr>
-            <input type="submit" value="Login" class="btn btn-info btn-user btn-block" />
-            <input type="hidden" name="next" value="{{ next }}" />
-          </form>
-          <div class="text-center"><a class="small" href={% url 'password_reset' %}>Forgot Password?</a></div>
-          <div class="text-center"><a class="small" href={% url 'waiss:register' %}>Create an Account!</a></div>
+          </div>
+        </div>
       </div>
-    </div>
+    </div>    
   </div>
-</div>
-
+</section>
 {% endblock %}
