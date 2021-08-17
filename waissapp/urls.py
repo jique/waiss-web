@@ -10,7 +10,6 @@ urlpatterns = [
      path('about/', views.about, name='about'),
      path('about-the-calculations/', views.about_calc, name='about_calc'),
      path('', views.home, name='home_page'),
-     path('waiss/', views.home_waiss, name='home_page_waiss'),
      
      #FIELDUNIT_PARAMETERS
      path('new_fieldunit/', views.new_fieldunit, name='new_fieldunit'),
@@ -42,7 +41,6 @@ urlpatterns = [
      path('list_personnel/', views.list_personnel, name='list_personnel'),
      path('edit_personnel/<str:id>/update', views.edit_personnel, name='edit_personnel'),
 
-    
      #CROP_PARAMETERS
      path('new_crop/', views.new_crop, name='new_crop'),
      path('list_crop/', views.list_crop, name='list_crop'),

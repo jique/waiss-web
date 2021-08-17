@@ -56,15 +56,13 @@ class SoilInline(admin.TabularInline):
     model = Soil
 
 class SoilAdmin(admin.ModelAdmin):
-    list_display = ('soiltype', 'fc', 'pwp', 'source', 'timestamp')
+    list_display = ('soiltype', 'fc', 'pwp', 'bln_surface_irrigation', 'intake_family', 'source', 'author', 'personal', 'timestamp')
     ordering = ["soiltype"]
 
 class CropInline(admin.TabularInline):
     model = Crop
-    list_display =('crop', 'mad', 'growingperiod', 'drz', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3', 'timestamp')
-
 class CropAdmin(admin.ModelAdmin):
-    list_display =('crop', 'mad', 'growingperiod', 'drz', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3', 'timestamp')
+    list_display =('crop', 'mad', 'growingperiod', 'drz', 'root_growth_model', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3', 'author', 'personal', 'timestamp')
     ordering = ['crop',]
 
 class CalibrationConstantInline(admin.TabularInline):
@@ -77,7 +75,7 @@ class WAISSystemsInline(admin.TabularInline):
     model = WAISSystems
     
 class WAISSystemsAdmin(admin.ModelAdmin):
-    list_display =('name', 'farm', 'farm_manager', 'crop', 'date_transplanted', 'soil', 'fieldunit', 'calib', 'basin', 'border', 'furrow', 'drip', 'sprinkler', 'timestamp')
+    list_display =('name', 'farm', 'farm_manager', 'crop', 'date_transplanted', 'soil', 'fieldunit', 'calib', 'basin', 'border', 'furrow', 'drip', 'sprinkler', 'author', 'personal', 'timestamp')
 
 class PercentShadedInline(admin.TabularInline):
     model = PercentShaded

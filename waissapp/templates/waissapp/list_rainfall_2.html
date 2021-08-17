@@ -21,8 +21,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <small><em>Are you sure you want to delete rainfall <b>"{{rainfall.name}}"</b>?<br>
-            Deleting <b>"{{rainfall.name}}"</b> will also delete the systems where it is used.</em></small>
+            <small><em>Are you sure you want to delete rainfall <b>{{rainfall.amount}} mm [{{rainfall.timestamp}}]</b> from {{rainfall.fieldunit}}?</em></small>
         </div>
         <div class="modal-footer">
             <form class="form-group" action="" method="post">

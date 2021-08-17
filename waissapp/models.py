@@ -8,7 +8,7 @@ class Personnel(models.Model):
     last_name = models.CharField(max_length=30, null=True)
     number = models.IntegerField(null=True)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
 
@@ -33,7 +33,7 @@ class FieldUnit(models.Model):
     delay = models.IntegerField(verbose_name='Sending Delay (ms)', null=True, blank=True)
     clockcorrection = models.IntegerField(verbose_name='Clock Correction (s)', null=True, blank=True)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
 
@@ -45,7 +45,7 @@ class FieldUnit(models.Model):
 
 class Sensor(models.Model):
     name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True, unique=True)
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True, blank=True)
     depth = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Depth, m", null=True)
 
     def __str__(self):
@@ -56,8 +56,8 @@ class Sensor(models.Model):
         ordering = ('name',)
 
 class MoistureContent(models.Model):
-    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, null=True)
-    timestamp = models.DateTimeField(verbose_name='Date & Time Measured', null=True, help_text="Format: mm/dd/yyyy hh:mm")
+    sensor = models.ForeignKey(Sensor, on_delete=models.SET_NULL, null=True)
+    timestamp = models.DateTimeField(verbose_name='Date & Time Measured', null=True)
     mc_data = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Analog Reading", null=True)
 
     class Meta:
@@ -108,11 +108,15 @@ class Soil(models.Model):
         (sandy_15 , 'sandy (1.5)'),
         (sandy_20 , 'sandy (2.0)')
     ]
-    bln_surface_irrigation = models.BooleanField(default=False)
-    intake_family = models.CharField(max_length=30,choices=choices,verbose_name="Intake Family",null=True, blank=True, help_text="The number indicates the intake rate of the soil. Required for surface irrigations- basin, border, and furrow.")
+    yes_no = [
+        ("yes", 'Yes, I will!'),
+        ("no", 'No, I wont.'),
+    ]
+    bln_surface_irrigation = models.CharField(choices=yes_no, max_length=3, verbose_name="Are you going to use a surface irrigation system (e.g. basin, border, furrow)?", null="True")
+    intake_family = models.CharField(max_length=30,choices=choices,verbose_name="Intake Family",null=True, blank=True, help_text="The number indicates the intake rate of the soil.")
     source = models.CharField(max_length=30, verbose_name="Data Source", null=True, blank=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
 
     def __str__(self):
@@ -147,7 +151,7 @@ class CalibrationConstant(models.Model):
     date_tested = models.DateTimeField(verbose_name='Date Calibrated', null=True, blank=True)
     tested_by = models.CharField(max_length=30, verbose_name="Tested By", null=True, blank=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
 
     def __str__(self):
@@ -173,7 +177,7 @@ class Crop(models.Model):
         ("yes", 'Yes, I will!'),
         ("no", 'No, I wont.'),
     ]
-    select_drip = models.CharField(choices=yes_no, max_length=3, verbose_name="Are you going to use a drip irrigation system?", null="True", blank=True)
+    select_drip = models.CharField(choices=yes_no, max_length=3, verbose_name="Are you going to use a drip irrigation system?", null="True")
     peak_Etcrop = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm/day)", null=True, blank=True)
     transpiration_ratio = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Transpiration Ratio", null=True, blank=True)
    
@@ -197,7 +201,7 @@ class Crop(models.Model):
 
 
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     
     class Meta:
@@ -238,7 +242,7 @@ class Basin(models.Model):
     ]
     ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     
     class Meta:
@@ -268,7 +272,7 @@ class Furrow(models.Model):
     furrow_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Spacing", null=True)
     furrow_length = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Length", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     
     class Meta:
@@ -295,7 +299,7 @@ class Border(models.Model):
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True, blank=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     
     class Meta:
@@ -325,11 +329,15 @@ class Drip(models.Model):
     plant_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Plant spacing (m)", null=True)
     row_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Row spacing (m)", null=True)
     wetted_dia = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Wetted diameter (m)", null=True)
-    bln_ii = models.BooleanField(verbose_name="Has preferred irrigation interval", null=True)
+    yes_or_no = [
+        ("yes", 'Yes, I do!'),
+        ("no", 'No, I dont.'),
+    ]
+    bln_ii = models.CharField(choices=yes_or_no, max_length=6, verbose_name="Has preferred irrigation interval", null=True)
     irrigation_interval = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Irrigation Interval (days)", null=True, blank=True, help_text="Fillout only if you have preferred irrigation interval based on your farm schedule.")
     EU = models.DecimalField(max_digits=3, decimal_places=3, verbose_name="Design Emission Uniformity", null=True, blank=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True)
     personal = models.BooleanField(default=True)
     
     class Meta:
@@ -370,7 +378,7 @@ class Sprinkler(models.Model):
     nozzle_diameter = models.DecimalField(max_digits=5, decimal_places=4, verbose_name="Nozzle Diameter (cm)", null=True, blank=True)
     operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True, blank=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     
     class Meta:
@@ -390,7 +398,7 @@ class Farm(models.Model):
     select_coordinates = models.CharField(choices=yes_no, max_length=3, verbose_name="Do you have the coordinates of your farm?", null="True", blank=True)
     lat = models.DecimalField(decimal_places=4, verbose_name="Latitude", null="True", blank="True", max_digits=6)
     long = models.DecimalField(decimal_places=4, verbose_name="Longitude", null="True", blank="True", max_digits=7)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
 
@@ -403,37 +411,38 @@ class Farm(models.Model):
         return self.name
 
 class WAISSystems(models.Model):
-    name = models.CharField(max_length=50, unique=True, blank=True)
-    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, verbose_name="Farm", null=True, blank=True)
-    farm_manager = models.ForeignKey(Personnel, on_delete=models.CASCADE, verbose_name="Farm Manager", null=True, blank=True)
-    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True, blank=True)
-    date_transplanted = models.DateField(verbose_name='Date Transplanted', null=True, blank=True)
-    soil = models.ForeignKey(Soil, on_delete=models.CASCADE, null=True, blank=True)
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
-    calib = models.ForeignKey(CalibrationConstant, on_delete=models.CASCADE, verbose_name="Calibration Equation", null=True, blank=True)
-    basin = models.ForeignKey(Basin, on_delete=models.CASCADE, verbose_name="Basin System", null=True, blank=True)
-    border = models.ForeignKey(Border, on_delete=models.CASCADE, verbose_name="Border System", null=True, blank=True)
-    furrow = models.ForeignKey(Furrow, on_delete=models.CASCADE, verbose_name="Furrow System", null=True, blank=True)
-    drip = models.ForeignKey(Drip, on_delete=models.CASCADE, verbose_name="Drip System", null=True, blank=True)
-    sprinkler = models.ForeignKey(Sprinkler, on_delete=models.CASCADE, verbose_name="Sprinkler System", null=True, blank=True)    
+    name = models.CharField(max_length=50, unique=True)
+    farm = models.ForeignKey(Farm, on_delete=models.SET_NULL, verbose_name="Farm", null=True)
+    farm_manager = models.ForeignKey(Personnel, on_delete=models.SET_NULL, verbose_name="Farm Manager", null=True)
+    crop = models.ForeignKey(Crop, on_delete=models.SET_NULL, null=True)
+    date_transplanted = models.DateField(verbose_name='Date Transplanted', null=True)
+    soil = models.ForeignKey(Soil, on_delete=models.SET_NULL, null=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True)
+    calib = models.ForeignKey(CalibrationConstant, on_delete=models.SET_NULL, verbose_name="Calibration Equation", null=True)
+    basin = models.ForeignKey(Basin, on_delete=models.SET_NULL, verbose_name="Basin System", null=True, blank=True)
+    border = models.ForeignKey(Border, on_delete=models.SET_NULL, verbose_name="Border System", null=True, blank=True)
+    furrow = models.ForeignKey(Furrow, on_delete=models.SET_NULL, verbose_name="Furrow System", null=True, blank=True)
+    drip = models.ForeignKey(Drip, on_delete=models.SET_NULL, verbose_name="Drip System", null=True, blank=True)
+    sprinkler = models.ForeignKey(Sprinkler, on_delete=models.SET_NULL, verbose_name="Sprinkler System", null=True, blank=True)
+    checker = models.CharField(max_length=50, unique=True, null=True, blank=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
-
+    modified_date = models.DateTimeField(auto_now=True)
     class Meta:
         verbose_name_plural = "0. WAISSystems"
         ordering = ('name',)
-        get_latest_by = "timestamp"
+        get_latest_by = "modified_date"
     def __str__(self):
         return self.name
 
 #MESSAGES
 class ReceivedMsgs(models.Model):
-    number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True)
+    number = models.ForeignKey(Personnel, on_delete=models.SET_NULL, null=True, blank=True)
     msg = models.TextField(max_length=200, verbose_name="Message", null=True, blank=True)
     timestamp = models.DateTimeField(verbose_name='Date/Time Sent', auto_now_add=True, null=True, blank=True)
     marker = models.BooleanField(default=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
 
     class Meta:
@@ -443,12 +452,12 @@ class ReceivedMsgs(models.Model):
         return str(self.number)
 
 class SentMsgs(models.Model):
-    number = models.ForeignKey(Personnel, on_delete=models.CASCADE, null=True, blank=True)
+    number = models.ForeignKey(Personnel, on_delete=models.SET_NULL, null=True, blank=True)
     msg = models.TextField(max_length=200, verbose_name="Message", null=True, blank=True)
     sent = models.BooleanField(verbose_name="Sent?", default=False)
     timestamp = models.DateTimeField(verbose_name='Date/Time Sent', auto_now_add=True, null=True, blank=True)
     marker = models.BooleanField(default=False)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     class Meta:
         verbose_name_plural = "Messages: Sent"
@@ -457,18 +466,21 @@ class SentMsgs(models.Model):
         return str(self.number)
 
 class Rainfall(models.Model):
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True, blank=True)
     amount = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Rainfall (mm)", null=True, blank=True)
     timestamp = models.DateTimeField(verbose_name='Date & Time', null=True, blank=True)
+    class Meta:
+        verbose_name_plural = "Rainfall"
+        get_latest_by = "timestamp"
 
 class Gravimetric(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, null=True)
-    timestamp = models.DateTimeField(verbose_name='Date & Time', null=True, help_text="Format: mm/dd/yyyy hh:mm (should be an exact counterpart on MCv datapoints)")
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True)
+    timestamp = models.DateTimeField(verbose_name='Date & Time', null=True)
     mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="MCv (%)", null=True)
     note = models.CharField(max_length=100, verbose_name="Remarks", null=True, blank=True)
 
 class PercentShaded(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Crop", null=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True)
     area_shaded =  models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area Shaded (%)", null=True)
     date =  models.DateField(verbose_name="Date", null=True)
     class Meta:

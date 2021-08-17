@@ -1,13 +1,9 @@
-{% extends 'waissapp/home_page.html'%}
+{% extends 'registration/login.html'%}
 {% load static %}
 {% load crispy_forms_tags %}
-
-{% block owl_block %}
-{% endblock %}
-
 {% block style_block %}
 <style>
-  .home-carousel li {
+  .form-group li {
     text-transform: none;
     letter-spacing: 0em;
     font-weight: 400;
@@ -20,46 +16,23 @@
 </style>
 {% endblock %}
 
-{% block etcal_slider_block %}
-{% endblock %}
-
-{% block sections_block %}
-<section style="background: url(/static/base/imgs/corns.jpg) center center repeat; background-size: cover;" class="bar background-white relative-positioned">
+{% block login_form %}
+<div class="col-md-4 border rounded" style="background-color: rgba(251, 251, 251, 0.5)">
   <div class="container">
-      <!-- Carousel Start-->
-      <div class="home-carousel">
-          <div class="dark-mask mask-primary"></div>
-          <div class="container">
-            <div class="item">
-              <div class="row">
-                <div class="col-md-7 text-center">
-                  <img src=/static/base/imgs/laptop-2.png alt="" class="img-fluid">
-                  <h3>Water Advisory For Irrigation Scheduling System</h3>
-                  <p>Smart. Accurate. Innovation.<br>Easy. User-friendly. Accessible.</p>
-                </div>
-                <div class="col-md-4 border rounded" style="background-color: rgba(251, 251, 251, 0.5)">
-                  <div class="container">
-                    <div class="text-center"><br>
-                      <h4>Create an Account!</h4>
-                    </div>
-                    <form class="form-group" method="post" action={% url 'waiss:register' %}>
-                      {% csrf_token %}
-                      <div>
-                        {{ form|crispy }}
-                      </div>
-                      <input class="btn btn-info btn-user btn-block" type="submit" value="Register"/>
-                      <input type="hidden" name="next" value="{{ next }}"/>
-                    </form>
-                    <hr>
-                    <div class="text-center"><a class="small" href="{% url 'password_reset' %}">Forgot Password?</a></div>
-                    <div class="text-center"><a class="small" href="{% url 'login' %}">Already have an account? Login!</a></div><br>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
+    <div class="text-center"><br>
+      <h4>Create an Account!</h4>
+    </div>
+    <form class="form-group" method="post" action={% url 'waiss:register' %}>
+      {% csrf_token %}
+      <div>
+        {{ form|crispy }}
       </div>
-    </div>    
+      <input class="btn btn-success btn-user btn-block" type="submit" value="Register"/>
+      <input type="hidden" name="next" value="{{ next }}"/>
+    </form>
+    <hr>
+    <div class="text-center"><a class="small text-success" href="{% url 'password_reset' %}">Forgot Password?</a></div>
+    <div class="text-center"><a class="small text-success" href="{% url 'login' %}">Already have an account? Login!</a></div><br>
   </div>
-</section>
+</div>
 {% endblock %}

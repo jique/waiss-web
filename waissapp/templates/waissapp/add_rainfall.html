@@ -1,5 +1,13 @@
-{% load static %}
 {% load crispy_forms_tags %}
+{% block meta_block %}
+<!-- Moment.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+
+<!-- Tempus Dominus Bootstrap 4 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
+{% endblock %}
+
 <form class="create-form" method="post" data-url="{% url 'waiss:add_rainfall' %}">
 	{% csrf_token %}
 	<div class="modal-header">
@@ -9,9 +17,23 @@
 		</button>
   </div>
   <div class="modal-body">
-    <div class="col">{{form.fieldunit|as_crispy_field}}</div>
-    <div class="col">{{form.timestamp|as_crispy_field}}</div>
-    <div class="col">{{form.amount|as_crispy_field}}</div>
+    {{form.fieldunit|as_crispy_field}}
+    <div class="input-group">
+			<div class="input-group-prepend">
+				Date & Time*&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<span class="rounded-left">{{form.timestamp}}</span>&emsp;</div>
+			<div class="input-group-append" data-target="#id_timestamp" data-toggle="datetimepicker">
+				<div class="input-group-text rounded" id="inputGroup-sizing-default"><i class="fa fa-calendar"></i></div>
+			</div>
+		</div>
+		<script>
+			$(function () {
+			  $("#id_timestamp").datetimepicker({
+				format: 'DD/MM/YYYY HH:mm',
+			  });
+			});
+		</script>
+		<br>
+    {{form.amount|as_crispy_field}}
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

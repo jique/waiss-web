@@ -2,6 +2,8 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+
+
 {% block form_block %}
             <div class="progress_bar">
                 <div class="pro-bar">
@@ -22,9 +24,16 @@
                     {{ formset.management_form }}
                     {% for form in formset %}
                     <div class="row">
-                      <div class="col">{{form.sensor|as_crispy_field}}</div>
-                      <div class="col">{{form.timestamp|as_crispy_field}}</div>
-                      <div class="col">{{form.mc_data|as_crispy_field}}</div>
+                      {{form.sensor|as_crispy_field}}
+                      {{form.timestamp|as_crispy_field}}
+                      <script>
+                        $(function () {
+                          $("#id_timestamp").datetimepicker({
+                            format: 'd/m/Y H:i',
+                          });
+                        });
+                      </script>
+                      {{form.mc_data|as_crispy_field}}
                     </div>
                     {% endfor%}
                 </div>

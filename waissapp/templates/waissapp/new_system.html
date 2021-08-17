@@ -25,71 +25,316 @@
             <div class="row">
               <div class="col">{{form.date_transplanted|as_crispy_field }}</div>
             </div>
-            <div class="row">
-                <div class="col">{{form.farm|as_crispy_field }}</div>
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Farm*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="farm" id="id_farm">
+                  {% if farm_ses %}
+                  <option value="{{farm_ses}}">{{ses_farm}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in farm_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+                <div class="text-danger text-right small">
+                  <i><b>{{empty_farm}}</b></i>
+                </div>
+              </div>
             </div>
-            <div class="row">
-              <div class="col">{{form.farm_manager|as_crispy_field}}</div>
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Farm Manager*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="farm_manager" id="id_farm_manager">
+                  {% if personnel_ses %}
+                  <option value="{{farm_manager_ses}}">{{ses_farm_manager}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in farm_manager_list %}
+                  <option value="{{f.id}}">{{f.first_name}} {{f.last_name}}</option>
+                  {% endfor %}
+                </select>
+                <div class="text-danger text-right small">
+                  <i><b>{{empty_farm_manager}}</b></i>
+                </div>
+              </div>
             </div>
-            <div class="row">
-                <div class="col">{{form.crop|as_crispy_field }}</div>
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Crop*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="crop" id="id_crop">
+                  {% if crop_ses %}
+                  <option value="{{crop_ses}}">{{ses_crop}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in crop_list %}
+                  <option value="{{f.id}}">{{f.crop}}</option>
+                  {% endfor %}
+                </select>
+                <div class="text-danger text-right small">
+                  <i><b>{{empty_crop}}</b></i>
+                </div>
+              </div>
             </div>
-            <div class="row">
-              <div class="col">{{form.soil|as_crispy_field }}</div>
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Soil*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="soil" id="id_soil">
+                  {% if soil_ses %}
+                  <option value="{{soil_ses}}">{{ses_soil}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in soil_list %}
+                  <option value="{{f.id}}">{{f.soiltype}}</option>
+                  {% endfor %}
+                </select>
+                <div class="text-danger text-right">
+                  <i><small><b>{{empty_soil}}</b></small></i>
+                </div>
+              </div>
             </div>
-            <div class="row">
-              <div class="col">{{form.calib|as_crispy_field }}</div>
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Calib*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="calib" id="id_calib">
+                  {% if calib_ses %}
+                  <option value="{{calib_ses}}">{{ses_calib}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in calib_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+                <div class="text-danger text-right">
+                  <i><small><b>{{empty_calib}}</b></small></i>
+                </div>
+              </div>
             </div>
-            <div class="row">
-              <div class="col">{{form.fieldunit|as_crispy_field }}</div>
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Field Unit*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="fieldunit" id="id_fieldunit">
+                  {% if fieldunit_ses %}
+                  <option value="{{fieldunit_ses}}">{{ses_fieldunit}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in fieldunit_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+                <div class="text-danger text-right">
+                  <i><small><b>{{empty_fieldunit}}</b></small></i>
+                </div>
+              </div>
             </div>
-            {% if basin_ses %}
-            <div class="row">
-              <div class="col">{{form.basin|as_crispy_field }}</div>
-            </div>
-            {% endif %}
-            {% if border_ses %}
-            <div class="row">
-              <div class="col">{{form.border|as_crispy_field }}</div>
-            </div>
-            {% endif %}
-            {% if furrow_ses %}
-            <div class="row">
-              <div class="col">{{form.furrow|as_crispy_field }}</div>
-            </div>
-            {% endif %}
-            {% if sprinkler_ses %}
-            <div class="row">
-              <div class="col">{{form.sprinkler|as_crispy_field }}</div>
-            </div>
-            {% endif %}
-            {% if drip_ses %}
-            <div class="row">
-              <div class="col">{{form.drip|as_crispy_field }}</div>
-            </div>
-            {% endif %}
-            {% if basin_ses and border_ses and furrow_ses and drip_ses and sprinkler_ses %}
-            <div class="row">
-              <div class="col">{{form.basin|as_crispy_field }}</div>
-            </div>
-            <div class="row">
-              <div class="col">{{form.border|as_crispy_field }}</div>
-            </div>
-            <div class="row">
-              <div class="col">{{form.furrow|as_crispy_field }}</div>
-            </div>
-            <div class="row">
-              <div class="col">{{form.sprinkler|as_crispy_field }}</div>
-            </div>
-            <div class="row">
-              <div class="col">{{form.drip|as_crispy_field }}</div>
-            </div>
+            <!-- ERROR MSG ON IRRIGATION SYSTEM DUPLICATION-->
+            {% if messages %}
+              {% for message in messages %}
+              <div class="text-danger text-right">
+              <i><small><b>{{message|safe}}</b></small></i>
+              </div>
+              {% endfor %}
             {% else %}
             {% endif %}
+            <!-- ERROR MSG ON IRRIGATION SYSTEM DUPLICATION-->
+            {% if basin_ses %}
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Basin*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="basin" id="id_basin">
+                  {% if basin_ses %}
+                  <option value="{{basin_ses}}">{{ses_basin}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in basin_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            {% elif border_ses %}
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Border*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="border" id="id_border">
+                  {% if border_ses %}
+                  <option value="{{border_ses}}">{{ses_border}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in border_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            {% elif furrow_ses %}
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Furrow*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="furrow" id="id_furrow">
+                  {% if furrow_ses %}
+                  <option value="{{furrow_ses}}">{{ses_furrow}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in furrow_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            {% elif sprinkler_ses %}
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Sprinkler*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="sprinkler" id="id_sprinkler">
+                  {% if sprinkler_ses %}
+                  <option value="{{sprinkler_ses}}">{{ses_sprinkler}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in sprinkler_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            {% elif drip_ses %}
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Drip*</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="drip" id="id_drip">
+                  {% if drip_ses %}
+                  <option value="{{drip_ses}}">{{ses_drip}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in drip_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            {% else %}
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Basin</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="basin" id="id_basin">
+                  {% if basin_ses %}
+                  <option value="{{basin_ses}}">{{ses_basin}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in basin_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Border</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="border" id="id_border">
+                  {% if border_ses %}
+                  <option value="{{border_ses}}">{{ses_border}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in border_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Furrow</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="furrow" id="id_furrow">
+                  {% if furrow_ses %}
+                  <option value="{{furrow_ses}}">{{ses_furrow}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in furrow_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Sprinkler</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="sprinkler" id="id_sprinkler">
+                  {% if sprinkler_ses %}
+                  <option value="{{sprinkler_ses}}">{{ses_sprinkler}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in sprinkler_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-5">
+                <label class="mb-0">Drip</label>
+              </div>
+              <div class="col-7">
+                <select class="form-control" name="drip" id="id_drip">
+                  {% if drip_ses %}
+                  <option value="{{drip_ses}}">{{ses_drip}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in drip_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            {% endif %}
             <div class="text-right">
-                    <button type="button" class="btn btn-success"><a href={% url 'waiss:new_sensor' %} style="color:white">Previous</a></button>
-                    <input type="submit" value="Submit" class="btn btn-info">
-                    <button type="button" class="btn btn-success"><a href={% url 'waiss:new_mc' %} style="color:white">Next</a></button>
+              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_sensor' %} style="color:white">Previous</a></button>
+              <input type="submit" value="Submit" class="btn btn-info">
             </div>
           </form>
         </div>
@@ -99,5 +344,70 @@
 {% endblock %}
 
 {% block bottom_script_block %}
+<script>
+  // Run on page load
+  window.onload = function() {
+      // If values are not blank, restore them to the fields
+      var farm = sessionStorage.getItem('farm');
+      var farm_manager = sessionStorage.getItem('farm_manager');
+      var crop = sessionStorage.getItem('crop');
+      var soil = sessionStorage.getItem('soil');
+      var calib = sessionStorage.getItem('calib');
+      var fieldunit = sessionStorage.getItem('fieldunit');
+      var basin = sessionStorage.getItem('basin');
+      var border = sessionStorage.getItem('border');
+      var furrow = sessionStorage.getItem('furrow');
+      var sprinkler = sessionStorage.getItem('sprinkler');
+      var drip = sessionStorage.getItem('drip');
+
+      if (farm !== null) $('#id_farm').val(farm);
+      if (farm_manager !== null) $('#id_farm_manager').val(farm_manager);
+      if (crop !== null) $('#id_crop').val(crop);
+      if (soil !== null) $('#id_soil').val(soil);
+      if (calib !== null) $('#id_calib').val(calib);
+      if (fieldunit !== null) $('#id_fieldunit').val(fieldunit);
+      if (basin !== null) $('#id_basin').val(basin);
+      if (border !== null) $('#id_border').val(border);
+      if (furrow !== null) $('#id_furrow').val(furrow);
+      if (sprinkler !== null) $('#id_sprinkler').val(sprinkler);
+      if (drip !== null) $('#id_drip').val(drip);
+  }
+
+  window.onbeforeunload = function() {
+	// Before refreshing the page, save the form data to sessionStorage
+    sessionStorage.setItem("farm", $('#id_farm').val());
+    sessionStorage.setItem("farm_manager", $('#id_farm_manager').val());
+    sessionStorage.setItem("crop", $('#id_crop').val());
+    sessionStorage.setItem("soil", $('#id_soil').val());
+    sessionStorage.setItem("calib", $('#id_calib').val());
+    sessionStorage.setItem("fieldunit", $('#id_fieldunit').val());
+    sessionStorage.setItem("basin", $('#id_basin').val());
+    sessionStorage.setItem("border", $('#id_border').val());
+    sessionStorage.setItem("furrow", $('#id_furrow').val());
+    sessionStorage.setItem("sprinkler", $('#id_sprinkler').val());
+    sessionStorage.setItem("drip", $('#id_drip').val());
+  }
+  history.pushState = ( f => function pushState(){
+    var ret = f.apply(this, arguments);
+    window.dispatchEvent(new Event('pushstate'));
+    window.dispatchEvent(new Event('locationchange'));
+    return ret;
+  })(history.pushState);
+
+  history.replaceState = ( f => function replaceState(){
+      var ret = f.apply(this, arguments);
+      window.dispatchEvent(new Event('replacestate'));
+      window.dispatchEvent(new Event('locationchange'));
+      return ret;
+  })(history.replaceState);
+
+  window.addEventListener('popstate',()=>{
+      window.dispatchEvent(new Event('locationchange'))
+  });
+  
+  window.addEventListener('locationchange', function(){
+      console.log('location changed!');
+  })
+</script> 
 {% endblock %}
     

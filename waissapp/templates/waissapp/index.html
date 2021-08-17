@@ -263,13 +263,13 @@
               <form method="post">
                 {% csrf_token %}
                 <label class="mb-0 font-weight-bold text-gray-800">System: </label>
-                    <select name="selected_system" id="selected_system" class="btn btn-secondary btn-sm">
-                      <option>{{selected_system}}</option>
-                      {% for system in form %}
-                      <option value="{{system.name}}">{{system}}</option>
-                      {% endfor %}
-                    </select>
-                    <input class="btn btn-info btn-sm" type="submit" value="Generate Irrigation Advisory">
+                <select name="selected_system" id="selected_system" class="btn btn-secondary btn-sm">
+                  <option>{{selected_system}}</option>
+                  {% for system in form %}
+                  <option value="{{system.name}}">{{system}}</option>
+                  {% endfor %}
+                </select>
+                <input class="btn btn-info btn-sm" type="submit" name="dashboard_submit" value="Generate Irrigation Advisory">
               </form>
             </div>
             <div class="col">
@@ -422,7 +422,7 @@
                         {% if mc_ave < MC_TO_IRRIGATE %}
                         Irrigate for {{irrigation_period}} mins <br><br>
                         <div class="small">or<br>Volume : {{total_volume}} liter {% if drip != None %}/ plant{% endif %}</div>
-                        <div class="small">F<sub>n</sub> : {{net_application_depth}} mm</div>
+                        <div class="small">F<sub>n</sub> : {% if net_application_depth < 0 %} 0 mm {% else %}{{net_application_depth}} mm {% endif %}</div>
                         {% endif %}
                         {% if not mc_ave < MC_TO_IRRIGATE and mc_ave != "" %}
                         <br><br>
@@ -465,6 +465,9 @@
         </a>
         <ul class="icon-ul">
           <li class="icon-li">
+            <button class="btn show-form icon-a" data-url="{% url 'waiss:add_mc' %}"><i class="fas fa-water"></i></button>
+          </li>
+          <li class="icon-li">
             <button class="btn show-form icon-a" data-url="{% url 'waiss:add_gravi' %}"><img src={% static "theme/microwave-white-18dp.svg" %} title="add gravimetric soil moisture content"></button>
           </li>
           {% if drip %}
@@ -473,7 +476,7 @@
           </li>
           {% endif%}
           <li class="icon-li">
-            <button class="btn show-form icon-a" data-url="{% url 'waiss:add_rainfall' %}"><i class="fas fa-oil-can" title="add rainfall/irrigation"></i></button>
+            <button class="btn show-form icon-a" data-url="{% url 'waiss:add_rainfall' %}"><i class="fas fa-shower"></i></button>
           </li>
         </ul>
         <!-- Create/Update Modal -->

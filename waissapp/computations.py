@@ -15,7 +15,7 @@ def index(request):
 	current_user = request.user
 	form = WAISSystems.objects.filter(author=current_user) # for_dropdown_select_options
 	
-	if request.method == 'POST':  # for sending the selected WAISS_system by the user
+	if request.method == 'POST' and 'dashboard_submit' in request.POST:  # for sending the selected WAISS_system by the user
 		selected_system = request.POST['selected_system']
 		selected_system = WAISSystems.objects.get(name=selected_system)
 	else:
@@ -39,8 +39,13 @@ def index(request):
 	calib_eqn = calib.calib_equation
 
 	fieldunit = selected_system.fieldunit  # getting fieldunit variables
+	
 	query_sensors = Sensor.objects.all().filter(fieldunit=fieldunit)
-	num_sensors = len(query_sensors)
+	num_sensors = len(query_sensors) #get number of sensors
+
+	sensor_2 = None #for single sensor fieldunit
+	sensor_3 = None
+	
 	if num_sensors == 1:
 		sensor_1 = Sensor.objects.all().filter(fieldunit=fieldunit)[:1]
 		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
@@ -75,7 +80,7 @@ def index(request):
 
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
 		p_time = p.timestamp
-		p_amount = float(p.amount)
+		p_amount = (p.amount)
 		j = len(rainfall_collection)
 		for i, m in enumerate(mc_list, start=1):
 			m_time = m.timestamp
@@ -294,7 +299,7 @@ def index(request):
 		irrigation_q = furrow.discharge
 	if border != None:
 		irrigation_q = border.discharge
-		Qu = irrigation_q
+		Qu = float(irrigation_q)
 	if sprinkler != None:
 		irrigation_q = sprinkler.discharge
 	if drip != None:
@@ -352,7 +357,7 @@ def index(request):
 		#IRRIGATION SYSTEM
 		#BASIN
 		if basin != None:
-			if net_application_depth == 0:
+			if net_application_depth <= 0:
 				irrigation_period = 0
 				total_volume = 0
 			else:
@@ -403,7 +408,7 @@ def index(request):
 			bln_open = furrow.bln_furrow_type
 			P_adj = round(0.265*(discharge*mannings_coeff/slope**0.5)**0.425 + 0.227, 4)
 
-			if net_application_depth == 0:
+			if net_application_depth <= 0:
 				net_opportunity_time = 0
 				advanced_time = 0
 				irrigation_period = 0
@@ -422,12 +427,16 @@ def index(request):
 		#BORDER
 		if border != None:
 			So = float(border.area_slope)
-			Fn = net_application_depth
-			n = border.mannings_coeff
-			Tn = ((Fn - cons_c)/cons_a)**(1/cons_b)
-			if slope <= 0.004:
-				Tl = ((Qu**0.2)*n)/120*[So+[(0.0094*n*Qu**0.175/[(Tn**0.88)*(So**0.5)])**1.6]]
-			if slope > 0.004:
+			Fn = float(net_application_depth)
+			n = float(border.mannings_coeff)
+			y = Fn - cons_c
+			if y > 0:
+				Tn = float(((y)/cons_a)**(1/cons_b))
+			else:
+				Tn = 0.0001 #JUST TO REMOVE FLOAT DIVISION ZERO
+			if So <= 0.004:
+				Tl = ((Qu**float(0.2))*n)/120*(So+((float(0.0094)*n*Qu**float(0.175)/((Tn**float(0.88))*(So**float(0.5))))**float(1.6)))
+			if So > 0.004:
 				Tl = (Qu**0.2)*(n**1.2)/(120*So**1.6)
 			irrigation_period = Tn - Tl
 
@@ -436,10 +445,10 @@ def index(request):
 			Sl = float(sprinkler.sprinkler_spacing)
 			Sm = float(sprinkler.lateral_spacing)
 			ea = float(sprinkler.ea)/100
-			if sprinkler.bln_sprinkler_discharge == "Yes":
+			if sprinkler.bln_irrigation == "True":
 				d = float(sprinkler.nozzle_diameter)
 				P = float(sprinkler.operating_pressure)
-				C = float(sprinkler.discharge_coefficient)
+				C = float(0.96)
 				q = 0.1109543178 * C * d**2 * P**0.5 #original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)
 			else:
 				q = float(irrigation_q)

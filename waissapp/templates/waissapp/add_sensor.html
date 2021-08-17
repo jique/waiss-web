@@ -8,9 +8,9 @@
 		</button>
 	</div>
 	<div class="modal-body">
-		<div class="col">{{form.fieldunit|as_crispy_field}}</div>
-		<div class="col">{{form.name|as_crispy_field}}</div>
-        <div class="col">{{form.depth|as_crispy_field}}</div>
+		{{form.fieldunit|as_crispy_field}}
+		{{form.name|as_crispy_field}}
+        {{form.depth|as_crispy_field}}
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

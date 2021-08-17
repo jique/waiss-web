@@ -1,20 +1,87 @@
 {% load crispy_forms_tags %}
+
+{% block meta_block %}
+<!-- Moment.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+
+<!-- Tempus Dominus Bootstrap 4 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
+{% endblock %}
+
 <form class="create-form" method="post" data-url="{% url 'waiss:add_mc' %}">
 	{% csrf_token %}
 	<div class="modal-header">
-		<h6 class="modal-title" >Create Moisture Content (Raw)</h6>
+		<h6 class="modal-title" >Add Soil Moisture Content (Raw)</h6>
 		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
 	<div class="modal-body">
-		<div class="col">{{form.sensor|as_crispy_field}}</div>
-		<div class="col">{{form.timestamp|as_crispy_field}}</div>
-		<div class="col">{{form.mc_data|as_crispy_field}}</div>
-        <div class="col text-right"><em><b><small>Or upload multiple data at once, </small><a href="{% url 'waiss:upload_csv' %}">  Upload CSV file</a>.</b></em></div>
+		{{form.sensor|as_crispy_field}}
+		<div class="input-group">
+			<div class="input-group-prepend">
+				Date & Time*&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<span class="rounded-left">{{form.timestamp}}</span>&emsp;</div>
+			<div class="input-group-append" data-target="#id_timestamp" data-toggle="datetimepicker">
+				<div class="input-group-text rounded" id="inputGroup-sizing-default"><i class="fa fa-calendar"></i></div>
+			</div>
+		</div>
+		<script>
+			$(function () {
+			  $("#id_timestamp").datetimepicker({
+				format: 'DD/MM/YYYY HH:mm',
+			  });
+			});
+		</script>
+		<br>
+		{{form.mc_data|as_crispy_field}}
+		<div class="row">
+			<div class="col text-center">
+				<em><b><small>Or upload multiple data at once, </small> <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#CSV">
+					Upload CSV
+				  </button> .</b></em>
+			</div>
+		</div>
 	</div>
 	<div class="modal-footer">
         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-info btn-sm">Submit</button>
+        <button type="submit" class="btn btn-info btn-sm" name="submitSingle">Submit</button>
     </div>
 </form>
+
+<!-- Modal -->
+<div class="modal fade" id="CSV" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h6 class="modal-title" id="exampleModalLabel">UPLOAD CSV FILE</h6>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<form class="form-group" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="modal-body">
+				<small>Upload csv file with moisture content reading from sensor with data <b><i>order: sensor_name, timestamp (format: yyyy-mm-dd hh:mm:ss), value</i></b>.</small>
+				<br><br>
+				
+					<div class="custom-file">
+						<input type="file" name="file" class="btn btn-secondary">
+					</div>
+					{% if messages %}
+					{% for message in messages %}
+					<div>
+						<strong>{{message|safe}}</strong>
+					</div>
+					{% endfor %}
+					{% else %}
+					{% endif %}
+			</div>
+			<div class="modal-footer">
+				<a class="btn btn-danger btn-sm" href="{% url 'waiss:index' %}">Close</a>
+				<input type="submit" name="Upload" value="Upload" class="btn btn-sm btn-info">
+			</div>
+		</form>
+	  </div>
+	</div>
+  </div>
