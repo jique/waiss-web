@@ -106,6 +106,12 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link " href="{% url 'waiss:list_calib' %}">
+            <i class="fas fa-chart-line"></i>
+            <span class="text-gray-100">Calibration Constants</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParam" aria-expanded="true" aria-controls="collapseParam">
             <i class="fas fa-cloud-rain"></i>
             <span class="text-gray-100">Irrigation Systems</span>
@@ -136,12 +142,6 @@
                 {% endif %}
             </div>
           </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'waiss:list_calib' %}">
-            <i class="fas fa-chart-line"></i>
-            <span class="text-gray-100">Calibration Constants</span>
-          </a>
         </li>
 
         <!-- Divider -->
@@ -488,9 +488,9 @@
         <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>  
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <script src="{% static 'js/modal.js' %}"></script>
-</div>
-</div>
-</div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 </div>
 </div>

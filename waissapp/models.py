@@ -334,7 +334,7 @@ class Drip(models.Model):
         ("no", 'No, I dont.'),
     ]
     bln_ii = models.CharField(choices=yes_or_no, max_length=6, verbose_name="Has preferred irrigation interval", null=True)
-    irrigation_interval = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Irrigation Interval (days)", null=True, blank=True, help_text="Fillout only if you have preferred irrigation interval based on your farm schedule.")
+    irrigation_interval = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Irrigation Interval (days)", null=True, blank=True)
     EU = models.DecimalField(max_digits=3, decimal_places=3, verbose_name="Design Emission Uniformity", null=True, blank=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True)
@@ -350,7 +350,7 @@ class Sprinkler(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null="True", blank=True)
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True)
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -360,7 +360,7 @@ class Sprinkler(models.Model):
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True)
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
-    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, blank=True)
+    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
     EFF_CHOICES = [
         (50, '50'),
         (55, '55'),
@@ -374,9 +374,10 @@ class Sprinkler(models.Model):
     ]
     ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True)
     lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True)
+    with_q_bln = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you know the sprinkler discharge?", null=True)
     sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True)
-    nozzle_diameter = models.DecimalField(max_digits=5, decimal_places=4, verbose_name="Nozzle Diameter (cm)", null=True, blank=True)
-    operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True, blank=True)
+    nozzle_diameter = models.DecimalField(max_digits=5, decimal_places=4, verbose_name="Nozzle Diameter (cm)", null=True)
+    operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)

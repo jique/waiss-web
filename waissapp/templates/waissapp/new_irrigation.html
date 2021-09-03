@@ -61,14 +61,15 @@
       </div>
       {% endif %}
     </div>
-    <div class="row collapse" id="collapseOne">
-      <div class="col text-center">
+    <div class="row collapse" id="collapse_irrig_One">
+      <div class="col text-right">
         <!--No irrigation system-->
+        <br>
         <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
         <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
       </div>
     </div>
-    <div class="row collapse" id="collapseTwo">
+    <div class="row collapse" id="collapse_irrig_Two">
       {% if select_ses == None %}
       <div class="col"><label>What kind of irrigation system?&emsp;</label></div>
       <div class="col">
@@ -119,7 +120,7 @@
       {% endif %}
     </div>
     <hr>
-    <div class="row collapse" id="collapse1">
+    <div class="row collapse" id="collapse_irrig_1">
       <div class="col-4">
         {% if basin_list %}
           <form method="post" class="form-group">
@@ -156,7 +157,7 @@
         </form>
       </div>
     </div>
-    <div class="row collapse" id="collapse2">
+    <div class="row collapse" id="collapse_irrig_2">
       <div class="col-4">
         {% if border_list %}
         <form method="post" class="form-group">
@@ -193,7 +194,7 @@
       </form>
       </div>
     </div>
-    <div class="row collapse" id="collapse3">
+    <div class="row collapse" id="collapse_irrig_3">
       <div class="col-4">
         {% if furrow_list %}
         <form method="post" class="form-group">
@@ -233,7 +234,7 @@
       </form>
       </div>
     </div>
-    <div class="row collapse" id="collapse4">
+    <div class="row collapse" id="collapse_irrig_4">
       <div class="col-4">
         {% if sprinkler_list %}
         <form method="post" class="form-group">
@@ -261,19 +262,13 @@
         {{ sprinkler.lateral_spacing|as_crispy_field }}
         {{ sprinkler.sprinkler_spacing|as_crispy_field }}
         {{ sprinkler.ea|as_crispy_field }}
-        <label><b>Do you know the sprinkler discharge?&emsp;</b></label>
-        <select class="form-control" id="with_q_bln" name="with_q_bln">
-          <option>---</option>
-          <option value="yes">Yes, I do!</option>
-          <option value="no">No, I don't!</option>
-        </select>
-        <br>
-        <div class="row collapse" id="collapseYes">
+        {{ sprinkler.with_q_bln|as_crispy_field }}
+        <div class="row collapse" id="collapse_irrig_Yes">
           <div class="col">
           {{ sprinkler.discharge|as_crispy_field}}
           </div>
         </div>
-        <div class="row collapse" id="collapseNo">
+        <div class="row collapse" id="collapse_irrig_No">
           <div class="col">
             {{ sprinkler.nozzle_diameter|as_crispy_field }}
             {{ sprinkler.operating_pressure|as_crispy_field }}<!--Use ave discharge coefficient (0.96)-->
@@ -288,7 +283,7 @@
       </form>
       </div>
     </div>
-    <div class="row collapse" id="collapse5">
+    <div class="row collapse" id="collapse_irrig_5">
       <div class="col-4">
         {% if drip_list %}
         <form method="post" class="form-group">
@@ -322,7 +317,7 @@
           {{ drip.wetted_dia|as_crispy_field }}
           {{ drip.EU|as_crispy_field }}
           {{ drip.bln_ii|as_crispy_field }}
-          <div class="row collapse" id="collapseII">
+          <div class="row collapse" id="collapse_irrig_II">
             <div class="col">
               {{ drip.irrigation_interval|as_crispy_field }}
             </div>
@@ -340,105 +335,5 @@
 </div>
 </div>
 </div>
-<script>
-  $( document ).ready(function() {
-    showHide();
-    $("#id_bln_irrigation").change(function () {
-      showHide();
-    });
-  });
-    function showHide() {
-      var checkedValue = $("#id_bln_irrigation").val();
-      if (checkedValue == "False") {
-        $("#collapseOne").collapse('show');
-        $("#collapseTwo").collapse('hide');
-        $("#collapse1").collapse('hide');
-        $("#collapse2").collapse('hide');
-        $("#collapse3").collapse('hide');
-        $("#collapse4").collapse('hide');
-        $("#collapse5").collapse('hide');
-      } else if (checkedValue == "True") {
-        $("#collapseOne").collapse('hide');
-        $("#collapseTwo").collapse('show');
-      }
-    };
-  $( document ).ready(function() {
-    showHide2();
-      $("#id_select_irrigation").change(function () {
-        showHide2();
-      });
-    });
-    function showHide2() {
-      var checkedValue = $("#id_select_irrigation").val();
-      if (checkedValue == "basin") {
-        $("#collapse1").collapse('show');
-            $("#collapse2").collapse('hide');
-            $("#collapse3").collapse('hide');
-            $("#collapse4").collapse('hide');
-            $("#collapse5").collapse('hide');
-        } else if (checkedValue == "border") {
-            $("#collapse1").collapse('hide');
-            $("#collapse2").collapse('show');
-            $("#collapse3").collapse('hide');
-            $("#collapse4").collapse('hide');
-            $("#collapse5").collapse('hide');
-        } else if (checkedValue == "furrow") {
-            $("#collapse1").collapse('hide');
-            $("#collapse2").collapse('hide');
-            $("#collapse3").collapse('show');
-            $("#collapse4").collapse('hide');
-            $("#collapse5").collapse('hide');
-        } else if (checkedValue == "sprinkler") {
-            $("#collapse1").collapse('hide');
-            $("#collapse2").collapse('hide');
-            $("#collapse3").collapse('hide');
-            $("#collapse4").collapse('show');
-            $("#collapse5").collapse('hide');
-        } else if (checkedValue == "drip") {
-            $("#collapse1").collapse('hide');
-            $("#collapse2").collapse('hide');
-            $("#collapse3").collapse('hide');
-            $("#collapse4").collapse('hide');
-            $("#collapse5").collapse('show');
-        }
-    };
-  $( document ).ready(function() {
-    showHide3();
-      $("#with_q_bln").change(function () {
-        showHide3();
-      });
-    });
-    function showHide3() {
-      var checkedValue = $("#with_q_bln").val();
-      if (checkedValue == "yes") {
-        $("#collapseYes").collapse('show');
-        $("#collapseNo").collapse('hide');
-        $('#id_discharge').pop('required', true);
-        $('#id_nozzle_diameter').pop('required', false);
-        $('#id_operating_pressure').pop('required', false);
-      } else if (checkedValue == "no") {
-        $("#collapseYes").collapse('hide');
-        $("#collapseNo").collapse('show');
-        $('#id_nozzle_diameter').pop('required', true);
-        $('#id_operating_pressure').pop('required', true);
-        $('#id_discharge').pop('required', false);
-      }
-    };
-  $( document ).ready(function() {
-    showHide4();
-      $("#id_bln_ii").change(function () {
-        showHide4();
-      });
-  });
-    function showHide4() {
-      var checkedValue = $("#id_bln_ii").val();
-      if (checkedValue == "yes") {
-        $("#collapseII").collapse('show');
-        $('#id_irrigation_interval').pop('required', true);
-      } else if (checkedValue == "no") {
-        $("#collapseII").collapse('hide');
-        $('#id_irrigation_interval').pop('required', false);
-      }
-    };
-</script>
+<script src="{% static 'js/showHide.js' %}"></script>
 {% endblock %}

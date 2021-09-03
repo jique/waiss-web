@@ -24,7 +24,6 @@
               <th class="align-top">Sprinkler Spacing (m)</th>
               <th class="align-top">Nozzle Diameter (cm)</th>
               <th class="align-top">Operating Pressure (kPa)</th>
-              <th class="align-top">Discharge Coefficient</th>
               <th class="align-top">Actions</th>
             </tr>
         </thead>
@@ -38,9 +37,12 @@
         <div class="modal-content"></div>
       </div>
     </div>
-    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>  
+    <script src="{% static 'js/showHide.js' %}"></script>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/modal.js' %}"></script>
 </div>
 {% endblock %}
-    
+
+{% block bottom_script_block %}
+{% endblock %}

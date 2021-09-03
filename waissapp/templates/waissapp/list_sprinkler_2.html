@@ -9,7 +9,6 @@
     <td class="align-middle">{{sprinkler.sprinkler_spacing}}</td>
     <td class="align-middle">{{sprinkler.nozzle_diameter}}</td>
     <td class="align-middle">{{sprinkler.operating_pressure}}</td>
-    <td class="align-middle">{{sprinkler.discharge_coefficient}}</td>
     <td class="align-middle min">
         <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_sprinkler' sprinkler.id %}"><i class="fas fa-edit"></i></button>
         <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ sprinkler.id }}"><i class="fas fa-trash"></i></button>
@@ -40,5 +39,4 @@
     </div>
   </div>
   <!-- Delete Modal -->
-<tr> 
 {% endfor %}

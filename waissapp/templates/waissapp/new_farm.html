@@ -48,6 +48,7 @@
               {{farm_form.lat|as_crispy_field}}
               {{farm_form.long|as_crispy_field}}
             </div>
+            <hr>
             <div class="text-right">
               <input type="submit" value="Submit" class="btn btn-info" name="btn_submit">
               <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Next</a></button>
@@ -59,26 +60,6 @@
   </div>
 </div>
 </div>
-<script>
-  $( document ).ready(function() {
-    showHide();
-      $("#id_select_coordinates").change(function () {
-        showHide();
-      });
-    });
-    function showHide() {
-      var checkedValue = $("#id_select_coordinates").val();
-      if (checkedValue == "yes") {
-        $("#collapseOne").collapse('show');
-        $("#id_lat").prop('required',true);
-        $("#id_long").prop('required',true);
-
-      } else if (checkedValue == "no") {
-        $("#collapseOne").collapse('hide');
-        $("#id_lat").prop('required',false);
-        $("#id_long").prop('required',false);
-      }
-    };
-</script>
+<script src="{% static 'js/showHide.js' %}"></script>  
 {% endblock %}
     

@@ -8,51 +8,67 @@
 		</button>
 	</div>
 	<div class="modal-body">
-                <div class="col">{{form.name|as_crispy_field}}</div>
-                <div class="col">{{form.calib_equation|as_crispy_field}}</div>
-                <div class="col">
-                        <div class="row">
-                                <div class="col"></div>
-                                <div class="col">{{form.coeff_a|as_crispy_field}}</div>
-                                <div class="col">{{form.coeff_b|as_crispy_field}}</div>
-                                
-                        </div>
-                </div>
-                
-                <div class="col">
-                        <div class="row">
-                                <div class="col"></div>
-                                <div class="col">{{form.coeff_c|as_crispy_field}}</div>
-                                <div class="col">{{form.coeff_d|as_crispy_field}}</div>
-                        </div>
-                </div>
-                <div class="col">
-                        <div class="row">
-                                <div class="col"></div>
-                                <div class="col">{{form.coeff_m|as_crispy_field}}</div>
-                                <div class="col"></div>
-                        </div>
-                </div>
-               
-                <div class="col">{{form.date_tested|as_crispy_field}}</div>
-                <div class="col">{{form.tested_by|as_crispy_field}}</div>
-                <span class="text-center">
-                        <div class="col"><span class="text-success"><b>Equation Standard Form</b></span></div>
-                        <div class="col"><small><i>Linear: MC<sub>v</sub> = a(reading) + b<br>
-                                Quadratic: MC<sub>v</sub> = a(reading)<sup>2</sup> + b(reading) + c</i></small>
-                        </div>
-                        <div class="col"><small><i>Exponential: MC<sub>v</sub> = ae<sup>b</sup>(reading)<br>
-                                Logarithmic: MC<sub>v</sub> = aln(reading) + b</i></small>
-                        </div>
-                        <div class="col">
-                                <small><i>Symmetrical Sigmoidal: MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</i></small>
-                                <br><small><i>Assymmetrical Sigmoidal:
-                                MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></i></small>
-                        </div>
-                </span>
+        {{form.name|as_crispy_field}}
+        {{form.calib_equation|as_crispy_field}}
+        <div class="row collapse" id="collapse_calib_1">
+            <div class="col-2"></div>
+            <div class="col">
+                    <small><b>MC<sub>v</sub> = a * (reading) + b</b></small><hr>
+                    {{form.coeff_a|as_crispy_field}}
+                    {{form.coeff_b|as_crispy_field}} <hr>
+            </div>
+        </div>
+        <div class="row collapse" id="collapse_calib_2">
+            <div class="col-2"></div>
+            <div class="col">
+                <small><b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></small><hr>
+                {{form.coeff_a|as_crispy_field}}
+                {{form.coeff_b|as_crispy_field}}
+                {{form.coeff_c|as_crispy_field}}<hr>
+            </div>
+        </div>
+        <div class="row collapse" id="collapse_calib_3">
+            <div class="col-2"></div>
+            <div class="col">
+                <small><b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></small><hr>
+                {{form.coeff_a|as_crispy_field}}
+                {{form.coeff_b|as_crispy_field}}<hr>
+            </div>
+        </div>
+        <div class="row collapse" id="collapse_calib_4">
+            <div class="col-2"></div>
+            <div class="col">
+                <small><b>MC<sub>v</sub> = a * ln(reading) + b</b></small><hr>
+                {{form.coeff_a|as_crispy_field}}
+                {{form.coeff_b|as_crispy_field}}<hr>
+            </div>
+        </div>
+        <div class="row collapse" id="collapse_calib_5">
+            <div class="col-2"></div>
+            <div class="col">
+                <small><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></small><hr>
+                {{form.coeff_a|as_crispy_field}}
+                {{form.coeff_b|as_crispy_field}}
+                {{form.coeff_c|as_crispy_field}}
+                {{form.coeff_d|as_crispy_field}}<hr>
+            </div>
+        </div>
+        <div class="row collapse" id="collapse_calib_6">
+            <div class="col-2"></div>
+            <div class="col">
+                <small><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></small><hr>
+                {{form.coeff_a|as_crispy_field}}
+                {{form.coeff_b|as_crispy_field}}
+                {{form.coeff_c|as_crispy_field}}
+                {{form.coeff_d|as_crispy_field}}
+                {{form.coeff_m|as_crispy_field}}<hr>
+            </div>
+        </div>
+        {{form.date_tested|as_crispy_field}}
+        {{form.tested_by|as_crispy_field}}
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-primary">Add</button>
+		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-info">Create</button>
 	</div>
 </form>

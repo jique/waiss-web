@@ -52,19 +52,10 @@ def about(request):
 def home(request):
 	return render(request, 'waissapp/home_page.html')
 
-def home_waiss(request):
-	return render(request, 'waissapp/home_page_waiss.html')
-
 def sarai_header(request):
 	return render(request, 'waissapp/sarai-header.html')
 
-def about_calc(request):
-	return render(request, 'waissapp/about_calc.html')
-
-def options(request):
-	return render(request, 'waissapp/simp_advanced.html')
 #WAISSYSTEMS
-
 @login_required
 def new_system(request):
 	current_user = request.user
@@ -395,15 +386,13 @@ def list_calib(request):
 	current_user = request.user
 	queryset_1 = CalibrationConstant.objects.filter(author=current_user)
 	queryset_2 = CalibrationConstant.objects.filter(personal=False)
-	calibs = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
-
-	#delete
-	if request.method == 'POST' and 'deleteModal' in request.POST:
+	second_list = list(set(queryset_2) - set(queryset_1)) #remove duplicate
+	calibs = sorted(chain(queryset_1, second_list), key=attrgetter('name'))#sort as a combined list
+	if request.method == 'POST' and 'deleteModal' in request.POST: #delete
 		pk=request.POST.get('deleteModal')
 		para = CalibrationConstant.objects.get(id=pk)
 		para.delete()
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 	context = {
 		"calibs": calibs,
 	}
@@ -498,8 +487,8 @@ def list_crop(request):
 	current_user = request.user
 	queryset_1 = Crop.objects.filter(author=current_user)
 	queryset_2 = Crop.objects.filter(personal=False)
-	crops = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
-
+	second_list = list(set(queryset_2) - set(queryset_1)) #remove duplicate
+	crops = sorted(chain(queryset_1, second_list), key=attrgetter('crop')) #sort as a combined list
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Crop.objects.get(id=pk)
@@ -604,7 +593,8 @@ def list_soil(request):
 	current_user = request.user
 	queryset_1 = Soil.objects.filter(author=current_user)
 	queryset_2 = Soil.objects.filter(personal=False)
-	soils = sorted(chain(queryset_1, queryset_2), key=attrgetter('timestamp'))
+	second_list = list(set(queryset_2) - set(queryset_1)) #remove duplicate
+	soils = sorted(chain(queryset_1, second_list), key=attrgetter('soiltype')) #sort combined list
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Soil.objects.get(id=pk)
@@ -682,21 +672,19 @@ def add_fieldunit(request):
 			instance.save()
 	else:  # display empty form
 		form = FieldUnitForm()
-
 	return save_all_fieldunit(request, form, 'waissapp/add_fieldunit.html')
 
 def list_fieldunit(request):
 	current_user = request.user
 	queryset_1 = FieldUnit.objects.filter(author=current_user)
 	queryset_2 = FieldUnit.objects.filter(personal=False)
-	fieldunits = chain(queryset_1, queryset_2)
-	
-	if request.method == 'POST' and 'deleteModal' in request.POST:
+	second_list = list(set(queryset_2) - set(queryset_1)) #remove duplicate
+	fieldunits = sorted(chain(queryset_1, second_list), key=attrgetter('name'))
+	if request.method == 'POST' and 'deleteModal' in request.POST: #delete
 		pk=request.POST.get('deleteModal')
 		para = FieldUnit.objects.get(id=pk)
 		para.delete()
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 	context = {
 		"fieldunits": fieldunits,
 	}
@@ -764,14 +752,13 @@ def list_sensor(request):
 	get_fieldunit = FieldUnit.objects.filter(author=current_user)
 	queryset_1 = Sensor.objects.filter(fieldunit__in=get_fieldunit)
 	queryset_2 = CalibrationConstant.objects.filter(personal=False)
-	sensors = chain(queryset_1, queryset_2)
-
+	second_list = list(set(queryset_2) - set(queryset_1)) #remove duplicate
+	sensors = sorted(chain(queryset_1, second_list), key=attrgetter('name'))
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Sensor.objects.get(id=pk)
 		para.delete()
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 	context = {
 		"sensors":sensors,
 	}
@@ -875,14 +862,13 @@ def list_farm(request):
 	current_user = request.user
 	queryset_1 = Farm.objects.filter(author=current_user)
 	queryset_2 = Farm.objects.filter(personal=False)
-	farms = chain(queryset_1, queryset_2)
-
+	second_list = list(set(queryset_2) - set(queryset_1)) #remove duplicate
+	farms = sorted(chain(queryset_1, second_list), key=attrgetter('name'))
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Farm.objects.get(id=pk)
 		para.delete()
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 	context = {
 		"farms": farms,
 	}
@@ -966,14 +952,13 @@ def list_personnel(request):
 	current_user = request.user
 	queryset_1 = Personnel.objects.filter(author=current_user)
 	queryset_2 = Personnel.objects.filter(personal=False)
-	personnels = chain(queryset_1, queryset_2)
-
+	second_list = list(set(queryset_2) - set(queryset_1)) #remove duplicate
+	personnels = sorted(chain(queryset_1, second_list), key=attrgetter('last_name'))
 	if request.method == 'POST'and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Personnel.objects.get(id=pk)
 		para.delete()
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 	context = {
 		"personnels": personnels,
 	}
@@ -995,12 +980,13 @@ def add_basin(request):
 		form = BasinForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
+			instance.bln_irrigation = True
+			instance.select_irrigation = "basin"
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
 	else:  # display empty form
 		form = BasinForm()
-
 	return save_all(request, form, 'waissapp/add_basin.html')
 
 @login_required
@@ -1009,12 +995,13 @@ def add_furrow(request):
 		form = FurrowForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
+			instance.bln_irrigation = True
+			instance.select_irrigation = "furrow"
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
 	else:  # display empty form
 		form = FurrowForm()
-
 	return save_all_furrow(request, form, 'waissapp/add_furrow.html')
 
 @login_required
@@ -1023,6 +1010,8 @@ def add_border(request):
 		form = BorderForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
+			instance.bln_irrigation = True
+			instance.select_irrigation = "border"
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
@@ -1036,6 +1025,8 @@ def add_drip(request):
 		form = DripForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
+			instance.bln_irrigation = True
+			instance.select_irrigation = "drip"
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
@@ -1049,6 +1040,8 @@ def add_sprinkler(request):
 		form = SprinklerForm(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
+			instance.bln_irrigation = True
+			instance.select_irrigation = "sprinkler"
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
@@ -1284,87 +1277,76 @@ def new_irrigation(request):
 	return render(request, 'waissapp/new_irrigation.html', context)
 
 @login_required
-
 def list_basin(request):
 	current_user = request.user
 	queryset_1 = Basin.objects.filter(author=current_user)
 	queryset_2 = Basin.objects.filter(personal=False)
-	basins = chain(queryset_1, queryset_2)
-
+	basins = sorted(chain(queryset_1, queryset_2), key=attrgetter('name'))
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Basin.objects.get(id=pk)
 		para.delete()
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 	context = {
 		"basins": basins,
 	}
 	return render(request, 'waissapp/list_basin.html', context)
-
+@login_required
 def list_border(request):
 	current_user = request.user
 	queryset_1 = Border.objects.filter(author=current_user)
 	queryset_2 = Border.objects.filter(personal=False)
-	borders = chain(queryset_1, queryset_2)
-
+	borders = sorted(chain(queryset_1, queryset_2), key=attrgetter('name'))
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Border.objects.get(id=pk)
 		para.delete()
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 	context = {
 		"borders": borders,
 	}
 	return render(request, 'waissapp/list_border.html', context)
-
+@login_required
 def list_furrow(request):
 	current_user = request.user
 	queryset_1 = Furrow.objects.filter(author=current_user)
 	queryset_2 = Furrow.objects.filter(personal=False)
-	furrows = chain(queryset_1, queryset_2)
-
+	furrows = sorted(chain(queryset_1, queryset_2), key=attrgetter('name'))
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Furrow.objects.get(id=pk)
 		para.delete()
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 	context = {
 		"furrows": furrows,
 	}
 	return render(request, 'waissapp/list_furrow.html', context)
-
+@login_required
 def list_sprinkler(request):
 	current_user = request.user
 	queryset_1 = Sprinkler.objects.filter(author=current_user)
 	queryset_2 = Sprinkler.objects.filter(personal=False)
-	sprinklers = chain(queryset_1, queryset_2)
-
+	sprinklers = sorted(chain(queryset_1, queryset_2))
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Sprinkler.objects.get(id=pk)
 		para.delete()
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 	context = {
 		"sprinklers": sprinklers,
 	}
 	return render(request, 'waissapp/list_sprinkler.html', context)
-
+@login_required
 def list_drip(request):
 	current_user = request.user
 	queryset_1 = Drip.objects.filter(author=current_user)
 	queryset_2 = Drip.objects.filter(personal=False)
-	drips = chain(queryset_1, queryset_2)
-
+	drips = sorted(chain(queryset_1, queryset_2), key=attrgetter('name'))
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Drip.objects.get(id=pk)
 		para.delete()
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 	context = {
 		"drips": drips,
 	}
@@ -1492,7 +1474,7 @@ def edit_sprinkler(request, id):
 	if request.method == 'POST':  # data sent by user
 		form = SprinklerForm(request.POST, instance=sprinkler)
 	else:
-		form = Sprinkler(instance=sprinkler)
+		form = SprinklerForm(instance=sprinkler)
 	return save_all_sprinkler(request, form, 'waissapp/edit_sprinkler.html')
 
 #Messages

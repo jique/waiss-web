@@ -14,29 +14,35 @@
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-hover border-bottom-secondary soil-table" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-            <tr class="text-center">
-              <th class="align-top">#</th>
-              <th class="align-top">Soil Name</th>
-              <th class="align-top">Field Capacity (MCv, %)</th>
-              <th class="align-top">Permanent Wilting Point (MCv, %)</th>
-              <th class="align-top">Intake Family</th>
-              <th class="align-top">Source</th>
-              <th class="align-top">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% include "waissapp/list_soil_2.html" %}
-        </tbody>
-    </table>
+          <thead>
+              <tr class="text-center">
+                <th class="align-top">#</th>
+                <th class="align-top">Soil Name</th>
+                <th class="align-top">Field Capacity (MCv, %)</th>
+                <th class="align-top">Permanent Wilting Point (MCv, %)</th>
+                <th class="align-top">Intake Family</th>
+                <th class="align-top">Source</th>
+                <th class="align-top">Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% include "waissapp/list_soil_2.html" %}
+          </tbody>
+        </table>
+      </div>
+    </div>     
     <!-- Create/Update Modal -->
     <div class="modal fade" id="modal-soil">
       <div class="modal-dialog">
         <div class="modal-content"></div>
       </div>
     </div>
+    <script src="{% static 'js/showHide.js' %}"></script>
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>  
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/modal.js' %}"></script>
 </div>
+{% endblock %}
+
+{% block bottom_script_block %}
 {% endblock %}

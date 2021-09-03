@@ -3,39 +3,35 @@
 {% load crispy_forms_tags %}
 
 {% block form_block %}
-          <div class="progress_bar">
-              <div class="pro-bar">
-                  <small class="progress_bar_title">
-                    Farm | Personnel | Crop | Soil | Calibration | Irrigation |<span style="color: #1abc9c; font-size: large;"><b> Field Unit</b></span>
-                    <span class="progress_number">77%</span>
-                  </small>
-                  <span class="progress-bar-inner" style="background-color: #1abc9c; width: 77%;" data-value="77" data-percentage-value="77"></span>
-              </div>
-          </div>
-            <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
-              <div class="card-header rounded-0 border-0"><small>Field Unit & Initial Settings</small></div>
-              <div class="card-body">
-                {% if fieldunit %}
-                {% else %}
-                <p class="small text-danger"><i>Please create a new field unit file even if you are going to use your previous field unit. Irrigation, Rainfall and Gravimetric Soil Moisture Content data are all saved in the field unit. Hence, to avoid combining of data from previous season please create a new field unit.
-                <br><br>
-                You cannot proceed to the next step without a newly submitted field unit.</i>
-                </p>
-                {% endif %}
-                <form class="form-group" action="" method="post">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.name|as_crispy_field }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.usk|as_crispy_field}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ fieldunit_form.number|as_crispy_field}}</div>
-                    </div>
-                </div>
+<div class="progress_bar">
+    <div class="pro-bar">
+        <small class="progress_bar_title">
+          Farm | Personnel | Crop | Soil | Calibration | Irrigation |<span style="color: #1abc9c; font-size: large;"><b> Field Unit</b></span>
+          <span class="progress_number">77%</span>
+        </small>
+        <span class="progress-bar-inner" style="background-color: #1abc9c; width: 77%;" data-value="77" data-percentage-value="77"></span>
+    </div>
+</div>
+<div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
+    <div class="card-header rounded-0 border-0"><small>Field Unit & Initial Settings</small></div>
+    <div class="card-body">
+        {% if fieldunit %}
+        {% else %}
+        <p class="small text-danger">
+            <i>Please create a new field unit file even if you are going to use your previous field unit. Irrigation, Rainfall and Gravimetric Soil Moisture Content data are all saved in the field unit. Hence, to avoid combining of data from previous season please create a new field unit.</i>
+        </p>
+        {% endif %}
+        <form class="form-group" action="" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">{{ fieldunit_form.name|as_crispy_field }}</div>
             </div>
-            <br>
+            <div class="row">
+                <div class="col">{{ fieldunit_form.usk|as_crispy_field}}</div>
+            </div>
+            <div class="row">
+                <div class="col">{{ fieldunit_form.number|as_crispy_field}}</div>
+            </div>
             <div class="text-right">
                 <button type="button" class="btn btn-success"><a href={% url 'waiss:new_irrigation' %} style="color:white">Previous</a></button>
                 <input type="submit" value="Submit" class="btn btn-info">
@@ -43,5 +39,7 @@
             </div>
         </form>
     </div>
+</div>
+</div>
 </div>
 {% endblock %}

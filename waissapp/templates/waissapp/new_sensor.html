@@ -31,14 +31,14 @@
                 </div>
               </div>
               {% endfor%}
+              <div class="text-right">
+                <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Previous</a></button>
+                <input type="submit" value="Submit" class="btn btn-info">
+                <button type="button" class="btn btn-success"><a href={% url 'waiss:new_system' %} style="color:white">Next</a></button>
+            </div>
       </div>
   </div>
-  <br>
-  <div class="text-center">
-      <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Previous</a></button>
-      <input type="submit" value="Submit" class="btn btn-info">
-      <button type="button" class="btn btn-success"><a href={% url 'waiss:new_system' %} style="color:white">Next</a></button>
-  </div>
 </form>
+</div>
 </div>
 {% endblock %}

@@ -8,22 +8,22 @@
 		</button>
 	</div>
 	<div class="modal-body">
-    <div class="col">{{form.name|as_crispy_field}}</div>
-    <div class="col">{{form.farm|as_crispy_field}}</div>
-    <div class="col">{{form.farm_manager|as_crispy_field}}</div>
-    <div class="col">{{form.crop|as_crispy_field}}</div>
-    <div class="col">{{form.date_transplanted|as_crispy_field}}</div>
-    <div class="col">{{form.soil|as_crispy_field}}</div>
-    <div class="col">{{form.fieldunit|as_crispy_field}}</div>
-    <div class="col">{{form.calib|as_crispy_field}}</div>
-    <div class="col">{{form.basin|as_crispy_field}}</div>
-    <div class="col">{{form.border|as_crispy_field}}</div>
-    <div class="col">{{form.furrow|as_crispy_field}}</div>
-    <div class="col">{{form.sprinkler|as_crispy_field}}</div>
-    <div class="col">{{form.drip|as_crispy_field}}</div>
+        {{form.name|as_crispy_field}}
+        {{form.date_transplanted|as_crispy_field}}
+        {{form.farm|as_crispy_field}}
+        {{form.farm_manager|as_crispy_field}}
+        {{form.crop|as_crispy_field}}
+        {{form.soil|as_crispy_field}}
+        {{form.fieldunit|as_crispy_field}}
+        {{form.calib|as_crispy_field}}
+        {{form.basin|as_crispy_field}}
+        {{form.border|as_crispy_field}}
+        {{form.furrow|as_crispy_field}}
+        {{form.sprinkler|as_crispy_field}}
+        {{form.drip|as_crispy_field}}
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-primary">Add</button>
+		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-info">Create</button>
 	</div>
 </form>

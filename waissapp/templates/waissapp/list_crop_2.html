@@ -1,9 +1,8 @@
-{% load static %}
 {% for crop in crops %}
 <tr class="text-center">
     <td class="align-middle">{{forloop.counter}}</td>
     <td class="align-middle min">{{crop.crop}}</td>
-    <td class="align-middle">{{crop.root_growth_model}}</td>
+    <td class="align-middle min">{{crop.root_growth_model}}</td>
     <td class="align-middle">{{crop.growingperiod}}</td>
     <td class="align-middle">{{crop.mad}}</td>
     <td class="align-middle">{{crop.drz}}</td>

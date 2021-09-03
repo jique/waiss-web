@@ -1,24 +1,30 @@
 {% load crispy_forms_tags %}
 <form class="update-form" method="post" data-url="{% url 'waiss:edit_drip' form.instance.id %}">
-    {% csrf_token %}
-      <div class="modal-header">
-            <h5 class="modal-title">Update Drip</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-      </div>
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title">Update Drip</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 	<div class="modal-body">
-            <div class="col">{{form.name|as_crispy_field}}</div>
-            <div class="col">{{form.discharge|as_crispy_field}}</div>
-            <div class="col">{{form.bln_single_lateral|as_crispy_field }}</div>
-            <div class="col">{{form.emitters_per_plant|as_crispy_field }}</div>
-            <div class="col">{{form.emitter_spacing|as_crispy_field }}</div>
-            <div class="col">{{form.plant_spacing|as_crispy_field }}</div>
-            <div class="col">{{form.row_spacing|as_crispy_field }}</div>
-            <div class="col">{{form.wetted_dia|as_crispy_field }}</div>
-            <div class="col">{{form.EU|as_crispy_field }}</div>
-            <div class="col">{{form.bln_ii|as_crispy_field }}</div>
-            <div class="col">{{form.irrigation_interval|as_crispy_field }}</div>
+    <small><i><b>Drip</b> irrigation is sometimes called trickle irrigation and involves dripping water onto the soil at very low rates (2-20 litres/hour) from a system of small diameter plastic pipes fitted with outlets called emitters or drippers. (FAO, 2021)</i></small>
+    <br><br>
+		{{form.name|as_crispy_field}}
+    {{form.discharge|as_crispy_field}}
+    {{form.bln_single_lateral|as_crispy_field}}
+    {{form.emitters_per_plant|as_crispy_field}}
+    {{form.emitter_spacing|as_crispy_field}}
+    {{form.plant_spacing|as_crispy_field}}
+    {{form.row_spacing|as_crispy_field}}
+    {{form.wetted_dia|as_crispy_field}}
+    {{form.EU|as_crispy_field}}
+    {{form.bln_ii|as_crispy_field}}
+		<div class="row collapse" id="collapse_irrig_II">
+      <div class="col">
+        {{form.irrigation_interval|as_crispy_field}}
+      </div>
+    </div>
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

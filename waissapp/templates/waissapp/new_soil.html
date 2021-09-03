@@ -43,13 +43,10 @@
                 {{soil_form.fc|as_crispy_field}}
                 {{soil_form.pwp|as_crispy_field}}
                 {{soil_form.bln_surface_irrigation|as_crispy_field}}
-                <div class="row collapse" id="collapseOne">
-                  <div class="col-1"></div>
+                <div class="row collapse" id="collapse4">
                   <div class="col">{{soil_form.intake_family|as_crispy_field}}</div>
                 </div>
-                <div class="row">
-                    <div class="col">{{ soil_form.source|as_crispy_field }}</div>
-                </div>
+                {{soil_form.source|as_crispy_field}}
                 <hr>
                 <div class="text-right">
                     <button type="button" class="btn btn-success"><a href={% url 'waiss:new_crop' %} style="color:white">Previous</a></button>
@@ -63,24 +60,6 @@
     </div>
   </div>
 </div>
-<script>
-  $( document ).ready(function() {
-    showHide();
-      $("#id_bln_surface_irrigation").change(function () {
-        showHide();
-      });
-    });
-    function showHide() {
-      var checkedValue = $("#id_bln_surface_irrigation").val();
-      if (checkedValue == "yes") {
-        $("#collapseOne").collapse('show');
-        $("#id_intake_family").prop('required',true);
-
-      } else if (checkedValue == "no") {
-        $("#collapseOne").collapse('hide');
-        $("#id_intake_family").prop('required',false);
-      }
-    };
-</script>
+<script src="{% static 'js/showHide.js' %}"></script>
 {% endblock %}
 

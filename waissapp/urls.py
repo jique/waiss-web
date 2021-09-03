@@ -8,7 +8,6 @@ urlpatterns = [
      path('accounts/register/', views.register, name='register'),
      path('accounts/profile', views.profile, name='profile'),
      path('about/', views.about, name='about'),
-     path('about-the-calculations/', views.about_calc, name='about_calc'),
      path('', views.home, name='home_page'),
      
      #FIELDUNIT_PARAMETERS
@@ -103,6 +102,5 @@ urlpatterns = [
      path('list_rainfall/', views.list_rainfall, name='list_rainfall'),
 
      path('upload_csv/', views.upload_csv, name='upload_csv'),
-     path('options/', views.options, name='simp_advanced'),
      path('sarai-header/', views.sarai_header, name='sarai_header')
 ]

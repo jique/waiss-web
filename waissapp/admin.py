@@ -23,7 +23,6 @@ class ReceivedMsgsAdmin(admin.ModelAdmin):
     
 class FieldUnitInline(admin.TabularInline):
     model = FieldUnit
-    extra=1
 
 class MoistureContentInline(admin.TabularInline):
     model = MoistureContent
@@ -49,7 +48,7 @@ class FarmAdmin(admin.ModelAdmin):
     list_display=('name', 'brgy', 'municipality', 'province', 'lat', 'long', 'author', 'personal', 'timestamp')
 
 class FieldUnitAdmin(admin.ModelAdmin):
-    list_display = ('name', 'author', 'personal', 'timestamp')
+    list_display = ('name', 'usk', 'number', 'fieldunitstatus', 'withirrigation', 'samples', 'sensorintegrationtime', 'timestart', 'timestop', 'delay', 'clockcorrection' , 'author', 'personal', 'timestamp')
     inlines = [SensorInline]
 
 class SoilInline(admin.TabularInline):

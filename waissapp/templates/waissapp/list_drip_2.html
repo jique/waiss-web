@@ -1,8 +1,8 @@
 {% load static %}
 {% for drip in drips %}
-<tr> 
+<tr class="text-center"> 
     <td class="align-middle">{{forloop.counter}}</td>
-    <td class="align-middle">{{drip.name}}</td>
+    <td class="align-middle min">{{drip.name}}</td>
     <td class="align-middle">{{drip.discharge}}</td>
     <td class="align-middle">{{drip.emitters_per_plant}}</td>
     <td class="align-middle">{{drip.emitter_spacing}}</td>
@@ -15,31 +15,30 @@
       <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_drip' drip.id %}"><i class="fas fa-edit"></i></button>
       <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ drip.id }}"><i class="fas fa-trash"></i></button>
     </td>
-  </tr>
-  <!-- Delete Modal -->
-  <div class="modal fade" id="deleteModal-{{ drip.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Delete Drip</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <small><em>Are you sure you want to delete drip <b>"{{drip.name}}"</b>?<br>
-            Deleting <b>"{{drip.name}}"</b> will also delete the systems where it is used.</em></small>
-        </div>
-        <div class="modal-footer">
-            <form class="form-group" action="" method="post">
-                {% csrf_token %}
-                <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="submit" class="btn btn-danger" name="deleteModal" value="{{drip.id}}">Confirm</button>
-            </form>
-        </div>
+</tr>
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal-{{ drip.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete Drip</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <small><em>Are you sure you want to delete drip <b>"{{drip.name}}"</b>?<br>
+          Deleting <b>"{{drip.name}}"</b> will also delete the systems where it is used.</em></small>
+      </div>
+      <div class="modal-footer">
+          <form class="form-group" action="" method="post">
+              {% csrf_token %}
+              <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+              <button type="submit" class="btn btn-danger" name="deleteModal" value="{{drip.id}}">Confirm</button>
+          </form>
       </div>
     </div>
   </div>
-  <!--  Delete Modal -->
-</tr>
+</div>
+<!--  Delete Modal -->
 {% endfor %}
