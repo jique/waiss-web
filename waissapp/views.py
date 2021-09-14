@@ -496,10 +496,7 @@ def add_sensor(request):
 def list_sensor(request):
 	current_user = request.user
 	get_fieldunit = FieldUnit.objects.filter(author=current_user)
-	queryset_1 = Sensor.objects.filter(fieldunit__in=get_fieldunit)
-	queryset_2 = CalibrationConstant.objects.filter(personal=False)
-	second_list = list(set(queryset_2) - set(queryset_1)) #remove duplicate
-	sensors = sorted(chain(queryset_1, second_list), key=attrgetter('name'))
+	sensors = Sensor.objects.filter(fieldunit__in=get_fieldunit)
 	if request.method == 'POST' and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
 		para = Sensor.objects.get(id=pk)
@@ -1352,22 +1349,6 @@ def add_mc(request):
 			form.save()
 	else:  # display empty form
 		form = MCForm()
-	
-	if request.method == 'POST' and 'Upload' in request.POST:
-		csv_file = request.FILES['file']
-
-		if not csv_file.name.endswith('.csv'):
-			messages.error(request, "This is not a csv file.")
-		
-		data_set = csv_file.read().decode('UTF-8')
-		io_string = io.StringIO(data_set)
-		next(io_string)
-		for column in csv.reader(io_string, delimiter=","):
-			_, created = MoistureContent.objects.update_or_create(
-				sensor= Sensor.objects.get(name=(column[0])), # returns error: expecting id but return is sensor_name if Sensor.objects.get(name="") is removed; needed for foreignkeys
-				timestamp=column[1],
-				mc_data=column[2],
-			)
 	return save_all_mc(request, form, 'waissapp/add_mc.html')
 
 @login_required
@@ -1392,7 +1373,7 @@ def upload_csv(request):
 			timestamp=column[1],
 			mc_data=column[2],
 		)
-
+		return redirect('/dashboard/')
 	context ={}
 
 	return render (request, 'waissapp/upload_csv.html', context)

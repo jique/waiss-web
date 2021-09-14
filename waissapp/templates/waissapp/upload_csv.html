@@ -5,19 +5,21 @@
 {% endblock %}
             
 {% block main_block %}
-<h5 class="text-left">Add Soil Moisture Readings</h5>
+<h5 class="text-left"><kbd class="bg-gradient-info small">Soil Moisture Readings</kbd></h5>
 <div class="row">
     <div class="col-12">
         <div class="card mb-4">
-            <div class="card-header"><small>Upload csv file with moisture content reading from sensor with data <b><i>{{order}}</i></b>.</small></div>
+            <div class="card-header"><small>Upload csv file with moisture content reading from sensor with data <b><i>{{order}}</i></b>.
+            <br>
+            Check format by opening the csv file in a notepad or wordpad. Make sure to use hyphen and not backslash.</small></div>
             <div class="card-body">
                 <form class="form-group" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="custom-file">
-                        <label>Upload a File: </label>
+                        <label class="">Upload a File: </label>
                         <input type="file" name="file">
                     </div>
-                    <input type="submit" value="Upload" class="btn btn-info btn-block">
+                    <input type="submit" value="Upload" class="btn btn-info btn-sm">
 
                     {% if messages %}
                     {% for message in messages %}

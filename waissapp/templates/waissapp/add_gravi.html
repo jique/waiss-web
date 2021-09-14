@@ -10,8 +10,8 @@
 
 <form class="create-form form-group" method="post" data-url="{% url 'waiss:add_gravi' %}">
 	{% csrf_token %}
-	<div class="modal-header">
-		<h6 class="modal-title" >Create Gravimetric Moisture Content (% MC<sub>V</sub>)</h6>
+	<div class="modal-header bg-light">
+		<h6 class="modal-title"><b>Add Gravimetric Moisture Content (% MC<sub>V</sub>)</b></h6>
 		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 		</button>
@@ -31,11 +31,12 @@
 				format: 'DD/MM/YYYY HH:mm',
 			  });
 			});
-		  </script>
-		  <br>
+		</script>
+		<br>
 		{{form.mc_data|as_crispy_field}}
+	</div>
 	<div class="modal-footer">
-        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-info btn-sm">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    	<button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
