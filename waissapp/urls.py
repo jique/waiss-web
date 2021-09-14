@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views, computations
+from . import views, computations, new_system
 
 app_name = 'waiss'
 
@@ -83,10 +83,10 @@ urlpatterns = [
 
 
      #WAISSystems
-     path('new_system/', views.new_system, name='new_system'),
-     path('add_system/', views.add_system, name='add_system'),
-     path('edit_system/<str:id>/', views.edit_system, name='edit_system'),
-     path('list_system/', views.list_system, name='list_system'),
+     path('new_system/', new_system.new_system, name='new_system'),
+     path('add_system/', new_system.add_system, name='add_system'),
+     path('edit_system/<str:id>/', new_system.edit_system, name='edit_system'),
+     path('list_system/', new_system.list_system, name='list_system'),
 
      #Other Data
      path('add_shaded/', views.add_shaded, name='add_shaded'),

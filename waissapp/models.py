@@ -2,6 +2,31 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.http import request
+from django.core.validators import MaxValueValidator, MinValueValidator
+
+class Farm(models.Model):
+    name = models.CharField(max_length=20, unique="True")
+    province = models.CharField(max_length=50, null="True")
+    municipality = models.CharField(max_length=50, null="True")
+    brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True")
+    yes_no = [
+        ("yes", 'Yes, I do!'),
+        ("no", 'No, I dont.'),
+    ]
+    select_coordinates = models.CharField(choices=yes_no, max_length=3, verbose_name="Do you have the coordinates of your farm?", null="True")
+    lat = models.DecimalField(decimal_places=4, verbose_name="Latitude", null="True", blank="True", max_digits=6)
+    long = models.DecimalField(decimal_places=4, verbose_name="Longitude", null="True", blank="True", max_digits=7)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
+    personal = models.BooleanField(default=True)
+    timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "1. Farms"
+        ordering = ('name',)
+        get_latest_by = "timestamp"
+
+    def __str__(self):
+        return self.name
 
 class Personnel(models.Model):
     first_name = models.CharField(max_length=30, null=True)
@@ -211,6 +236,19 @@ class Crop(models.Model):
     def __str__(self):
         return self.crop
 
+class NoIrrigation(models.Model):
+    farm = models.ForeignKey(Farm, on_delete=models.SET_NULL, default=None, null=True)
+    farm_area = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Farm Area (sq. m)", null=True)
+    percent_covered = models.IntegerField(default=50, validators=[MaxValueValidator(100), MinValueValidator(1)], verbose_name="Percentage of the Farm Area to be Irrigated (Estimate)", null=True)
+
+    yes_no = [
+        ("True", 'Yes, I do!'),
+        ("False", 'No, I dont.'),
+    ]
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True)
+    
+    class Meta:
+        verbose_name_plural = "5.f. Irrigation System: None"
 
 class Basin(models.Model):
     yes_no = [
@@ -384,30 +422,6 @@ class Sprinkler(models.Model):
     
     class Meta:
         verbose_name_plural = "5.d. Irrigation System: Sprinkler"
-    def __str__(self):
-        return self.name
-
-class Farm(models.Model):
-    name = models.CharField(max_length=20, unique="True")
-    province = models.CharField(max_length=50, null="True")
-    municipality = models.CharField(max_length=50, null="True")
-    brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True")
-    yes_no = [
-        ("yes", 'Yes, I do!'),
-        ("no", 'No, I dont.'),
-    ]
-    select_coordinates = models.CharField(choices=yes_no, max_length=3, verbose_name="Do you have the coordinates of your farm?", null="True", blank=True)
-    lat = models.DecimalField(decimal_places=4, verbose_name="Latitude", null="True", blank="True", max_digits=6)
-    long = models.DecimalField(decimal_places=4, verbose_name="Longitude", null="True", blank="True", max_digits=7)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
-    personal = models.BooleanField(default=True)
-    timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-
-    class Meta:
-        verbose_name_plural = "1. Farms"
-        ordering = ('name',)
-        get_latest_by = "timestamp"
-
     def __str__(self):
         return self.name
 

@@ -6,7 +6,7 @@
 <div class="progress_bar">
   <div class="pro-bar">
       <small class="progress_bar_title">
-          Farm | Personnel | Crop | Soil | Calibration | Irrigation | Field Unit | Sensor | <span style="color: #1abc9c; font-size: large;"><b>System</b></span>
+        <a href={% url 'waiss:new_farm' %} style="color: #858796">Farm</a> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> | <a href={% url 'waiss:new_fieldunit' %} style="color:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <span style="color: #1abc9c; font-size: large;"><b>System</b></span>
           <span class="progress_number">100%</span>
       </small>
       <span class="progress-bar-inner" style="background-color: #1abc9c; width: 100%;" data-value="100" data-percentage-value="100"></span>
@@ -245,6 +245,7 @@
                 </select>
               </div>
             </div>
+            {% elif no_irrigation_ses %}
             {% else %}
             <div class="row form-group">
               <div class="col-5">

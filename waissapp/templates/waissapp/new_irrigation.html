@@ -6,7 +6,7 @@
 <div class="progress_bar">
   <div class="pro-bar">
       <small class="progress_bar_title">
-        Farm | Personnel | Crop | Soil | Calibration |<span style="color: #1abc9c; font-size: large;"><b> Irrigation</b></span>
+        <a href={% url 'waiss:new_farm' %} style="color: #858796">Farm</a> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> |<span style="color: #1abc9c; font-size: large;"><b> Irrigation</b></span>
         <span class="progress_number">66%</span>
       </small>
       <span class="progress-bar-inner" style="background-color: #1abc9c; width: 66%;" data-value="66" data-percentage-value="66"></span>
@@ -17,7 +17,7 @@
   <div class="card-header rounded-0 border-0"><small>Irrigation System</small></div>
   <div class="card-body">
     <div class="row">
-      {% if select_ses == None %}
+      {% if select_ses == None and no_irrigation_ses == None %}
       <div class="col">
         <label>Do you have an irrigation system?&emsp;</label>
       </div>
@@ -59,14 +59,31 @@
           {{drip.bln_irrigation|as_crispy_field}}
         </form>
       </div>
+      {% elif no_irrigation_ses != None %}
+      <div class="col">
+        <form class="form-group">
+          {{no_irrigation.bln_irrigation|as_crispy_field}}
+        </form>
+      </div>
       {% endif %}
     </div>
     <div class="row collapse" id="collapse_irrig_One">
-      <div class="col text-right">
+      <div class="col-1"></div>
+      <div class="col">
         <!--No irrigation system-->
-        <br>
-        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
-        <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+        <form class="form-group" action="" method="post">
+          <hr>
+          {% csrf_token %}
+          {{no_irrigation.farm|as_crispy_field}}
+          {{no_irrigation.farm_area|as_crispy_field}}
+          {{no_irrigation.percent_covered|as_crispy_field}}
+          {{no_irrigation.errors}}
+          <hr>
+          <div class="text-right">
+            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
+            <input type="submit" value="Submit" class="btn btn-info" name="submit-no-irrigation">
+          </div>
+        </form>
       </div>
     </div>
     <div class="row collapse" id="collapse_irrig_Two">
@@ -119,10 +136,9 @@
         </div>
       {% endif %}
     </div>
-    <hr>
     <div class="row collapse" id="collapse_irrig_1">
       <div class="col-4">
-        {% if basin_list %}
+        {% if basin_list %} <hr>
           <form method="post" class="form-group">
             {% csrf_token %}
             <small>Existing Basins</small>
@@ -140,7 +156,7 @@
           </form>
           {% endif %}
       </div>
-      <div class="col">
+      <div class="col"> <hr>
         <form class="form-group" action="" method="post">
           {% csrf_token %}
           <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
@@ -159,7 +175,7 @@
     </div>
     <div class="row collapse" id="collapse_irrig_2">
       <div class="col-4">
-        {% if border_list %}
+        {% if border_list %} <hr>
         <form method="post" class="form-group">
           {% csrf_token %}
           <small>Existing Borders</small>
@@ -179,7 +195,7 @@
       </div>
       <div class="col">
       <form class="form-group" action="" method="post">
-        {% csrf_token %}
+        {% csrf_token %} <hr>
         <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
         {{border.name|as_crispy_field}}
         {{border.discharge|as_crispy_field}}
@@ -196,7 +212,7 @@
     </div>
     <div class="row collapse" id="collapse_irrig_3">
       <div class="col-4">
-        {% if furrow_list %}
+        {% if furrow_list %} <hr>
         <form method="post" class="form-group">
           {% csrf_token %}
           <small>Existing Furrows</small>
@@ -216,7 +232,7 @@
       </div>
       <div class="col">
       <form class="form-group" action="" method="post">
-        {% csrf_token %}
+        {% csrf_token %} <hr>
         <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
         {{furrow.name|as_crispy_field}}
         {{furrow.discharge|as_crispy_field}}
@@ -236,7 +252,7 @@
     </div>
     <div class="row collapse" id="collapse_irrig_4">
       <div class="col-4">
-        {% if sprinkler_list %}
+        {% if sprinkler_list %} <hr>
         <form method="post" class="form-group">
           {% csrf_token %}
           <small>Existing Sprinklers</small>
@@ -256,22 +272,22 @@
       </div>
       <div class="col">
       <form class="form-group" action="" method="post">
-        {% csrf_token %}
+        {% csrf_token %} <hr>
         <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
-        {{ sprinkler.name|as_crispy_field}}
-        {{ sprinkler.lateral_spacing|as_crispy_field }}
-        {{ sprinkler.sprinkler_spacing|as_crispy_field }}
-        {{ sprinkler.ea|as_crispy_field }}
-        {{ sprinkler.with_q_bln|as_crispy_field }}
+        {{sprinkler.name|as_crispy_field}}
+        {{sprinkler.lateral_spacing|as_crispy_field}}
+        {{sprinkler.sprinkler_spacing|as_crispy_field}}
+        {{sprinkler.ea|as_crispy_field}}
+        {{sprinkler.with_q_bln|as_crispy_field}}
         <div class="row collapse" id="collapse_irrig_Yes">
           <div class="col">
-          {{ sprinkler.discharge|as_crispy_field}}
+          {{sprinkler.discharge|as_crispy_field}}
           </div>
         </div>
         <div class="row collapse" id="collapse_irrig_No">
           <div class="col">
-            {{ sprinkler.nozzle_diameter|as_crispy_field }}
-            {{ sprinkler.operating_pressure|as_crispy_field }}<!--Use ave discharge coefficient (0.96)-->
+            {{sprinkler.nozzle_diameter|as_crispy_field}}
+            {{sprinkler.operating_pressure|as_crispy_field}}<!--Use ave discharge coefficient (0.96)-->
           </div>
         </div>
         <hr>
@@ -285,7 +301,7 @@
     </div>
     <div class="row collapse" id="collapse_irrig_5">
       <div class="col-4">
-        {% if drip_list %}
+        {% if drip_list %} <hr>
         <form method="post" class="form-group">
           {% csrf_token %}
           <small>Existing Drips</small>
@@ -305,21 +321,21 @@
       </div>
       <div class="col">
         <form class="form-group" action="" method="post">
-          {% csrf_token %}
+          {% csrf_token %} <hr>
           <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
-          {{ drip.name|as_crispy_field}}
-          {{ drip.discharge|as_crispy_field}}
-          {{ drip.bln_single_lateral|as_crispy_field }}
-          {{ drip.emitters_per_plant|as_crispy_field }}
-          {{ drip.emitter_spacing|as_crispy_field }}
-          {{ drip.plant_spacing|as_crispy_field }}
-          {{ drip.row_spacing|as_crispy_field }}
-          {{ drip.wetted_dia|as_crispy_field }}
-          {{ drip.EU|as_crispy_field }}
-          {{ drip.bln_ii|as_crispy_field }}
+          {{drip.name|as_crispy_field}}
+          {{drip.discharge|as_crispy_field}}
+          {{drip.bln_single_lateral|as_crispy_field}}
+          {{drip.emitters_per_plant|as_crispy_field}}
+          {{drip.emitter_spacing|as_crispy_field}}
+          {{drip.plant_spacing|as_crispy_field}}
+          {{drip.row_spacing|as_crispy_field}}
+          {{drip.wetted_dia|as_crispy_field}}
+          {{drip.EU|as_crispy_field}}
+          {{drip.bln_ii|as_crispy_field}}
           <div class="row collapse" id="collapse_irrig_II">
             <div class="col">
-              {{ drip.irrigation_interval|as_crispy_field }}
+              {{drip.irrigation_interval|as_crispy_field}}
             </div>
           </div>
           <hr>

@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, Farm, FieldUnit, Sensor, MoistureContent, WAISSystems, Rainfall, Gravimetric, PercentShaded, Basin, Furrow, Border, Drip, Sprinkler
+from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, Farm, FieldUnit, Sensor, MoistureContent, WAISSystems, Rainfall, Gravimetric, PercentShaded, Basin, Furrow, Border, Drip, Sprinkler, NoIrrigation
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -145,6 +145,17 @@ class SprinklerForm(ModelForm):
     class Meta:
         model = Sprinkler
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
+
+class NoIrrigationForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(NoIrrigationForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-6'
+        self.helper.field_class = 'col-6' 
+    class Meta:
+        model = NoIrrigation
+        exclude = ()
 
 class WAISSystemsForm(ModelForm):
     date_transplanted = forms.DateField(
