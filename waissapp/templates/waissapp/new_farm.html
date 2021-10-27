@@ -61,14 +61,13 @@
 </div>
 </div>
 <script>
-  var map = L.map('map').setView([69.204662, 330.622782], 13);
+  var map = L.map('map').setView([69.204662, 330.622782], 3);
   var popup = L.popup();
 
   L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=g0oXxXY5s36OBV9ZK206', {
     attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
     maxZoom: 18,
     tileSize: 256,
-    innerHeight: 180,
     zoomOffset: -1,
     }).addTo(map);
     
