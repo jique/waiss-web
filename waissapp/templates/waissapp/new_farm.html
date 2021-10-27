@@ -46,6 +46,7 @@
               {{farm_form.lat|as_crispy_field}}
               {{farm_form.long|as_crispy_field}}
             </div>
+            <div id="map"></div>
             <hr>
             <div class="text-center">
               <input type="submit" value="Next" class="btn btn-info" name="btn_submit">
@@ -57,13 +58,12 @@
   </div>
 </div>
 </div>
-<div id="map"></div>
 <script>
   var map = L.map('map').setView([14.1699, 121.2441], 13);
   L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=g0oXxXY5s36OBV9ZK206', {
     attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
     maxZoom: 18,
-    tileSize: 512,
+    tileSize: 256,
     zoomOffset: -1,
     }).addTo(map);
 </script>
