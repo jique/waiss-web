@@ -55,7 +55,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'waiss.urls'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-#GDAL_LIBRARY_PATH = r'C:\Users\jaqlo\sarai-waiss\Lib\site-packages\django\contrib\gis\gdal\libgal.py'
+
+#GDAL_LIBRARY_PATH = r"C:\Program Files (x86)\GDAL\gdal303.dll"
 
 SESSION_ENGINE ='django.contrib.sessions.backends.file'
 TEMPLATES = [
@@ -134,3 +135,7 @@ STATICFILES_DIRS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

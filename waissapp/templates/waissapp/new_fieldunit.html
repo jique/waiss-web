@@ -6,7 +6,7 @@
 <div class="progress_bar">
     <div class="pro-bar">
         <small class="progress_bar_title">
-            <a href={% url 'waiss:new_farm' %} style="color: #858796">Farm</a> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> |<span style="color: #1abc9c; font-size: large;"><b> Field Unit</b></span>
+            <a href={% url 'waiss:new_farm' %} style="color: #858796">Farm</a> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> |<span style="color: #1abc9c; font-size: large;"><b> Field Unit</b></span> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="color:#858796">System</a>
           <span class="progress_number">77%</span>
         </small>
         <span class="progress-bar-inner" style="background-color: #1abc9c; width: 77%;" data-value="77" data-percentage-value="77"></span>
@@ -15,27 +15,15 @@
 <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
     <div class="card-header rounded-0 border-0"><small>Field Unit & Initial Settings</small></div>
     <div class="card-body">
-        {% if fieldunit %}
-        {% else %}
-        <p class="small text-danger">
-            <i>Please create a new field unit file even if you are going to use your previous field unit. Irrigation, Rainfall and Gravimetric Soil Moisture Content data are all saved in the field unit. Hence, to avoid combining of data from previous season please create a new field unit.</i>
-        </p>
-        {% endif %}
         <form class="form-group" action="" method="post">
             {% csrf_token %}
-            <div class="row">
-                <div class="col">{{ fieldunit_form.name|as_crispy_field }}</div>
-            </div>
-            <div class="row">
-                <div class="col">{{ fieldunit_form.usk|as_crispy_field}}</div>
-            </div>
-            <div class="row">
-                <div class="col">{{ fieldunit_form.number|as_crispy_field}}</div>
-            </div>
-            <div class="text-right">
-                <button type="button" class="btn btn-success"><a href={% url 'waiss:new_irrigation' %} style="color:white">Previous</a></button>
-                <input type="submit" value="Submit" class="btn btn-info">
-                <button type="button" class="btn btn-success"><a href={% url 'waiss:new_sensor' %} style="color:white">Next</a></button>
+            <small><b>Fields with asterisks (*) are required.</b></small><hr>
+            <div class="col">
+                {{ fieldunit_form.name|as_crispy_field }}
+                {{ fieldunit_form.usk|as_crispy_field}}
+                {{ fieldunit_form.number|as_crispy_field}}
+            <div class="text-center">
+                <input type="submit" value="Next" class="btn btn-info">
             </div>
         </form>
     </div>

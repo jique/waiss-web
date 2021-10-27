@@ -6,7 +6,8 @@
 <div class="progress_bar">
   <div class="pro-bar">
       <small class="progress_bar_title">
-          <span style="color: #1abc9c; font-size: large;"><b>Farm</b></span>
+          <span style="color: #1abc9c; font-size: large;"><b>Farm</b></span> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> | <a href={% url 'waiss:new_fieldunit' %} style="color:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="color:#858796">System</a>
+        
           <span class="progress_number">11%</span>
       </small>
       <span class="progress-bar-inner" style="background-color: #1abc9c; width: 11%;" data-value="11" data-percentage-value="11"></span>
@@ -17,29 +18,26 @@
   <div class="card-header rounded-0 border-0"><small>Farm Name & Location</small></div>
     <div class="card-body">
       <div class="row">
+        {% if farm_list %}
         <div class="col-4">
-          {% if farm_list %}
           <form method="post" class="form-group">
             {% csrf_token %}
-            <small>Existing Farms</small>
-            <select class="form-control" id="selected_farm" name="selected_farm">
+            <small><b>Load existing farms.</b></small><hr>
+            <select class="form-control" id="selected_farm" name="loadData" onchange="this.form.submit()">
               <option value="{{selected_farm}}">{{selected_farm_text}}</option>
               {% for farm in farm_list %}
               <option value="{{farm.name}}">{{farm.name}}</option>
               {% endfor %}
             </select>
-            <small class="text-danger float-right"><i>{{error_msg}}</i></small><hr>
-            <p class="text-right">
-              <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData"></input>
-            </p>
           </form>
-        {% endif %}
         </div>
+        {% endif %}
         <div class="col">
-          <form method="post" class="from-group">
+          <form method="post" class="form-group">
             {% csrf_token %}
-            <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+            <small><b>Fields with asterisks (*) are required.</b></small><hr>
             {{ farm_form.name|as_crispy_field }}
+            {{ farm_form.farm_area|as_crispy_field }}
             {{ farm_form.brgy|as_crispy_field }}
             {{ farm_form.municipality|as_crispy_field }}
             {{ farm_form.province|as_crispy_field }}
@@ -49,9 +47,8 @@
               {{farm_form.long|as_crispy_field}}
             </div>
             <hr>
-            <div class="text-right">
-              <input type="submit" value="Submit" class="btn btn-info" name="btn_submit">
-              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_personnel' %} style="color:white">Next</a></button>
+            <div class="text-center">
+              <input type="submit" value="Next" class="btn btn-info" name="btn_submit">
             </div>
           </form>
         </div>
@@ -60,6 +57,7 @@
   </div>
 </div>
 </div>
-<script src="{% static 'js/showHide.js' %}"></script>  
+{% leaflet_map "yourmap" %}
+<script src="{% static 'js/showHide.js' %}"></script>
 {% endblock %}
     

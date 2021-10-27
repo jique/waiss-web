@@ -1,47 +1,61 @@
-{% extends 'waissapp/index.html'%}
+{% extends 'waissapp/home_page.html'%}
 {% load static %}
+{% load crispy_forms_tags %}
 
-{% block top_script_block %}
+{% block title_block %}
+WAISS Login
 {% endblock %}
 
-{% block pageheading_block %}
-About us
+{% block style_block %}
 {% endblock %}
 
-{% block main_block %}
-    <div class="main-body">
-        <div class="about_sarai">
-            <h6>Wiser with WAISS: Introducing SARAI’s smart irrigation technology</h6>
-            <a class="partner_logo" href="https://sarai.ph/services/waiss" target="_blank" id="logo">
-                <img src={% static "theme/waiss_logo.png" %} width=60px height=60px>
-            </a>
-            <p>With Water Advisory for Irrigation Scheduling System or WAISS, farmers can apply the right amount of water to crops at the right time and in the right place.</p>
-            <p>It is project of the PCAARRD-funded SARAI Project 2.3: Smarter Technologies for Crop Water Management under Project Leader Dr. Roger A Luyun Jr. and Study Leader Dr. Ronaldo B. Saludes.</p>
-            <p>The team is composed by Agricultural and Biosystems Engineers Christian Martin Casedo, Ginalyn Robel Brazil, Jay Ann Lomod, Toni-An Mae Salcedo, Bryan Baltazar, and Jan Albert Atienza.</p>
-            <p>Read more on DOST-PCAARRD's&nbsp;<span><a href="http://www.pcaarrd.dost.gov.ph/home/portal/index.php/quick-information-dispatch/3449-wiser-with-waiss-introducing-sarai-s-smart-irrigation-technology">page</a></span>.</p>
-        </div>
-        <div class="about_sarai">
-            <h6>About Project SARAi</h6>
-            <a class="partner_logo" href="https://www.sarai.ph" target="_blank" id="logo">
-                <img src={% static "theme/sarai.png" %} width=80px height=50px>
-            </a>    
-            <p>Project SARAi aims to develop a national crop forecasting and monitoring system for nine priority crops: rice, corn, banana, coconut, coffee, cacao, sugarcane, tomato, and soybean. This project is funded by DOST-PCAARRD.</p>
-        </div>
-        <div class="about_partners">
-            <h6>Patner Institutions:</h6>
-            <a class="partner_logo" href="https://www.uplb.edu.ph" target="_blank" id="logo">
-                <img src={% static "theme/uplb-logo.png" %} width=43px height=40px>
-            </a>
-            <a class="partner_logo" href="https://www.pcaarrd.dost.gov.ph" target="_blank" id="logo">
-                <img src={% static "theme/dost-pcaarrd-logo.png" %} width=40px height=40px>
-            </a>
-            <a class="partner_logo" href="https://www.dost.gov.ph" target="_blank" id="logo">
-                <img src={% static "theme/dost-logo.png" %} width=40px height=40px>
-            </a>
-        </div>
+{% block collapse_button %}
+{% endblock %}
+
+{% block sections_block %}
+<div id="content" class="team-member-detail border-top">
+    <div class="container">
+        <section class="bar">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading">
+                        <h2>Our Team</h2>
+                    </div>
+                    <p class="lead">Focus on developing smarter technologies for irrigation and management of crops to help farmers in monitoring their farm and ensuring optimum inputs for loss reduction, high water efficiency, and better yield results.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>Part of Project SARAI&apos;s advocacy is the practice of smart irrigation &ndash; the application of irrigation at the right time at the right amount. The project has developed two systems for soil water monitoring and management: the Water Advisory for Irrigation Scheduling System (WAISS) and the WAISS &ndash; Evapotranspiration-based Irrigation Scheduler and Calculator (WAISS-ETCal).</p>
+                    <p xml:lang="EN-US" lang="EN-US" paraid="0" paraeid="{ebc253f8-7175-4619-ae72-f6b5ad041e8f}{123}" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:0,&quot;335559731&quot;:0,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:4,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:0}">WAISS is a decision support system, which provides site- and crop-specific irrigation advisory and crop water management recommendations.​&nbsp;The whole system consists of a field unit and computer software. The field unit is installed in the farm for daily moisture content measurement.&nbsp;The server, consisting of a GSM module and software, receives the data from the field unit and analyzes it to generate irrigation advisories. The advisories are then sent to end-users via SMS, daily and during critical periods. End-users may opt to request the current status of their farm by texting &ldquo;STATUS&rdquo; to the WAISS server.​</p>
+                    <p xml:lang="EN-PH" lang="EN-PH" paraid="0" paraeid="{ebc253f8-7175-4619-ae72-f6b5ad041e8f}{187}" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:0,&quot;335559731&quot;:0,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:4,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:0}">Atmometer measures actual reference evapotranspiration and easily provides data for irrigation scheduling and is comparable to weather stations.​&nbsp;To have more accurate data, calibration of the atmometer to the local climate conditions must be done, by utilizing empirical equations such as FAO Penman-Monteith. The calibrated reference evapotranspiration reading can be used to estimate the amount of water to irrigate the crop by computing the actual evapotranspiration.​</p>
+                    <p xml:lang="EN-US" lang="EN-US" paraid="0" paraeid="{ebc253f8-7175-4619-ae72-f6b5ad041e8f}{199}" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:0,&quot;335559731&quot;:0,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:4,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:0}">The team has developed a web application for evapotranspiration-based irrigation scheduling and calculation. I​n this application, the user can create their account based on the characteristics of their farm, such as crop planted and soil texture, and the availability of an atmometer or nearby weather station where evapotranspiration measurements will be computed from. Daily irrigation advisories and schedules are generated through this application, which stakeholders can refer to when scheduling their farm activities.</p>
+                </div>
+                <div class="col-lg-6">
+                    <img alt="" src=/static/theme/field.jpg class="img-fluid mb-3 rounded">
+                    <div class="heading" data-pg-collapsed="">
+                        <h3>Our main responsibilities are</h3>
+                    </div>
+                    <ul class="ul-icons list-unstyled" data-pg-collapsed="">
+                        <li>
+                            <div class="icon-filled">
+                                <i class="fa fa-check"></i>
+                            </div>                                                    Develop crop water technologies for our nine (9) priority crops
+                        </li>
+                        <li>
+                            <div class="icon-filled">
+                                <i class="fa fa-check"></i>
+                            </div>                                                    Perform adaptive studies that confirm to the needs of local farmers
+                        </li>
+                        <li>
+                            <div class="icon-filled">
+                                <i class="fa fa-check"></i>
+                            </div>                                                    Optimize our developed technologies for a more accessible smart agriculture
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </div>
+</div>
 {% endblock %}
-
-{% block bottom_script_block %}
-{% endblock %}
-        

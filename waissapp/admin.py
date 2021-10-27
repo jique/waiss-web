@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, WAISSystems, PercentShaded, Rainfall, Gravimetric, Basin, Border, Furrow, Drip, Sprinkler, NoIrrigation
+from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, WAISSystems, PercentShaded, Rainfall, Gravimetric, Basin, Border, Furrow, Drip, Sprinkler
+
 class PersonnelInline(admin.TabularInline):
     model = Personnel
     
@@ -60,7 +61,7 @@ class SoilAdmin(admin.ModelAdmin):
 class CropInline(admin.TabularInline):
     model = Crop
 class CropAdmin(admin.ModelAdmin):
-    list_display =('crop', 'mad', 'growingperiod', 'drz', 'root_growth_model', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3', 'author', 'personal', 'timestamp')
+    list_display =('crop', 'mad', 'growingperiod', 'drz', 'root_growth_model', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3', 'source', 'author', 'personal', 'timestamp')
     ordering = ['crop',]
 
 class CalibrationConstantInline(admin.TabularInline):
@@ -138,15 +139,8 @@ class DripInline(admin.TabularInline):
 class DripAdmin(admin.ModelAdmin):
     list_display =('name', 'discharge', 'bln_single_lateral', 'emitters_per_plant', 'emitter_spacing', 'plant_spacing', 'row_spacing', 'wetted_dia', 'bln_ii', 'irrigation_interval', 'EU', 'author', 'personal', 'timestamp')
 
-class NoIrrigationInline(admin.TabularInline):
-    model = NoIrrigation
-
-class NoIrrigationAdmin(admin.ModelAdmin):
-    list_display =('farm', 'farm_area', 'percent_covered')
-
 admin.site.register(Basin, BasinAdmin)
 admin.site.register(Border, BorderAdmin)
 admin.site.register(Furrow, FurrowAdmin)
 admin.site.register(Sprinkler, SprinklerAdmin)
 admin.site.register(Drip, DripAdmin)
-admin.site.register(NoIrrigation, NoIrrigationAdmin)

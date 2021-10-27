@@ -51,7 +51,7 @@
               </div>
               <div class="col-7">
                 <select class="form-control" name="farm_manager" id="id_farm_manager">
-                  {% if personnel_ses %}
+                  {% if farm_manager_ses %}
                   <option value="{{farm_manager_ses}}">{{ses_farm_manager}}</option>
                   {% else %}
                   <option value="">----------</option>
@@ -145,16 +145,6 @@
                 </div>
               </div>
             </div>
-            <!-- ERROR MSG ON IRRIGATION SYSTEM DUPLICATION-->
-            {% if messages %}
-              {% for message in messages %}
-              <div class="text-danger text-right">
-              <i><small><b>{{message|safe}}</b></small></i>
-              </div>
-              {% endfor %}
-            {% else %}
-            {% endif %}
-            <!-- ERROR MSG ON IRRIGATION SYSTEM DUPLICATION-->
             {% if basin_ses %}
             <div class="row form-group">
               <div class="col-5">
@@ -245,97 +235,16 @@
                 </select>
               </div>
             </div>
-            {% elif no_irrigation_ses %}
             {% else %}
-            <div class="row form-group">
-              <div class="col-5">
-                <label class="mb-0">Basin</label>
-              </div>
-              <div class="col-7">
-                <select class="form-control" name="basin" id="id_basin">
-                  {% if basin_ses %}
-                  <option value="{{basin_ses}}">{{ses_basin}}</option>
-                  {% else %}
-                  <option value="">----------</option>
-                  {% endif %}
-                  {% for f in basin_list %}
-                  <option value="{{f.id}}">{{f.name}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-            <div class="row form-group">
-              <div class="col-5">
-                <label class="mb-0">Border</label>
-              </div>
-              <div class="col-7">
-                <select class="form-control" name="border" id="id_border">
-                  {% if border_ses %}
-                  <option value="{{border_ses}}">{{ses_border}}</option>
-                  {% else %}
-                  <option value="">----------</option>
-                  {% endif %}
-                  {% for f in border_list %}
-                  <option value="{{f.id}}">{{f.name}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-            <div class="row form-group">
-              <div class="col-5">
-                <label class="mb-0">Furrow</label>
-              </div>
-              <div class="col-7">
-                <select class="form-control" name="furrow" id="id_furrow">
-                  {% if furrow_ses %}
-                  <option value="{{furrow_ses}}">{{ses_furrow}}</option>
-                  {% else %}
-                  <option value="">----------</option>
-                  {% endif %}
-                  {% for f in furrow_list %}
-                  <option value="{{f.id}}">{{f.name}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-            <div class="row form-group">
-              <div class="col-5">
-                <label class="mb-0">Sprinkler</label>
-              </div>
-              <div class="col-7">
-                <select class="form-control" name="sprinkler" id="id_sprinkler">
-                  {% if sprinkler_ses %}
-                  <option value="{{sprinkler_ses}}">{{ses_sprinkler}}</option>
-                  {% else %}
-                  <option value="">----------</option>
-                  {% endif %}
-                  {% for f in sprinkler_list %}
-                  <option value="{{f.id}}">{{f.name}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-            <div class="row form-group">
-              <div class="col-5">
-                <label class="mb-0">Drip</label>
-              </div>
-              <div class="col-7">
-                <select class="form-control" name="drip" id="id_drip">
-                  {% if drip_ses %}
-                  <option value="{{drip_ses}}">{{ses_drip}}</option>
-                  {% else %}
-                  <option value="">----------</option>
-                  {% endif %}
-                  {% for f in drip_list %}
-                  <option value="{{f.id}}">{{f.name}}</option>
-                  {% endfor %}
-                </select>
+            <div class="row">
+              <div class="col text-center text-dark">
+                <p><i><b>Warning!</b> You do not have an irrigation system. To add, go back to the <kbd class="text-dark"><a href={% url 'waiss:new_irrigation' %}>irrigation</a></kbd> tab. <br>
+                If correct, click <kbd>Finish</kbd>.</i></p>
               </div>
             </div>
             {% endif %}
-            <div class="text-right">
-              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_sensor' %} style="color:white">Previous</a></button>
-              <input type="submit" value="Submit" class="btn btn-info">
+            <div class="text-center">
+              <input type="submit" value="Finish!" class="btn btn-info">
             </div>
           </form>
         </div>
@@ -345,6 +254,7 @@
 {% endblock %}
 
 {% block bottom_script_block %}
+<!--
 <script>
   // Run on page load
   window.onload = function() {
@@ -389,5 +299,6 @@
     sessionStorage.setItem("drip", $('#id_drip').val());
   }
 </script> 
+-->
 {% endblock %}
     

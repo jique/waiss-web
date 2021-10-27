@@ -6,7 +6,7 @@
 <div class="progress_bar">
   <div class="pro-bar">
       <small class="progress_bar_title">
-        <a href={% url 'waiss:new_farm' %} style="color: #858796">Farm</a> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> |<span style="color: #1abc9c; font-size: large;"><b> Irrigation</b></span>
+        <a href={% url 'waiss:new_farm' %} style="color:#858796">Farm</a> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> |<span style="color: #1abc9c; font-size: large;"><b> Irrigation</b></span> | <a href={% url 'waiss:new_fieldunit' %} style="color:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="color:#858796">System</a>
         <span class="progress_number">66%</span>
       </small>
       <span class="progress-bar-inner" style="background-color: #1abc9c; width: 66%;" data-value="66" data-percentage-value="66"></span>
@@ -17,7 +17,7 @@
   <div class="card-header rounded-0 border-0"><small>Irrigation System</small></div>
   <div class="card-body">
     <div class="row">
-      {% if select_ses == None and no_irrigation_ses == None %}
+      {% if select_ses == None %}
       <div class="col">
         <label>Do you have an irrigation system?&emsp;</label>
       </div>
@@ -59,31 +59,15 @@
           {{drip.bln_irrigation|as_crispy_field}}
         </form>
       </div>
-      {% elif no_irrigation_ses != None %}
-      <div class="col">
-        <form class="form-group">
-          {{no_irrigation.bln_irrigation|as_crispy_field}}
-        </form>
-      </div>
       {% endif %}
     </div>
     <div class="row collapse" id="collapse_irrig_One">
-      <div class="col-1"></div>
       <div class="col">
         <!--No irrigation system-->
-        <form class="form-group" action="" method="post">
           <hr>
-          {% csrf_token %}
-          {{no_irrigation.farm|as_crispy_field}}
-          {{no_irrigation.farm_area|as_crispy_field}}
-          {{no_irrigation.percent_covered|as_crispy_field}}
-          {{no_irrigation.errors}}
-          <hr>
-          <div class="text-right">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
-            <input type="submit" value="Submit" class="btn btn-info" name="submit-no-irrigation">
+          <div class="text-center">
+            <a class="btn btn-info" href={% url 'waiss:new_fieldunit' %}>Next</a>
           </div>
-        </form>
       </div>
     </div>
     <div class="row collapse" id="collapse_irrig_Two">
@@ -137,103 +121,85 @@
       {% endif %}
     </div>
     <div class="row collapse" id="collapse_irrig_1">
-      <div class="col-4">
-        {% if basin_list %} <hr>
+      {% if basin_list %}
+      <div class="col-4"><hr>
           <form method="post" class="form-group">
             {% csrf_token %}
-            <small>Existing Basins</small>
-            <select class="form-control" id="selected_basin" name="selected_basin">
+            <small><b>Load existing basin irrigation systems.</b></small><hr>
+            <select class="form-control" id="selected_basin" name="loadData_basin" onchange="this.form.submit()">
               <option value="{{selected_basin}}">{{selected_basin_text}}</option>
               {% for basin in basin_list %}
               <option value="{{basin.name}}">{{basin.name}}</option>
               {% endfor %}
             </select>
-            <small class="text-danger float-right"><i>{{error_msg}}</i></small>
-            <hr>
-            <p class="text-right">
-              <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData_basin"></input>
-            </p>
           </form>
-          {% endif %}
       </div>
+      {% endif %}
       <div class="col"> <hr>
         <form class="form-group" action="" method="post">
           {% csrf_token %}
-          <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+          <small><b>Fields with asterisks (*) are required.</b></small><hr>
           {{basin.name|as_crispy_field}}
           {{basin.basin_length|as_crispy_field}}
           {{basin.discharge|as_crispy_field}}
           {{basin.ea|as_crispy_field}}
           <hr>
-          <div class="text-right">
-              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
-              <input type="submit" value="Submit" class="btn btn-info" name="submit-basin">
-              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+          <div class="text-center">
+              <input type="submit" value="Next" class="btn btn-info" name="submit-basin">
           </div>
         </form>
       </div>
     </div>
     <div class="row collapse" id="collapse_irrig_2">
+      {% if border_list %}
       <div class="col-4">
-        {% if border_list %} <hr>
+        <hr>
         <form method="post" class="form-group">
           {% csrf_token %}
-          <small>Existing Borders</small>
-          <select class="form-control" id="selected_border" name="selected_border">
+          <small><b>Load existing border irrigation systems.</b></small><hr>
+          <select class="form-control" id="selected_border" name="loadData_border" onchange="this.form.submit()">
             <option value="{{selected_border}}">{{selected_border_text}}</option>
             {% for border in border_list %}
             <option value="{{border.name}}">{{border.name}}</option>
             {% endfor %}
           </select>
-          <small class="text-danger float-right"><i>{{error_msg}}</i></small>
-          <hr>
-          <p class="text-right">
-            <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData_border"></input>
-          </p>
         </form>
-        {% endif %}
       </div>
+      {% endif %}
       <div class="col">
       <form class="form-group" action="" method="post">
         {% csrf_token %} <hr>
-        <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+        <small><b>Fields with asterisks (*) are required.</b></small><hr>
         {{border.name|as_crispy_field}}
         {{border.discharge|as_crispy_field}}
         {{border.area_slope|as_crispy_field}}
         {{border.mannings_coeff|as_crispy_field}}
         <hr>
-        <div class="text-right">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
-            <input type="submit" value="Submit" class="btn btn-info" name="submit-border">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+        <div class="text-center">
+            <input type="submit" value="Next" class="btn btn-info" name="submit-border">
         </div>
       </form>
       </div>
     </div>
     <div class="row collapse" id="collapse_irrig_3">
-      <div class="col-4">
-        {% if furrow_list %} <hr>
+      {% if furrow_list %}
+      <div class="col-4"><hr>
         <form method="post" class="form-group">
           {% csrf_token %}
-          <small>Existing Furrows</small>
-          <select class="form-control" id="selected_furrow" name="selected_furrow">
+          <small><b>Load existing furrow irrigation systems.</b></small><hr>
+          <select class="form-control" id="selected_furrow" name="loadData_furrow" onchange="this.form.submit()">
             <option value="{{selected_furrow}}">{{selected_furrow_text}}</option>
             {% for furrow in furrow_list %}
             <option value="{{furrow.name}}">{{furrow.name}}</option>
             {% endfor %}
           </select>
-          <small class="text-danger float-right"><i>{{error_msg}}</i></small>
-          <hr>
-          <p class="text-right">
-            <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData_furrow"></input>
-          </p>
         </form>
-        {% endif %}
       </div>
+      {% endif %}
       <div class="col">
       <form class="form-group" action="" method="post">
         {% csrf_token %} <hr>
-        <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+        <small><b>Fields with asterisks (*) are required.</b></small><hr>
         {{furrow.name|as_crispy_field}}
         {{furrow.discharge|as_crispy_field}}
         {{furrow.area_slope|as_crispy_field}}
@@ -242,38 +208,31 @@
         {{furrow.furrow_spacing|as_crispy_field}}
         {{furrow.furrow_length|as_crispy_field}}
         <hr>
-        <div class="text-right">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
-            <input type="submit" value="Submit" class="btn btn-info" name="submit-furrow">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+        <div class="text-center">
+            <input type="submit" value="Next" class="btn btn-info" name="submit-furrow">
         </div>
       </form>
       </div>
     </div>
     <div class="row collapse" id="collapse_irrig_4">
-      <div class="col-4">
-        {% if sprinkler_list %} <hr>
+      {% if sprinkler_list %}
+      <div class="col-4"><hr>
         <form method="post" class="form-group">
           {% csrf_token %}
-          <small>Existing Sprinklers</small>
-          <select class="form-control" id="selected_sprinkler" name="selected_sprinkler">
+          <small><b>Load existing sprinkler irrigation systems.</b></small><hr>
+          <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
             <option value="{{selected_sprinkler}}">{{selected_sprinkler_text}}</option>
             {% for sprinkler in sprinkler_list %}
             <option value="{{sprinkler.name}}">{{sprinkler.name}}</option>
             {% endfor %}
           </select>
-          <small class="text-danger float-right"><i>{{error_msg}}</i></small>
-          <hr>
-          <p class="text-right">
-            <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData_sprinkler"></input>
-          </p>
         </form>
-        {% endif %}
       </div>
+      {% endif %}
       <div class="col">
       <form class="form-group" action="" method="post">
         {% csrf_token %} <hr>
-        <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+        <small><b>Fields with asterisks (*) are required.</b></small><hr>
         {{sprinkler.name|as_crispy_field}}
         {{sprinkler.lateral_spacing|as_crispy_field}}
         {{sprinkler.sprinkler_spacing|as_crispy_field}}
@@ -291,38 +250,31 @@
           </div>
         </div>
         <hr>
-        <div class="text-right">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
-            <input type="submit" value="Submit" class="btn btn-info" name="submit-sprinkler">
-            <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+        <div class="text-center">
+            <input type="submit" value="Next" class="btn btn-info" name="submit-sprinkler">
         </div>
       </form>
       </div>
     </div>
     <div class="row collapse" id="collapse_irrig_5">
-      <div class="col-4">
-        {% if drip_list %} <hr>
+      {% if drip_list %}
+      <div class="col-4"><hr>
         <form method="post" class="form-group">
           {% csrf_token %}
-          <small>Existing Drips</small>
-          <select class="form-control" id="selected_drip" name="selected_drip">
+          <small><b>Load existing drip irrigation systems.</b></small><hr>
+          <select class="form-control" id="selected_drip" name="loadData_drip" onchange="this.form.submit()">
             <option value="{{selected_drip}}">{{selected_drip_text}}</option>
             {% for drip in drip_list %}
             <option value="{{drip.name}}">{{drip.name}}</option>
             {% endfor %}
           </select>
-          <small class="text-danger float-right"><i>{{error_msg}}</i></small>
-          <hr>
-          <p class="text-right">
-            <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData_drip"></input>
-          </p>
         </form>
-        {% endif %}
       </div>
+      {% endif %}
       <div class="col">
         <form class="form-group" action="" method="post">
           {% csrf_token %} <hr>
-          <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+          <small><b>Fields with asterisks (*) are required.</b></small><hr>
           {{drip.name|as_crispy_field}}
           {{drip.discharge|as_crispy_field}}
           {{drip.bln_single_lateral|as_crispy_field}}
@@ -339,10 +291,8 @@
             </div>
           </div>
           <hr>
-          <div class="text-right">
-              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Previous</a></button>
-              <input type="submit" value="Submit" class="btn btn-info" name="submit-drip">
-              <button type="button" class="btn btn-success"><a href={% url 'waiss:new_fieldunit' %} style="color:white">Next</a></button>
+          <div class="text-center">
+              <input type="submit" value="Next" class="btn btn-info" name="submit-drip">
           </div>
         </form>
       </div>

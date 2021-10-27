@@ -1,13 +1,13 @@
 #WAISSYSTEMS
-from django.db.models.query import InstanceCheckMeta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
-from .models import Personnel, Farm, Sensor, FieldUnit, Soil, Crop, CalibrationConstant, WAISSystems, Basin, Furrow, Border, Drip, Sprinkler
+from .models import Personnel, Farm, FieldUnit, Soil, Crop, CalibrationConstant, WAISSystems, Basin, Furrow, Border, Drip, Sprinkler
 from .forms import WAISSystemsForm
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from itertools import chain
+from operator import attrgetter
 
 def save_all_system(request,form,template_name):
     data = dict()
@@ -68,8 +68,17 @@ def new_system(request):
 	#lists
 	farm_list = Farm.objects.filter(author=current_user)
 	farm_manager_list = Personnel.objects.filter(author=current_user)
-	crop_list = Crop.objects.filter(author=current_user)
-	soil_list = Soil.objects.filter(author=current_user)
+	#
+	current_user_list = Crop.objects.filter(author=current_user)
+	public_use_list = Crop.objects.filter(personal=False)
+	combined_list = set(public_use_list) - set(current_user_list)
+	crop_list = sorted(chain(current_user_list, combined_list), key=attrgetter('crop'))
+	#
+	current_user_list = Soil.objects.filter(author=current_user)
+	public_use_list = Soil.objects.filter(personal=False)
+	combined_list = set(public_use_list) - set(current_user_list)
+	soil_list = sorted(chain(current_user_list, combined_list), key=attrgetter('soiltype'))
+	#
 	fieldunit_list = FieldUnit.objects.filter(author=current_user)
 	calib_list = CalibrationConstant.objects.filter(author=current_user)
 	basin_list = Basin.objects.filter(author=current_user)
@@ -90,7 +99,6 @@ def new_system(request):
 	furrow_ses = request.session.get('furrow_ses', None)
 	drip_ses = request.session.get('drip_ses', None)
 	sprinkler_ses = request.session.get('sprinkler_ses', None)
-	no_irrigation_ses = request.session.get('no_irrigation_ses', None)
 
 	#GetFromInputBox
 	fieldunit = request.POST.get('fieldunit')
@@ -104,7 +112,6 @@ def new_system(request):
 	furrow = request.POST.get('furrow')
 	sprinkler = request.POST.get('sprinkler')
 	drip = request.POST.get('drip')
-
 	empty_farm = ""
 	empty_farm_manager = ""
 	empty_crop = ""
@@ -119,70 +126,50 @@ def new_system(request):
 			instance.author = request.user
 			instance.personal = True
 			instance.save()
+			return redirect('/dashboard/')
 	if request.method == 'POST':  # data sent by user
 		if farm == "" :
-			empty_farm = "Select farm."
+			empty_farm = "Select/Create farm."
 		else:
 			form.farm = Farm.objects.get(id=farm)
 		if farm_manager == "":
-			empty_farm_manager = "Select farm manager."
+			empty_farm_manager = "Select/Create farm manager."
 		else:
 			form.farm_manager = Personnel.objects.get(id=farm_manager)
 		if crop == "" :
-			empty_crop = "Select crop."
+			empty_crop = "Select/Create crop."
 		else:
 			form.crop = Crop.objects.get(id=crop)
 		if soil == "" :
-			empty_soil = "Select soil."
+			empty_soil = "Select/Create soil."
 		else:
 			form.soil = Soil.objects.get(id=soil)
 		if calib == "" :
-			empty_calib = "Select calibration equation."
+			empty_calib = "Select/Create calibration equation."
 		else:
 			form.calib = CalibrationConstant.objects.get(id=calib)	
 		if fieldunit == "" :
-			empty_fieldunit = "Select field unit."
+			empty_fieldunit = "Select/Create field unit."
 		else:
 			form.fieldunit = FieldUnit.objects.get(id=fieldunit)
 		#IRRIGATION
-		def make_field_required():
-			messages.error(request, "Submit just one irrigation system. Leave other irrigation system blank.")
-			form.fields['basin'].required = True
-			form.fields['border'].required = True
-			form.fields['furrow'].required = True
-			form.fields['sprinkler'].required = True
-			form.fields['drip'].required = True
-		if (basin == "") and (border == "") and (furrow == "") and (sprinkler == "") and (drip == ""):
-			messages.error(request, "Select one irrigation system.")
-			make_field_required()
-		if (basin != "") and (border != "") and (furrow != "") and (sprinkler != "") and (drip != ""):
-			messages.error(request, "Select just one irrigation system.")
-			form.fields['checker'].required = True
-		elif (basin != "") and (border != "" or furrow != "" or sprinkler != "" or drip != ""):
-			make_field_required()
-		elif (border != "") and (furrow != "" or sprinkler != "" or drip != ""):
-			make_field_required()
-		elif (furrow != "") and (sprinkler != "" or drip != ""):
-			make_field_required()
-		elif (sprinkler != "") and (drip != ""):
-			make_field_required()
-		elif basin != "":
+		if basin_ses != None:
 			form.basin = Basin.objects.get(id=basin)
 			form_validation()
-		elif border != "":
+		elif border != None:
 			form.border = Border.objects.get(id=border)
 			form_validation()
-		elif furrow != "":
+		elif furrow != None:
 			form.furrow = Furrow.objects.get(id=furrow)
 			form_validation()
-		elif sprinkler != "":
+		elif sprinkler != None:
 			form.sprinkler = Sprinkler.objects.get(id=sprinkler)
 			form_validation()
-		elif drip != "":
+		elif drip != None:
 			form.drip = Drip.objects.get(id=drip)
 			form_validation()
-		if form.is_valid():
-			return redirect('/dashboard/')
+		else:
+			form_validation()
 	#getnameofsessions
 	ses_farm = ""
 	ses_farm_manager = ""
@@ -200,6 +187,9 @@ def new_system(request):
 		ses_farm = Farm.objects.get(id=farm_ses)
 	if farm_manager_ses != None:
 		ses_farm_manager = Personnel.objects.get(id=farm_manager_ses)
+		f = ses_farm_manager.first_name
+		l = ses_farm_manager.last_name
+		ses_farm_manager = str(f)+ ' ' + str(l)
 	if crop_ses != None:
 		ses_crop = Crop.objects.get(id=crop_ses)
 	if soil_ses != None:
@@ -225,7 +215,6 @@ def new_system(request):
 		"furrow_ses": furrow_ses,
 		"drip_ses": drip_ses,
 		"sprinkler_ses": sprinkler_ses,
-		"no_irrigation_ses": no_irrigation_ses,
 		"farm_list": farm_list,
 		"farm_manager_list": farm_manager_list,
 		"crop_list": crop_list,

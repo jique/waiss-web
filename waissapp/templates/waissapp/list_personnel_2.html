@@ -3,7 +3,7 @@
 <tr class="text-center">
     <td class="align-middle">{{forloop.counter}}</td>
     <td class="align-middle">{{personnel.last_name}}</td>
-    <td class="">{{personnel.first_name}}</td>
+    <td class="">{{personnel.name}}</td>
     <td class="">{{personnel.number}}</td>
     <td class="min">
       <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_personnel' personnel.id %}"><i class="fas fa-edit"></i></button>
@@ -21,8 +21,8 @@
           </button>
         </div>
         <div class="modal-body">
-            <small><em>Are you sure you want to delete personnel <b>"{{personnel.first_name}} {{personnel.last_name}}"</b>?<br>
-            Deleting <b>"{{personnel.first_name}} {{personnel.last_name}}"</b> will also delete the systems that he/she manages.</em></small>
+            <small><em>Are you sure you want to delete personnel <b>"{{personnel.name}} {{personnel.last_name}}"</b>?<br>
+            Deleting <b>"{{personnel.name}} {{personnel.last_name}}"</b> will also delete the systems that he/she manages.</em></small>
         </div>
         <div class="modal-footer">
             <form class="form-group" action="" method="post">

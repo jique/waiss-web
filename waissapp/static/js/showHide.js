@@ -26,10 +26,10 @@ $(document).ready(function () {
     repeat5();
   });
   showHide7();
-  showHide8();
   $("#id_bln_irrigation").change(function () {
     showHide7();
   });
+  showHide8();
   $("#id_select_irrigation").change(function () {
     showHide8();
   });
@@ -175,68 +175,68 @@ function repeat3() {
   });
 }
 function showHide6() {
-    var checkedValue = $("#id_calib_equation").val();
-    if (checkedValue == "linear") {
-      $("#collapse_calib_1").collapse('show');
-      $("#collapse_calib_2").collapse('hide');
-      $("#collapse_calib_3").collapse('hide');
-      $("#collapse_calib_4").collapse('hide');
-      $("#collapse_calib_5").collapse('hide');
-      $("#collapse_calib_6").collapse('hide');
-      $("#id_coeff_c").prop('required',false);
-      $("#id_coeff_d").prop('required',false);
-      $("#id_coeff_m").prop('required',false);
-    } else if (checkedValue == "quadratic") {
-      $("#collapse_calib_1").collapse('hide');
-      $("#collapse_calib_2").collapse('show');
-      $("#collapse_calib_3").collapse('hide');
-      $("#collapse_calib_4").collapse('hide');
-      $("#collapse_calib_5").collapse('hide');
-      $("#collapse_calib_6").collapse('hide');
-      $("#id_coeff_c").prop('required',true);
-      $("#id_coeff_d").prop('required',false);
-      $("#id_coeff_m").prop('required',false);
-    } else if (checkedValue == "exponential") {
-      $("#collapse_calib_1").collapse('hide');
-      $("#collapse_calib_2").collapse('hide');
-      $("#collapse_calib_3").collapse('show');
-      $("#collapse_calib_4").collapse('hide');
-      $("#collapse_calib_5").collapse('hide');
-      $("#collapse_calib_6").collapse('hide');
-      $("#id_coeff_c").prop('required',false);
-      $("#id_coeff_d").prop('required',false);
-      $("#id_coeff_m").prop('required',false);
-    } else if (checkedValue == "logarithmic") {
-      $("#collapse_calib_1").collapse('hide');
-      $("#collapse_calib_2").collapse('hide');
-      $("#collapse_calib_3").collapse('hide');
-      $("#collapse_calib_4").collapse('show');
-      $("#collapse_calib_5").collapse('hide');
-      $("#collapse_calib_6").collapse('hide');
-      $("#id_coeff_c").prop('required',false);
-      $("#id_coeff_d").prop('required',false);
-      $("#id_coeff_m").prop('required',false);
-    } else if (checkedValue == "symmetrical sigmoidal") {
-      $("#collapse_calib_1").collapse('hide');
-      $("#collapse_calib_2").collapse('hide');
-      $("#collapse_calib_3").collapse('hide');
-      $("#collapse_calib_4").collapse('hide');
-      $("#collapse_calib_5").collapse('show');
-      $("#collapse_calib_6").collapse('hide');
-      $("#id_coeff_c").prop('required',true);
-      $("#id_coeff_d").prop('required',true);
-      $("#id_coeff_m").prop('required',false);
-    } else if (checkedValue == "asymmetrical sigmoidal") {
-      $("#collapse_calib_1").collapse('hide');
-      $("#collapse_calib_2").collapse('hide');
-      $("#collapse_calib_3").collapse('hide');
-      $("#collapse_calib_4").collapse('hide');
-      $("#collapse_calib_5").collapse('hide');
-      $("#collapse_calib_6").collapse('show');
-      $("#id_coeff_c").prop('required',true);
-      $("#id_coeff_d").prop('required',true);
-      $("#id_coeff_m").prop('required',true);
-    }
+  var checkedValue = $("#id_calib_equation").val();
+  if (checkedValue == "linear") {
+    $("#collapse_calib_1").collapse('show');
+    $("#collapse_calib_2").collapse('hide');
+    $("#collapse_calib_3").collapse('hide');
+    $("#collapse_calib_4").collapse('hide');
+    $("#collapse_calib_5").collapse('hide');
+    $("#collapse_calib_6").collapse('hide');
+    $("#id_coeff_c").prop('required',false);
+    $("#id_coeff_d").prop('required',false);
+    $("#id_coeff_m").prop('required',false);
+  } else if (checkedValue == "quadratic") {
+    $("#collapse_calib_1").collapse('hide');
+    $("#collapse_calib_2").collapse('show');
+    $("#collapse_calib_3").collapse('hide');
+    $("#collapse_calib_4").collapse('hide');
+    $("#collapse_calib_5").collapse('hide');
+    $("#collapse_calib_6").collapse('hide');
+    $("#id_coeff_c").prop('required',true);
+    $("#id_coeff_d").prop('required',false);
+    $("#id_coeff_m").prop('required',false);
+  } else if (checkedValue == "exponential") {
+    $("#collapse_calib_1").collapse('hide');
+    $("#collapse_calib_2").collapse('hide');
+    $("#collapse_calib_3").collapse('show');
+    $("#collapse_calib_4").collapse('hide');
+    $("#collapse_calib_5").collapse('hide');
+    $("#collapse_calib_6").collapse('hide');
+    $("#id_coeff_c").prop('required',false);
+    $("#id_coeff_d").prop('required',false);
+    $("#id_coeff_m").prop('required',false);
+  } else if (checkedValue == "logarithmic") {
+    $("#collapse_calib_1").collapse('hide');
+    $("#collapse_calib_2").collapse('hide');
+    $("#collapse_calib_3").collapse('hide');
+    $("#collapse_calib_4").collapse('show');
+    $("#collapse_calib_5").collapse('hide');
+    $("#collapse_calib_6").collapse('hide');
+    $("#id_coeff_c").prop('required',false);
+    $("#id_coeff_d").prop('required',false);
+    $("#id_coeff_m").prop('required',false);
+  } else if (checkedValue == "symmetrical sigmoidal") {
+    $("#collapse_calib_1").collapse('hide');
+    $("#collapse_calib_2").collapse('hide');
+    $("#collapse_calib_3").collapse('hide');
+    $("#collapse_calib_4").collapse('hide');
+    $("#collapse_calib_5").collapse('show');
+    $("#collapse_calib_6").collapse('hide');
+    $("#id_coeff_c").prop('required',true);
+    $("#id_coeff_d").prop('required',true);
+    $("#id_coeff_m").prop('required',false);
+  } else if (checkedValue == "asymmetrical sigmoidal") {
+    $("#collapse_calib_1").collapse('hide');      
+    $("#collapse_calib_2").collapse('hide');
+    $("#collapse_calib_3").collapse('hide');
+    $("#collapse_calib_4").collapse('hide');
+    $("#collapse_calib_5").collapse('hide');
+    $("#collapse_calib_6").collapse('show');
+    $("#id_coeff_c").prop('required',true);
+    $("#id_coeff_d").prop('required',true);
+    $("#id_coeff_m").prop('required',true);
+  }
 }
 //add_sprinkler
 function repeat4() {

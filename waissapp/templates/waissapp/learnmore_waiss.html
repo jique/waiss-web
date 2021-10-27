@@ -1,0 +1,89 @@
+{% extends 'waissapp/home_page.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title_block %}
+WAISS Login
+{% endblock %}
+
+{% block style_block %}
+{% endblock %}
+
+{% block collapse_button %}
+{% endblock %}
+
+{% block sections_block %}
+<div id="content" class="border-top">
+    <div class="container">
+        <div class="row bar">
+            <!-- LEFT COLUMN _________________________________________________________-->
+            <div id="blog-post" class="col-md-9">
+                <p class="lead">Eighty percent (80%) of freshwater withdrawal in the Philippines is allotted for agricultural use, specifically, for irrigation purposes. Irrigated agriculture is, on average, at least twice as productive per unit of land as rainfed agriculture, thereby allowing for more production intensification and crop diversification. When agricultural water is used effectively and safely, production and crop yield are positively affected.&nbsp;</p>
+                <div id="post-content">
+                    <p>However, due to population growth, urbanization, and climate change, competition for water resources is expected to increase, with a particular impact on agriculture.  Accompanied by gaps in design and assumptions and operational realities of irrigation systems, unaccounted water losses, and over/underestimation of irrigation water requirements, a decrease in agricultural water is expected and  can cause production and yield loss. With the current challenges faced by the agricultural sector, a decrease in agricultural water is expected and  can cause production and yield loss.</p>
+                    <p>Traditional water management done by Filipino farmers is through feel method, which is done by squeezing soil sample from the soil surface and judging if it is dry or not. Other relies on the weather condition before the day of irrigation. </p>
+                    <p class="text-sm"></p>
+                    <p>Irrigation management strategies are the most important way to improve agricultural water use while maintaining optimal production and yield. The key is to implement management strategies that improve water use efficiency without decreasing yield.&nbsp;</p>
+                    <p><video src=/static/theme/ppt_slides_gif.mp4  autoplay="true" controls="" loop="true" muted="true" class="img-fluid"></video></p>
+                    <p></p>
+                    <p>To better address the irrigation management problem in the Philippines, SARAI Project 2.3 is developing and promoting smart crop water technologies for smart irrigation. Smart irrigation entails &ldquo;applying the right amount of water to crops at the right time and in the right place&rdquo;. These strategies allow for the conservation of water and energy, and potentially decrease grower&rsquo;s operating costs.&nbsp;<span style="font-size: 1rem;">Some common Smart Irrigation Technologies are the use of IoT in soil moisture measurement, AWD or Alternate Wetting and Drying for lowland rice, installation of Drip Irrigation or Automated Irrigation, and Near Real-Time monitoring of water levels.</span></p>
+                    <p></p>
+                    <blockquote class="blockquote">
+                        <p class="text-sm">These technologies promote water conservation, high crop productivity, high water use efficiency, minimize labor and drudgery, increase in global competitiveness, and allows youth engagement and women participation in agriculture.</p>
+                    </blockquote>
+                    <p><img src=/static/theme/ppt_slide_2.png alt="" class="img-fluid"></p>
+                    <h2>Smart Technologies</h2>
+                    <ol>
+                        <p>Project SARAI, through the Project 2.3 team, developed a smart moisture monitoring tool and evapotranspiration-based irrigation scheduler and calculator, and promotes the use of a calibrated atmometer for evapotranspiration estimation to aid farmers with their irrigation activities.</p>
+                        <li>Evapotranspiration-based irrigation scheduler and calculator</li>
+                        <li>Soil moisture-based monitoring tool</li>
+                    </ol>
+                    <h3>Evapotranspiration-based Irrigation Scheduler and Calculator</h3>
+                    <p>An atmometer is an instrument that can be used to estimate the potential evapotranspiration (ETo) within an area. By computing for the crop evapotranspiration (ETc) from the ETo and crop coefficient of the crop planted, the mm of water that evaporated and transpired can be estimated and therefore replenished through irrigation.</p>
+                    <blockquote class="blockquote">
+                        <p class="text-sm"><p>An evapotranspiration-based irrigation scheduler and calculator was developed from SARAI Phase I wherein end-users can input values from computed evapotranspiration or measured soil moisture content to generate an irrigation advisory for their farm. This can be used when there is a nearby weather station, AWS, atmometer, or if the farmer has their own soil moisture sensor.</p></p>
+                    </blockquote>
+                    <p><h3>Soil moisture-based monitoring tool</h3></p>
+                    <blockquote class="blockquote">
+                        <p class="text-sm"><p><p>WAISS or Water Advisory for Irrigation Scheduling System is a soil moisture monitoring system that can provide irrigation advisories and recommendations to end-users via text message. A field unit, consisting of 2-3 soil moisture sensors and a transmitting data logger, is installed in the farm for daily moisture content measurement. The field unit transmits the soil moisture data to the WAISS server for calculation and generation of daily irrigation advisories &ndash; TO IRRIGATE OR NOT. If the farm has an available irrigation system, WAISS can also recommend estimated irrigation duration for a more efficient use of water resource.</p></p></p>
+                    </blockquote>
+                    <p><p>For SARAI Project 2.3, the team is currently improving the design of WAISS, both the field unit and software, to fix the issues or problems encountered during field testing and to improve the software to make it more user-friendly and accessible. Additional field testing for different upland crops will also be conducted for a more accurate application to a wide variety of crops.</p></p>
+                    <p><video src=/static/theme/ppt_gif_2.mp4  autoplay="true" controls="" loop="true" muted="true" class="img-fluid"></video></p>
+                    <p><p>These SARAI technologies developed aim to improve the farmer&rsquo;s practices and management by promoting a more scientific approach to irrigation. The development of farming technologies can also help mainstream the use of smart, digital tools which will then instill confidence in farmers when it comes to using new technologies. In addition, the application of new and more &ldquo;high-tech&rdquo; gadgets in farming can help address the problem of aging farmers by engaging the youth and women. When Philippine agriculture has managed to mainstream the use of smart technologies, it will help push the industry to achieve global competitiveness.</p></p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-default sidebar-menu">
+                    <div class="panel-heading">
+                        <h3 class="h4 panel-title">Smart Irrigation</h3>
+                    </div>
+                    <div class="panel-body text-widget">
+                        <p>Smart irrigation is providing the right amount of water to crops at the right time.</p>
+                    </div>
+                    <p><img src=/static/theme/smart-irrig.gif autoplay="true" controls="" loop="true" muted="true" height="200"></img></p>
+                    <p><video src=/static/theme/ppt_gif_3.mp4  autoplay="true" controls="" loop="true" muted="true" height="200"></video></p>
+                </div>
+                <div class="panel panel-default sidebar-menu">
+                    <div class="panel-heading">
+                        <h3 class="h4 panel-title">Read more</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="nav nav-pills flex-column text-sm">
+                            <li class="nav-item">
+                                <a href=/articles/etcal-principal-concepts class=" nav-link">ETCAL Principal Concepts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href=/articles/crop-water-management class=" nav-link">Crop Water Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href=/articles/smart-irrigation class=" nav-link">Smart Irrigation</a>
+                            </li>
+                            <li class="nav-item"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

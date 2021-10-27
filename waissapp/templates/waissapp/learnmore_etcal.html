@@ -1,0 +1,107 @@
+{% extends 'waissapp/home_page.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title_block %}
+WAISS Login
+{% endblock %}
+
+{% block style_block %}
+{% endblock %}
+
+{% block collapse_button %}
+{% endblock %}
+
+{% block sections_block %}
+<div id="content" data-pg-collapsed class="border-top">
+    <div class="container">
+        <div class="bar justify-content-center row" data-pg-collapsed>
+            <div id="blog-listing-medium" class="col-md-10">
+                <section class="post" data-pg-collapsed>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="image">
+                                <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7757266/"><img src=/static/theme/et-article.jpg alt="Example blog post alt" class="img-fluid"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h2 class="h3 mt-0"><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7757266/">On the Use of the Term &quot;Evapotranspiration&quot;</a></h2>
+                            <div class="d-flex flex-wrap justify-content-between text-xs">
+                                <p class="author-category">By <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7757266/">D.G. Miralles, W. Brutsaert, A.J. Dolman, and J.H. Gash</a></p>
+                                <p class="date-comments"></p>
+                            </div>
+                            <p class="intro">Evaporation is the phenomenon by which a substance is converted from its liquid into its vapor phase, independently of where it lies in nature. However, language is alive, and just like regular speech, scientific terminology changes. Frequently, those changes are grounded on a solid rationale, but sometimes these semantic transitions have a fragile foundation. That is the case with &ldquo;evapotranspiration.&rdquo;</p>
+                            <p class="read-more text-right"><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7757266/" class="btn btn-template-outlined">Continue reading</a></p>
+                        </div>
+                    </div>
+                </section>
+                <section class="post" data-pg-collapsed>
+                    <div class="row" data-pg-collapsed>
+                        <div class="col-md-4">
+                            <div class="image">
+                                <a href="http://www.fao.org/3/X0490E/x0490e04.htm#chapter%201%20%20%20introduction%20to%20evapotranspiration"><img src=/static/theme/et-article-1.png alt="Example blog post alt" class="img-fluid"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h2 class="h3 mt-0"><a href="http://www.fao.org/3/X0490E/x0490e04.htm#chapter%201%20%20%20introduction%20to%20evapotranspiration">Evapotranspiration</a></h2>
+                            <div class="d-flex flex-wrap justify-content-between text-xs">
+                                <p class="author-category">By <a href="http://www.fao.org/3/X0490E/x0490e04.htm#chapter%201%20%20%20introduction%20to%20evapotranspiration">FAO</a></p>
+                                <p class="date-comments"></p>
+                            </div>
+                            <p class="intro">This chapter explains the concepts of and the differences between reference crop evapotranspiration (ET<sub>o</sub>) and crop evapotranspiration under standard conditions (ET<sub>c</sub>) and various management and environmental conditions (ET<sub>c adj</sub>). It also examines the factors that affect evapotranspiration, the units in which it is normally expressed and the way in which it can be determined.</p>
+                            <p class="read-more text-right"><a href="http://www.fao.org/3/X0490E/x0490e04.htm#chapter%201%20%20%20introduction%20to%20evapotranspiration" class="btn btn-template-outlined">Continue reading</a></p>
+                        </div>
+                    </div>
+                </section>
+                <section class="post" data-pg-collapsed>
+                    <div class="row" data-pg-collapsed>
+                        <div class="col-md-4">
+                            <div class="image">
+                                <a href="https://www.researchgate.net/publication/259821292_Estimating_Evapotranspiration_by_Using_Atmometers_for_Irrigation_Scheduling_in_a_Humid_Environment"><img src=/static/theme/et-article-2.png alt="Example blog post alt" class="img-fluid"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h2 class="h3 mt-0"><a href="https://www.researchgate.net/publication/259821292_Estimating_Evapotranspiration_by_Using_Atmometers_for_Irrigation_Scheduling_in_a_Humid_Environment">Estimating Evapotranspiration by using atmometers for irrigation scheduling in a humid environment</a></h2>
+                            <div class="d-flex flex-wrap justify-content-between text-xs">
+                                <p class="author-category">By <a href="https://www.researchgate.net/publication/259821292_Estimating_Evapotranspiration_by_Using_Atmometers_for_Irrigation_Scheduling_in_a_Humid_Environment">J.W. Knox, J.A. Rodriguez-diaz, and T.M. Hess</a></p>
+                                <p class="date-comments"></p>
+                            </div>
+                            <p class="intro">Evapotranspiration data from three commercial atmometers (ET0-A) were compared over an irrigation season for instrumentalprecision, and compared against Penman-Monteith (ET0-PM) data from an automatic weather station for accuracy. The effects of using contrasting ET0estimation methods on the timing and amounts of water application were then evaluated by using an irrigation-scheduling water-balance computer model.&nbsp;</p>
+                            <p class="read-more text-right"><a href="https://www.researchgate.net/publication/259821292_Estimating_Evapotranspiration_by_Using_Atmometers_for_Irrigation_Scheduling_in_a_Humid_Environment" class="btn btn-template-outlined">Continue reading</a></p>
+                        </div>
+                    </div>
+                </section>
+                <section class="post" data-pg-collapsed>
+                    <div class="row" data-pg-collapsed>
+                        <div class="col-md-4">
+                            <div class="image">
+                                <a href="https://extension.colostate.edu/docs/pubs/crops/04707.pdf"><img src=/static/theme/et-article-3.PNG alt="Example blog post alt" class="img-fluid"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h2 class="h3 mt-0"><a href="https://extension.colostate.edu/docs/pubs/crops/04707.pdf">Irrigation Scheduling: The water Balance Approach</a></h2>
+                            <div class="d-flex flex-wrap justify-content-between text-xs">
+                                <p class="author-category">By <a href="https://extension.colostate.edu/docs/pubs/crops/04707.pdf">A.A. Andales, J.L. Chavez, and T.A. Bauder</a></p>
+                                <p class="date-comments"></p>
+                            </div>
+                            <p class="intro">The water requirement of a crop must
+be satisfied to achieve potential yields. The
+crop water requirement is also called crop
+evapotranspiration and is usually represented
+as ETc
+. Evapotranspiration is a combination
+of two processes &ndash; evaporation of water
+from the ground surface or wet surfaces of
+plants; and transpiration of water through the
+stomata of leaves. The water requirement can
+be supplied by stored soil water, precipitation,
+and irrigation.</p>
+                            <p class="read-more text-right"><a href="https://extension.colostate.edu/docs/pubs/crops/04707.pdf" class="btn btn-template-outlined">Continue reading</a></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

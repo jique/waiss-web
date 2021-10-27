@@ -7,7 +7,9 @@ urlpatterns = [
      path('dashboard/', computations.index, name='index'),
      path('accounts/register/', views.register, name='register'),
      path('accounts/profile', views.profile, name='profile'),
-     path('about/', views.about, name='about'),
+     path('about-our-team/', views.about, name='about'),
+     path('articles/etcal-principal-concepts/', views.articles_etcal, name='learnmore_etcal'),
+     path('articles/smart-irrigation/', views.articles_waiss, name='learnmore_waiss'),
      path('', views.home, name='home_page'),
      
      #FIELDUNIT_PARAMETERS

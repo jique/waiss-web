@@ -5,10 +5,7 @@
 {% block title_block %} WAISS: Systems {% endblock %}
 {% block main_block %}
 <h6 class="text-left"><kbd class="bg-gradient-info">WAISS</kbd>
-  <button class="btn show-form" data-url="{% url 'waiss:add_system' %}">
-  <img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data">
-  </button>
-  <a href={%url 'waiss:new_farm' %}>Guided</a>
+  <a href={% url 'waiss:new_farm' %}><img src={% static "theme/add.png" %} style="height: 30px;" alt="add button" data-toggle="tooltip" data-placement="right" title="add new data"></a>
 </h6>
 <div class="card shadow mb-4">
     <div class="card-body">

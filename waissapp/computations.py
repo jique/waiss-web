@@ -4,6 +4,9 @@ from itertools import chain
 from operator import attrgetter
 import math
 from django.contrib.auth.decorators import login_required
+import datetime
+from datetime import datetime
+import pytz
 
 @login_required
 def index(request):
@@ -16,14 +19,13 @@ def index(request):
 	form = WAISSystems.objects.filter(author=current_user) # for_dropdown_select_options
 	
 	if request.method == 'POST' and 'dashboard_submit' in request.POST:  # for sending the selected WAISS_system by the user
-		selected_system = request.POST['selected_system']
+		selected_system = request.POST['dashboard_submit']
 		selected_system = WAISSystems.objects.get(name=selected_system)
 	else:
 		if form.exists():
 			selected_system = WAISSystems.objects.filter(author=current_user).latest()
 		else:
 			return redirect ('/new_farm/')
-		
 
 	crop = selected_system.crop # getting crop variables
 	crop_id = selected_system.crop.id
@@ -46,6 +48,9 @@ def index(request):
 	sensor_2 = None #for single sensor fieldunit
 	sensor_3 = None
 	
+	error_msg_no_sensor_data = ""
+	error_msg_excess_sensor_data = ""
+
 	if num_sensors == 1:
 		sensor_1 = Sensor.objects.all().filter(fieldunit=fieldunit)[:1]
 		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
@@ -107,13 +112,16 @@ def index(request):
 					gravimetric_collection.append(0.0)
 				gravimetric_collection.append(p_amount)
 				break
-	MC_TO_IRRIGATE = round((((soil_fc - soil_pwp)* crop_mad) + soil_pwp)*100, 2) # mc to initiate irrigation advisory
+	MC_TO_IRRIGATE = round((((soil_fc - soil_pwp)* crop_mad) + soil_pwp)*100, 2) # threshold mc to initiate irrigation advisory
+	mci_1 = 0
+	mci_2 = 0
+	mci_3 = 0
 	if len(mc_1) == 0:
 		depth_1 = ""
 		depth_2	= ""
 		depth_3	= ""
 		pass
-	else:
+	else: # take consideration the no. of sensors in the field unit
 		if num_sensors == 1:
 			mci_1 = float(mc_1.latest().mc_data)
 			depth_1 = float(sensor_1.get().depth)*1000
@@ -130,7 +138,7 @@ def index(request):
 			depth_2 = float(sensor_2.get().depth)*1000
 			depth_3 = float(sensor_3.get().depth)*1000
 	
-	def calculateMC(mc_value): # Convert analog reading to MCv
+	def calculateMC(mc_value): # Convert analog reading to MCv using calibration constants
 		float(mc_value)
 		if calib_eqn == "linear":
 			calib_coeff_a = float(calib.coeff_a)
@@ -171,42 +179,39 @@ def index(request):
 	series_pwp = []
 	series_mc_ave = []
 
-	if len(mc_1) == 0:
-		pass
-	else:
-		if num_sensors == 1:
-			for mc_obj in mc_1_sorted:
-				mc_value = float(mc_obj.mc_data)
-				mc_collection_1.append(calculateMC(mc_value))
-				series_fc.append(round(soil_fc*100, 2))
-				series_pwp.append(round(soil_pwp*100, 2))
-			mci_1 = calculateMC(mci_1)
-		if num_sensors == 2:
-			for mc_obj in mc_1_sorted:
-				mc_value = float(mc_obj.mc_data)
-				mc_collection_1.append(calculateMC(mc_value))
-				series_fc.append(round(soil_fc*100, 2))
-				series_pwp.append(round(soil_pwp*100, 2))
-			for mc_obj in mc_2_sorted:
-				mc_value = float(mc_obj.mc_data)
-				mc_collection_2.append(calculateMC(mc_value))
-			mci_1 = calculateMC(mci_1)
-			mci_2 = calculateMC(mci_2)
-		if num_sensors ==3:
-			for mc_obj in mc_1_sorted:
-				mc_value = float(mc_obj.mc_data)
-				mc_collection_1.append(calculateMC(mc_value))
-				series_fc.append(round(soil_fc*100, 2))
-				series_pwp.append(round(soil_pwp*100, 2))
-			for mc_obj in mc_2_sorted:
-				mc_value = float(mc_obj.mc_data)
-				mc_collection_2.append(calculateMC(mc_value))
-			for mc_obj in mc_3_sorted:
-				mc_value = float(mc_obj.mc_data)
-				mc_collection_3.append(calculateMC(mc_value))
-			mci_1 = calculateMC(mci_1)
-			mci_2 = calculateMC(mci_2)
-			mci_3 = calculateMC(mci_3)
+	if num_sensors == 1:
+		for mc_obj in mc_1_sorted:
+			mc_value = float(mc_obj.mc_data)
+			mc_collection_1.append(calculateMC(mc_value))
+			series_fc.append(round(soil_fc*100, 2))
+			series_pwp.append(round(soil_pwp*100, 2))
+		mci_1 = calculateMC(mci_1)
+	if num_sensors == 2:
+		for mc_obj in mc_1_sorted:
+			mc_value = float(mc_obj.mc_data)
+			mc_collection_1.append(calculateMC(mc_value))
+			series_fc.append(round(soil_fc*100, 2))
+			series_pwp.append(round(soil_pwp*100, 2))
+		for mc_obj in mc_2_sorted:
+			mc_value = float(mc_obj.mc_data)
+			mc_collection_2.append(calculateMC(mc_value))
+		mci_1 = calculateMC(mci_1)
+		mci_2 = calculateMC(mci_2)
+	if num_sensors ==3:
+		for mc_obj in mc_1_sorted:
+			mc_value = float(mc_obj.mc_data)
+			mc_collection_1.append(calculateMC(mc_value))
+			series_fc.append(round(soil_fc*100, 2))
+			series_pwp.append(round(soil_pwp*100, 2))
+		for mc_obj in mc_2_sorted:
+			mc_value = float(mc_obj.mc_data)
+			mc_collection_2.append(calculateMC(mc_value))
+		for mc_obj in mc_3_sorted:
+			mc_value = float(mc_obj.mc_data)
+			mc_collection_3.append(calculateMC(mc_value))
+		mci_1 = calculateMC(mci_1)
+		mci_2 = calculateMC(mci_2)
+		mci_3 = calculateMC(mci_3)
 
 	crop_model = crop.root_growth_model # for computation of the actual depth of rootzone
 	crop_drz = float(crop.drz)
@@ -215,7 +220,7 @@ def index(request):
 	def calculateDRZ(crop_dat):
 		if crop_model == "Borg-Grimes Model": # Borg-Grimes Model
 			sine = 0.5*(math.sin(math.radians(3.03*(crop_dat/crop_growingperiod)-1.47)))
-			drz = round((float(crop_drz - crop_ro)*(0.5 + sine))*1000, 0) #convert to mm
+			drz = round((float(crop_drz - crop_ro)*100*(0.5 + sine))*10, 0) #converted to CM, check for errors later
 		if crop_model == "User-Defined": # User-Defined
 			eqnform = crop.eqnform
 			if eqnform == "linear":
@@ -252,7 +257,8 @@ def index(request):
 	furrow = selected_system.furrow
 	drip = selected_system.drip
 	sprinkler = selected_system.sprinkler
-	if furrow != None or basin != None or border != None:
+
+	if furrow != None or basin != None or border != None: #Common values used by surface irrigation (e.g. basin, border, furrow)
 		cons_c = 7.0
 		rate = 0.05
 		if intake_family == "clay_005":
@@ -304,6 +310,7 @@ def index(request):
 		irrigation_q = sprinkler.discharge
 	if drip != None:
 		irrigation_q = drip.discharge
+
 	ea = ""
 	crop_dat = 0
 	mc_ave_collection = []
@@ -313,13 +320,12 @@ def index(request):
 	mci_2 = ""
 	mci_3 = ""
 	mc_ave = ""
-	net_application_depth = ""
-	irrigation_period = ""
-	total_volume = ""
-	area_shaded = ""
-	if len(mc_1) == 0:
-		pass
-	else:
+	net_application_depth = 0
+	irrigation_period = 0
+	total_volume = 0
+	area_shaded = 0
+
+	if len(mc_1) > 0: # getting date from data of sensor 1
 		for mc_obj in mc_1_sorted:
 			mc_date = mc_obj.timestamp.date()
 			crop_dat = ((mc_date - crop_transplanted).days)
@@ -327,7 +333,20 @@ def index(request):
 
 		drz = calculateDRZ(crop_dat)
 
-		def calculateMC_AVE(drz, mc_a, mc_b, mc_c): #Calculating average MCv
+		def calculateMC_AVE_1(mc_a): # for fieldunit with 1 sensor only
+			mc_ave = mc_a
+			return round(mc_ave, 2)
+
+		def calculateMC_AVE_2(drz, mc_a, mc_b): # for fieldunit with 2 sensors
+			if drz <= depth_1:
+				mc_ave = mc_a
+			if drz > depth_1 and drz <= depth_2:
+				mc_ave = ((mc_a*depth_1) + (mc_b*(drz-depth_1)))/(drz)
+			else:
+				mc_ave = ((mc_a*depth_1) + (mc_b*(depth_2-depth_1)))/depth_2
+			return round(mc_ave, 2)
+
+		def calculateMC_AVE_3(drz, mc_a, mc_b, mc_c): # for fieldunit with 3 sensors
 			if drz <= depth_1:
 				mc_ave = mc_a
 			if drz > depth_1 and drz <= depth_2:
@@ -336,10 +355,18 @@ def index(request):
 				mc_ave = ((mc_a*depth_1) + (mc_b*(depth_2-depth_1)) + (mc_c*(depth_3-depth_2)))/(depth_3)
 			return round(mc_ave, 2)
 
-		for (drz, mc_a, mc_b, mc_c) in zip(drz_collection, mc_collection_1, mc_collection_2, mc_collection_3):
-			mc_ave_collection.append(calculateMC_AVE(drz, mc_a, mc_b, mc_c))
-
-		mc_ave = calculateMC_AVE(drz, mc_a, mc_b, mc_c)
+		if num_sensors == 1:
+			for (drz, mc_a) in zip(drz_collection, mc_collection_1):
+				mc_ave = calculateMC_AVE_1(mc_a)
+				mc_ave_collection.append(calculateMC_AVE_1(mc_a))
+		if num_sensors == 2:
+			for (drz, mc_a, mc_b) in zip(drz_collection, mc_collection_1, mc_collection_2):
+				mc_ave = calculateMC_AVE_2(drz, mc_a, mc_b)
+				mc_ave_collection.append(calculateMC_AVE_2(drz, mc_a, mc_b))
+		if num_sensors == 3:
+			for (drz, mc_a, mc_b, mc_c) in zip(drz_collection, mc_collection_1, mc_collection_2, mc_collection_3):
+				mc_ave = calculateMC_AVE_3(drz, mc_a, mc_b, mc_c)
+				mc_ave_collection.append(calculateMC_AVE_3(drz, mc_a, mc_b, mc_c))
 
 		def calculateFn(x, y): #Calculate net application depth (Fn)
 			if y > MC_TO_IRRIGATE:
@@ -501,6 +528,13 @@ def index(request):
 			irrigation_period = (gross_volume_per_plant/(Np*q))*24*60
 			total_volume = gross_volume_per_plant
 			intake_family = None
+		# No Irrigation Data #
+		no_irrigation = None
+		if furrow == None and basin == None and border == None and drip==None and sprinkler==None:
+			farm = selected_system.farm
+			farm_area = farm.farm_area
+			no_irrigation = True
+			total_volume = net_application_depth * farm_area * 0.20 #[Assumption]
 		
 	#FOR DISPLAY
 		net_application_depth = round(net_application_depth, 2)
@@ -509,8 +543,12 @@ def index(request):
 	soil_fc = soil.fc
 	soil_pwp = soil.pwp
 	crop_mad = round(crop.mad * 100)
-		
+	
+	today= datetime.utcnow().replace(tzinfo=pytz.utc)
+
 	context = {
+		"today": today,
+		"num_sensors": num_sensors,
 		"final_list": reversed_list,
 		"form": form,
 		"selected_system": selected_system,

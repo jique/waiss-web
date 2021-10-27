@@ -24,11 +24,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href={% static "css/sb-admin-2.min.css" %} rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+  
     <link rel="stylesheet" href=/static/base/css/navbar_makesticky.css>
     <link href={% static "css/footer.css" %} rel="stylesheet" type="text/css">
     <link href={% static "css/progress-bar.css" %} rel="stylesheet" type="text/css">
-
     <title>
         {% block title_block %}
         WAISS
@@ -37,88 +36,272 @@
 </head>
 
 <body id="page-top" onload="startTime()">
+<style>
+#navbar {
+  background: #fff;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+#navbar .navbar-toggler {
+  font-size: 0.9rem;
+  padding: 10px 15px;
+  border-color: #ddd;
+}
 
+#navbar ul ul a {
+  padding-left: 0 !important;
+}
+
+#navbar .dropdown-menu {
+  border-radius: 0;
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#navbar .dropdown-menu .dropdown-item {
+  padding: 0;
+}
+
+#navbar .dropdown-menu h5 {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #ccc;
+  margin-top: .7rem;
+  margin-bottom: .5rem;
+}
+
+#navbar .dropdown-menu a.nav-link {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase !important;
+  border-bottom: 1px solid #eee;
+  padding: 15px 20px !important;
+  color: #555;
+}
+
+#navbar .dropdown-menu a.nav-link:hover {
+  -webkit-transform: translateX(5px);
+  transform: translateX(5px);
+  color: #4fbfa8;
+}
+
+#navbar .dropdown-submenu {
+  position: relative;
+}
+
+#navbar .dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -2px;
+  font-size: 1em;
+}
+
+#navbar .menu-large {
+  position: static !important;
+}
+
+#navbar .menu-large .megamenu {
+  padding: 20px;
+  width: 100%;
+  max-width: 1140px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  margin-top: -1px;
+}
+
+#navbar .menu-large a.nav-link {
+  padding: 7px !important;
+  padding-left: 0 !important;
+}
+
+#navbar .navbar-nav > li.active > a {
+  background: #4fbfa8 !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  border-color: #3aa18c !important;
+}
+
+#navbar .navbar-nav > li > a {
+  margin: 0;
+  padding: 1.4rem 1rem 1.6rem;
+  color: #555;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-top: .3rem solid transparent;
+}
+
+#navbar .navbar-nav > li > a:hover {
+  background: rgba(79, 191, 168, 0.5);
+  border-color: rgba(79, 191, 168, 0.8);
+}
+
+#navbar .navbar-nav > li > a:focus {
+  background: #4fbfa8 !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  border-color: #3aa18c !important;
+}
+
+#navbar.nav-light .navbar-nav > li.active a.dropdown-toggle,
+#navbar.nav-light .navbar-nav > li.active a.dropdown-toggle:hover {
+  background: none !important;
+  color: #555 !important;
+  text-decoration: underline !important;
+  border-color: #4fbfa8 !important;
+}
+
+#navbar.nav-light .navbar-nav > li > a:hover {
+  background: none !important;
+  border-color: #87d3c4 !important;
+}
+
+#navbar.nav-light .navbar-nav > li > a:focus {
+  background: none !important;
+  color: #555 !important;
+  text-decoration: underline !important;
+  border-color: #4fbfa8 !important;
+}
+
+@media (max-width: 991px) {
+  #navbar {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  #navbar .menu-large .megamenu {
+    width: 100%;
+    left: 0 !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+  }
+  #navbar .navbar-collapse {
+    max-height: 600px;
+    overflow-y: auto;
+    margin-top: 1rem;
+  }
+  #navbar .navbar-nav > li > a {
+    padding: 0 10px;
+    height: 45px;
+    line-height: 45px;
+    border-top: 0;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+  #navbar .navbar-nav > li > a:hover {
+    background: rgba(79, 191, 168, 0.5);
+    border-color: rgba(79, 191, 168, 0.8);
+  }
+  #navbar .dropdown-menu {
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
+</style>
 {% block sarai_nav_block %}
-<div class="nav-holder border-bottom bg-light">
-  <!-- Top bar-->
-  <nav class="navbar sticky-top navbar-expand-lg navbar-light top-bar bg-light container">
-      <a class="navbar-brand" href="#"><img src={% static "theme/sarai_logo.png" %} class="logo" height="45" alt="sarai_logo"></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-          <a class="nav-link" href="https://sarai.ph/about-us">About Us</a>
-      </li>
-      <!-- <li class="nav-item">
-          <a class="nav-link" href="#">Advisory</a>
-      </li> -->
-      <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Maps
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="http://maps.sarai.ph/suitability-maps">Suitability Maps</a>
-          <a class="dropdown-item" href="http://maps.sarai.ph/ndvi">Normalized Difference Vegetation Index</a>
-          <a class="dropdown-item" href="http://maps.sarai.ph/rainfall-maps">Rainfall Map</a>
-          <a class="dropdown-item" href="http://maps.sarai.ph/agri-drought">SVTR Map</a>
-          <a class="dropdown-item" href="http://maps.sarai.ph/evi">Enhanced Vegetation Index</a>
-          <a class="dropdown-item" href="https://aldrinjao.github.io/soils2/">Soils Profile Map</a>
+<div class="bg-light">
+<div class="top-bar border-bottom">
+  <div class="container">
+      <div class="row d-flex align-items-center">
+          <div class="col-md-6">
+              <a class="navbar-brand" href="https://sarai.ph">
+                  <img src={% static "theme/sarai_logo.png" %} class="logo" height="45" alt="sarai_logo">
+              </a>
           </div>
-      </li>
-      <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Services
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="https://sarai.ph/rainfall-outlook">Rainfall Outlook</a>
-          <a class="dropdown-item" href="https://sarai.ph/drought-forecast">Drought Forecast</a>
-          <a class="dropdown-item" href="https://sarai.ph/weather-monitoring">Weather Monitoring</a>
-          <a class="dropdown-item" href="http://202.92.144.48/">Sarai Community</a>
-          <a class="dropdown-item" href="https://www.saraiapps.xyz/soilsmap/">Soils Characteristics</a>
+          <div class="col-md-6 d-md-block d-none">
+              <div class="d-flex justify-content-md-end justify-content-between">
+                <a class="navbar-brand" href="https://www.dost.gov.ph"><img src={% static "theme/dost-logo.png" %} height="45px;"></a>
+                <a class="navbar-brand" href="https://www.pcaarrd.dost.gov.ph"><img src={% static "theme/dost-pcaarrd-logo.png" %} height="45px;"></a>
+                <a class="navbar-brand" href="https://www.uplb.edu.ph"><img src={% static "theme/uplb-logo.png" %} height="45px;"></a>
+              </div>
           </div>
-      </li>
-      </ul>
-      <a class="navbar-brand" href="#"><img src={% static "theme/dost-logo.png" %} height="50px;"></a>
-      <a class="navbar-brand" href="#"><img src={% static "theme/dost-pcaarrd-logo.png" %} height="50px;"></a>
-      <a class="navbar-brand" href="#"><img src={% static "theme/uplb-logo.png" %} height="50px;"></a>
       </div>
-  </nav>
+  </div>
 </div>
-<!-- Top bar end-->
+</div>
 <!-- Navbar Start-->
 <header class="nav-holder make-sticky">
   <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
       <div class="container">
         <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
           <div class="sidebar-brand-icon">
-            <img src={% static "all/logo/WAISS-logo-with-def.png" %} height=64px>
+            <img src={% static "all/logo/WAISS-logo-with-def.png" %} height=60px>
           </div>
         </div>
-        <!-- WAISS navbar-->
-        <ul class="navbar-nav text-left">
-          <!-- Nav Item - User Information -->
-          <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
-              <img class="img-profile rounded-circle" src={% static "theme/lady_sarai.png" %} width=50px height=50px>
-            </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href={%url 'waiss:index' %}>
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                Dashboard
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'logout'%}?next={{request.path}}">
-                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Logout
-              </a>
-            </div>
-          </li>
-        </ul>
+        <div id="navigation" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav ml-auto">
+              <li class="nav-item dropdown">
+                  <a data-toggle="dropdown" class="nav-link dropdown-toggle font-weight-bolder">Home <b class="caret"></b></a>
+                  <ul class="dropdown-menu" active>
+                      <li class="dropdown-item">
+                        <a href={% url 'waiss:home_page' %} class="nav-link">Main Page</a>
+                      </li>
+                      <li class="dropdown-item">
+                          <a href={% url 'login' %} class="nav-link">Water Advisory for Irrigation Scheduling System (WAISS)</a>
+                      </li>
+                      <li class="dropdown-item">
+                          <a href="https://waiss-etcal.sarai.ph/" target="_blank" class="nav-link">ET-based Irrigation Scheduler and Calculator (WAISS-ETCAL)</a>
+                      </li>
+                  </ul>
+              </li>
+              <li class="nav-item dropdown">
+                  <a data-toggle="dropdown" class="nav-link dropdown-toggle font-weight-bolder">Learn More <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                      <li class="dropdown-item">
+                          <a href="{% url 'waiss:learnmore_waiss' %}" class="nav-link">Soil Moisture-based Irrigation</a>
+                      </li>
+                      <li class="dropdown-item">
+                          <a href="{% url 'waiss:learnmore_etcal' %}" target="_blank" class="nav-link">ET-based Irrigation</a>
+                      </li>
+                  </ul>
+              </li>
+              <!-- ========== Contact dropdown ==================-->
+              <li class="nav-item dropdown">
+                  <a data-toggle="dropdown" class="nav-link dropdown-toggle font-weight-bolder">About Us <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                      <li class="dropdown-item">
+                          <a href="https://sarai.ph/about-us" class="nav-link">Project SARAI</a>
+                      </li>
+                      <li class="dropdown-item">
+                          <a href="{% url 'waiss:about' %}" class="nav-link">SARAI 2.3 Team</a>
+                      </li>
+                  </ul>
+              </li>
+              <!-- ========== Contact dropdown end ==================-->
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown">
+                <a data-toggle="dropdown" class="nav-link dropdown-toggle"><span class="btn btn-sm btn-primary" style="text-transform: lowercase;">{{user.get_username}}</span><b class="caret"></b></a>
+                <!-- Dropdown - User Information -->
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item">
+                      <a href=/dashboard/ class="nav-link"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
+                  </li>
+                  <li class="dropdown-item">
+                      <a href="/accounts/logout/?next=/new_farm/" class="nav-link"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</a>
+                  </li>
+                </ul>
+              </li>
+          </ul>
       </div>
+      <div id="search" class="collapse clearfix">
+          <form role="search" class="navbar-form">
+              <div class="input-group">
+                  <input type="text" placeholder="Search" class="form-control">
+                  <span class="input-group-btn"> <button type="submit" class="btn btn-template-main">
+                          <i class="fa fa-search"></i>
+                      </button></span>
+              </div>
+          </form>
+      </div>
+    </div>
+    </div>
   </div>
 </header>
 <!-- Navbar End-->
@@ -155,7 +338,7 @@
       <div class="row">
         <div class="col-sm-5 mr-auto">
             <h6>Project 2.3 - Smart Technologies for Crop Water Management</h6>
-            <p class="text-justify"></p>
+            <p class="text-justify">During Project SARAI phase I, the team provided opportunities for technology fabrication, and development of a decision support system (DSS) for water management protocols. During Project SARAI phase II, the team developed the Water Advisory for Irrigation Scheduling System (WAISS) and the Evapotranspiration-based Irrigation Scheduler and Calculator (WAISS-ETCAL).</p>
         </div>
         <div class="col-sm-4 mr-auto">
             <h6>Connect with us</h6>

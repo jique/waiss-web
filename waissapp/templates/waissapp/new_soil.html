@@ -6,7 +6,7 @@
 <div class="progress_bar">
     <div class="pro-bar">
         <small class="progress_bar_title">
-          <a href={% url 'waiss:new_farm' %} style="color:#858796">Farm</a> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <span style="color: #1abc9c; font-size: large;"><b> Soil</b></span>
+          <a href={% url 'waiss:new_farm' %} style="color:#858796">Farm</a> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <span style="color: #1abc9c; font-size: large;"><b> Soil</b></span> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> | <a href={% url 'waiss:new_fieldunit' %} style="color:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="color:#858796">System</a>
           <span class="progress_number">44%</span>
         </small>
         <span class="progress-bar-inner" style="background-color: #1abc9c; width: 44%;" data-value="44" data-percentage-value="44"></span>
@@ -20,25 +20,20 @@
             {% if soil_list %}
             <form method="post" class="form-group">
               {% csrf_token %}
-              <small>Existing Soils</small>
-              <select class="form-control" id="selected_soil" name="selected_soil">
+              <small><b>Load existing soils.</b></small><hr>
+              <select class="form-control" id="selected_soil" name="loadData" onchange="this.form.submit()">
                 <option value="{{selected_soil}}">{{selected_soil_text}}</option>
                 {% for soil in soil_list %}
                 <option value="{{soil.soiltype}}">{{soil.soiltype}}</option>
                 {% endfor %}
               </select>
-              <small class="text-danger float-right"><i>{{error_msg}}</i></small>
-              <hr>
-              <p class="text-right">
-                <input class="btn btn-info btn-sm" type="submit" value="Load Database" name="loadData"></input>
-              </p>
             </form>
             {% endif %}
           </div>
           <div class="col">
             <form class="form-group" action="" method="post">
             {% csrf_token %}
-              <small><b>Fields with asterisks (*) are required. Press next if you will use data from database.</b></small><hr>
+              <small><b>Fields with asterisks (*) are required.</b></small><hr>
                 {{soil_form.soiltype|as_crispy_field}}
                 {{soil_form.fc|as_crispy_field}}
                 {{soil_form.pwp|as_crispy_field}}
@@ -48,10 +43,8 @@
                 </div>
                 {{soil_form.source|as_crispy_field}}
                 <hr>
-                <div class="text-right">
-                    <button type="button" class="btn btn-success"><a href={% url 'waiss:new_crop' %} style="color:white">Previous</a></button>
-                    <input type="submit" value="Submit" class="btn btn-info" name="btn_submit">
-                    <button type="button" class="btn btn-success"><a href={% url 'waiss:new_calib' %} style="color:white">Next</a></button>
+                <div class="text-center">
+                    <input type="submit" value="Next" class="btn btn-info" name="btn_submit">
                 </div>
             </form>
           </div>

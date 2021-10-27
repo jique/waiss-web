@@ -28,66 +28,39 @@
         <link rel="stylesheet" href=/static/base/vendor/owl.carousel/assets/owl.carousel.css>
         <link rel="stylesheet" href=/static/base/vendor/owl.carousel/assets/owl.theme.default.css>
         {% endblock %}
-        <link rel="stylesheet" href=/static/base/css/style.default.css>
-        <link rel="stylesheet" href=/static/base/css/custom.css>
+        
+        
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link href={% static "css/footer.css" %} rel="stylesheet" type="text/css">
         <link href={% static "css/progress-bar.css" %} rel="stylesheet" type="text/css">
         <link href={% static "css/sb-admin-2.min.css" %} rel="stylesheet">
+        <link rel="stylesheet" href=/static/base/css/custom.css>
+        <link rel="stylesheet" href=/static/base/css/style.default.css>
     </head>
     <body >
         {% block style_block %}
         {% endblock %}
-        <div id="all" class="bg-light">
-            <div class="nav-holder border-bottom">
-                <!-- Top bar-->
-                <nav class="navbar sticky-top navbar-expand-lg navbar-light top-bar bg-light container">
-                    <a class="navbar-brand" href="#"><img src={% static "theme/sarai_logo.png" %} class="logo" height="45" alt="sarai_logo"></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://sarai.ph/about-us">About Us</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="#">Advisory</a>
-                    </li> -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Maps
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="http://maps.sarai.ph/suitability-maps">Suitability Maps</a>
-                        <a class="dropdown-item" href="http://maps.sarai.ph/ndvi">Normalized Difference Vegetation Index</a>
-                        <a class="dropdown-item" href="http://maps.sarai.ph/rainfall-maps">Rainfall Map</a>
-                        <a class="dropdown-item" href="http://maps.sarai.ph/agri-drought">SVTR Map</a>
-                        <a class="dropdown-item" href="http://maps.sarai.ph/evi">Enhanced Vegetation Index</a>
-                        <a class="dropdown-item" href="https://aldrinjao.github.io/soils2/">Soils Profile Map</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Services
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="https://sarai.ph/rainfall-outlook">Rainfall Outlook</a>
-                        <a class="dropdown-item" href="https://sarai.ph/drought-forecast">Drought Forecast</a>
-                        <a class="dropdown-item" href="https://sarai.ph/weather-monitoring">Weather Monitoring</a>
-                        <a class="dropdown-item" href="http://202.92.144.48/">Sarai Community</a>
-                        <a class="dropdown-item" href="https://www.saraiapps.xyz/soilsmap/">Soils Characteristics</a>
-                        </div>
-                    </li>
-                    </ul>
-                    <a class="navbar-brand" href="#"><img src={% static "theme/dost-logo.png" %} height="50px;"></a>
-                    <a class="navbar-brand" href="#"><img src={% static "theme/dost-pcaarrd-logo.png" %} height="50px;"></a>
-                    <a class="navbar-brand" href="#"><img src={% static "theme/uplb-logo.png" %} height="50px;"></a>
-                    </div>
-                </nav>
+        <div>
+            <div class="top-bar border-bottom bg-light" style="height: 61px;padding: 3px;">
+              <div class="container">
+                  <div class="row d-flex align-items-center">
+                      <div class="col-md-6">
+                          <a class="navbar-brand" href="https://sarai.ph">
+                              <img src={% static "theme/sarai_logo.png" %} class="logo" height="45px" alt="sarai_logo">
+                          </a>
+                      </div>
+                      <div class="col-md-6 d-md-block d-none">
+                          <div class="d-flex justify-content-md-end justify-content-between">
+                            <a class="navbar-brand" href="https://www.dost.gov.ph"><img src={% static "theme/dost-logo.png" %} height="45px;"></a>
+                            <a class="navbar-brand" href="https://www.pcaarrd.dost.gov.ph"><img src={% static "theme/dost-pcaarrd-logo.png" %} height="45px;"></a>
+                            <a class="navbar-brand" href="https://www.uplb.edu.ph"><img src={% static "theme/uplb-logo.png" %} height="45px;"></a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
             </div>
-            <!-- Top bar end-->
+        </div>
             <!-- Navbar Start-->
             <header class="nav-holder make-sticky">
                 <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
@@ -106,6 +79,9 @@
                                     <a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">Home <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown-item">
+                                            <a href={% url 'waiss:home_page' %} class="nav-link">Main Page</a>
+                                          </li>
+                                        <li class="dropdown-item">
                                             <a href={% url 'login' %} class="nav-link">Water Advisory for Irrigation Scheduling System (WAISS)</a>
                                         </li>
                                         <li class="dropdown-item">
@@ -117,10 +93,10 @@
                                     <a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">Learn More <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown-item">
-                                            <a href=/ class="nav-link">Soil Moisture-based Irrigation</a>
+                                            <a href="{% url 'waiss:learnmore_waiss' %}" class="nav-link">Soil Moisture-based Irrigation</a>
                                         </li>
                                         <li class="dropdown-item">
-                                            <a href="#" target="_blank" class="nav-link">ET-based Irrigation</a>
+                                            <a href="{% url 'waiss:learnmore_etcal' %}" target="_blank" class="nav-link">ET-based Irrigation</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -132,7 +108,7 @@
                                             <a href="https://sarai.ph/about-us" class="nav-link">Project SARAI</a>
                                         </li>
                                         <li class="dropdown-item">
-                                            <a href="#" class="nav-link">SARAI 2.3 Team</a>
+                                            <a href="{% url 'waiss:about' %}" class="nav-link">SARAI 2.3 Team</a>
                                         </li>
                                     </ul>
                                 </li>

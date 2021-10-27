@@ -1,8 +1,33 @@
 from django.forms import ModelForm
 from django import forms
-from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, Farm, FieldUnit, Sensor, MoistureContent, WAISSystems, Rainfall, Gravimetric, PercentShaded, Basin, Furrow, Border, Drip, Sprinkler, NoIrrigation
+from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, Farm, FieldUnit, Sensor, MoistureContent, WAISSystems, Rainfall, Gravimetric, PercentShaded, Basin, Furrow, Border, Drip, Sprinkler
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'password1',
+            'password2'
+        )
+
+class UserForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'email'
+        )
 
 class SoilForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -34,13 +59,19 @@ class FieldUnitForm(forms.ModelForm):
         super(FieldUnitForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-6'
-        self.helper.field_class = 'col-6'
+        self.helper.label_class = 'col-4'
+        self.helper.field_class = 'col-8'
     class Meta:
         model = FieldUnit
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
 
 class CalibForm(ModelForm):
+    date_tested = forms.DateField(
+    widget=forms.TextInput(     
+        attrs={'type': 'date'},
+        ),
+    required=False
+    )
     def __init__(self, *args, **kwargs):
         super(CalibForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -85,8 +116,8 @@ class FarmForm(ModelForm):
         super(FarmForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-4'
-        self.helper.field_class = 'col-8' 
+        self.helper.label_class = 'col-5'
+        self.helper.field_class = 'col-7' 
     class Meta:
         model = Farm
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
@@ -146,17 +177,6 @@ class SprinklerForm(ModelForm):
         model = Sprinkler
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
 
-class NoIrrigationForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(NoIrrigationForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-6'
-        self.helper.field_class = 'col-6' 
-    class Meta:
-        model = NoIrrigation
-        exclude = ()
-
 class WAISSystemsForm(ModelForm):
     date_transplanted = forms.DateField(
     widget=forms.TextInput(     
@@ -179,8 +199,8 @@ class PersonnelForm(ModelForm):
         super(PersonnelForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-4'
-        self.helper.field_class = 'col-8' 
+        self.helper.label_class = 'col-5'
+        self.helper.field_class = 'col-7' 
     class Meta:
         model = Personnel
         exclude = ('author', 'personal',)

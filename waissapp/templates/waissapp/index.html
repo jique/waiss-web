@@ -42,7 +42,7 @@
     </title>
 </head>
 
-<body id="page-top" onload="startTime()">
+<body id="page-top">
 
 {% block style_block%}
 <style>
@@ -190,9 +190,6 @@
                   </form>
                 </div>
               </li>
-              <li class="nav-item">
-                  <div class="nav-link"><small><span id="date"></span>&nbsp;&nbsp;<span id="time"></span></small></div>
-              </li>
             <!-- Nav Item - Messages -->
             <li class="nav-item">
               <a class="nav-link" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -257,22 +254,27 @@
           {% endblock %}
 
           {% block main_block %}
-          
           <div class="row">
-            <div class="col-6 text-gray-800">
+            <div class="col text-gray-800">
               <form method="post">
                 {% csrf_token %}
-                <label class="mb-0 font-weight-bold text-gray-800">System: </label>
-                <select name="selected_system" id="selected_system" class="btn btn-secondary btn-sm">
+                <select name="dashboard_submit" id="selected_system" class="btn btn-secondary btn-sm" onchange="this.form.submit()">
                   <option>{{selected_system}}</option>
                   {% for system in form %}
                   <option value="{{system.name}}">{{system}}</option>
                   {% endfor %}
                 </select>
-                <input class="btn btn-info btn-sm" type="submit" name="dashboard_submit" value="Generate Irrigation Advisory">
+                <a href={% url 'waiss:new_farm' %} class="btn btn-sm btn-info"><i class="fas fa-plus-circle" alt="add button" data-toggle="tooltip" data-placement="right" title="Create new WAISS."></i></a>
               </form>
             </div>
             <div class="col">
+              <div class="small text-right">
+                <i>Transplanted last <b>{{crop_transplanted}}.</b>
+                <br>
+                Today is <b>{{today}}</b>.</i>
+              </div>
+            </div>
+            <div class="col-3">
               <nav class="navbar navbar-expand icon-bar">
                 <!-- Sidebar Toggle (Topbar) -->
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -281,22 +283,22 @@
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
                   <li class="nav-item">
-                      <a class="nav-link" role="button">
+                      <a class="btn btn-sm btn-danger text-white" role="button">
                         <i class="fas fa-power-off"></i>
                       </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" role="button">
+                    <a class="btn btn-sm btn-warning text-white" role="button">
                       <i class="fas fa-sync-alt"></i>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" role="button">
+                    <a class="btn btn-sm btn-success text-white" role="button">
                       <i class="fas fa-battery-full"></i>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" role="button">
+                    <a class="btn btn-sm btn-primary text-white" role="button">
                       <i class="fas fa-signal"></i>
                     </a>
                   </li>
@@ -307,7 +309,7 @@
           <hr>
           <div class="row">
             <!--Crop Card -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl col-md-6 mb-4">
               <div class="card border-left-primary shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -324,7 +326,7 @@
               </div>
             </div>
             <!-- Soil Card -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl col-md-6 mb-4">
               <div class="card border-left-info shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -332,15 +334,11 @@
                       <div class="mb-0 mr-3 font-weight-bold text-gray-800">{{soil}}</div>
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Soil</div>
                       <small>
-                        {% if basin %}
+                        {% if basin or border or furrow %} <!-- Surface irrigation -->
                           FC: {{soil_fc}}% &nbsp;PWP: {{soil_pwp}}% MCv<br>Intake Family: {{intake_family}}
-                          {% elif border %}
-                          FC: {{soil_fc}}% &nbsp;PWP: {{soil_pwp}}% MCv<br>Intake Family: {{intake_family}}
-                          {% elif furrow %}
-                          FC: {{soil_fc}}% &nbsp;PWP: {{soil_pwp}}% MCv<br>Intake Family: {{intake_family}}
-                          {% elif sprinkler %}
+                        {% elif sprinkler or drip%}
                           FC: {{soil_fc}}% MCv<br>PWP: {{soil_pwp}}% MCv
-                          {% elif drip %}
+                        {% else %} <!-- No irrigation -->
                           FC: {{soil_fc}}% MCv<br>PWP: {{soil_pwp}}% MCv
                         {% endif %}
                       </small>
@@ -349,9 +347,9 @@
                 </div>
               </div>
             </div>
-
+            {% if basin or border or furrow or drip or sprinkler %}
             <!-- Irrigation Card -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl col-md-6 mb-4">
               <div class="card border-left-warning shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -364,6 +362,9 @@
                           {% elif sprinkler %} {{sprinkler}}
                         {% endif %}</div>
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Irrigation System</div>
+                        {% if no_irrigation %}
+                        <small><i>no irrigation system</i></small><br><br><br>
+                        {% else %}
                         <small>type: 
                           {% if basin %} basin
                           {% elif drip %} drip
@@ -378,14 +379,17 @@
                           {{irrigation_q}} l/day
                           {% endif %}
                         </small>
+                        {% endif %}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
+            {% else %}
+            <!-- No irrigation -->
+            {% endif %}
           <!-- Calibration Card-->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl col-md-6 mb-4">
               <div class="card border-left-success shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -419,20 +423,25 @@
                     <br>
                     <div class="mb-0 mr-3 font-weight-bold text-gray-800">
                       <i>
+                        {% if no_irrigation %}
+                        <div class="small"><br>Volume : {{total_volume}} liter {% if drip != None %}/ plant{% endif %}</div>
+                        <div class="small">F<sub>n</sub> : {% if net_application_depth < 0 %} 0 mm {% else %}{{net_application_depth}} mm {% endif %}</div>
+                        {% else %}
                         {% if mc_ave < MC_TO_IRRIGATE %}
                         Irrigate for {{irrigation_period}} mins <br><br>
                         <div class="small">or<br>Volume : {{total_volume}} liter {% if drip != None %}/ plant{% endif %}</div>
                         <div class="small">F<sub>n</sub> : {% if net_application_depth < 0 %} 0 mm {% else %}{{net_application_depth}} mm {% endif %}</div>
                         {% endif %}
+                        {% endif %}
                         {% if not mc_ave < MC_TO_IRRIGATE and mc_ave != "" %}
                         <br><br>
                         irrigation not needed
-                        <br><br><br>
+                        <br><br>
                         {% endif %}
                         {% if  mc_ave == "" %}
                         <br><br>
                         no MC<sub>V</sub> data available
-                        <br><br><br>
+                        <br><br>
                         {% endif %}
                       </i>
                     </div>
@@ -440,7 +449,6 @@
                     <div class="small">Latest MC<sub>v</sub>: {{mc_ave}} % </div> 
                     <div class="small">MC<sub>v</sub> to irrigate: {{MC_TO_IRRIGATE}} %</div>
                     <div class="small">Effective DRZ: {{drz}} mm</div><br>
-                    <div class="small"><i>Transplanted last <b>{{crop_transplanted}}.</b></i></div>
                   </div>
                 </div>
               </div>
