@@ -29,8 +29,8 @@
     <link rel="stylesheet" href=/static/base/css/navbar_makesticky.css>
     <link href={% static "css/footer.css" %} rel="stylesheet" type="text/css">
     <link href={% static "css/progress-bar.css" %} rel="stylesheet" type="text/css">
-    {% leaflet_js %}
-    {% leaflet_css %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <title>
         {% block title_block %}
         WAISS
@@ -40,6 +40,14 @@
 
 <body id="page-top" onload="startTime()">
 <style>
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 180px;
+}
 #navbar {
   background: #fff;
   padding-top: 0;
