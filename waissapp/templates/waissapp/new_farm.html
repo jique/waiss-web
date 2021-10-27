@@ -46,7 +46,9 @@
               {{farm_form.lat|as_crispy_field}}
               {{farm_form.long|as_crispy_field}}
             </div>
-            <div class="row" id="map"></div>
+            <div class="row">
+              <div class="col" id="map"></div>
+            </div>
             <hr>
             <div class="text-center">
               <input type="submit" value="Next" class="btn btn-info" name="btn_submit">
@@ -59,7 +61,7 @@
 </div>
 </div>
 <script>
-  var map = L.map('map').setView([12.8797, 121.7740], 13);
+  var map = L.map('map').setView([69.204662, 330.622782], 13);
   var popup = L.popup();
 
   L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=g0oXxXY5s36OBV9ZK206', {
