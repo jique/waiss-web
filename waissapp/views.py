@@ -199,21 +199,20 @@ def new_crop(request):
 		crop.mad = request.POST.get('mad')
 		crop.root_growth_model = request.POST.get('root_growth_model')
 		crop.select_drip = request.POST.get('select_drip')
+		crop.eqnform = request.POST.get('eqnform')
+		crop.peak_Etcrop = request.POST.get('peak_Etcrop')
+		crop.transpiration_ratio = request.POST.get('transpiration_ratio')
+		crop.root_a = request.POST.get('root_a')
+		crop.root_b = request.POST.get('root_b')
+		crop.root_c = request.POST.get('root_c')
+		crop.kc_ini = request.POST.get('kc_ini')
+		crop.kc_mid = request.POST.get('kc_mid')
+		crop.kc_end = request.POST.get('kc_end')
+		crop.kc_cc_1 = request.POST.get('kc_cc_1')
+		crop.kc_cc_2 = request.POST.get('kc_cc_2')
+		crop.kc_cc_3 = request.POST.get('kc_cc_3')
 		crop.source = request.POST.get('source')
-		crop.eqnform= request.POST.get('eqnform')
-		crop.peak_Etcrop= request.POST.get('peak_Etcrop')
-		crop.transpiration_ratio= request.POST.get('transpiration_ratio')
-		crop.root_a= request.POST.get('root_a')
-		crop.root_b= request.POST.get('root_b')
-		crop.root_c= request.POST.get('root_c')
-		crop.kc_ini= request.POST.get('kc_ini')
-		crop.kc_mid= request.POST.get('kc_mid')
-		crop.kc_end= request.POST.get('kc_end')
-		crop.kc_cc_1= request.POST.get('kc_cc_1')
-		crop.kc_cc_2= request.POST.get('kc_cc_2')
-		crop.kc_cc_3= request.POST.get('kc_cc_3')
 		for key in request.POST:
-			print(key)
 			value = request.POST.get(key)
 			if value == "":
 				pass
@@ -327,7 +326,6 @@ def new_soil(request):
 		soil.intakefamily = request.POST.get('intakefamily')
 		soil.source = request.POST.get('source')
 		for key in request.POST:
-			print(key)
 			value = request.POST.get(key)
 			if value == "":
 				pass
