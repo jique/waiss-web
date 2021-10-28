@@ -103,7 +103,7 @@ def new_calib(request):
 		calib.author = request.user
 		for key, value in request.POST.items():
 			if value == "":
-				pass
+				continue
 			else:
 				calib.key = value
 		calib.save()
