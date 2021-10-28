@@ -314,8 +314,8 @@ def new_soil(request):
 		var_list = ['source', 'intake_family']
 		for y in var_list:
 			get_y = request.POST.get(y)
-			if get_y== "":
-				pass
+			if get_y == "":
+				soil.y = ""
 			else:
 				soil.y = get_y
 		soil.save()
