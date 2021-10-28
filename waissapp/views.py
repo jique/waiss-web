@@ -311,8 +311,13 @@ def new_soil(request):
 		soil.fc = request.POST.get('fc')
 		soil.pwp = request.POST.get('pwp')
 		soil.bln_surface_irrigation = request.POST.get('bln_surface_irrigation')
-		soil.intake_family = request.POST.get('intake_family')
-		soil.source = request.POST.get('source')
+		var_list = ['source', 'intake_family']
+		for y in var_list:
+			get_y = request.POST.get('y')
+			if get_y== "":
+				pass
+			else:
+				soil.y = get_y
 		request.session['soil_ses'] = soil.id
 		return redirect('/new_calib/')
 
