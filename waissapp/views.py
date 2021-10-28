@@ -317,7 +317,7 @@ def new_soil(request):
 			if get_y == "":
 				soil.y = ""
 			else:
-				soil.y = get_y
+				soil.y = request.POST.get(y)
 		soil.save()
 		request.session['soil_ses'] = soil.id
 		return redirect('/new_calib/')
