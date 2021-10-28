@@ -199,27 +199,13 @@ def new_crop(request):
 		crop.mad = request.POST.get('mad')
 		crop.root_growth_model = request.POST.get('root_growth_model')
 		crop.select_drip = request.POST.get('select_drip')
-		crop.peak_Etcrop = request.POST.get('peak_Etcrop', None)
-		crop.transpiration_ratio = request.POST.get('transpiration_ratio', None)
-		crop.eqnform = request.POST.get('eqnform', None)
-		crop.root_a = request.POST.get('root_a', None)
-		crop.root_b = request.POST.get('root_b', None)
-		crop.root_c = request.POST.get('root_c', None)
-		crop.kc_ini = request.POST.get('kc_ini', None)
-		crop.kc_mid = request.POST.get('kc_mid', None)
-		crop.kc_end = request.POST.get('kc_end', None)
-		crop.kc_cc_1 = request.POST.get('kc_cc_1', None)
-		crop.kc_cc_2 = request.POST.get('kc_cc_2', None)
-		crop.kc_cc_3 = request.POST.get('kc_cc_3', None)
-		crop.source = request.POST.get('source', None)
-		none_list = [request.POST.get('source'), request.POST.get('eqnform'), request.post.get('peak_Etcrop'), request.post.get('transpiration_ratio'), request.post.get('root_a'), request.post.get('root_b'), request.post.get('root_c'), request.post.get('kc_ini'), request.post.get('kc_mid'), request.post.get('kc_end'), request.post.get('kc_cc_1'), request.post.get('kc_cc_2'), request.post.get('kc_cc_3')]
 		var_list = ['source', 'eqnform', 'peak_Etcrop', 'transpiration_ratio', 'root_a', 'root_b', 'root_c', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3' ]
-		for x in none_list:
-			for y in var_list:
-				if x == "":
-					pass
-				else:
-					crop.y = request.POST.get('y')
+		for y in var_list:
+			get_y = request.POST.get('y')
+			if get_y== "":
+				pass
+			else:
+				crop.y = get_y
 		crop.author = request.user
 		crop.save()
 		request.session['crop_ses'] = crop.id
