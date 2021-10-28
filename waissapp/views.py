@@ -558,6 +558,7 @@ def new_farm(request):
 			farm, created = Farm.objects.get_or_create(**form.cleaned_data)
 			f = farm.save(commit=False)
 			f.author = request.user
+			f.save()
 			request.session['farm_ses'] = f.id
 			return redirect('/new_personnel/')
 			
