@@ -555,7 +555,7 @@ def new_farm(request):
 	if request.method == 'POST' and 'btn_submit' in request.POST:  #Saving database
 		form = FarmForm(request.POST)
 		farm, created = Farm.objects.update_or_create(name=request.POST.get("name"))
-		if farm.is_valid():
+		if form.is_valid():
 			instance = farm.save(commit=False)
 			instance.author = request.user
 			instance.personal = True
