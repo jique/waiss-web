@@ -565,8 +565,7 @@ def new_farm(request):
 				return HttpResponseRedirect('/new_personnel/')
 		else:
 			for f in form.fields.values():
-				data = {}
-				data = data.append(f)
+				data = f
 			form = FarmForm(request.POST, initial=data)
 			if form.has_changed():
 				form = FarmForm(request.POST, instance=farm.id)
