@@ -201,7 +201,7 @@ def new_crop(request):
 		crop.select_drip = request.POST.get('select_drip')
 		var_list = ['source', 'eqnform', 'peak_Etcrop', 'transpiration_ratio', 'root_a', 'root_b', 'root_c', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3' ]
 		for y in var_list:
-			get_y = request.POST.get('y')
+			get_y = request.POST.get(y)
 			if get_y== "":
 				pass
 			else:
@@ -313,7 +313,7 @@ def new_soil(request):
 		soil.bln_surface_irrigation = request.POST.get('bln_surface_irrigation')
 		var_list = ['source', 'intake_family']
 		for y in var_list:
-			get_y = request.POST.get('y')
+			get_y = request.POST.get(y)
 			if get_y== "":
 				pass
 			else:
