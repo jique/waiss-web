@@ -557,15 +557,12 @@ def new_farm(request):
 		if form.is_valid():
 			id = form.cleaned_data['id']
 			farm, created = Farm.objects.update_or_create(id='id')
-			if created:
-				farm.save()
-			else:
-				instance = form.save(commit=False)
-				instance.author = request.user
-				instance.personal = True
-				instance.save()
-				request.session['farm_ses'] = instance.id
-		return HttpResponseRedirect('/new_personnel/')
+			instance = farm.save(commit=False)
+			instance.author = request.user
+			instance.personal = True
+			instance.save()
+			request.session['farm_ses'] = instance.id
+			return HttpResponseRedirect('/new_personnel/')
 	context = {
 		'farm_form': form,
 		'farm_list': farm_list,
