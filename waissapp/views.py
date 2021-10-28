@@ -101,11 +101,12 @@ def new_calib(request):
 		calib.date_tested = request.POST.get('date_tested')
 		calib.tested_by = request.POST.get('tested_by')
 		for key in request.POST:
-			value = request.POST.get(key)
-			if value == '':
+			value = request.POST.get[key]
+			if value == "":
 				pass
 			else:
 				calib.key = value
+		calib.author = request.user
 		calib.save()
 		request.session['calib_ses'] = calib.id
 		return redirect('/new_irrigation/')
