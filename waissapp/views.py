@@ -554,10 +554,17 @@ def new_farm(request):
 		selected_farm_text = id
 	if request.method == 'POST' and 'btn_submit' in request.POST:  #Saving database
 		form = FarmForm(request.POST)
+		name = request.POST["name"]
+		farm_area = request.POST["farm_area"]
+		province = request.POST["province"]
+		municipality = request.POST["municipality"]
+		brgy = request.POST["brgy"]
+		lat = request.POST["lat"]
+		long = request.POST["long"]
 		if form.is_valid():
 			f = form.save(commit=False)
 			f.author = request.user
-			farm, created = Farm.objects.get_or_create(**form.cleaned_data)
+			farm, created = Farm.objects.get_or_create(name=name, farm_area=farm_area, province=province, municipality=municipality, brgy=brgy, lat=lat, long=long, author=f.author)
 			farm.save()
 			request.session['farm_ses'] = f.id
 			return redirect('/new_personnel/')

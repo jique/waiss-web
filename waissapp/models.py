@@ -8,11 +8,6 @@ class Farm(models.Model):
     province = models.CharField(max_length=50, null="True")
     municipality = models.CharField(max_length=50, null="True")
     brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True")
-    yes_no = [
-        ("yes", 'Yes, I do!'),
-        ("no", 'No, I dont.'),
-    ]
-    select_coordinates = models.CharField(choices=yes_no, max_length=3, verbose_name="Do you have the coordinates of your farm?", null="True")
     lat = models.DecimalField(default=12.0000, decimal_places=4, verbose_name="Latitude", null="True", blank="True", max_digits=6, validators=[MinValueValidator(5), MaxValueValidator(20)])
     long = models.DecimalField(default=121.0000, decimal_places=4, verbose_name="Longitude", null="True", blank="True", max_digits=7, validators=[MinValueValidator(100), MaxValueValidator(130)])
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
