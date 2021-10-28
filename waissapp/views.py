@@ -94,9 +94,9 @@ def new_calib(request):
 		calib.calib_equation = request.POST.get('calib_equation')
 		calib.coeff_a = request.POST.get('coeff_a')
 		calib.coeff_b = request.POST.get('coeff_b')
-		calib.coeff_c = request.POST.get('coeff_c')
-		calib.coeff_d = request.POST.get('coeff_d')
-		calib.coeff_m = request.POST.get('coeff_m')
+		calib.coeff_c = request.POST.get('coeff_c', None)
+		calib.coeff_d = request.POST.get('coeff_d', None)
+		calib.coeff_m = request.POST.get('coeff_m', None)
 		calib.date_tested = request.POST.get('date_tested')
 		calib.tested_by = request.POST.get('tested_by')
 		request.session['calib_ses'] = calib.id

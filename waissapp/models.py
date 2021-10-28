@@ -196,7 +196,7 @@ class Crop(models.Model):
         ("no", 'No, I wont.'),
     ]
     select_drip = models.CharField(choices=yes_no, max_length=3, verbose_name="Are you going to use a drip irrigation system?", null="True")
-    peak_Etcrop = models.DecimalField(default=6.00, max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm/day)", null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(10)])
+    peak_Etcrop = models.DecimalField(default=6.00, max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm/day)", null=True, blank=True, validators=[MinValueValidator(1.00), MaxValueValidator(10)])
     transpiration_ratio = models.DecimalField(default=1.0, max_digits=3, decimal_places=2, verbose_name="Transpiration Ratio", null=True, blank=True, validators=[MinValueValidator(0.1), MaxValueValidator(1)])
    
     CHOICES = [
@@ -211,9 +211,9 @@ class Crop(models.Model):
     kc_ini = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (ini)", null=True, blank=True, validators=[MinValueValidator(.1), MaxValueValidator(2)])
     kc_mid = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (mid)", null=True, blank=True, validators=[MinValueValidator(.1), MaxValueValidator(2)])
     kc_end = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Kc (end)", null=True, blank=True, validators=[MinValueValidator(.1), MaxValueValidator(2)])
-    kc_cc_1 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 1", null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(100)])
-    kc_cc_2 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 2", null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(100)])
-    kc_cc_3 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 3", null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(100)])
+    kc_cc_1 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 1", null=True, blank=True, validators=[MinValueValidator(1.00), MaxValueValidator(100)])
+    kc_cc_2 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 2", null=True, blank=True, validators=[MinValueValidator(1.00), MaxValueValidator(100)])
+    kc_cc_3 = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Curve cutoff 3", null=True, blank=True, validators=[MinValueValidator(1.00), MaxValueValidator(100)])
     source = models.CharField(max_length=250, verbose_name="Data Source", null=True, blank=True)
 
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
