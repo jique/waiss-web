@@ -199,9 +199,9 @@ def new_crop(request):
 		crop.mad = request.POST.get('mad')
 		crop.root_growth_model = request.POST.get('root_growth_model')
 		crop.select_drip = request.POST.get('select_drip')
-		crop.eqnform = request.POST.get('eqnform')
 		crop.peak_Etcrop = request.POST.get('peak_Etcrop')
 		crop.transpiration_ratio = request.POST.get('transpiration_ratio')
+		crop.eqnform = request.POST.get('eqnform')
 		crop.root_a = request.POST.get('root_a')
 		crop.root_b = request.POST.get('root_b')
 		crop.root_c = request.POST.get('root_c')
@@ -331,6 +331,7 @@ def new_soil(request):
 				pass
 			else:
 				soil.key = value
+		soil.author = request.user
 		soil.save()
 		request.session['soil_ses'] = soil.id
 		return redirect('/new_calib/')
