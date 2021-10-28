@@ -3,8 +3,8 @@ var mapCenter = [14.16358, 121.25078];
 var markCenter = L.marker(mapCenter).addTo(map);  
     
 function buildMap(){ 
-    if (!isNaN($('input[name="farm_lat"]').val()) && $('input[name="farm_lat"]').val() != "" && !isNaN($('input[name="farm_long').val()) && $('input[name="farm_long').val() != ""){
-        mapCenter = [parseFloat($('input[name="farm_lat"]').val()), parseFloat($('input[name="farm_long').val())];
+    if (!isNaN($('input[name="lat"]').val()) && $('input[name="lat"]').val() != "" && !isNaN($('input[name="long').val()) && $('input[name="long').val() != ""){
+        mapCenter = [parseFloat($('input[name="lat"]').val()), parseFloat($('input[name="long').val())];
     }
     markCenter.setLatLng(mapCenter).addTo(map);
     map.setView(mapCenter, 10);
@@ -59,21 +59,21 @@ function buildMap(){
         2
         );
         var center = L.polygon(results.points).getBounds().getCenter();
-        $('input[name="farm_lat"]').val(parseFloat(center.lat));
-        $('input[name="farm_long"]').val(parseFloat(center.lng));
+        $('input[name="lat"]').val(parseFloat(center.lat));
+        $('input[name="long"]').val(parseFloat(center.lng));
     }
 
     map.on('click', function(e){
         var lat = e.latlng.lat;
         var lng = e.latlng.lng;
-        $('input[name="farm_lat"]').val(lat);
-        $('input[name="farm_long"]').val(lng);
+        $('input[name="lat"]').val(lat);
+        $('input[name="long"]').val(lng);
     });
 
         
-    $('body').on('change', 'input[name="farm_lat"]', function () {
+    $('body').on('change', 'input[name="lat"]', function () {
         var x = $(this).val();
-        var y = $('input[name="farm_long"]').val();
+        var y = $('input[name="long"]').val();
         if(x == ""){
             x = mapCenter[0];
         }
@@ -84,8 +84,8 @@ function buildMap(){
         markCenter.setLatLng({lat:x, lng:y});
     });
         
-    $('body').on('change', 'input[name="farm_long"]', function () {
-        var x = $('input[name="farm_lat"]').val();
+    $('body').on('change', 'input[name="long"]', function () {
+        var x = $('input[name="lat"]').val();
         var y = $(this).val();
         if(x == ""){
             x = mapCenter[0];
@@ -105,8 +105,8 @@ buildMap();
 to the concerned field*/
 
 $('body').on('click', "#get-my-loc", function (){
-    fx = document.getElementById("id_farm_lat"), //farm location holders
-    fy = document.getElementById("id_farm_long"),
+    fx = document.getElementById("id_lat"), //farm location holders
+    fy = document.getElementById("id_long"),
     fh = document.getElementById("fh"),
     getLocationforFarm();
 });
@@ -117,8 +117,8 @@ $('body').on('click', "#sta-my-loc", function (){
     getLocationforStation();
 });
 
-var fx = document.getElementById("id_farm_lat"), //farm location holders
-fy = document.getElementById("id_farm_long"),
+var fx = document.getElementById("id_lat"), //farm location holders
+fy = document.getElementById("id_long"),
 fh = document.getElementById("fh"),
 sx = document.getElementById("id_station_lat"), //station location holders
 sy = document.getElementById("id_station_long"),
