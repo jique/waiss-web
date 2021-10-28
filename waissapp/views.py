@@ -101,13 +101,12 @@ def new_calib(request):
 		calib.date_tested = request.POST.get('date_tested')
 		calib.tested_by = request.POST.get('tested_by')
 		calib.author = request.user
-		for key in request.POST:
-			value = request.POST.get(key)
+		for key, value in request.POST.items():
 			if value == "":
 				pass
 			else:
-				calib.key = Decimal(value)
-				calib.save()
+				calib.key = value
+		calib.save()
 		request.session['calib_ses'] = calib.id
 		return redirect('/new_irrigation/')
 	context = {
