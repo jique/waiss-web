@@ -64,8 +64,9 @@ function buildMap(){
     }
 
     map.on('click', function(e){
-        var lat = e.latlng.lat;
-        var lng = e.latlng.lng;
+        var coord = e.latlng;
+        var lat = coord.lat;
+        var lng = coord.lng;
         $('input[name="lat"]').val(lat);
         $('input[name="long"]').val(lng);
     });
