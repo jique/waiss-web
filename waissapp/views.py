@@ -90,13 +90,17 @@ def new_calib(request):
 		selected_calib_text = id
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = CalibForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
-			instance.author = request.user
-			instance.personal = True
-			instance.save()
-			request.session['calib_ses'] = instance.id
-			return redirect('/new_irrigation/')
+		calib, created = CalibrationConstant.objects.get_or_create(name=request.POST.get('name'))
+		calib.calib_equation = request.POST.get('calib_equation')
+		calib.coeff_a = request.POST.get('coeff_a')
+		calib.coeff_b = request.POST.get('coeff_b')
+		calib.coeff_c = request.POST.get('coeff_c')
+		calib.coeff_d = request.POST.get('coeff_d')
+		calib.coeff_m = request.POST.get('coeff_m')
+		calib.date_tested = request.POST.get('date_tested')
+		calib.tested_by = request.POST.get('tested_by')
+		request.session['calib_ses'] = calib.id
+		return redirect('/new_irrigation/')
 	context = {
 		'calib_form': form,
 		'calib_list': calib_list,
@@ -187,13 +191,30 @@ def new_crop(request):
 
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = CropForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
-			instance.author = request.user
-			instance.personal = True
-			instance.save()
-			request.session['crop_ses'] = instance.id
-			return redirect('/new_soil/')
+		crop, created = Crop.objects.get_or_create(crop=request.POST.get('crop'))
+		crop.growingperiod = request.POST.get('growingperiod')
+		crop.root_ini = request.POST.get('root_ini')
+		crop.drz = request.POST.get('drz')
+		crop.mad = request.POST.get('mad')
+		crop.root_growth_model = request.POST.get('root_growth_model')
+		crop.select_drip = request.POST.get('select_drip')
+		crop.peak_Etcrop = request.POST.get('peak_Etcrop')
+		crop.transpiration_ratio = request.POST.get('transpiration_ratio')
+		crop.eqnform = request.POST.get('eqnform')
+		crop.root_a = request.POST.get('root_a')
+		crop.root_b = request.POST.get('root_b')
+		crop.root_c = request.POST.get('root_c')
+		crop.kc_ini = request.POST.get('kc_ini')
+		crop.kc_mid = request.POST.get('kc_mid')
+		crop.kc_end = request.POST.get('kc_end')
+		crop.kc_cc_1 = request.POST.get('kc_cc_1')
+		crop.kc_cc_2 = request.POST.get('kc_cc_2')
+		crop.kc_cc_3 = request.POST.get('kc_cc_3')
+		crop.source = request.POST.get('source')
+		crop.author = request.user
+		crop.save()
+		request.session['crop_ses'] = crop.id
+		return redirect('/new_soil/')
 
 	context = {
 		'crop_form': form,
@@ -291,13 +312,14 @@ def new_soil(request):
 
 	if request.method == 'POST' and 'btn_submit' in request.POST: # data sent by user
 		form = SoilForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
-			instance.author = request.user
-			instance.personal = True
-			instance.save()
-			request.session['soil_ses'] = instance.id
-			return redirect('/new_calib/')
+		soil, created = Soil.objects.get_or_create(soiltype=request.POST.get('soiltype'))
+		soil.fc = request.POST.get('fc')
+		soil.pwp = request.POST.get('pwp')
+		soil.bln_surface_irrigation = request.POST.get('bln_surface_irrigation')
+		soil.intake_family = request.POST.get('intake_family')
+		soil.source = request.POST.get('source')
+		request.session['soil_ses'] = soil.id
+		return redirect('/new_calib/')
 
 	context = {
 		'soil_form': form,
@@ -375,22 +397,23 @@ def new_fieldunit(request):
 		form = FieldUnitForm(instance=fieldunit_id)
 	if request.method == 'POST':  # data sent by user
 		form = FieldUnitForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
-			instance.author = request.user
-			instance.personal = True
-			instance.timestart = '8:00'
-			instance.timestop = '17:00'
-			instance.fieldunitstatus =  True
-			instance.withirrigation = True
-			instance.automaticthreshold = True
-			instance.samples = 10
-			instance.sensorintegrationtime = 10
-			instance.delay = 10
-			instance.clockcorrection = 0
-			instance.save()
-			request.session['fieldunit_ses'] = instance.id
-			return redirect('/new_sensor/')
+		fieldunit, created = FieldUnit.objects.get_or_create(name=request.POST.get('name'))
+		fieldunit.usk = request.POST.get('usk')
+		fieldunit.number = request.POST.get('number')
+		fieldunit.author = request.user
+		fieldunit.personal = True
+		fieldunit.timestart = '8:00'
+		fieldunit.timestop = '17:00'
+		fieldunit.fieldunitstatus =  True
+		fieldunit.withirrigation = True
+		fieldunit.automaticthreshold = True
+		fieldunit.samples = 10
+		fieldunit.sensorintegrationtime = 10
+		fieldunit.delay = 10
+		fieldunit.clockcorrection = 0
+		fieldunit.save()
+		request.session['fieldunit_ses'] = fieldunit.id
+		return redirect('/new_sensor/')
 	
 	context ={
 		"fieldunit_form": form,
@@ -465,12 +488,13 @@ def new_sensor(request):
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=0)
 		fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
 		formset = SensorFormSet(queryset=Sensor.objects.filter(fieldunit__in=fieldunit))
-	print(fieldunit_ses, fieldunit)
 	if request.method == 'POST':
 		formset = SensorFormSet(request.POST)
-		if formset.is_valid():
-			formset.save()
-			return redirect('/new_system/')
+		sensors, created = Sensor.objects.get_or_create(name=request.POST.get('name'))
+		sensors.fieldunit = request.POST.get('fieldunit')
+		sensors.depth = request.POST.get('depth')
+		sensors.save()
+		return redirect('/new_system/')
 	
 	context = {
 		"formset": formset,
@@ -666,13 +690,14 @@ def new_personnel(request):
 		selected_id = id.id
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = PersonnelForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
-			instance.author = request.user
-			instance.personal = True
-			instance.save()
-			request.session['personnel_ses'] = instance.id
-			return redirect('/new_crop/')
+		personnel, created = Personnel.objects.get_or_create(first_name=request.POST.get('first_name'), last_name=request.POST.get('last_name'), number=request.POST.get('number'))
+		personnel.first_name = request.POST.get('first_name')
+		personnel.last_name = request.POST.get('last_name')
+		personnel.number = request.POST.get('number')
+		personnel.author = request.user
+		personnel.save()
+		request.session['personnel_ses'] = personnel.id
+		return redirect('/new_crop/')
 	context = {
 		'personnel_form': form,
 		'personnel_list': personnel_list,
