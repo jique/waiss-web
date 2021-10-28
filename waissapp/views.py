@@ -100,15 +100,14 @@ def new_calib(request):
 		calib.coeff_m = request.POST.get('coeff_m')
 		calib.date_tested = request.POST.get('date_tested')
 		calib.tested_by = request.POST.get('tested_by')
+		calib.author = request.user
 		for key in request.POST:
 			value = request.POST.get(key)
-			print(value)
 			if value == "":
 				pass
 			else:
 				calib.key = value
-		calib.author = request.user
-		calib.save()
+				calib.save()
 		request.session['calib_ses'] = calib.id
 		return redirect('/new_irrigation/')
 	context = {
