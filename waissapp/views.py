@@ -200,7 +200,7 @@ def new_crop(request):
 		crop.select_drip = request.POST.get('select_drip')
 		crop.peak_Etcrop = request.POST.get('peak_Etcrop', None)
 		crop.transpiration_ratio = request.POST.get('transpiration_ratio', None)
-		crop.eqnform = request.POST.get('eqnform')
+		crop.eqnform = request.POST.get('eqnform', None)
 		crop.root_a = request.POST.get('root_a', None)
 		crop.root_b = request.POST.get('root_b', None)
 		crop.root_c = request.POST.get('root_c', None)
