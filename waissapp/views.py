@@ -318,6 +318,7 @@ def new_soil(request):
 				pass
 			else:
 				soil.y = get_y
+		soil.save()
 		request.session['soil_ses'] = soil.id
 		return redirect('/new_calib/')
 
