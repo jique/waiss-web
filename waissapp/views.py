@@ -558,6 +558,7 @@ def new_farm(request):
 		farm.farm_area = request.POST.get('farm_area')
 		farm.province = request.POST.get('province')
 		farm.municipality = request.POST.get('municipality')
+		farm.brgy = request.POST.get('brgy')
 		farm.lat = request.POST.get('lat')
 		farm.long = request.POST.get('long')
 		farm.author = request.user
