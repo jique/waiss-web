@@ -212,10 +212,14 @@ def new_crop(request):
 		crop.kc_cc_2 = request.POST.get('kc_cc_2', None)
 		crop.kc_cc_3 = request.POST.get('kc_cc_3', None)
 		crop.source = request.POST.get('source', None)
-		none_list = [crop.peak_Etcrop, crop.transpiration_ratio, crop.root_a, crop.root_b, crop.root_c, crop.kc_ini, crop.kc_mid, crop.kc_end, crop.kc_cc_1, crop.kc_cc_2, crop.kc_cc_3,]
+		none_list = [request.POST.get('source'), request.POST.get('eqnform'), request.post.get('peak_Etcrop'), request.post.get('transpiration_ratio'), request.post.get('root_a'), request.post.get('root_b'), request.post.get('root_c'), request.post.get('kc_ini'), request.post.get('kc_mid'), request.post.get('kc_end'), request.post.get('kc_cc_1'), request.post.get('kc_cc_2'), request.post.get('kc_cc_3')]
+		var_list = ['source', 'eqnform', 'peak_Etcrop', 'transpiration_ratio', 'root_a', 'root_b', 'root_c', 'kc_ini', 'kc_mid', 'kc_end', 'kc_cc_1', 'kc_cc_2', 'kc_cc_3' ]
 		for x in none_list:
-			if x == None:
-				x == Decimal(0)
+			for y in var_list:
+				if x == "":
+					pass
+				else:
+					crop.y = request.POST.get('y')
 		crop.author = request.user
 		crop.save()
 		request.session['crop_ses'] = crop.id
