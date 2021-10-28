@@ -105,7 +105,8 @@ def new_calib(request):
 			if value == "":
 				pass
 			else:
-				calib.key = value
+				calib = 'calib.' + key
+				calib = value
 		calib.save()
 		request.session['calib_ses'] = calib.id
 		return redirect('/new_irrigation/')
