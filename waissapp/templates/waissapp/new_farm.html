@@ -18,12 +18,13 @@
   <div class="card-header rounded-0 border-0"><small>Farm Name & Location</small></div>
     <div class="card-body">
       <div class="row">
+        <section>
         <div class="col-7">
           {% if farm_list %}
           <div class="row bg-light">
             <form method="post" class="form-group col">
               {% csrf_token %}
-              <small><b>Load existing farms.</b></small><hr>
+              <small><b>Load existing farms.</b></small>
               <select class="form-control" id="selected_farm" name="loadData" onchange="this.form.submit()">
                   <option value="{{selected_farm}}">{{selected_farm_text}}</option>
                   {% for farm in farm_list %}
@@ -44,11 +45,11 @@
             <div class="row">
               <div class="col">{{farm_form.lat|as_crispy_field}}</div>
               <div class="col">{{farm_form.long|as_crispy_field}}</div>
-              <div class="col"><br><button  class="btn btn-outline-info btn-block" data-content="By clicking this button, you may need to allow this site to access your current location." data-placement="left" data-toggle="popover" data-trigger="hover" id="get-my-loc" name="get-farm-coordinates" onclick="getLocationforFarm();" type="button">Get my location</button></div>
+              <div class="col"><br><button  class="btn btn-outline-info btn-sm btn-block" data-content="By clicking this button, you may need to allow this site to access your current location." data-placement="left" data-toggle="popover" data-trigger="hover" id="get-my-loc" name="get-farm-coordinates" onclick="getLocationforFarm();" type="button">Get my location</button></div>
             </div>
             <div class="row">
               <div class="col-8">{{ farm_form.farm_area|as_crispy_field }}</div>
-              <div class="col"><br><button  class="btn btn-outline-info btn-block" data-target="#modalTraceFarm" data-toggle="modal" id="trace-my-farm" name="trace-my-farm" type="button">Trace my farm</button>
+              <div class="col"><br><button  class="btn btn-outline-info btn-sm btn-block" data-target="#modalTraceFarm" data-toggle="modal" id="trace-my-farm" name="trace-my-farm" type="button">Trace my farm</button>
               </div>
             </div>
             <hr>
@@ -58,6 +59,7 @@
           </form>
         </div>
         <div class="col-5" id="tracemap"></div>
+        </section>
       </div>
     </div>
   </div>
@@ -89,7 +91,14 @@
   </div>
 </div>
 
+<script src=/static/all/leaflet/leaflet.js></script>
+<script src=/static/all/leaflet/leaflet-mouseposition.js></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.min.js"></script>
+<script src=/static/all/leaflet/leaflet.awesome-markers.js></script>
+<script src="https://npmcdn.com/leaflet.path.drag/src/Path.Drag.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-editable@1.2.0/src/Leaflet.Editable.min.js"></script>
 <script src="{% static 'js/map.js' %}"></script>
+
 <script src="{% static 'js/showHide.js' %}"></script>
 {% endblock %}
     
