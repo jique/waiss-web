@@ -557,10 +557,6 @@ def new_farm(request):
 		farm_name = Farm.objects.get(name=request.POST.get("name"))
 		farm, created = Farm.objects.update_or_create(name=farm_name)
 		if created:
-			form = FarmForm(request.POST, instance=farm_name)
-			request.session['farm_ses'] = farm.id
-			return HttpResponseRedirect('/new_personnel/')
-		else:
 			if form.is_valid():
 				instance = form.save(commit=False)
 				instance.author = request.user
@@ -568,6 +564,10 @@ def new_farm(request):
 				instance.save()
 				request.session['farm_ses'] = farm.id
 				return HttpResponseRedirect('/new_personnel/')
+		else:
+			form = FarmForm(request.POST, instance=farm_name)
+			request.session['farm_ses'] = farm.id
+			return HttpResponseRedirect('/new_personnel/')
 	context = {
 		'farm_form': form,
 		'farm_list': farm_list,
