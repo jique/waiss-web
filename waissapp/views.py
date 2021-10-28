@@ -300,7 +300,7 @@ def new_soil(request):
 	soil_list = sorted(chain(current_user_list, combined_list), key=attrgetter('soiltype'))
 	if request.method == 'POST' and 'loadData' in request.POST:
 		pk=request.POST.get('loadData')
-		id = Soil.objects.get(name=pk)
+		id = Soil.objects.get(soiltype=pk)
 		form = SoilForm(instance=id)
 		selected_soil = id
 		selected_soil_text = id
