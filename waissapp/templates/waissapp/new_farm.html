@@ -107,7 +107,7 @@
 <script src="https://npmcdn.com/leaflet.path.drag/src/Path.Drag.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet-editable@1.2.0/src/Leaflet.Editable.min.js"></script>
 <script >
-  var map = L.map('tracemap');
+var map = L.map('tracemap');
 var mapCenter = [14.16358, 121.25078];     
 var markCenter = L.marker(mapCenter).addTo(map);  
     
@@ -124,7 +124,7 @@ function buildMap(){
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 20,
         id: 'mapbox/satellite-streets-v11',
-        tileSize: 512,
+        tileSize: 256,
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoiZ3JtYiIsImEiOiJja3QyZTB1emEwbWpyMm5ueGNsM3p6ZWZxIn0.qosdXRuQF0PUAo2XT48_0g'
     }).addTo(map);
