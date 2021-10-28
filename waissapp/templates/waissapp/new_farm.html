@@ -20,7 +20,7 @@
       <div class="row">
         <div class="col-7">
           {% if farm_list %}
-          <div class="bg-light">
+          <div class="row bg-light">
             <form method="post" class="form-group">
               {% csrf_token %}
               <small><b>Load existing farms.</b></small><hr>
@@ -44,11 +44,11 @@
             <div class="row">
               <div class="col">{{farm_form.lat|as_crispy_field}}</div>
               <div class="col">{{farm_form.long|as_crispy_field}}</div>
-              <div class="col"><br><button  class="btn btn-info btn-sm" data-content="By clicking this button, you may need to allow this site to access your current location." data-placement="left" data-toggle="popover" data-trigger="hover" id="get-my-loc" name="get-farm-coordinates" onclick="getLocationforFarm();" type="button">Get my location</button></div>
+              <div class="col"><br><br><button  class="btn btn-info btn-sm" data-content="By clicking this button, you may need to allow this site to access your current location." data-placement="left" data-toggle="popover" data-trigger="hover" id="get-my-loc" name="get-farm-coordinates" onclick="getLocationforFarm();" type="button">Get my location</button></div>
             </div>
             <div class="row">
-              <div class="col">{{ farm_form.farm_area|as_crispy_field }}</div>
-              <div class="col"><br><button  class="btn btn-info btn-sm" data-target="#modalTraceFarm" data-toggle="modal" id="trace-my-farm" name="trace-my-farm" type="button">Trace my farm</button>
+              <div class="col-6">{{ farm_form.farm_area|as_crispy_field }}</div>
+              <div class="col"><br><br><button  class="btn btn-info btn-sm" data-target="#modalTraceFarm" data-toggle="modal" id="trace-my-farm" name="trace-my-farm" type="button">Trace my farm</button>
               </div>
             </div>
             <hr>
