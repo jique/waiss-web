@@ -60,31 +60,7 @@
   </div>
 </div>
 </div>
-<script>
-  var map = L.map('map').setView([14.16358, 121.25078], 6);
-  var popup = L.popup();
-
-  var mapboxUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ3JtYiIsImEiOiJja3QyZTB1emEwbWpyMm5ueGNsM3p6ZWZxIn0.qosdXRuQF0PUAo2XT48_0g';
-
-  L.tileLayer(mapboxUrl, {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 20,
-      id: 'mapbox/satellite-streets-v11',
-      tileSize: 512,
-      zoomOffset: -1,
-      accessToken: 'pk.eyJ1IjoiZ3JtYiIsImEiOiJja3QyZTB1emEwbWpyMm5ueGNsM3p6ZWZxIn0.qosdXRuQF0PUAo2XT48_0g'
-  }).addTo(map);
-
-    
-  function onMapClick(e) {
-    popup
-      .setLatLng(e.latlng)
-      .setContent("You farm is at " + round(e.latlng.lat, 4) + ', ' + round(e.latlng.lng, 4))
-      .openOn(map);
-  }
-  
-  map.on('click', onMapClick);
-</script>
+<script src="{% static 'js/map.js' %}"></script>
 <script src="{% static 'js/showHide.js' %}"></script>
 {% endblock %}
     
