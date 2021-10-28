@@ -556,11 +556,10 @@ def new_farm(request):
 		name = request.POST["name"]
 		form = FarmForm(request.POST)
 		if form.is_valid():
-			f = form.save(commit=False)
-			f.author = request.user
-			farm, created = Farm.objects.get_or_create(name=name)
+			farm, created = Farm.objects.get_or_create(name=request.POST.get('name'))
+			farm.lat = request.POST.get('lat')
 			farm.save()
-			request.session['farm_ses'] = f.id
+			request.session['farm_ses'] = farm.id
 			return redirect('/new_personnel/')
 			
 	context = {
