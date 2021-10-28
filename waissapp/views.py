@@ -211,6 +211,10 @@ def new_crop(request):
 		crop.kc_cc_2 = request.POST.get('kc_cc_2', None)
 		crop.kc_cc_3 = request.POST.get('kc_cc_3', None)
 		crop.source = request.POST.get('source', None)
+		none_list = [crop.peak_Etcrop, crop.transpiration_ratio, crop.root_a, crop.root_b, crop.root_c, crop.kc_ini, crop.kc_mid, crop.kc_end, crop.kc_cc_1, crop.kc_cc_2, crop.kc_cc_3,]
+		for x in none_list():
+			if x == None:
+				x == 0.0
 		crop.author = request.user
 		crop.save()
 		request.session['crop_ses'] = crop.id
