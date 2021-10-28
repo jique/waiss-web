@@ -311,13 +311,15 @@ def new_soil(request):
 		soil.fc = request.POST.get('fc')
 		soil.pwp = request.POST.get('pwp')
 		soil.bln_surface_irrigation = request.POST.get('bln_surface_irrigation')
-		var_list = ['source', 'intake_family']
-		for y in var_list:
-			get_y = request.POST.get('y')
-			if get_y == "":
-				soil.y = ""
+		soil.intakefamily = request.POST.get('intakefamily')
+		soil.source = request.POST.get('source')
+		for key in request.POST:
+			print(key)
+			value = request.POST.get(key)
+			if value == "":
+				pass
 			else:
-				soil.y = get_y
+				soil.key = value
 		soil.save()
 		request.session['soil_ses'] = soil.id
 		return redirect('/new_calib/')
