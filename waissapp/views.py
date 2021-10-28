@@ -102,7 +102,7 @@ def new_calib(request):
 		calib.tested_by = request.POST.get('tested_by')
 		for key in request.POST:
 			value = request.POST.get(key)
-			if value == "":
+			if value == '':
 				pass
 			else:
 				calib.key = value
