@@ -101,7 +101,8 @@ def new_calib(request):
 		calib.date_tested = request.POST.get('date_tested')
 		calib.tested_by = request.POST.get('tested_by')
 		for key in request.POST:
-			value = request.POST.getlist('key')
+			value = request.POST.getlist(key)
+			print(value)
 			if value == "":
 				pass
 			else:
