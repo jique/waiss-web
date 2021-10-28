@@ -17,6 +17,7 @@ import io, csv
 from .decorators import unauthenticated_user
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from decimal import Decimal
 
 @unauthenticated_user
 def register(request):
@@ -214,7 +215,7 @@ def new_crop(request):
 		none_list = [crop.peak_Etcrop, crop.transpiration_ratio, crop.root_a, crop.root_b, crop.root_c, crop.kc_ini, crop.kc_mid, crop.kc_end, crop.kc_cc_1, crop.kc_cc_2, crop.kc_cc_3,]
 		for x in none_list:
 			if x == None:
-				x == 0.0
+				x == Decimal(0)
 		crop.author = request.user
 		crop.save()
 		request.session['crop_ses'] = crop.id
