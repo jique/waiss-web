@@ -553,19 +553,13 @@ def new_farm(request):
 		selected_farm = id
 		selected_farm_text = id
 	if request.method == 'POST' and 'btn_submit' in request.POST:  #Saving database
-		form = FarmForm(request.POST)
 		farm_name = Farm.objects.get(name=request.POST.get("name"))
 		farm, created = Farm.objects.update_or_create(name=farm_name)
-		if created:
-			farm.author = request.user
-			farm.personal = True
-			farm.save()
-			request.session['farm_ses'] = farm.id
-			return HttpResponseRedirect('/new_personnel/')
-		else:
-			farm.save()
-			request.session['farm_ses'] = farm.id
-			return HttpResponseRedirect('/new_personnel/')
+		farm.author = request.user
+		farm.personal = True
+		farm.save()
+		request.session['farm_ses'] = farm.id
+		return HttpResponseRedirect('/new_personnel/')
 	context = {
 		'farm_form': form,
 		'farm_list': farm_list,
