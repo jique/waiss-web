@@ -554,8 +554,7 @@ def new_farm(request):
 		selected_farm_text = id
 	if request.method == 'POST' and 'btn_submit' in request.POST:  #Saving database
 		form = FarmForm(request.POST)
-		farm_name = Farm.objects.get(name=request.POST.get("name"))
-		farm, created = Farm.objects.update_or_create(name=farm_name)
+		farm, created = Farm.objects.update_or_create(name=request.POST.get("name"))
 		if created:
 			if form.is_valid():
 				instance = form.save(commit=False)
