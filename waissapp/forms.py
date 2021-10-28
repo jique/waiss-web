@@ -112,6 +112,10 @@ class MCForm(forms.ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
 
 class FarmForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(FarmForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.label_class = 'small'
     class Meta:
         model = Farm
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
