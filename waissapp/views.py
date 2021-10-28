@@ -568,7 +568,7 @@ def new_farm(request):
 				data = []
 				data = data.append(f)
 			form = FarmForm(request.POST, initial=data)
-			if f.has_changed():
+			if form.has_changed():
 				form = FarmForm(request.POST, instance=farm.id)
 				form.save()
 				request.session['farm_ses'] = form.id
