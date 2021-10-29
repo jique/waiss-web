@@ -232,7 +232,7 @@ def new_crop(request):
 			for k in key_list:
 				for k2 in crop_key_list:
 					k2 = request.POST.get(k)
-			crop.save()
+					crop.save()
 		request.session['crop_ses'] = crop.id
 		return redirect('/new_soil/')
 
