@@ -103,7 +103,7 @@ def new_calib(request):
 		calib.author = request.user
 		for key, value in request.POST.items():
 			if value == "":
-				continue
+				pass
 			else:
 				calib.key = value
 		calib.save()
@@ -224,7 +224,7 @@ def new_crop(request):
 			if value == "":
 				pass
 			else:
-				crop.key = value
+				crop.key = request.POST.get(key)
 		crop.author = request.user
 		crop.save()
 		request.session['crop_ses'] = crop.id
