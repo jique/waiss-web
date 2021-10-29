@@ -223,16 +223,33 @@ def new_crop(request):
 		for key in request.POST:
 			value = request.POST.get(key)
 			if value != "":
-				key_list = []
-				k = key
-				key_list.append(k)
-				crop_key_list = []
-				k2 = 'crop.' + str(k)
-				crop_key_list.append(k2)
-			for k in key_list:
-				for k2 in crop_key_list:
-					k2 = request.POST.get(k)
-					crop.save()
+				if key == 'peak_Etcrop':
+					crop.peak_Etcrop = peak_Etcrop
+				if key == 'transpiration_ratio':
+					crop.transpiration_ratio = transpiration_ratio
+				if key == 'eqnform':
+					crop.eqnform = eqnform
+				if key == 'root_a':
+					crop.root_a = root_a
+				if key == 'root_b':
+					crop.root_b = root_b
+				if key == 'root_c':
+					crop.root_c = root_c
+				if key == 'kc_ini':
+					crop.kc_ini = kc_ini
+				if key == 'kc_mid':
+					crop.kc_mid = kc_mid
+				if key == 'kc_end':
+					crop.kc_end = kc_end
+				if key == 'kc_cc_1':
+					crop.kc_cc_1 = kc_cc_1
+				if key == 'kc_cc_2':
+					crop.kc_cc_2 =kc_cc_2
+				if key == 'kc_cc_3':
+					crop.kc_cc_3 = kc_cc_3
+				if key == 'source':
+					crop.source = source
+		crop.save()
 		request.session['crop_ses'] = crop.id
 		return redirect('/new_soil/')
 
