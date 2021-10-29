@@ -219,14 +219,20 @@ def new_crop(request):
 		crop.kc_cc_2 = request.POST.get('kc_cc_2')
 		crop.kc_cc_3 = request.POST.get('kc_cc_3')
 		crop.source = request.POST.get('source')
+		crop.author = request.user
 		for key in request.POST:
 			value = request.POST.get(key)
-			if value == "":
-				pass
-			else:
-				crop.key = request.POST.get(key)
-		crop.author = request.user
-		crop.save()
+			if value != "":
+				key_list = []
+				k = key
+				key_list.append(k)
+				crop_key_list = []
+				k2 = 'crop.' + str(k)
+				crop_key_list.append(k2)
+			for k in key_list:
+				for k2 in crop_key_list:
+					k2 = request.POST.get(k)
+			crop.save()
 		request.session['crop_ses'] = crop.id
 		return redirect('/new_soil/')
 
