@@ -912,16 +912,17 @@ def new_irrigation(request):
 	if request.method == 'POST' and 'submit-basin' in request.POST:  #submit data
 		basin_form = BasinForm(request.POST)
 		basin, created = Basin.objects.get_or_create(name=request.POST.get('name'))
-		basin.author = request.user
 		basin.basin_length = request.POST.get('basin_length')
 		basin.discharge = request.POST.get('discharge')
 		basin.ea = request.POST.get('ea')
+		basin.author = request.user
 		basin.save() #save
 		request.session.pop('border_ses', None) #delete sessions
 		request.session.pop('furrow_ses', None)
 		request.session.pop('sprinkler', None)
 		request.session.pop('drip_ses', None)
 		request.session['basin_ses'] = basin.id #create session
+
 	#border
 	if border_name == None:
 		border_form = BorderForm()
