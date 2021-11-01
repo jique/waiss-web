@@ -545,7 +545,7 @@ def new_sensor(request):
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3)
 		fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
 		formset = SensorFormSet(queryset=Sensor.objects.filter(fieldunit__in=fieldunit))
-		ses_fieldunit = FieldUnit.objects.get(id=fieldunit_ses)
+		ses_fieldunit = FieldUnit.objects.get(name=fieldunit_ses)
 	if request.method == 'POST':
 		formset = SensorFormSet(request.POST)
 		sensors, created = Sensor.objects.get_or_create(name=request.POST.get('name'))
