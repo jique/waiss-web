@@ -283,7 +283,7 @@ class Furrow(models.Model):
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, validators=[MinValueValidator(0.0001)])
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True, validators=[MinValueValidator(0.0001)])
-    bln_furrow_type = models.BooleanField (verbose_name="It is an open-ended furrow.", null=True)
+    bln_furrow_type = models.BooleanField (verbose_name="Is it an open-ended furrow?", null=True)
     furrow_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Spacing", null=True, validators=[MinValueValidator(0.01)])
     furrow_length = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Length", null=True, validators=[MinValueValidator(0.01)])
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)

@@ -987,7 +987,7 @@ def new_irrigation(request):
 		furrow.discharge = request.POST.get('discharge')
 		furrow.mannings_coeff = request.POST.get('mannings_coeff')
 		furrow.area_slope = request.POST.get('area_slope')
-		furrow.bln_furrow_type = request.POST.get('bln_furrow_type')
+		furrow.bln_furrow_type = bool(request.POST.get('bln_furrow_type'))
 		furrow.furrow_spacing = request.POST.get('furrow_spacing')
 		furrow.furrow_length = request.POST.get('furrow_length')
 		furrow.save() #save
@@ -1066,6 +1066,7 @@ def new_irrigation(request):
 		drip, created = Drip.objects.get_or_create(name=request.POST.get('name'))
 		drip.author = request.user
 		drip.discharge = request.POST.get('discharge')
+		drip.bln_single_lateral = bool(request.POST.get('bln_single_lateral'))
 		drip.emitters_per_plant = request.POST.get('emitters_per_plant')
 		drip.emitter_spacing = request.POST.get('emitter_spacing')
 		drip.plant_spacing = request.POST.get('plant_spacing')
