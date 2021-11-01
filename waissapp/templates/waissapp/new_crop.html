@@ -21,7 +21,7 @@
           <div class="row bg-light rounded">
             <form method="post" class="form-group col-md">
               {% csrf_token %}
-              <small><b>Load existing crops.</b></small><hr>
+              <small><b>My crops</b></small><hr>
               <select class="form-control" id="selected_crop" name="loadData" onchange="this.form.submit()">
                 <option value="{{selected_crop}}">{{selected_crop_text}}</option>
                 {% for crop in crop_list %}
@@ -42,14 +42,13 @@
               <div class="col-md">{{crop_form.mad|as_crispy_field}}</div>
             </div>
             <div class="row">
-              {{crop_form.drz|as_crispy_field}}
-              {{crop_form.root_ini|as_crispy_field}}
+              <div class="col-md">{{crop_form.drz|as_crispy_field}}</div>
+              <div class="col-md">{{crop_form.root_ini|as_crispy_field}}</div>
             </div>
             {{crop_form.root_growth_model|as_crispy_field}}
             <div class="row collapse" id="collapse1">
               <div class="col-md">
                 <hr>
-                <i><b>Borg-Grimes Model</b></i> <br>
                 <small>No additional information required!</small>
                 <hr>
               </div>
@@ -57,27 +56,15 @@
             <div class="row collapse" id="collapse2">
               <div class="col-md">
                 <hr>
-                <i><b>Inverse K<sub>c</sub></b></i><br>
                 <div class="row">
-                  <div class="col-md">
-                    {{crop_form.kc_ini|as_crispy_field}}
-                  </div>
-                  <div class="col-md">
-                    {{crop_form.kc_mid|as_crispy_field}}
-                  </div>
-                  <div class="col-md">
-                    {{crop_form.kc_end|as_crispy_field}}
-                  </div>
+                  <div class="col-md">{{crop_form.kc_ini|as_crispy_field}}</div>
+                  <div class="col-md">{{crop_form.kc_mid|as_crispy_field}}</div>
+                  <div class="col-md">{{crop_form.kc_end|as_crispy_field}}</div>
+                </div>
                 <div class="row">
-                  <div class="col-md">
-                    {{crop_form.kc_cc_1|as_crispy_field}}
-                  </div>
-                  <div class="col-md">
-                    {{crop_form.kc_cc_2|as_crispy_field}}
-                  </div>
-                  <div class="col-md">
-                    {{crop_form.kc_cc_3|as_crispy_field}}
-                  </div>
+                  <div class="col-md">{{crop_form.kc_cc_1|as_crispy_field}}</div>
+                  <div class="col-md">{{crop_form.kc_cc_2|as_crispy_field}}</div>
+                  <div class="col-md">{{crop_form.kc_cc_3|as_crispy_field}}</div>
                 </div>
                 <hr>
               </div>
@@ -85,13 +72,11 @@
             <div class="row collapse" id="collapse3">
               <div class="col-md">
                 <hr>
-                <i><b>User-Defined Equation</b></i> <br>
                 {{crop_form.eqnform|as_crispy_field}}
                 <div class="row collapse" id="panel1">
                   <small>MC<sub>v</sub> = (reading)*a + b</small>
                   <div class="col-md">{{crop_form.root_a|as_crispy_field}}</div>
                   <div class="col-md">{{crop_form.root_b|as_crispy_field}}</div>
-                  </div>
                 </div>
                 <div class="row collapse" id="panel2">
                   <small>MC<sub>v</sub> = (reading)<sup>2</sup>*a + (reading)*b + c</small>
