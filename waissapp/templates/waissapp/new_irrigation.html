@@ -18,16 +18,12 @@
   <div class="card-body">
     <div class="row">
       {% if select_ses == None %}
-      <div class="col">
-        <label>Do you have an irrigation system?&emsp;</label>
-      </div>
-      <div class="col">
-        <select class="form-control" id="id_bln_irrigation" name="bln_irrigation">
+      <label class="small">Do you have an irrigation system?&emsp;</label>
+      <select class="form-control" id="id_bln_irrigation" name="bln_irrigation">
           <option value={{bln_irrigation}}>{{bln_irrigation_text}}</option>
           <option value="True">Yes, I do!</option>
           <option value="False">No, I don't!</option>
-        </select>
-      </div>
+      </select>
       {% elif select_ses == 'basin' %}
       <div class="col">
         <form class="form-group">
@@ -72,17 +68,15 @@
     </div>
     <div class="row collapse" id="collapse_irrig_Two">
       {% if select_ses == None %}
-      <div class="col"><label>What kind of irrigation system?&emsp;</label></div>
-      <div class="col">
-        <select class="form-control" id="id_select_irrigation" name="select_irrigation">
+      <label class="small">What kind of irrigation system?&emsp;</label></div>
+      <select class="form-control" id="id_select_irrigation" name="select_irrigation">
           <option value={{select_irrigation}}>{{select_irrigation}}</option>
           <option value="basin">basin</option>
           <option value="border">border</option>
           <option value="furrow">furrow</option>
           <option value="sprinkler">sprinkler</option>
           <option value="drip">drip</option>
-        </select>
-      </div>
+      </select>
       {% elif select_ses == 'basin' %}
       <div class="col">
         <form class="form-group">
@@ -141,10 +135,10 @@
           <small><b>Fields with asterisks (*) are required.</b></small><hr>
           {{basin.name|as_crispy_field}}
           {{basin.basin_length|as_crispy_field}}
-          {{basin.discharge|as_crispy_field}}
-          <div id="div_id_ea" class="form-group row">
-            <label for="id_ea" class="col-form-label col-6 requiredField">Application Efficiency (%)<span class="asteriskField">*</span></label>
-            <div class="col-6">
+          <div class="row">
+            <div class="col-md">{{basin.discharge|as_crispy_field}}</div>
+            <div class="col-md">
+              <label for="id_ea" class="small">Application Efficiency (%)<span class="asteriskField">*</span></label>
               <select name="ea" class="select form-control custom-select" required="" id="id_ea">
                 <option value={{basin_ea}}>{{basin_ea}}</option>
                 <option value="50">50</option>
