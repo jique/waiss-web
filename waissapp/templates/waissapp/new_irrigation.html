@@ -19,8 +19,8 @@
     <div class="row">
       {% if select_ses == None %}
       <div class="col-md">
-        <form class="form-group">
-          <label class="small">Do you have an irrigation system?&emsp;</label>
+        <form class="form-group"><!--Do you have an irrigation system?-->
+          <label class="small">Do you have an irrigation system?</label>
           <select class="form-control" id="id_bln_irrigation" name="bln_irrigation">
               <option value={{bln_irrigation}}>{{bln_irrigation_text}}</option>
               <option value="True">Yes, I do!</option>
@@ -60,7 +60,7 @@
         </form>
       </div>
       {% endif %}
-    </div>
+    </div><!--Do you have an irrigation system?-->
     <div class="row collapse" id="collapse_irrig_One"><!--With No irrigation system-->
       <div class="col-md">
         <hr>
@@ -68,7 +68,7 @@
           <a class="btn btn-info" href={% url 'waiss:new_fieldunit' %}>Next</a>
         </div>
       </div>
-    </div>
+    </div><!--With No irrigation system-->
     <div class="row collapse" id="collapse_irrig_Two"><!--With irrigation system-->
       {% if select_ses == None %}
       <div class="col-md">
@@ -87,45 +87,40 @@
       {% elif select_ses == 'basin' %}
       <div class="col-md">
         <form class="form-group">
-          {% csrf_token %}
           {{basin.select_irrigation|as_crispy_field}}
         </form>
       </div>
       {% elif select_ses == 'border' %}
-        <div class="col-md">
-          <form class="form-group">
-            {% csrf_token %}
-            {{border.select_irrigation|as_crispy_field}}
-          </form>
-        </div>
+      <div class="col-md">
+        <form class="form-group">
+          {{border.select_irrigation|as_crispy_field}}
+        </form>
+      </div>
       {% elif select_ses == 'furrow' %}
-        <div class="col-md">
-          <form class="form-group">
-            {% csrf_token %}
-            {{furrow.select_irrigation|as_crispy_field}}
-          </form>
-        </div>
+      <div class="col-md">
+        <form class="form-group">
+          {{furrow.select_irrigation|as_crispy_field}}
+        </form>
+      </div>
       {% elif select_ses == 'sprinkler' %}
-        <div class="col-md">
-          <form class="form-group">
-            {% csrf_token %}
-            {{sprinkler.select_irrigation|as_crispy_field}}
-          </form>
-        </div>
+      <div class="col-md">
+        <form class="form-group">
+          {{sprinkler.select_irrigation|as_crispy_field}}
+        </form>
+      </div>
       {% elif select_ses == 'drip' %}
-        <div class="col-md">
-          <form class="form-group">
-            {% csrf_token %}
-            {{drip.select_irrigation|as_crispy_field}}
-          </form>
-        </div>
+      <div class="col-md">
+        <form class="form-group">
+          {{drip.select_irrigation|as_crispy_field}}
+        </form>
+      </div>
       {% endif %}
-    </div>
-    <div class="row collapse" id="collapse_irrig_1">
+    </div><!--With irrigation system-->
+    <div class="row collapse" id="collapse_irrig_1"><!--Basin Row Collapse-->
       {% if basin_list %}
       <div class="col-md-4"><hr>
         <div class="row bg-light">
-          <form method="post" class="form-group">
+          <form method="post" class="form-group col-md">
             {% csrf_token %}
             <small><b>Load existing basin irrigation systems.</b></small><hr>
             <select class="form-control" id="selected_basin" name="loadData_basin" onchange="this.form.submit()">
@@ -139,7 +134,7 @@
       </div>
       {% endif %}
       <div class="col-md"> <hr>
-        <form class="form-group col-md" action="" method="post">
+        <form class="form-group" action="" method="post">
           {% csrf_token %}
           <small><b>Fields with asterisks (*) are required.</b></small><hr>
           {{basin.name|as_crispy_field}}
@@ -163,16 +158,13 @@
             </div>
           </div>
           <hr>
-          <div class="text-center">
-              <input type="submit" value="Next" class="btn btn-info" name="submit-basin">
-          </div>
+          <div class="text-center"><input type="submit" value="Next" class="btn btn-info" name="submit-basin"></div>
         </form>
       </div>
-    </div>
-    <div class="row collapse" id="collapse_irrig_2">
+    </div><!--Basin Row Collapse-->
+    <div class="row collapse" id="collapse_irrig_2"><!--Border Row Collapse-->
       {% if border_list %}
-      <div class="col-md-4">
-        <hr>
+      <div class="col-md-4"><hr>
         <div class="row bg-light">
           <form method="post" class="form-group col-md">
             {% csrf_token %}
@@ -198,13 +190,11 @@
           <div class="col-md">{{border.mannings_coeff|as_crispy_field}}</div>
         </div>
         <hr>
-        <div class="text-center">
-            <input type="submit" value="Next" class="btn btn-info" name="submit-border">
-        </div>
+        <div class="text-center"><input type="submit" value="Next" class="btn btn-info" name="submit-border"></div>
       </form>
       </div>
-    </div>
-    <div class="row collapse" id="collapse_irrig_3">
+    </div><!--Border Row Collapse-->
+    <div class="row collapse" id="collapse_irrig_3"><!--Furrow Row Collapse-->
       {% if furrow_list %}
       <div class="col-md-4"><hr>
         <div class="row bg-light">
@@ -239,13 +229,11 @@
             <div class="col-md">{{furrow.mannings_coeff|as_crispy_field}}</div>
           </div>
           <hr>
-          <div class="text-center">
-              <input type="submit" value="Next" class="btn btn-info" name="submit-furrow">
-          </div>
+          <div class="text-center"><input type="submit" value="Next" class="btn btn-info" name="submit-furrow"></div>
         </form>
       </div>
-    </div>
-    <div class="row collapse" id="collapse_irrig_4">
+    </div><!--Furrow Row Collapse-->
+    <div class="row collapse" id="collapse_irrig_4"><!--Sprinkler Row Collapse-->
       {% if sprinkler_list %}
       <div class="col-md-4"><hr>
         <div class="row bg-light">
@@ -283,13 +271,11 @@
             <div class="col-md">{{sprinkler.operating_pressure|as_crispy_field}}<!--Use ave discharge coefficient (0.96)--></div>
           </div>
           <hr>
-          <div class="text-center">
-              <input type="submit" value="Next" class="btn btn-info" name="submit-sprinkler">
-          </div>
+          <div class="text-center"><input type="submit" value="Next" class="btn btn-info" name="submit-sprinkler"></div>
         </form>
       </div>
-    </div>
-    <div class="row collapse" id="collapse_irrig_5">
+    </div><!--Sprinkler Row Collapse-->
+    <div class="row collapse" id="collapse_irrig_5"><!--Drip Row Collapse-->
       {% if drip_list %}
       <div class="col-md-4"><hr>
         <div class="row bg-light">
@@ -339,10 +325,8 @@
           </div>
         </form>
       </div>
-    </div>
-  </div>
-</div>
-</div>
-</div>
+    </div><!--Drip Row Collapse-->
+  </div><!--Card Body-->
+</div><!--Card-->
 <script src="{% static 'js/showHide.js' %}"></script>
 {% endblock %}

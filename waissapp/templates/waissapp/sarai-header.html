@@ -210,129 +210,128 @@
 </style>
 {% block sarai_nav_block %}
 <div class="bg-light">
-<div class="top-bar border-bottom">
-  <div class="container">
-      <div class="row d-flex align-items-center">
-          <div class="col-md-6">
-              <a class="navbar-brand" href="https://sarai.ph">
-                  <img src={% static "theme/sarai_logo.png" %} class="logo" height="45" alt="sarai_logo">
-              </a>
-          </div>
-          <div class="col-md-6 d-md-block d-none">
-              <div class="d-flex justify-content-md-end justify-content-between">
-                <a class="navbar-brand" href="https://www.dost.gov.ph"><img src={% static "theme/dost-logo.png" %} height="45px;"></a>
-                <a class="navbar-brand" href="https://www.pcaarrd.dost.gov.ph"><img src={% static "theme/dost-pcaarrd-logo.png" %} height="45px;"></a>
-                <a class="navbar-brand" href="https://www.uplb.edu.ph"><img src={% static "theme/uplb-logo.png" %} height="45px;"></a>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-</div>
-<!-- Navbar Start-->
-<header class="nav-holder make-sticky">
-  <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
-      <div class="container">
-        <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
-          <div class="sidebar-brand-icon">
-            <img src={% static "all/logo/WAISS-logo-with-def.png" %} height=60px>
-          </div>
+  <div class="top-bar border-bottom">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+            <div class="col-md-6">
+                <a class="navbar-brand" href="https://sarai.ph">
+                    <img src={% static "theme/sarai_logo.png" %} class="logo" height="45" alt="sarai_logo">
+                </a>
+            </div>
+            <div class="col-md-6 d-md-block d-none">
+                <div class="d-flex justify-content-md-end justify-content-between">
+                  <a class="navbar-brand" href="https://www.dost.gov.ph"><img src={% static "theme/dost-logo.png" %} height="45px;"></a>
+                  <a class="navbar-brand" href="https://www.pcaarrd.dost.gov.ph"><img src={% static "theme/dost-pcaarrd-logo.png" %} height="45px;"></a>
+                  <a class="navbar-brand" href="https://www.uplb.edu.ph"><img src={% static "theme/uplb-logo.png" %} height="45px;"></a>
+                </div>
+            </div>
         </div>
-        <div id="navigation" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav ml-auto">
-              <li class="nav-item dropdown">
-                  <a data-toggle="dropdown" class="nav-link dropdown-toggle font-weight-bolder">Home <b class="caret"></b></a>
-                  <ul class="dropdown-menu" active>
-                      <li class="dropdown-item">
-                        <a href={% url 'waiss:home_page' %} class="nav-link">Main Page</a>
-                      </li>
-                      <li class="dropdown-item">
-                          <a href={% url 'login' %} class="nav-link">Water Advisory for Irrigation Scheduling System (WAISS)</a>
-                      </li>
-                      <li class="dropdown-item">
-                          <a href="https://waiss-etcal.sarai.ph/" target="_blank" class="nav-link">ET-based Irrigation Scheduler and Calculator (WAISS-ETCAL)</a>
-                      </li>
-                  </ul>
-              </li>
-              <li class="nav-item dropdown">
-                  <a data-toggle="dropdown" class="nav-link dropdown-toggle font-weight-bolder">Learn More <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                      <li class="dropdown-item">
-                          <a href="{% url 'waiss:learnmore_waiss' %}" class="nav-link">Soil Moisture-based Irrigation</a>
-                      </li>
-                      <li class="dropdown-item">
-                          <a href="{% url 'waiss:learnmore_etcal' %}" target="_blank" class="nav-link">ET-based Irrigation</a>
-                      </li>
-                  </ul>
-              </li>
-              <!-- ========== Contact dropdown ==================-->
-              <li class="nav-item dropdown">
-                  <a data-toggle="dropdown" class="nav-link dropdown-toggle font-weight-bolder">About Us <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                      <li class="dropdown-item">
-                          <a href="https://sarai.ph/about-us" class="nav-link">Project SARAI</a>
-                      </li>
-                      <li class="dropdown-item">
-                          <a href="{% url 'waiss:about' %}" class="nav-link">SARAI 2.3 Team</a>
-                      </li>
-                  </ul>
-              </li>
-              <!-- ========== Contact dropdown end ==================-->
-              <!-- Nav Item - User Information -->
-              <li class="nav-item dropdown">
-                <a data-toggle="dropdown" class="nav-link dropdown-toggle"><span class="btn btn-sm btn-primary" style="text-transform: lowercase;">{{user.get_username}}</span><b class="caret"></b></a>
-                <!-- Dropdown - User Information -->
-                <ul class="dropdown-menu">
-                  <li class="dropdown-item">
-                      <a href=/dashboard/ class="nav-link"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
-                  </li>
-                  <li class="dropdown-item">
-                      <a href="/accounts/logout/?next=/new_farm/" class="nav-link"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</a>
-                  </li>
-                </ul>
-              </li>
-          </ul>
-      </div>
-      <div id="search" class="collapse clearfix">
-          <form role="search" class="navbar-form">
-              <div class="input-group">
-                  <input type="text" placeholder="Search" class="form-control">
-                  <span class="input-group-btn"> <button type="submit" class="btn btn-template-main">
-                          <i class="fa fa-search"></i>
-                      </button></span>
-              </div>
-          </form>
-      </div>
-    </div>
     </div>
   </div>
-</header>
-<!-- Navbar End-->
+<!-- Navbar Start-->
+  <header class="nav-holder make-sticky">
+    <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+        <div class="container">
+          <div class="sidebar-brand d-flex align-items-center justify-content-left" href="index.html">
+            <div class="sidebar-brand-icon">
+              <img src={% static "all/logo/WAISS-logo-with-def.png" %} height=60px>
+            </div>
+          </div>
+          <div id="navigation" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a data-toggle="dropdown" class="nav-link dropdown-toggle font-weight-bolder">Home <b class="caret"></b></a>
+                    <ul class="dropdown-menu" active>
+                        <li class="dropdown-item">
+                          <a href={% url 'waiss:home_page' %} class="nav-link">Main Page</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href={% url 'login' %} class="nav-link">Water Advisory for Irrigation Scheduling System (WAISS)</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="https://waiss-etcal.sarai.ph/" target="_blank" class="nav-link">ET-based Irrigation Scheduler and Calculator (WAISS-ETCAL)</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a data-toggle="dropdown" class="nav-link dropdown-toggle font-weight-bolder">Learn More <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item">
+                            <a href="{% url 'waiss:learnmore_waiss' %}" class="nav-link">Soil Moisture-based Irrigation</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="{% url 'waiss:learnmore_etcal' %}" target="_blank" class="nav-link">ET-based Irrigation</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- ========== Contact dropdown ==================-->
+                <li class="nav-item dropdown">
+                    <a data-toggle="dropdown" class="nav-link dropdown-toggle font-weight-bolder">About Us <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item">
+                            <a href="https://sarai.ph/about-us" class="nav-link">Project SARAI</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="{% url 'waiss:about' %}" class="nav-link">SARAI 2.3 Team</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- ========== Contact dropdown end ==================-->
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown">
+                  <a data-toggle="dropdown" class="nav-link dropdown-toggle"><span class="btn btn-sm btn-primary" style="text-transform: lowercase;">{{user.get_username}}</span><b class="caret"></b></a>
+                  <!-- Dropdown - User Information -->
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-item">
+                        <a href=/dashboard/ class="nav-link"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a href="/accounts/logout/?next=/new_farm/" class="nav-link"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</a>
+                    </li>
+                  </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="search" class="collapse clearfix">
+            <form role="search" class="navbar-form">
+                <div class="input-group">
+                    <input type="text" placeholder="Search" class="form-control">
+                    <span class="input-group-btn"> <button type="submit" class="btn btn-template-main">
+                            <i class="fa fa-search"></i>
+                        </button></span>
+                </div>
+            </form>
+        </div>
+      </div>
+      </div>
+    </div>
+  </header>
+  <!-- Navbar End-->
 {% endblock %}
 
-<section style="background: url(/static/base/imgs/corns.jpg) center center repeat; background-size: cover;" class="bar background-white relative-positioned">
-  <div style="background-color: rgba(79, 191, 168, 0.9)">
-    <div class="container">
-      <!-- Outer Row -->
-      <div class="row justify-content-center">
-        <div class="col-lg-12"><br>
-          <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
-            <div class="p-5">
-                {% block header_block %}
-                <h4 class="display-4" style="color: #1abc9c; font-size: 35px;">Let's get started! <span></span></h4>
-                <p class="lead" style="font-size: 15px;">Input required information for each parameters.</p>
-                {% endblock %}
+  <section style="background: url(/static/base/imgs/corns.jpg) center center repeat; background-size: cover;" class="bar background-white relative-positioned">
+    <div style="background-color: rgba(79, 191, 168, 0.9)">
+      <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+          <div class="col-lg-12"><br>
+            <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
+              <div class="p-5">
+                  {% block header_block %}
+                  <h4 class="display-4" style="color: #1abc9c; font-size: 35px;">Let's get started! <span></span></h4>
+                  <p class="lead" style="font-size: 15px;">Input required information for each parameters.</p>
+                  {% endblock %}
 
-                {% block form_block %}
-                {% endblock %}
-                <br>
+                  {% block form_block %}
+                  {% endblock %}
+                  <br>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
         
 {% block footer_block %}
   <!-- Footer -->
@@ -379,22 +378,18 @@
         </div>
       </div>
     </div>
-</footer>
+  </footer>
   <!-- End of Footer -->
 {% endblock %}
-      <!-- End of Main Content -->
-    </div>
-  <!-- End of Content Wrapper -->
-  <!-- End of Page Wrapper -->
+</div><!-- End of Bg-Light -->
   
-  <!-- Bootstrap core JavaScript-->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-  <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
 {% block bottom_script_block %}
 {% endblock %}
-    
 </body>
 </html>
