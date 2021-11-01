@@ -139,7 +139,7 @@
       </div>
       {% endif %}
       <div class="col-md"> <hr>
-        <form class="form-group" action="" method="post">
+        <form class="form-group col-md" action="" method="post">
           {% csrf_token %}
           <small><b>Fields with asterisks (*) are required.</b></small><hr>
           {{basin.name|as_crispy_field}}
@@ -174,7 +174,7 @@
       <div class="col-md-4">
         <hr>
         <div class="row bg-light">
-          <form method="post" class="form-group">
+          <form method="post" class="form-group col-md">
             {% csrf_token %}
             <small><b>Load existing border irrigation systems.</b></small><hr>
             <select class="form-control" id="selected_border" name="loadData_border" onchange="this.form.submit()">
@@ -208,7 +208,7 @@
       {% if furrow_list %}
       <div class="col-md-4"><hr>
         <div class="row bg-light">
-          <form method="post" class="form-group">
+          <form method="post" class="form-group col-md">
             {% csrf_token %}
             <small><b>Load existing furrow irrigation systems.</b></small><hr>
             <select class="form-control" id="selected_furrow" name="loadData_furrow" onchange="this.form.submit()">
@@ -249,7 +249,7 @@
       {% if sprinkler_list %}
       <div class="col-md-4"><hr>
         <div class="row bg-light">
-          <form method="post" class="form-group">
+          <form method="post" class="form-group col-md">
             {% csrf_token %}
             <small><b>Load existing sprinkler irrigation systems.</b></small><hr>
             <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
@@ -293,7 +293,7 @@
       {% if drip_list %}
       <div class="col-md-4"><hr>
         <div class="row bg-light">
-          <form method="post" class="form-group">
+          <form method="post" class="form-group col-md">
             {% csrf_token %}
             <small><b>Load existing drip irrigation systems.</b></small><hr>
             <select class="form-control" id="selected_drip" name="loadData_drip" onchange="this.form.submit()">
