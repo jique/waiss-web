@@ -887,12 +887,12 @@ def new_irrigation(request):
 	drip_name = request.session.get('drip_ses', None)
 	#basin
 	if basin_name == None:
-		basin = BasinForm()
+		basin_form = BasinForm()
 		selected_basin_text = '--choose--'
 		selected_basin = ""
 	else:
 		basin_name = Basin.objects.get(id=basin_name)
-		basin = BasinForm(instance=basin_name)
+		basin_form = BasinForm(instance=basin_name)
 		selected_basin = basin_name
 		selected_basin_text = basin_name
 		select_ses = 'basin'
@@ -904,7 +904,7 @@ def new_irrigation(request):
 	if request.method == 'POST' and 'loadData_basin' in request.POST: #load data
 		pk = request.POST.get('loadData_basin')
 		id = Basin.objects.get(name=pk)
-		basin = BasinForm(instance=id)
+		basin_form = BasinForm(instance=id)
 		selected_basin = id
 		selected_basin_text = id
 		select_ses = 'basin'
@@ -913,20 +913,23 @@ def new_irrigation(request):
 		basin_form = BasinForm(request.POST)
 		basin, created = Basin.objects.get_or_create(name=request.POST.get('name'))
 		basin.author = request.user
-		request.session.pop('border_ses', None)
+		basin.basin_length = request.POST.get('basin_length')
+		basin.discharge = request.POST.get('discharge')
+		basin.ea = request.POST.get('ea')
+		basin.save() #save
+		request.session.pop('border_ses', None) #delete sessions
 		request.session.pop('furrow_ses', None)
 		request.session.pop('sprinkler', None)
 		request.session.pop('drip_ses', None)
-		basin.save()
-		request.session['basin_ses'] = basin.id
+		request.session['basin_ses'] = basin.id #create session
 	#border
 	if border_name == None:
-		border = BorderForm()
+		border_form = BorderForm()
 		selected_border_text = '--choose--'
 		selected_border = ""
 	else:
 		border_name = Border.objects.get(id=border_name)
-		border = BorderForm(request.POST or None, instance=border_name)
+		border_form = BorderForm(request.POST or None, instance=border_name)
 		selected_border = border_name
 		selected_border_text = border_name
 		select_ses = 'border'
@@ -935,7 +938,7 @@ def new_irrigation(request):
 	if request.method == 'POST' and 'loadData_border' in request.POST:
 		pk=request.POST.get('loadData_border')
 		id = Border.objects.get(id=pk)
-		border = BorderForm(instance=id)
+		border_form = BorderForm(instance=id)
 		selected_border = id
 		selected_border_text = id
 		select_ses = 'border'
@@ -943,21 +946,24 @@ def new_irrigation(request):
 		border_form = BorderForm(request.POST)
 		border, created = Border.objects.get_or_create(name=request.POST.get('name'))
 		border.author = request.user
-		request.session.pop('basin_ses', None)
+		border.discharge = request.POST.get('discharge')
+		border.mannings_coeff = request.POST.get('mannings_coeff')
+		border.area_slope = request.POST.get('area_slope')
+		border.save() #save
+		request.session.pop('basin_ses', None) #delete session from other irrigation systems
 		request.session.pop('furrow_ses', None)
 		request.session.pop('sprinkler_ses', None)
 		request.session.pop('drip_ses', None)
-		request.session['border_ses'] = border.id
-		border.save()
+		request.session['border_ses'] = border.id #create session for border
 		return redirect('/new_fieldunit/')
 	#furrow
 	if furrow_name == None:
-		furrow = FurrowForm()
+		furrow_form = FurrowForm()
 		selected_furrow_text = '--choose--'
 		selected_furrow = ""
 	else:
 		furrow_name = Furrow.objects.get(id=furrow_name)
-		furrow = FurrowForm(request.POST or None, instance=furrow_name)
+		furrow_form = FurrowForm(request.POST or None, instance=furrow_name)
 		selected_furrow = furrow_name
 		selected_furrow_text = furrow_name
 		select_ses = 'furrow'
@@ -965,7 +971,7 @@ def new_irrigation(request):
 	if request.method == 'POST' and 'loadData_furrow' in request.POST:
 		pk = request.POST.get('loadData_furrow')
 		id = Furrow.objects.get(id=pk)
-		furrow = FurrowForm(instance=id)
+		furrow_form = FurrowForm(instance=id)
 		selected_furrow = id
 		selected_furrow_text = id
 		select_ses = 'furrow'
@@ -973,20 +979,26 @@ def new_irrigation(request):
 		furrow_form = FurrowForm(request.POST)
 		furrow, created = Furrow.objects.get_or_create(name=request.POST.get('name'))
 		furrow.author = request.user
-		furrow.save()
-		request.session.pop('basin_ses', None)
+		furrow.discharge = request.POST.get('discharge')
+		furrow.mannings_coeff = request.POST.get('mannings_coeff')
+		furrow.area_slope = request.POST.get('area_slope')
+		furrow.bln_furrow_type = request.POST.get('bln_furrow_type')
+		furrow.furrow_spacing = request.POST.get('furrow_spacing')
+		furrow.furrow_length = request.POST.get('furrow_length')
+		furrow.save() #save
+		request.session.pop('basin_ses', None) #delete other sessions from other irrigation systems
 		request.session.pop('border_ses', None)
 		request.session.pop('sprinkler', None)
 		request.session.pop('drip_ses', None)
-		request.session['furrow_ses'] = furrow.id
+		request.session['furrow_ses'] = furrow.id #create session for furrow
 		return redirect('/new_fieldunit/')
 	if sprinkler_name == None:
-		sprinkler = SprinklerForm()
+		sprinkler_form = SprinklerForm()
 		selected_sprinkler_text = "--choose--"
 		selected_sprinkler = ""
 	else:
 		sprinkler_name = Sprinkler.objects.get(id=sprinkler_name)
-		sprinkler = SprinklerForm(request.POST or None, instance=sprinkler_name)
+		sprinkler_form = SprinklerForm(request.POST or None, instance=sprinkler_name)
 		selected_sprinkler = sprinkler_name
 		selected_sprinkler_text = ""
 		select_ses = 'sprinkler'
@@ -994,7 +1006,7 @@ def new_irrigation(request):
 	if request.method == 'POST' and 'loadData_sprinkler' in request.POST:
 		pk=request.POST.get('loadData_sprinkler')
 		id = Sprinkler.objects.get(id=pk)
-		sprinkler = SprinklerForm(instance=id)
+		sprinkler_form = SprinklerForm(instance=id)
 		selected_sprinkler = id			
 		selected_sprinkler_text = id
 		select_ses = 'sprinkler'
@@ -1005,6 +1017,10 @@ def new_irrigation(request):
 		discharge = request.POST.get('discharge')
 		nozzle_diameter = request.POST.get('nozzle_diameter')
 		operating_pressure = request.POST.get('operating_pressure')
+		sprinkler.ea = request.POST.get('ea')
+		sprinkler.lateral_spacing = request.POST.get('lateral_spacing')
+		sprinkler.with_q_bln = request.POST.get('with_q_bln')
+		sprinkler.sprinkler_spacing = request.POST.get('sprinkler_spacing')
 		for key in request.POST:
 			value = request.POST.get(key)
 			if value != "":
@@ -1023,12 +1039,12 @@ def new_irrigation(request):
 		return redirect('/new_fieldunit/')
 	#drip
 	if drip_name == None:
-		drip = DripForm()
+		drip_form = DripForm()
 		selected_drip_text = "--choose--"
 		selected_drip = ""
 	else:
 		drip_name = Drip.objects.get(id=drip_name)
-		drip = DripForm(request.POST or None, instance=drip_name)
+		drip_form = DripForm(request.POST or None, instance=drip_name)
 		selected_drip = drip_name
 		selected_drip_text = drip_name
 		select_ses = 'drip'
@@ -1036,7 +1052,7 @@ def new_irrigation(request):
 	if request.method == 'POST' and 'loadData_drip' in request.POST:
 		pk=request.POST.get('loadData_drip')
 		id = Drip.objects.get(id=pk)
-		drip = DripForm(instance=id)
+		drip_form = DripForm(instance=id)
 		selected_drip = id
 		selected_drip_text = id
 		select_ses = 'drip'
@@ -1044,6 +1060,14 @@ def new_irrigation(request):
 		drip_form = DripForm(request.POST)
 		drip, created = Drip.objects.get_or_create(name=request.POST.get('name'))
 		drip.author = request.user
+		drip.discharge = request.POST.get('discharge')
+		drip.emitters_per_plant = request.POST.get('emitters_per_plant')
+		drip.emitter_spacing = request.POST.get('emitter_spacing')
+		drip.plant_spacing = request.POST.get('plant_spacing')
+		drip.row_spacing = request.POST.get('row_spacing')
+		drip.wetted_dia = request.POST.get('wetted_dia')
+		drip.bln_ii = request.POST.get('bln_ii')
+		drip.EU = request.POST.get('EU')
 		irrigation_interval = request.POST.get('irrigation_interval')
 		for key in request.POST:
 			value = request.POST.get(key)
@@ -1060,10 +1084,10 @@ def new_irrigation(request):
 
 	context = {
 		"basin" : basin_form,
-		"border" : border,
-		"furrow" : furrow,
-		"sprinkler" : sprinkler,
-		"drip" : drip,
+		"border" : border_form,
+		"furrow" : furrow_form,
+		"sprinkler" : sprinkler_form,
+		"drip" : drip_form,
 		"selected_basin": selected_basin,
 		"selected_border": selected_border,
 		"selected_furrow": selected_furrow,

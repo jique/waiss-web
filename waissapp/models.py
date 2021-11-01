@@ -8,7 +8,7 @@ class Farm(models.Model):
     province = models.CharField(max_length=50, null="True")
     municipality = models.CharField(max_length=50, null="True")
     brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True")
-    lat = models.DecimalField(default=12.0000, decimal_places=4, verbose_name="Latitude", null="True", max_digits=6, validators=[MinValueValidator(5), MaxValueValidator(20)])
+    lat = models.DecimalField(default=14.0000, decimal_places=4, verbose_name="Latitude", null="True", max_digits=6, validators=[MinValueValidator(5), MaxValueValidator(20)])
     long = models.DecimalField(default=121.0000, decimal_places=4, verbose_name="Longitude", null="True", max_digits=7, validators=[MinValueValidator(100), MaxValueValidator(130)])
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
