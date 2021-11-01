@@ -17,18 +17,7 @@
   <div class="card-header rounded-0 border-0"><small>Irrigation System</small></div>
   <div class="card-body">
     <div class="row">
-      {% if select_ses == None %}
-      <div class="col">
-        <label>Do you have an irrigation system?&emsp;</label>
-      </div>
-      <div class="col">
-        <select class="form-control" id="id_bln_irrigation" name="bln_irrigation">
-          <option value={{bln_irrigation}}>{{bln_irrigation_text}}</option>
-          <option value="True">Yes, I do!</option>
-          <option value="False">No, I don't!</option>
-        </select>
-      </div>
-      {% elif select_ses == 'basin' %}
+      {% if select_ses == 'basin' %}
       <div class="col">
         <form class="form-group">
           {% csrf_token %}
@@ -58,6 +47,17 @@
         <form class="form-group">
           {{drip.bln_irrigation|as_crispy_field}}
         </form>
+      </div>
+      {% else %}
+      <div class="col">
+        <label>Do you have an irrigation system?&emsp;</label>
+      </div>
+      <div class="col">
+        <select class="form-control" id="id_bln_irrigation" name="bln_irrigation">
+          <option value={{bln_irrigation}}>{{bln_irrigation_text}}</option>
+          <option value="True">Yes, I do!</option>
+          <option value="False">No, I don't!</option>
+        </select>
       </div>
       {% endif %}
     </div>

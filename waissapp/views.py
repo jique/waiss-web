@@ -897,7 +897,7 @@ def new_irrigation(request):
 		selected_basin = basin_name
 		selected_basin_text = basin_name
 		select_ses = 'basin'
-		basin_ea = basin_name.ea 
+		basin_ea = basin_name.ea #for select tag not loading selected value
 	
 	basin_list = Basin.objects.filter(author=request.user) #Dropdown database
 	bln_irrigation = ""
@@ -1087,7 +1087,7 @@ def new_irrigation(request):
 		request.session.pop('border_ses', None)
 		request.session['drip_ses'] = drip.id
 		return redirect('/new_fieldunit/')
-
+	print('select_ses')
 	context = {
 		"basin" : basin_form,
 		"basin_ea": basin_ea,
