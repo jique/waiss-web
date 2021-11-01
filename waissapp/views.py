@@ -549,7 +549,7 @@ def new_sensor(request):
 		sensors, created = Sensor.objects.get_or_create(name=request.POST.get('name'), fieldunit=request.POST.get('fieldunit'))
 		sensors.fieldunit = request.POST.get('fieldunit')
 		sensors.depth = request.POST.get('depth')
-		if formset.is_valid:
+		if formset.is_valid():
 			sensors.save()
 			return redirect('/new_system/')
 	
