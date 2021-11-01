@@ -6,15 +6,15 @@
 <div class="progress_bar">
   <div class="pro-bar">
       <small class="progress_bar_title">
-          <span style="col-mdor: #1abc9c; font-size: large;"><b>Farm</b></span> | <a href={% url 'waiss:new_personnel' %} style="col-mdor:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="col-mdor:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="col-mdor:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="col-mdor:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="col-mdor: #858796">Irrigation</a> | <a href={% url 'waiss:new_fieldunit' %} style="col-mdor:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="col-mdor:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="col-mdor:#858796">System</a>
+          <span style="color: #1abc9c; font-size: large;"><b>Farm</b></span> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> | <a href={% url 'waiss:new_fieldunit' %} style="color:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="color:#858796">System</a>
         
           <span class="progress_number">11%</span>
       </small>
-      <span class="progress-bar-inner" style="background-col-mdor: #1abc9c; width: 11%;" data-value="11" data-percentage-value="11"></span>
+      <span class="progress-bar-inner" style="background-color: #1abc9c; width: 11%;" data-value="11" data-percentage-value="11"></span>
   </div>
 </div>
 
-<div class="card rounded-0 border-0" style="background-col-mdor: rgba(251, 251, 251, 0.5)">
+<div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
   <div class="card-header rounded-0 border-0"><small>Farm Name & Location</small></div>
     <div class="card-body">
       <div class="row" class="section">
@@ -44,12 +44,12 @@
             <div class="row">
               <div class="col-md">{{farm_form.lat|as_crispy_field}}</div>
               <div class="col-md">{{farm_form.long|as_crispy_field}}</div>
-              <div class="col-md"><br><button  class="btn btn-outline-info btn-sm btn-block" data-content="By clicking this button, you may need to allow this site to access your current location." data-placement="left" data-toggle="popover" data-trigger="hover" id="get-my-loc" name="get-farm-coordinates" onclick="getLocationforFarm();" type="button">Get my location</button></div>
+              <div class="col-md"><button  class="btn btn-outline-info btn-sm btn-block" data-content="By clicking this button, you may need to allow this site to access your current location." data-placement="left" data-toggle="popover" data-trigger="hover" id="get-my-loc" name="get-farm-coordinates" onclick="getLocationforFarm();" type="button">Get my location</button></div>
               <i id="fh" class="notes"></i>
             </div>
             <div class="row">
               <div class="col-md-8">{{ farm_form.farm_area|as_crispy_field }}</div>
-              <div class="col-md"><br><button  class="btn btn-outline-info btn-sm btn-block" data-target="#modalTraceFarm" data-toggle="modal" id="trace-my-farm" name="trace-my-farm" type="button">Trace my farm</button>
+              <div class="col-md"><button  class="btn btn-outline-info btn-sm btn-block" data-target="#modalTraceFarm" data-toggle="modal" id="trace-my-farm" name="trace-my-farm" type="button">Trace my farm</button>
               </div>
             </div>
             <hr>
