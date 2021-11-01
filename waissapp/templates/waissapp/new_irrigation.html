@@ -124,6 +124,7 @@
     <div class="row collapse" id="collapse_irrig_1">
       {% if basin_list %}
       <div class="col-md-4"><hr>
+        <div class="row bg-light">
           <form method="post" class="form-group">
             {% csrf_token %}
             <small><b>Load existing basin irrigation systems.</b></small><hr>
@@ -134,6 +135,7 @@
               {% endfor %}
             </select>
           </form>
+        </div>
       </div>
       {% endif %}
       <div class="col-md"> <hr>
@@ -171,16 +173,18 @@
       {% if border_list %}
       <div class="col-md-4">
         <hr>
-        <form method="post" class="form-group">
-          {% csrf_token %}
-          <small><b>Load existing border irrigation systems.</b></small><hr>
-          <select class="form-control" id="selected_border" name="loadData_border" onchange="this.form.submit()">
-            <option value="{{selected_border}}">{{selected_border_text}}</option>
-            {% for border in border_list %}
-            <option value="{{border.name}}">{{border.name}}</option>
-            {% endfor %}
-          </select>
-        </form>
+        <div class="row bg-light">
+          <form method="post" class="form-group">
+            {% csrf_token %}
+            <small><b>Load existing border irrigation systems.</b></small><hr>
+            <select class="form-control" id="selected_border" name="loadData_border" onchange="this.form.submit()">
+              <option value="{{selected_border}}">{{selected_border_text}}</option>
+              {% for border in border_list %}
+              <option value="{{border.name}}">{{border.name}}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </div>
       </div>
       {% endif %}
       <div class="col-md">
@@ -203,16 +207,18 @@
     <div class="row collapse" id="collapse_irrig_3">
       {% if furrow_list %}
       <div class="col-md-4"><hr>
-        <form method="post" class="form-group">
-          {% csrf_token %}
-          <small><b>Load existing furrow irrigation systems.</b></small><hr>
-          <select class="form-control" id="selected_furrow" name="loadData_furrow" onchange="this.form.submit()">
-            <option value="{{selected_furrow}}">{{selected_furrow_text}}</option>
-            {% for furrow in furrow_list %}
-            <option value="{{furrow.name}}">{{furrow.name}}</option>
-            {% endfor %}
-          </select>
-        </form>
+        <div class="row bg-light">
+          <form method="post" class="form-group">
+            {% csrf_token %}
+            <small><b>Load existing furrow irrigation systems.</b></small><hr>
+            <select class="form-control" id="selected_furrow" name="loadData_furrow" onchange="this.form.submit()">
+              <option value="{{selected_furrow}}">{{selected_furrow_text}}</option>
+              {% for furrow in furrow_list %}
+              <option value="{{furrow.name}}">{{furrow.name}}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </div>
       </div>
       {% endif %}
       <div class="col-md">
@@ -242,16 +248,18 @@
     <div class="row collapse" id="collapse_irrig_4">
       {% if sprinkler_list %}
       <div class="col-md-4"><hr>
-        <form method="post" class="form-group">
-          {% csrf_token %}
-          <small><b>Load existing sprinkler irrigation systems.</b></small><hr>
-          <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
-            <option value="{{selected_sprinkler}}">{{selected_sprinkler_text}}</option>
-            {% for sprinkler in sprinkler_list %}
-            <option value="{{sprinkler.name}}">{{sprinkler.name}}</option>
-            {% endfor %}
-          </select>
-        </form>
+        <div class="row bg-light">
+          <form method="post" class="form-group">
+            {% csrf_token %}
+            <small><b>Load existing sprinkler irrigation systems.</b></small><hr>
+            <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
+              <option value="{{selected_sprinkler}}">{{selected_sprinkler_text}}</option>
+              {% for sprinkler in sprinkler_list %}
+              <option value="{{sprinkler.name}}">{{sprinkler.name}}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </div>
       </div>
       {% endif %}
       <div class="col-md">
@@ -284,16 +292,18 @@
     <div class="row collapse" id="collapse_irrig_5">
       {% if drip_list %}
       <div class="col-md-4"><hr>
-        <form method="post" class="form-group">
-          {% csrf_token %}
-          <small><b>Load existing drip irrigation systems.</b></small><hr>
-          <select class="form-control" id="selected_drip" name="loadData_drip" onchange="this.form.submit()">
-            <option value="{{selected_drip}}">{{selected_drip_text}}</option>
-            {% for drip in drip_list %}
-            <option value="{{drip.name}}">{{drip.name}}</option>
-            {% endfor %}
-          </select>
-        </form>
+        <div class="row bg-light">
+          <form method="post" class="form-group">
+            {% csrf_token %}
+            <small><b>Load existing drip irrigation systems.</b></small><hr>
+            <select class="form-control" id="selected_drip" name="loadData_drip" onchange="this.form.submit()">
+              <option value="{{selected_drip}}">{{selected_drip_text}}</option>
+              {% for drip in drip_list %}
+              <option value="{{drip.name}}">{{drip.name}}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </div>
       </div>
       {% endif %}
       <div class="col-md">

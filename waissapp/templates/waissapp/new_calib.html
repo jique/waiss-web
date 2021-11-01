@@ -18,16 +18,18 @@
         <div class="row">
             {% if calib_list %}
             <div class="col-md-4">
-                <form method="post" class="form-group">
-                    {% csrf_token %}
-                    <small><b>Load existing calibration equations.</b></small><hr>
-                    <select class="form-control" id="selected_calib" name="loadData" onchange="this.form.submit()">
-                      <option value="{{selected_calib}}">{{selected_calib_text}}</option>
-                      {% for calib in calib_list %}
-                      <option value="{{calib.name}}">{{calib.name}}</option>
-                      {% endfor %}
-                    </select>
-                </form>
+                <div class="row bg-light">
+                    <form method="post" class="form-group">
+                        {% csrf_token %}
+                        <small><b>Load existing calibration equations.</b></small><hr>
+                        <select class="form-control" id="selected_calib" name="loadData" onchange="this.form.submit()">
+                          <option value="{{selected_calib}}">{{selected_calib_text}}</option>
+                          {% for calib in calib_list %}
+                          <option value="{{calib.name}}">{{calib.name}}</option>
+                          {% endfor %}
+                        </select>
+                    </form>
+                </div>
             </div>
             {% endif %}
             <div class="col-md">
