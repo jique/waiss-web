@@ -54,7 +54,7 @@ class FieldUnitForm(forms.ModelForm):
         super(FieldUnitForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.label_class = 'small'
-        self.helper.field_class = 'input-sm'
+        self.helper.label_field = 'form-control-sm'
     class Meta:
         model = FieldUnit
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
@@ -69,7 +69,7 @@ class CalibForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(CalibForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.label_class = 'small lh-sm' 
+        self.helper.label_class = 'small' 
     class Meta:
         model = CalibrationConstant
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
@@ -78,7 +78,7 @@ class SensorForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(SensorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.label_class = 'small lh-sm'
+        self.helper.label_class = 'small'
     class Meta:
         model = Sensor
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
