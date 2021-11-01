@@ -196,9 +196,7 @@ class PersonnelForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(PersonnelForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-5'
-        self.helper.field_class = 'col-7' 
+        self.helper.label_class = 'small'
     class Meta:
         model = Personnel
         exclude = ('author', 'personal',)
