@@ -17,6 +17,7 @@
     <div class="card-body">
         <form class="form-group" action="" method="post">
             {% csrf_token %}
+            <small><b>Fields with asterisks (*) are required.</b></small>
             <hr>
             <div class="col">
                 {{ fieldunit_form.name|as_crispy_field }}

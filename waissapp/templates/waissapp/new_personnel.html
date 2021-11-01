@@ -17,7 +17,7 @@
     <div class="card-header border-0 rounded-0"><small>Name & Mobile Number to whom advisories are sent.</small></div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md">
+        <div class="col-md-4">
         {% if personnel_list %}
         <div class="row bg-light rounded">
           <form method="post" class="form-group col-md">
@@ -32,6 +32,8 @@
           </form>
         </div>
         {% endif %}
+        </div>
+        <div class="col-md-4">
           <form method="post" class="form-group">
             {% csrf_token %}
             <hr>
