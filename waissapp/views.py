@@ -905,7 +905,7 @@ def new_irrigation(request):
 		pk = request.POST.get('loadData_basin')
 		id = Basin.objects.get(name=pk)
 		basin_form = BasinForm(instance=id)
-		basin_ea = basin_form.ea
+		basin_ea = id.ea
 		selected_basin = id
 		selected_basin_text = id
 		select_ses = 'basin'
