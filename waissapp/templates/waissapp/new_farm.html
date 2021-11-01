@@ -44,12 +44,12 @@
             <div class="row">
               <div class="col-md">{{farm_form.lat|as_crispy_field}}</div>
               <div class="col-md">{{farm_form.long|as_crispy_field}}</div>
-              <div class="col-md"><button  class="btn btn-outline-info btn-sm btn-block" data-content="By clicking this button, you may need to allow this site to access your current location." data-placement="left" data-toggle="popover" data-trigger="hover" id="get-my-loc" name="get-farm-coordinates" onclick="getLocationforFarm();" type="button">Get my location</button></div>
+              <div class="col-md d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block" data-content="By clicking this button, you may need to allow this site to access your current location." data-placement="left" data-toggle="popover" data-trigger="hover" id="get-my-loc" name="get-farm-coordinates" onclick="getLocationforFarm();" type="button">Get my location</button></div>
               <i id="fh" class="notes"></i>
             </div>
             <div class="row">
               <div class="col-md-8">{{ farm_form.farm_area|as_crispy_field }}</div>
-              <div class="col-md"><button  class="btn btn-outline-info btn-sm btn-block" data-target="#modalTraceFarm" data-toggle="modal" id="trace-my-farm" name="trace-my-farm" type="button">Trace my farm</button>
+              <div class="col-md d-flex align-items-center mt-3"><button  class="btn btn-outline-info btn-sm btn-block" data-target="#modalTraceFarm" data-toggle="modal" id="trace-my-farm" name="trace-my-farm" type="button">Trace my farm</button>
               </div>
             </div>
             <hr>
