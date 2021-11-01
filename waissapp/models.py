@@ -232,7 +232,7 @@ class Basin(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True)
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, default="True")
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -240,7 +240,7 @@ class Basin(models.Model):
         ("sprinkler", 'sprinkler'),
         ("drip", 'drip'),
     ]
-    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Irrigation System Type", null=True, blank=True)
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Irrigation System Type", null=True, default="basin")
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
     basin_length = models.DecimalField(max_digits=20, decimal_places=1, verbose_name="Basin Length (m)", null=True, validators=[MinValueValidator(0.01)])
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
@@ -270,7 +270,7 @@ class Furrow(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True)
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, default="True")
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -278,7 +278,7 @@ class Furrow(models.Model):
         ("sprinkler", 'sprinkler'),
         ("drip", 'drip'),
     ]
-    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True)
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="furrow")
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, validators=[MinValueValidator(0.0001)])
@@ -287,7 +287,7 @@ class Furrow(models.Model):
     furrow_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Spacing", null=True, validators=[MinValueValidator(0.01)])
     furrow_length = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Length", null=True, validators=[MinValueValidator(0.01)])
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True)
     personal = models.BooleanField(default=True)
     
     class Meta:
@@ -300,7 +300,7 @@ class Border(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True)
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, default="True")
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -308,13 +308,13 @@ class Border(models.Model):
         ("sprinkler", 'sprinkler'),
         ("drip", 'drip'),
     ]
-    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True)
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="border")
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, validators=[MinValueValidator(0.0001)])
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True, validators=[MinValueValidator(0.0001)])
-    timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True, blank=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
+    timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True)
     personal = models.BooleanField(default=True)
     
     class Meta:
@@ -327,7 +327,7 @@ class Drip(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null="True", blank=True)
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null="True", default="True")
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -335,7 +335,7 @@ class Drip(models.Model):
         ("sprinkler", 'sprinkler'),
         ("drip", 'drip'),
     ]
-    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True)
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="drip")
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
     bln_single_lateral = models.BooleanField (verbose_name="Single Straight Lateral", null=True)
     discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Discharge (l/day)", null=True, validators=[MinValueValidator(0.01)])
@@ -350,7 +350,7 @@ class Drip(models.Model):
     ]
     bln_ii = models.CharField(choices=yes_or_no, max_length=6, verbose_name="Has preferred irrigation interval", null=True)
     irrigation_interval = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Irrigation Interval (days)", null=True, blank=True, validators=[MinValueValidator(1)])
-    EU = models.DecimalField(max_digits=3, decimal_places=3, verbose_name="Design Emission Uniformity", null=True, blank=True, validators=[MinValueValidator(0.001)])
+    EU = models.DecimalField(max_digits=3, decimal_places=3, verbose_name="Design Emission Uniformity", null=True, validators=[MinValueValidator(0.001)])
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True)
     personal = models.BooleanField(default=True)
@@ -365,7 +365,7 @@ class Sprinkler(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True)
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, default="True")
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -373,9 +373,9 @@ class Sprinkler(models.Model):
         ("sprinkler", 'sprinkler'),
         ("drip", 'drip'),
     ]
-    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True)
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="sprinkler")
     name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
-    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
+    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, blank=True, validators=[MinValueValidator(0.01)])
     EFF_CHOICES = [
         (50, '50'),
         (55, '55'),
@@ -391,8 +391,8 @@ class Sprinkler(models.Model):
     lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True, validators=[MinValueValidator(0.01)])
     with_q_bln = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you know the sprinkler discharge?", null=True)
     sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True, validators=[MinValueValidator(0.01)])
-    nozzle_diameter = models.DecimalField(max_digits=5, decimal_places=4, verbose_name="Nozzle Diameter (cm)", null=True, validators=[MinValueValidator(0.0001)])
-    operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True, validators=[MinValueValidator(0.01)])
+    nozzle_diameter = models.DecimalField(max_digits=5, decimal_places=4, verbose_name="Nozzle Diameter (cm)", null=True, blank=True, validators=[MinValueValidator(0.0001)])
+    operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True, blank=True, validators=[MinValueValidator(0.01)])
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)

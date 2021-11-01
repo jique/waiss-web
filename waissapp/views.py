@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, PercentShaded, Rainfall, Gravimetric, Basin, Furrow, Border, Drip, Sprinkler
@@ -95,17 +96,25 @@ def new_calib(request):
 		calib.calib_equation = request.POST.get('calib_equation')
 		calib.coeff_a = request.POST.get('coeff_a')
 		calib.coeff_b = request.POST.get('coeff_b')
-		calib.coeff_c = request.POST.get('coeff_c')
-		calib.coeff_d = request.POST.get('coeff_d')
-		calib.coeff_m = request.POST.get('coeff_m')
-		calib.date_tested = request.POST.get('date_tested')
-		calib.tested_by = request.POST.get('tested_by')
+		coeff_c = request.POST.get('coeff_c')
+		coeff_d = request.POST.get('coeff_d')
+		coeff_m = request.POST.get('coeff_m')
+		date_tested = request.POST.get('date_tested')
+		tested_by = request.POST.get('tested_by')
 		calib.author = request.user
-		for key, value in request.POST.items():
-			if value == "":
-				pass
-			else:
-				calib.key = value
+		for key in request.POST:
+			value = request.POST.get(key)
+			if value != "":
+				if key == 'coeff_c':
+					calib.coeff_c = coeff_c
+				if key == 'coeff_d':
+					calib.coeff_d = coeff_d
+				if key == 'coeff_m':
+					calib.coeff_m = coeff_m
+				if key == 'date_tested':
+					calib.date_tested = date_tested
+				if key == 'tested_by':
+					calib.tested_by = tested_by
 		calib.save()
 		request.session['calib_ses'] = calib.id
 		return redirect('/new_irrigation/')
@@ -353,14 +362,15 @@ def new_soil(request):
 		soil.fc = request.POST.get('fc')
 		soil.pwp = request.POST.get('pwp')
 		soil.bln_surface_irrigation = request.POST.get('bln_surface_irrigation')
-		soil.intakefamily = request.POST.get('intakefamily')
-		soil.source = request.POST.get('source')
+		intakefamily = request.POST.get('intakefamily')
+		source = request.POST.get('source')
 		for key in request.POST:
 			value = request.POST.get(key)
-			if value == "":
-				pass
-			else:
-				soil.key = value
+			if value != "":
+				if key == 'intakefamily':
+					soil.intakefamily = intakefamily
+				if key == 'source':
+					soil.source = source
 		soil.author = request.user
 		soil.save()
 		request.session['soil_ses'] = soil.id
@@ -900,24 +910,15 @@ def new_irrigation(request):
 		select_ses = 'basin'
 
 	if request.method == 'POST' and 'submit-basin' in request.POST:  #submit data
-		basin = BasinForm(request.POST)
-		if basin.is_valid():
-			instance = basin.save(commit=False)
-			instance.author = request.user
-			instance.personal = True
-			instance.bln_irrigation = True
-			instance.select_irrigation = "basin"
-			instance.save()
-			request.session.pop('border_ses', None)
-			request.session.pop('furrow_ses', None)
-			request.session.pop('sprinkler', None)
-			request.session.pop('drip_ses', None)
-			request.session['basin_ses'] = instance.id
-		else:
-			bln_irrigation = True
-			bln_irrigation_text = "Yes, I do!"
-			select_irrigation = "basin"
-			select_ses = 'basin'
+		basin_form = BasinForm(request.POST)
+		basin, created = Basin.objects.get_or_create(name=request.POST.get('name'))
+		basin.author = request.user
+		request.session.pop('border_ses', None)
+		request.session.pop('furrow_ses', None)
+		request.session.pop('sprinkler', None)
+		request.session.pop('drip_ses', None)
+		basin.save()
+		request.session['basin_ses'] = basin.id
 	#border
 	if border_name == None:
 		border = BorderForm()
@@ -939,24 +940,16 @@ def new_irrigation(request):
 		selected_border_text = id
 		select_ses = 'border'
 	if request.method == 'POST' and 'submit-border' in request.POST:
-		border = BorderForm(request.POST)
-		if border.is_valid():
-			instance = border.save(commit=False)
-			instance.author = request.user
-			instance.personal = True
-			instance.bln_irrigation = True
-			instance.select_irrigation = "border"
-			instance.save()
-			request.session.pop('basin_ses', None)
-			request.session.pop('furrow_ses', None)
-			request.session.pop('sprinkler_ses', None)
-			request.session.pop('drip_ses', None)
-			request.session['border_ses'] = instance.id
-			return redirect('/new_fieldunit/')
-		else:
-			bln_irrigation = True
-			bln_irrigation_text = "Yes, I do!"
-			select_irrigation = "border"
+		border_form = BorderForm(request.POST)
+		border, created = Border.objects.get_or_create(name=request.POST.get('name'))
+		border.author = request.user
+		request.session.pop('basin_ses', None)
+		request.session.pop('furrow_ses', None)
+		request.session.pop('sprinkler_ses', None)
+		request.session.pop('drip_ses', None)
+		request.session['border_ses'] = border.id
+		border.save()
+		return redirect('/new_fieldunit/')
 	#furrow
 	if furrow_name == None:
 		furrow = FurrowForm()
@@ -977,24 +970,16 @@ def new_irrigation(request):
 		selected_furrow_text = id
 		select_ses = 'furrow'
 	if request.method == 'POST' and 'submit-furrow' in request.POST:
-		furrow = FurrowForm(request.POST)
-		if furrow.is_valid():
-			instance = furrow.save(commit=False)
-			instance.author = request.user
-			instance.personal = True
-			instance.bln_irrigation = True
-			instance.select_irrigation = "furrow"
-			instance.save()
-			request.session.pop('basin_ses', None)
-			request.session.pop('border_ses', None)
-			request.session.pop('sprinkler', None)
-			request.session.pop('drip_ses', None)
-			request.session['furrow_ses'] = instance.id
-			return redirect('/new_fieldunit/')
-		else:
-			bln_irrigation = True
-			bln_irrigation_text = "Yes, I do!"
-			select_irrigation = "furrow"
+		furrow_form = FurrowForm(request.POST)
+		furrow, created = Furrow.objects.get_or_create(name=request.POST.get('name'))
+		furrow.author = request.user
+		furrow.save()
+		request.session.pop('basin_ses', None)
+		request.session.pop('border_ses', None)
+		request.session.pop('sprinkler', None)
+		request.session.pop('drip_ses', None)
+		request.session['furrow_ses'] = furrow.id
+		return redirect('/new_fieldunit/')
 	if sprinkler_name == None:
 		sprinkler = SprinklerForm()
 		selected_sprinkler_text = "--choose--"
@@ -1014,24 +999,28 @@ def new_irrigation(request):
 		selected_sprinkler_text = id
 		select_ses = 'sprinkler'
 	if request.method == 'POST' and 'submit-sprinkler' in request.POST:
-		sprinkler = SprinklerForm(request.POST)
-		if sprinkler.is_valid():
-			instance = sprinkler.save(commit=False)
-			instance.author = request.user
-			instance.personal = True
-			instance.bln_irrigation = True
-			instance.select_irrigation = "sprinkler"
-			instance.save()
-			request.session['sprinkler_ses'] = instance.id
-			request.session.pop('basin_ses', None)
-			request.session.pop('furrow_ses', None)
-			request.session.pop('border_ses', None)
-			request.session.pop('drip_ses', None)
-			return redirect('/new_fieldunit/')
-		else:
-			bln_irrigation = True
-			bln_irrigation_text = "Yes, I do!"
-			select_irrigation = "sprinkler"
+		sprinkler_form = SprinklerForm(request.POST)
+		sprinkler, created = Sprinkler.objects.get_or_create(name=request.POST.get('name'))
+		sprinkler.author = request.user
+		discharge = request.POST.get('discharge')
+		nozzle_diameter = request.POST.get('nozzle_diameter')
+		operating_pressure = request.POST.get('operating_pressure')
+		for key in request.POST:
+			value = request.POST.get(key)
+			if value != "":
+				if key == "discharge":
+					sprinkler.discharge = discharge
+				if key == "nozzle_diameter":
+					sprinkler.nozzle_diameter = nozzle_diameter
+				if key == "operating_pressure":
+					sprinkler.operating_pressure = operating_pressure
+		sprinkler.save()
+		request.session['sprinkler_ses'] = sprinkler.id
+		request.session.pop('basin_ses', None)
+		request.session.pop('furrow_ses', None)
+		request.session.pop('border_ses', None)
+		request.session.pop('drip_ses', None)
+		return redirect('/new_fieldunit/')
 	#drip
 	if drip_name == None:
 		drip = DripForm()
@@ -1052,27 +1041,25 @@ def new_irrigation(request):
 		selected_drip_text = id
 		select_ses = 'drip'
 	if request.method == 'POST' and 'submit-drip' in request.POST:
-		drip = DripForm(request.POST)
-		if drip.is_valid():
-			instance = drip.save(commit=False)
-			instance.author = request.user
-			instance.personal = True
-			instance.bln_irrigation = True
-			instance.select_irrigation = "drip"
-			instance.save()
-			request.session.pop('basin_ses', None)
-			request.session.pop('furrow_ses', None)
-			request.session.pop('sprinkler_ses', None)
-			request.session.pop('border_ses', None)
-			request.session['drip_ses'] = instance.id
-			return redirect('/new_fieldunit/')
-		else:
-			bln_irrigation = True
-			bln_irrigation_text = "Yes, I do!"
-			select_irrigation = "drip"
+		drip_form = DripForm(request.POST)
+		drip, created = Drip.objects.get_or_create(name=request.POST.get('name'))
+		drip.author = request.user
+		irrigation_interval = request.POST.get('irrigation_interval')
+		for key in request.POST:
+			value = request.POST.get(key)
+			if value != "":
+				if key == "irrigation_interval":
+					drip.irrigation_interval = irrigation_interval
+		drip.save()
+		request.session.pop('basin_ses', None)
+		request.session.pop('furrow_ses', None)
+		request.session.pop('sprinkler_ses', None)
+		request.session.pop('border_ses', None)
+		request.session['drip_ses'] = drip.id
+		return redirect('/new_fieldunit/')
 
 	context = {
-		"basin" : basin,
+		"basin" : basin_form,
 		"border" : border,
 		"furrow" : furrow,
 		"sprinkler" : sprinkler,
