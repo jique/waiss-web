@@ -925,6 +925,7 @@ def new_irrigation(request):
 		request.session.pop('sprinkler', None)
 		request.session.pop('drip_ses', None)
 		request.session['basin_ses'] = basin.id #create session
+		return redirect('/new_fieldunit/')
 
 	#border
 	if border_name == None:
