@@ -1087,7 +1087,7 @@ def new_irrigation(request):
 		request.session.pop('border_ses', None)
 		request.session['drip_ses'] = drip.id
 		return redirect('/new_fieldunit/')
-	print('select_ses')
+	print(select_ses)
 	context = {
 		"basin" : basin_form,
 		"basin_ea": basin_ea,
