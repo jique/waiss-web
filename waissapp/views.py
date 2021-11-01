@@ -557,6 +557,7 @@ def new_sensor(request):
 	context = {
 		"formset": formset,
 		"fielunit_list": fielunit_list,
+		"fieldunit_ses": fieldunit_ses,
 		"ses_fieldunit": ses_fieldunit,
 	}
 
