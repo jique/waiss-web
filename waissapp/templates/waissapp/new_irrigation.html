@@ -17,38 +17,7 @@
   <div class="card-header rounded-0 border-0"><small>Irrigation System</small></div>
   <div class="card-body">
     <div class="row">
-      {% if select_ses == 'basin' %}
-      <div class="col">
-        <form class="form-group">
-          {% csrf_token %}
-          {{basin.bln_irrigation|as_crispy_field}}
-        </form>
-      </div>
-      {% elif select_ses == 'border' %}
-      <div class="col">
-        <form class="form-group">
-          {{border.bln_irrigation|as_crispy_field}}
-        </form>
-      </div>
-      {% elif select_ses == 'furrow' %}
-      <div class="col">
-        <form class="form-group">
-          {{furrow.bln_irrigation|as_crispy_field}}
-        </form>
-      </div>
-      {% elif select_ses == 'sprinkler' %}
-      <div class="col">
-        <form class="form-group">
-          {{sprinkler.bln_irrigation|as_crispy_field}}
-        </form>
-      </div>
-      {% elif select_ses == 'drip' %}
-      <div class="col">
-        <form class="form-group">
-          {{drip.bln_irrigation|as_crispy_field}}
-        </form>
-      </div>
-      {% else %}
+      {% if select_ses == 'None' %}
       <div class="col">
         <label>Do you have an irrigation system?&emsp;</label>
       </div>
@@ -58,6 +27,41 @@
           <option value="True">Yes, I do!</option>
           <option value="False">No, I don't!</option>
         </select>
+      </div>
+      {% elif select_ses == 'basin' %}
+      <div class="col">
+        <form class="form-group">
+          {% csrf_token %}
+          {{basin.bln_irrigation|as_crispy_field}}
+        </form>
+      </div>
+      {% elif select_ses == 'border' %}
+      <div class="col">
+        <form class="form-group">
+          {% csrf_token %}
+          {{border.bln_irrigation|as_crispy_field}}
+        </form>
+      </div>
+      {% elif select_ses == 'furrow' %}
+      <div class="col">
+        <form class="form-group">
+          {% csrf_token %}
+          {{furrow.bln_irrigation|as_crispy_field}}
+        </form>
+      </div>
+      {% elif select_ses == 'sprinkler' %}
+      <div class="col">
+        <form class="form-group">
+          {% csrf_token %}
+          {{sprinkler.bln_irrigation|as_crispy_field}}
+        </form>
+      </div>
+      {% elif select_ses == 'drip' %}
+      <div class="col">
+        <form class="form-group">
+          {% csrf_token %}
+          {{drip.bln_irrigation|as_crispy_field}}
+        </form>
       </div>
       {% endif %}
     </div>
@@ -101,21 +105,21 @@
         <div class="col">
           <form class="form-group">
             {% csrf_token %}
-              {{furrow.select_irrigation|as_crispy_field}}
-            </form>
-          </div>
+            {{furrow.select_irrigation|as_crispy_field}}
+          </form>
+        </div>
       {% elif select_ses == 'sprinkler' %}
         <div class="col">
           <form class="form-group">
             {% csrf_token %}
-              {{sprinkler.select_irrigation|as_crispy_field}}
+            {{sprinkler.select_irrigation|as_crispy_field}}
           </form>
         </div>
       {% elif select_ses == 'drip' %}
         <div class="col">
           <form class="form-group">
             {% csrf_token %}
-              {{drip.select_irrigation|as_crispy_field}}
+            {{drip.select_irrigation|as_crispy_field}}
           </form>
         </div>
       {% endif %}
