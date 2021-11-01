@@ -886,6 +886,7 @@ def new_irrigation(request):
 	sprinkler_name = request.session.get('sprinkler_ses', None)
 	drip_name = request.session.get('drip_ses', None)
 	#basin
+	basin_ea = 0
 	if basin_name == None:
 		basin_form = BasinForm()
 		selected_basin_text = '--choose--'
@@ -905,7 +906,7 @@ def new_irrigation(request):
 		pk = request.POST.get('loadData_basin')
 		id = Basin.objects.get(name=pk)
 		basin_form = BasinForm(instance=id)
-		basin_ea = id.ea
+		basin_ea = round(id.ea, 0)
 		selected_basin = id
 		selected_basin_text = id
 		select_ses = 'basin'
