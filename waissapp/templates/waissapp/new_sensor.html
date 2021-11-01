@@ -25,18 +25,8 @@
                 <div class="col-md-2 d-flex align-items-center text-right mt-3">
                     <div class="btn btn-sm btn-outline-info"><b>Sensor #{{forloop.counter}}</b></div>
                 </div>
-                <div class="col-md">
-                    <label class="mb-0 small">Field Unit*</label>
-                    <select class="form-control" name="fieldunit" id="id_fieldunit">
-                    {% if fieldunit_ses %}
-                    <option value="{{ses_fieldunit}}">{{ses_fieldunit}}</option>
-                    {% else %}
-                    <option value="">----------</option>
-                    {% for f in fieldunit_list %}
-                    <option value="{{f.name}}">{{f.name}}</option>
-                    {% endfor %}
-                    {% endif %}
-                    </select>
+                <div class="col-md small">
+                    {{form.fieldunit|as_crispy_field}}
                 </div>
                 <div class="col-md small">
                     {{form.name|as_crispy_field}}
