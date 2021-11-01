@@ -145,7 +145,7 @@ class Soil(models.Model):
         ordering = ('soiltype',)
 
 class CalibrationConstant(models.Model):
-    name = models.CharField(max_length=25, verbose_name="File Name", unique=True, null=True)
+    name = models.CharField(max_length=25, verbose_name="Name", unique=True, null=True)
     CALIBRATION_EQUATION_CHOICES = [
         ("linear", 'Linear'),
         ("quadratic", 'Quadratic'),
@@ -232,7 +232,7 @@ class Basin(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, default="True")
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True, default="True")
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -240,8 +240,8 @@ class Basin(models.Model):
         ("sprinkler", 'sprinkler'),
         ("drip", 'drip'),
     ]
-    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Irrigation System Type", null=True, default="basin")
-    name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Irrigation System Type", null=True, blank=True, default="basin")
+    name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
     basin_length = models.DecimalField(max_digits=20, decimal_places=1, verbose_name="Basin Length (m)", null=True, validators=[MinValueValidator(0.01)])
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
     EFF_CHOICES = [
@@ -279,7 +279,7 @@ class Furrow(models.Model):
         ("drip", 'drip'),
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="furrow")
-    name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True)
+    name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, validators=[MinValueValidator(0.0001)])
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True, validators=[MinValueValidator(0.0001)])
@@ -309,7 +309,7 @@ class Border(models.Model):
         ("drip", 'drip'),
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="border")
-    name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True)
+    name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, validators=[MinValueValidator(0.0001)])
     area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True, validators=[MinValueValidator(0.0001)])
@@ -336,7 +336,7 @@ class Drip(models.Model):
         ("drip", 'drip'),
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="drip")
-    name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
+    name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
     bln_single_lateral = models.BooleanField (verbose_name="Single Straight Lateral", null=True)
     discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Discharge (l/day)", null=True, validators=[MinValueValidator(0.01)])
     emitters_per_plant = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="No. of Emitters per Plant", null=True, validators=[MinValueValidator(1)])
@@ -374,7 +374,7 @@ class Sprinkler(models.Model):
         ("drip", 'drip'),
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="sprinkler")
-    name= models.CharField(max_length=30, verbose_name="File Name", unique=True, null=True,)
+    name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, blank=True, validators=[MinValueValidator(0.01)])
     EFF_CHOICES = [
         (50, '50'),
