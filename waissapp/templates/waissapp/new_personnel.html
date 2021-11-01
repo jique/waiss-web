@@ -35,8 +35,6 @@
           <form method="post" class="form-group">
             {% csrf_token %}
             <hr>
-            <small><b>Fields with asterisks (*) are required.</b></small>
-            <hr>
             <div class="row">
               <div class="col-md">{{personnel_form.first_name|as_crispy_field}}</div>
               <div class="col-md">{{personnel_form.last_name|as_crispy_field}}</div>

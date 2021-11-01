@@ -33,6 +33,7 @@ class SoilForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(SoilForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.label_class = 'small'
     class Meta:
         model = Soil
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
@@ -47,8 +48,8 @@ class CropForm(forms.ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
 
 class FieldUnitForm(forms.ModelForm):
-    timestart = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Start Time", required=False)
-    timestop = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Stop Time", required=False)
+    timestart = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Start Time", required=True)
+    timestop = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Stop Time", required=True)
 
     def __init__(self, *args, **kwargs):
         super(FieldUnitForm, self).__init__(*args, **kwargs)
