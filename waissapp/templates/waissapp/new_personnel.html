@@ -22,7 +22,7 @@
         <div class="row bg-light rounded">
           <form method="post" class="form-group col-md">
             {% csrf_token %}
-            <small><b>My personnel</b></small>
+            <small><b>Load existing personnel.</b></small><hr>
             <select class="form-control" id="selected_personnel" name="loadData" onchange="this.form.submit()">
               <option value={{selected_id}}>{{selected_personnel}}</option>
               {% for personnel in personnel_list %}
@@ -36,6 +36,7 @@
         <div class="col-md">
           <form method="post" class="form-group">
             {% csrf_token %}
+            <small><b>Fields with asterisks (*) are required.</b></small>
             <hr>
             <div class="row">
               <div class="col-md">{{personnel_form.first_name|as_crispy_field}}</div>
