@@ -54,7 +54,7 @@ class FieldUnitForm(forms.ModelForm):
         super(FieldUnitForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.label_class = 'small'
-        self.helper.field_class = 'form-control-sm'
+        self.helper.field_class = 'form-control form-control-sm'
     class Meta:
         model = FieldUnit
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
