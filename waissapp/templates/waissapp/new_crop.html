@@ -16,7 +16,7 @@
   <div class="card-header border-0 rounded-0"><small>Crop & Characteristics</small></div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md">
+        <div class="col-md-4">
           {% if crop_list %}
           <div class="row bg-light rounded">
             <form method="post" class="form-group col-md">
@@ -31,6 +31,8 @@
             </form>
           </div>
           {% endif %}
+        </div>
+        <div class="col-md">
           <form method="post" class="form-group">
             {% csrf_token %}
             <hr>
