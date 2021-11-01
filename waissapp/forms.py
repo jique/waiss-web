@@ -44,9 +44,7 @@ class CropForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CropForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-6'
-        self.helper.field_class = 'col-6'
+        self.helper.label_class = 'small'
     class Meta:
         model = Crop
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
