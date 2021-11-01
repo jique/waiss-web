@@ -22,7 +22,7 @@
             {% csrf_token %} 
             {% for form in formset %}
             <div class="row">
-                <div class="col-md-2 d-flex align-items-right mt-3">
+                <div class="col-md-2 d-flex align-items-center text-right mt-3">
                     <div class="btn btn-sm btn-outline-info"><b>Sensor #{{forloop.counter}}</b></div>
                 </div>
                 <div class="col-md">
@@ -32,10 +32,10 @@
                     <option value="{{fieldunit_ses}}">{{ses_fieldunit}}</option>
                     {% else %}
                     <option value="">----------</option>
-                    {% endif %}
                     {% for f in fieldunit_list %}
                     <option value="{{f.id}}">{{f.name}}</option>
                     {% endfor %}
+                    {% endif %}
                     </select>
                 </div>
                 <div class="col-md small">

@@ -534,9 +534,10 @@ def edit_fieldunit(request, id):
 #SENSOR_PARAMETERS
 @login_required
 def new_sensor(request):
+	current_user = request.user
 	fieldunit_ses = request.session.get('fieldunit_ses', None)
 	ses_fieldunit = ""
-	fielunit_list = FieldUnit.objects.filter(author=request.user)
+	fielunit_list = FieldUnit.objects.filter(author=current_user)
 	if fieldunit_ses == None:
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3)
 		formset = SensorFormSet(queryset=Sensor.objects.none())
