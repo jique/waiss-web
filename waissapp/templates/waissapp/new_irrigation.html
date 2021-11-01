@@ -32,31 +32,31 @@
       <div class="col">
         <form class="form-group">
           {% csrf_token %}
-          {{basin_form.bln_irrigation|as_crispy_field}}
+          {{basin.bln_irrigation|as_crispy_field}}
         </form>
       </div>
       {% elif select_ses == 'border' %}
       <div class="col">
         <form class="form-group">
-          {{border_form.bln_irrigation|as_crispy_field}}
+          {{border.bln_irrigation|as_crispy_field}}
         </form>
       </div>
       {% elif select_ses == 'furrow' %}
       <div class="col">
         <form class="form-group">
-          {{furrow_form.bln_irrigation|as_crispy_field}}
+          {{furrow.bln_irrigation|as_crispy_field}}
         </form>
       </div>
       {% elif select_ses == 'sprinkler' %}
       <div class="col">
         <form class="form-group">
-          {{sprinker_form.bln_irrigation|as_crispy_field}}
+          {{sprinkler.bln_irrigation|as_crispy_field}}
         </form>
       </div>
       {% elif select_ses == 'drip' %}
       <div class="col">
         <form class="form-group">
-          {{drip_form.bln_irrigation|as_crispy_field}}
+          {{drip.bln_irrigation|as_crispy_field}}
         </form>
       </div>
       {% endif %}
@@ -87,35 +87,35 @@
       <div class="col">
         <form class="form-group">
           {% csrf_token %}
-          {{basin_form.select_irrigation|as_crispy_field}}
+          {{basin.select_irrigation|as_crispy_field}}
         </form>
       </div>
       {% elif select_ses == 'border' %}
         <div class="col">
           <form class="form-group">
             {% csrf_token %}
-            {{border_form.select_irrigation|as_crispy_field}}
+            {{border.select_irrigation|as_crispy_field}}
           </form>
         </div>
       {% elif select_ses == 'furrow' %}
         <div class="col">
           <form class="form-group">
             {% csrf_token %}
-              {{furrow_form.select_irrigation|as_crispy_field}}
+              {{furrow.select_irrigation|as_crispy_field}}
             </form>
           </div>
       {% elif select_ses == 'sprinkler' %}
         <div class="col">
           <form class="form-group">
             {% csrf_token %}
-              {{sprinker_form.select_irrigation|as_crispy_field}}
+              {{sprinkler.select_irrigation|as_crispy_field}}
           </form>
         </div>
       {% elif select_ses == 'drip' %}
         <div class="col">
           <form class="form-group">
             {% csrf_token %}
-              {{drip_form.select_irrigation|as_crispy_field}}
+              {{drip.select_irrigation|as_crispy_field}}
           </form>
         </div>
       {% endif %}
@@ -139,9 +139,9 @@
         <form class="form-group" action="" method="post">
           {% csrf_token %}
           <small><b>Fields with asterisks (*) are required.</b></small><hr>
-          {{basin_form.name|as_crispy_field}}
-          {{basin_form.basin_length|as_crispy_field}}
-          {{basin_form.discharge|as_crispy_field}}
+          {{basin.name|as_crispy_field}}
+          {{basin.basin_length|as_crispy_field}}
+          {{basin.discharge|as_crispy_field}}
           <div id="div_id_ea" class="form-group row">
             <label for="id_ea" class="col-form-label col-6 requiredField">Application Efficiency (%)<span class="asteriskField">*</span></label>
             <div class="col-6">
@@ -186,10 +186,10 @@
       <form class="form-group" action="" method="post">
         {% csrf_token %} <hr>
         <small><b>Fields with asterisks (*) are required.</b></small><hr>
-        {{border_form.name|as_crispy_field}}
-        {{border_form.discharge|as_crispy_field}}
-        {{border_form.area_slope|as_crispy_field}}
-        {{border_form.mannings_coeff|as_crispy_field}}
+        {{border.name|as_crispy_field}}
+        {{border.discharge|as_crispy_field}}
+        {{border.area_slope|as_crispy_field}}
+        {{border.mannings_coeff|as_crispy_field}}
         <hr>
         <div class="text-center">
             <input type="submit" value="Next" class="btn btn-info" name="submit-border">
@@ -216,13 +216,13 @@
       <form class="form-group" action="" method="post">
         {% csrf_token %} <hr>
         <small><b>Fields with asterisks (*) are required.</b></small><hr>
-        {{furrow_form.name|as_crispy_field}}
-        {{furrow_form.discharge|as_crispy_field}}
-        {{furrow_form.area_slope|as_crispy_field}}
-        {{furrow_form.mannings_coeff|as_crispy_field}}
-        {{furrow_form.bln_furrow_type|as_crispy_field}}
-        {{furrow_form.furrow_spacing|as_crispy_field}}
-        {{furrow_form.furrow_length|as_crispy_field}}
+        {{furrow.name|as_crispy_field}}
+        {{furrow.discharge|as_crispy_field}}
+        {{furrow.area_slope|as_crispy_field}}
+        {{furrow.mannings_coeff|as_crispy_field}}
+        {{furrow.bln_furrow_type|as_crispy_field}}
+        {{furrow.furrow_spacing|as_crispy_field}}
+        {{furrow.furrow_length|as_crispy_field}}
         <hr>
         <div class="text-center">
             <input type="submit" value="Next" class="btn btn-info" name="submit-furrow">
@@ -239,7 +239,7 @@
           <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
             <option value="{{selected_sprinkler}}">{{selected_sprinkler_text}}</option>
             {% for sprinkler in sprinkler_list %}
-            <option value="{{sprinker.name}}">{{sprinker.name}}</option>
+            <option value="{{sprinkler.name}}">{{sprinkler.name}}</option>
             {% endfor %}
           </select>
         </form>
@@ -249,20 +249,20 @@
       <form class="form-group" action="" method="post">
         {% csrf_token %} <hr>
         <small><b>Fields with asterisks (*) are required.</b></small><hr>
-        {{sprinker_form.name|as_crispy_field}}
-        {{sprinker_form.lateral_spacing|as_crispy_field}}
-        {{sprinker_form.sprinkler_spacing|as_crispy_field}}
-        {{sprinker_form.ea|as_crispy_field}}
-        {{sprinker_form.with_q_bln|as_crispy_field}}
+        {{sprinkler.name|as_crispy_field}}
+        {{sprinkler.lateral_spacing|as_crispy_field}}
+        {{sprinkler.sprinkler_spacing|as_crispy_field}}
+        {{sprinkler.ea|as_crispy_field}}
+        {{sprinkler.with_q_bln|as_crispy_field}}
         <div class="row collapse" id="collapse_irrig_Yes">
           <div class="col">
-          {{sprinker_form.discharge|as_crispy_field}}
+          {{sprinkler.discharge|as_crispy_field}}
           </div>
         </div>
         <div class="row collapse" id="collapse_irrig_No">
           <div class="col">
-            {{sprinker_form.nozzle_diameter|as_crispy_field}}
-            {{sprinker_form.operating_pressure|as_crispy_field}}<!--Use ave discharge coefficient (0.96)-->
+            {{sprinkler.nozzle_diameter|as_crispy_field}}
+            {{sprinkler.operating_pressure|as_crispy_field}}<!--Use ave discharge coefficient (0.96)-->
           </div>
         </div>
         <hr>
@@ -291,19 +291,19 @@
         <form class="form-group" action="" method="post">
           {% csrf_token %} <hr>
           <small><b>Fields with asterisks (*) are required.</b></small><hr>
-          {{drip_form.name|as_crispy_field}}
-          {{drip_form.discharge|as_crispy_field}}
-          {{drip_form.bln_single_lateral|as_crispy_field}}
-          {{drip_form.emitters_per_plant|as_crispy_field}}
-          {{drip_form.emitter_spacing|as_crispy_field}}
-          {{drip_form.plant_spacing|as_crispy_field}}
-          {{drip_form.row_spacing|as_crispy_field}}
-          {{drip_form.wetted_dia|as_crispy_field}}
-          {{drip_form.EU|as_crispy_field}}
-          {{drip_form.bln_ii|as_crispy_field}}
+          {{drip.name|as_crispy_field}}
+          {{drip.discharge|as_crispy_field}}
+          {{drip.bln_single_lateral|as_crispy_field}}
+          {{drip.emitters_per_plant|as_crispy_field}}
+          {{drip.emitter_spacing|as_crispy_field}}
+          {{drip.plant_spacing|as_crispy_field}}
+          {{drip.row_spacing|as_crispy_field}}
+          {{drip.wetted_dia|as_crispy_field}}
+          {{drip.EU|as_crispy_field}}
+          {{drip.bln_ii|as_crispy_field}}
           <div class="row collapse" id="collapse_irrig_II">
             <div class="col">
-              {{drip_form.irrigation_interval|as_crispy_field}}
+              {{drip.irrigation_interval|as_crispy_field}}
             </div>
           </div>
           <hr>
