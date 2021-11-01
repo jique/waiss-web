@@ -18,7 +18,7 @@
   <div class="card-body">
     <div class="row">
       {% if select_ses == None %}
-      <div class="col-md">
+      <div class="col-md form-group">
         <label class="small">Do you have an irrigation system?&emsp;</label>
         <select class="form-control" id="id_bln_irrigation" name="bln_irrigation">
             <option value={{bln_irrigation}}>{{bln_irrigation_text}}</option>
@@ -70,7 +70,7 @@
     </div>
     <div class="row collapse" id="collapse_irrig_Two">
       {% if select_ses == None %}
-      <div class="col-md">
+      <div class="col-md form-group">
         <label class="small">What kind of irrigation system?&emsp;</label></div>
         <select class="form-control" id="id_select_irrigation" name="select_irrigation">
             <option value={{select_irrigation}}>{{select_irrigation}}</option>
@@ -186,8 +186,9 @@
         <small><b>Fields with asterisks (*) are required.</b></small><hr>
         {{border.name|as_crispy_field}}
         {{border.discharge|as_crispy_field}}
-        {{border.area_slope|as_crispy_field}}
-        {{border.mannings_coeff|as_crispy_field}}
+        <div class="row">
+          <div class="col-md">{{border.area_slope|as_crispy_field}}</div>
+          <div class="col-md">{{border.mannings_coeff|as_crispy_field}}</div>
         <hr>
         <div class="text-center">
             <input type="submit" value="Next" class="btn btn-info" name="submit-border">
@@ -215,12 +216,18 @@
         {% csrf_token %} <hr>
         <small><b>Fields with asterisks (*) are required.</b></small><hr>
         {{furrow.name|as_crispy_field}}
-        {{furrow.discharge|as_crispy_field}}
-        {{furrow.area_slope|as_crispy_field}}
-        {{furrow.mannings_coeff|as_crispy_field}}
-        {{furrow.bln_furrow_type|as_crispy_field}}
-        {{furrow.furrow_spacing|as_crispy_field}}
-        {{furrow.furrow_length|as_crispy_field}}
+        <div class="row">
+          <div class="col-md">{{furrow.bln_furrow_type|as_crispy_field}}</div>
+          <div class="col-md">{{furrow.discharge|as_crispy_field}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md">{{furrow.furrow_spacing|as_crispy_field}}</div>
+          <div class="col-md">{{furrow.furrow_length|as_crispy_field}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md">{{furrow.area_slope|as_crispy_field}}</div>
+          <div class="col-md">{{furrow.mannings_coeff|as_crispy_field}}</div>
+        </div>
         <hr>
         <div class="text-center">
             <input type="submit" value="Next" class="btn btn-info" name="submit-furrow">
@@ -248,8 +255,10 @@
         {% csrf_token %} <hr>
         <small><b>Fields with asterisks (*) are required.</b></small><hr>
         {{sprinkler.name|as_crispy_field}}
-        {{sprinkler.lateral_spacing|as_crispy_field}}
-        {{sprinkler.sprinkler_spacing|as_crispy_field}}
+        <div class="row">
+          <div class="col-md">{{sprinkler.sprinkler_spacing|as_crispy_field}}</div>
+          <div class="col-md">{{sprinkler.lateral_spacing|as_crispy_field}}</div>
+        </div>
         {{sprinkler.ea|as_crispy_field}}
         {{sprinkler.with_q_bln|as_crispy_field}}
         <div class="row collapse" id="collapse_irrig_Yes">
@@ -290,14 +299,22 @@
           {% csrf_token %} <hr>
           <small><b>Fields with asterisks (*) are required.</b></small><hr>
           {{drip.name|as_crispy_field}}
-          {{drip.discharge|as_crispy_field}}
-          {{drip.bln_single_lateral|as_crispy_field}}
-          {{drip.emitters_per_plant|as_crispy_field}}
-          {{drip.emitter_spacing|as_crispy_field}}
-          {{drip.plant_spacing|as_crispy_field}}
-          {{drip.row_spacing|as_crispy_field}}
-          {{drip.wetted_dia|as_crispy_field}}
-          {{drip.EU|as_crispy_field}}
+          <div class="row">
+            <div class="col-md">{{drip.bln_single_lateral|as_crispy_field}}</div>
+            <div class="col-md">{{drip.discharge|as_crispy_field}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md">{{drip.emitters_per_plant|as_crispy_field}}</div>
+            <div class="col-md">{{drip.emitter_spacing|as_crispy_field}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md">{{drip.plant_spacing|as_crispy_field}}</div>
+            <div class="col-md">{{drip.row_spacing|as_crispy_field}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md">{{drip.wetted_dia|as_crispy_field}}</div>
+            <div class="col-md">{{drip.EU|as_crispy_field}}</div>
+          </div>
           {{drip.bln_ii|as_crispy_field}}
           <div class="row collapse" id="collapse_irrig_II">
             <div class="col-md">
