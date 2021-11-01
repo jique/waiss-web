@@ -19,9 +19,10 @@
       <div class="row">
         <div class="col-md">
         {% if personnel_list %}
+        <div class="row bg-light rounded">
           <form method="post" class="form-group">
             {% csrf_token %}
-            <small><b>Load existing personnels.</b></small><hr>
+            <small><b>My personnel</b></small>
             <select class="form-control" id="selected_personnel" name="loadData" onchange="this.form.submit()">
               <option value={{selected_id}}>{{selected_personnel}}</option>
               {% for personnel in personnel_list %}
@@ -29,13 +30,14 @@
               {% endfor %}
             </select>
           </form>
+        </div>
         {% endif %}
           <form method="post" class="form-group">
             {% csrf_token %}
             <small><b>Fields with asterisks (*) are required.</b></small><hr>
             <div class="row">
-              <div class="col">{{personnel_form.first_name|as_crispy_field}}</div>
-              <div class="col">{{personnel_form.last_name|as_crispy_field}}</div>
+              <div class="col-md">{{personnel_form.first_name|as_crispy_field}}</div>
+              <div class="col-md">{{personnel_form.last_name|as_crispy_field}}</div>
             </div>
             {{personnel_form.number|as_crispy_field}}
             <hr>
