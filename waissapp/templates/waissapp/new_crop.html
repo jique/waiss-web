@@ -42,8 +42,8 @@
               <div class="col-md">{{crop_form.mad|as_crispy_field}}</div>
             </div>
             <div class="row">
-              <div class="col-md">{{crop_form.drz|as_crispy_field}}</div>
               <div class="col-md">{{crop_form.root_ini|as_crispy_field}}</div>
+              <div class="col-md">{{crop_form.drz|as_crispy_field}}</div>
             </div>
             {{crop_form.root_growth_model|as_crispy_field}}
             <div class="row collapse" id="collapse1">
@@ -74,12 +74,12 @@
                 <hr>
                 {{crop_form.eqnform|as_crispy_field}}
                 <div class="row collapse" id="panel1">
-                  <small>MC<sub>v</sub> = (reading)*a + b</small>
+                  <div class="col-md small">MC<sub>v</sub> = (reading)*a + b</div>
                   <div class="col-md">{{crop_form.root_a|as_crispy_field}}</div>
                   <div class="col-md">{{crop_form.root_b|as_crispy_field}}</div>
                 </div>
                 <div class="row collapse" id="panel2">
-                  <small>MC<sub>v</sub> = (reading)<sup>2</sup>*a + (reading)*b + c</small>
+                  <div class="col-md small">MC<sub>v</sub> = (reading)<sup>2</sup>*a + (reading)*b + c</div>
                   <div class="col-md">{{crop_form.root_a|as_crispy_field}}</div>
                   <div class="col-md">{{crop_form.root_b|as_crispy_field}}</div>
                   <div class="col-md">{{crop_form.root_c|as_crispy_field}}</div>
@@ -89,8 +89,10 @@
             </div>
             {{crop_form.select_drip|as_crispy_field}}
             <div class="row collapse" id="collapseOne">
+              <hr>
               <div class="col-md">{{crop_form.peak_Etcrop|as_crispy_field}}</div>
               <div class="col-md">{{crop_form.transpiration_ratio|as_crispy_field}}</div>
+              <hr>
             </div>
             {{crop_form.source|as_crispy_field}}
         <hr>
