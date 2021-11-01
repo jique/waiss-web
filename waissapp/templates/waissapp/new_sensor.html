@@ -20,13 +20,16 @@
               {% csrf_token %} 
               {% for form in formset %}
               <div class="row">
-                <div class="col">
+                <div class="col-md-1 d-flex align-items-center mt-3">
+                    {{forloop.counter}}
+                </div>
+                <div class="col-md small">
                     {{form.fieldunit|as_crispy_field}}
                 </div>
-                <div class="col">
+                <div class="col-md small">
                     {{form.name|as_crispy_field}}
                 </div>
-                <div class="col">
+                <div class="col-md small">
                     {{form.depth|as_crispy_field}}
                 </div>
               </div>
