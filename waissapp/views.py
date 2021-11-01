@@ -942,7 +942,7 @@ def new_irrigation(request):
 	border_list = Border.objects.all() #Loading database
 	if request.method == 'POST' and 'loadData_border' in request.POST:
 		pk=request.POST.get('loadData_border')
-		id = Border.objects.get(id=pk)
+		id = Border.objects.get(name=pk)
 		border_form = BorderForm(instance=id)
 		selected_border = id
 		selected_border_text = id
@@ -975,7 +975,7 @@ def new_irrigation(request):
 	furrow_list = Furrow.objects.all() #Loading database
 	if request.method == 'POST' and 'loadData_furrow' in request.POST:
 		pk = request.POST.get('loadData_furrow')
-		id = Furrow.objects.get(id=pk)
+		id = Furrow.objects.get(name=pk)
 		furrow_form = FurrowForm(instance=id)
 		selected_furrow = id
 		selected_furrow_text = id
@@ -1010,7 +1010,7 @@ def new_irrigation(request):
 	sprinkler_list = Sprinkler.objects.all() #Loading database
 	if request.method == 'POST' and 'loadData_sprinkler' in request.POST:
 		pk=request.POST.get('loadData_sprinkler')
-		id = Sprinkler.objects.get(id=pk)
+		id = Sprinkler.objects.get(name=pk)
 		sprinkler_form = SprinklerForm(instance=id)
 		selected_sprinkler = id			
 		selected_sprinkler_text = id
@@ -1056,7 +1056,7 @@ def new_irrigation(request):
 	drip_list = Drip.objects.all() #Loading database
 	if request.method == 'POST' and 'loadData_drip' in request.POST:
 		pk=request.POST.get('loadData_drip')
-		id = Drip.objects.get(id=pk)
+		id = Drip.objects.get(name=pk)
 		drip_form = DripForm(instance=id)
 		selected_drip = id
 		selected_drip_text = id
