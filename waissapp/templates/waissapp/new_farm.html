@@ -6,22 +6,22 @@
 <div class="progress_bar">
   <div class="pro-bar">
       <small class="progress_bar_title">
-          <span style="color: #1abc9c; font-size: large;"><b>Farm</b></span> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> | <a href={% url 'waiss:new_fieldunit' %} style="color:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="color:#858796">System</a>
+          <span style="col-mdor: #1abc9c; font-size: large;"><b>Farm</b></span> | <a href={% url 'waiss:new_personnel' %} style="col-mdor:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="col-mdor:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="col-mdor:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="col-mdor:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="col-mdor: #858796">Irrigation</a> | <a href={% url 'waiss:new_fieldunit' %} style="col-mdor:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="col-mdor:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="col-mdor:#858796">System</a>
         
           <span class="progress_number">11%</span>
       </small>
-      <span class="progress-bar-inner" style="background-color: #1abc9c; width: 11%;" data-value="11" data-percentage-value="11"></span>
+      <span class="progress-bar-inner" style="background-col-mdor: #1abc9c; width: 11%;" data-value="11" data-percentage-value="11"></span>
   </div>
 </div>
 
-<div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
+<div class="card rounded-0 border-0" style="background-col-mdor: rgba(251, 251, 251, 0.5)">
   <div class="card-header rounded-0 border-0"><small>Farm Name & Location</small></div>
     <div class="card-body">
       <div class="row" class="section">
-        <div class="col-7">
+        <div class="col-md-7">
           {% if farm_list %}
           <div class="row bg-light">
-            <form method="post" class="form-group col">
+            <form method="post" class="form-group col-md">
               {% csrf_token %}
               <label class="small">My Farms</label>
               <select class="form-control" id="selected_farm" name="loadData" onchange="this.form.submit()">
@@ -37,19 +37,19 @@
             {% csrf_token %}
             {{ farm_form.name|as_crispy_field }}
             <div class="row">
-              <div class="col">{{ farm_form.brgy|as_crispy_field }}</div>
-              <div class="col">{{ farm_form.municipality|as_crispy_field }}</div>
-              <div class="col">{{ farm_form.province|as_crispy_field }}</div>
+              <div class="col-md">{{ farm_form.brgy|as_crispy_field }}</div>
+              <div class="col-md">{{ farm_form.municipality|as_crispy_field }}</div>
+              <div class="col-md">{{ farm_form.province|as_crispy_field }}</div>
             </div>
             <div class="row">
-              <div class="col">{{farm_form.lat|as_crispy_field}}</div>
-              <div class="col">{{farm_form.long|as_crispy_field}}</div>
-              <div class="col"><br><button  class="btn btn-outline-info btn-sm btn-block" data-content="By clicking this button, you may need to allow this site to access your current location." data-placement="left" data-toggle="popover" data-trigger="hover" id="get-my-loc" name="get-farm-coordinates" onclick="getLocationforFarm();" type="button">Get my location</button></div>
+              <div class="col-md">{{farm_form.lat|as_crispy_field}}</div>
+              <div class="col-md">{{farm_form.long|as_crispy_field}}</div>
+              <div class="col-md"><br><button  class="btn btn-outline-info btn-sm btn-block" data-content="By clicking this button, you may need to allow this site to access your current location." data-placement="left" data-toggle="popover" data-trigger="hover" id="get-my-loc" name="get-farm-coordinates" onclick="getLocationforFarm();" type="button">Get my location</button></div>
               <i id="fh" class="notes"></i>
             </div>
             <div class="row">
-              <div class="col-8">{{ farm_form.farm_area|as_crispy_field }}</div>
-              <div class="col"><br><button  class="btn btn-outline-info btn-sm btn-block" data-target="#modalTraceFarm" data-toggle="modal" id="trace-my-farm" name="trace-my-farm" type="button">Trace my farm</button>
+              <div class="col-md-8">{{ farm_form.farm_area|as_crispy_field }}</div>
+              <div class="col-md"><br><button  class="btn btn-outline-info btn-sm btn-block" data-target="#modalTraceFarm" data-toggle="modal" id="trace-my-farm" name="trace-my-farm" type="button">Trace my farm</button>
               </div>
             </div>
             <hr>
@@ -58,13 +58,13 @@
             </div>
           </form>
         </div>
-        <div class="col-5 mt-2" id="tracemap" style="height: 530px; width:100%;">
+        <div class="col-md-5 mt-2" id="tracemap" style="height: 530px; width:100%;">
         </div>
         <div class=""  hidden="true">
           <div id="div_id_farm_map" class="form-group">
             <label for="id_farm_map" class="">Farm Map Properties</label>
             <div class="">
-              <textarea name="farm_map" cols="40" rows="10" class="textarea form-control" id="id_farm_map">{}</textarea>
+              <textarea name="farm_map" col-mds="40" rows="10" class="textarea form-control" id="id_farm_map">{}</textarea>
               <input type="hidden" name="initial-farm_map" value="{}" id="initial-id_farm_map">
             </div>
           </div>
@@ -303,7 +303,12 @@ function fetch(){
     }); 
 }
 /*--end of AJAX LOADED HTML DATA--*/
-$("[data-toggle=popover]").popover();
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  $("[data-toggle=popover]").popover({
+    container: 'body'
+  });
+})
 </script>
 {% endblock %}
     
