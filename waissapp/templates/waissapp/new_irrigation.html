@@ -101,21 +101,21 @@
         <div class="col">
           <form class="form-group">
             {% csrf_token %}
-              {{furrow.select_irrigation|as_crispy_field}}
-            </form>
-          </div>
+            {{furrow.select_irrigation|as_crispy_field}}
+          </form>
+        </div>
       {% elif select_ses == 'sprinkler' %}
         <div class="col">
           <form class="form-group">
             {% csrf_token %}
-              {{sprinkler.select_irrigation|as_crispy_field}}
+            {{sprinkler.select_irrigation|as_crispy_field}}
           </form>
         </div>
       {% elif select_ses == 'drip' %}
         <div class="col">
           <form class="form-group">
             {% csrf_token %}
-              {{drip.select_irrigation|as_crispy_field}}
+            {{drip.select_irrigation|as_crispy_field}}
           </form>
         </div>
       {% endif %}
