@@ -22,11 +22,21 @@
             {% csrf_token %} 
             {% for form in formset %}
             <div class="row">
-                <div class="col-md-2 d-flex align-items-center mt-3">
+                <div class="col-md-2 d-flex align-items-right mt-3">
                     <div class="btn btn-sm btn-outline-info"><b>Sensor #{{forloop.counter}}</b></div>
                 </div>
-                <div class="col-md small">
-                    {{form.fieldunit|as_crispy_field}}
+                <div class="col-md">
+                    <label class="mb-0 small">Field Unit*</label>
+                    <select class="form-control" name="fieldunit" id="id_fieldunit">
+                    {% if fieldunit_ses %}
+                    <option value="{{fieldunit_ses}}">{{ses_fieldunit}}</option>
+                    {% else %}
+                    <option value="">----------</option>
+                    {% endif %}
+                    {% for f in fieldunit_list %}
+                    <option value="{{f.id}}">{{f.name}}</option>
+                    {% endfor %}
+                    </select>
                 </div>
                 <div class="col-md small">
                     {{form.name|as_crispy_field}}

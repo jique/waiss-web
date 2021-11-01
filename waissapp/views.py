@@ -535,6 +535,8 @@ def edit_fieldunit(request, id):
 @login_required
 def new_sensor(request):
 	fieldunit_ses = request.session.get('fieldunit_ses', None)
+	ses_fieldunit = ""
+	fielunit_list = FieldUnit.objects.filter(author=request.user)
 	if fieldunit_ses == None:
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3)
 		formset = SensorFormSet(queryset=Sensor.objects.none())
@@ -542,6 +544,7 @@ def new_sensor(request):
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=0)
 		fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
 		formset = SensorFormSet(queryset=Sensor.objects.filter(fieldunit__in=fieldunit))
+		ses_fieldunit = FieldUnit.objects.get(id=fieldunit_ses)
 	if request.method == 'POST':
 		formset = SensorFormSet(request.POST)
 		sensors, created = Sensor.objects.get_or_create(name=request.POST.get('name'))
@@ -552,6 +555,8 @@ def new_sensor(request):
 	
 	context = {
 		"formset": formset,
+		"fielunit_list": fielunit_list,
+		"ses_fieldunit": ses_fieldunit,
 	}
 
 	return render(request, 'waissapp/new_sensor.html', context)
