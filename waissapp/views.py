@@ -456,6 +456,8 @@ def new_fieldunit(request):
 		fieldunit.usk = request.POST.get('usk')
 		fieldunit.number = request.POST.get('number')
 		fieldunit.author = request.user
+		fieldunit.timestart = request.POST.get('timestart')
+		fieldunit.timestop = request.POST.get('timestop')
 		fieldunit.fieldunitstatus =  True
 		fieldunit.withirrigation = True
 		fieldunit.automaticthreshold = True

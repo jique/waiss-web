@@ -46,8 +46,8 @@ class FieldUnit(models.Model):
     automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", null=True, blank=True)
     samples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True, blank=True)
     sensorintegrationtime = models.IntegerField(verbose_name='Sensor Integration Time (ms)', null=True, blank=True)
-    timestart = models.TimeField(verbose_name='Starting Time', null=True, blank=True)
-    timestop = models.TimeField(verbose_name='Stopping Time', null=True, blank=True)
+    timestart = models.TimeField(verbose_name='Starting Time', null=True)
+    timestop = models.TimeField(verbose_name='Stopping Time', null=True)
     delay = models.IntegerField(verbose_name='Sending Delay (ms)', null=True, blank=True)
     clockcorrection = models.IntegerField(verbose_name='Clock Correction (s)', null=True, blank=True)
 
