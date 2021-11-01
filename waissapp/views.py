@@ -897,6 +897,7 @@ def new_irrigation(request):
 		selected_basin = basin_name
 		selected_basin_text = basin_name
 		select_ses = 'basin'
+		basin_ea = basin_name.ea
 	
 	basin_list = Basin.objects.filter(author=request.user) #Dropdown database
 	bln_irrigation = ""
