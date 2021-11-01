@@ -26,10 +26,8 @@
               <div class="col">{{form.date_transplanted|as_crispy_field }}</div>
             </div>
             <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Farm*</label>
-              </div>
-              <div class="col-7">
                 <select class="form-control" name="farm" id="id_farm">
                   {% if farm_ses %}
                   <option value="{{farm_ses}}">{{ses_farm}}</option>
@@ -44,12 +42,8 @@
                   <i><b>{{empty_farm}}</b></i>
                 </div>
               </div>
-            </div>
-            <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Farm Manager*</label>
-              </div>
-              <div class="col-7">
                 <select class="form-control" name="farm_manager" id="id_farm_manager">
                   {% if farm_manager_ses %}
                   <option value="{{farm_manager_ses}}">{{ses_farm_manager}}</option>
@@ -66,10 +60,8 @@
               </div>
             </div>
             <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Crop*</label>
-              </div>
-              <div class="col-7">
                 <select class="form-control" name="crop" id="id_crop">
                   {% if crop_ses %}
                   <option value="{{crop_ses}}">{{ses_crop}}</option>
@@ -84,12 +76,8 @@
                   <i><b>{{empty_crop}}</b></i>
                 </div>
               </div>
-            </div>
-            <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Soil*</label>
-              </div>
-              <div class="col-7">
                 <select class="form-control" name="soil" id="id_soil">
                   {% if soil_ses %}
                   <option value="{{soil_ses}}">{{ses_soil}}</option>
@@ -106,10 +94,8 @@
               </div>
             </div>
             <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Calibration Equation*</label>
-              </div>
-              <div class="col-7">
                 <select class="form-control" name="calib" id="id_calib">
                   {% if calib_ses %}
                   <option value="{{calib_ses}}">{{ses_calib}}</option>
@@ -124,12 +110,8 @@
                   <i><small><b>{{empty_calib}}</b></small></i>
                 </div>
               </div>
-            </div>
-            <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Field Unit*</label>
-              </div>
-              <div class="col-7">
                 <select class="form-control" name="fieldunit" id="id_fieldunit">
                   {% if fieldunit_ses %}
                   <option value="{{fieldunit_ses}}">{{ses_fieldunit}}</option>
@@ -147,10 +129,10 @@
             </div>
             {% if basin_ses %}
             <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Basin*</label>
               </div>
-              <div class="col-7">
+              <div class="col-md">
                 <select class="form-control" name="basin" id="id_basin">
                   {% if basin_ses %}
                   <option value="{{basin_ses}}">{{ses_basin}}</option>
@@ -165,10 +147,10 @@
             </div>
             {% elif border_ses %}
             <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Border*</label>
               </div>
-              <div class="col-7">
+              <div class="col-md">
                 <select class="form-control" name="border" id="id_border">
                   {% if border_ses %}
                   <option value="{{border_ses}}">{{ses_border}}</option>
@@ -183,10 +165,10 @@
             </div>
             {% elif furrow_ses %}
             <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Furrow*</label>
               </div>
-              <div class="col-7">
+              <div class="col-md">
                 <select class="form-control" name="furrow" id="id_furrow">
                   {% if furrow_ses %}
                   <option value="{{furrow_ses}}">{{ses_furrow}}</option>
@@ -201,10 +183,10 @@
             </div>
             {% elif sprinkler_ses %}
             <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Sprinkler*</label>
               </div>
-              <div class="col-7">
+              <div class="col-md">
                 <select class="form-control" name="sprinkler" id="id_sprinkler">
                   {% if sprinkler_ses %}
                   <option value="{{sprinkler_ses}}">{{ses_sprinkler}}</option>
@@ -219,10 +201,10 @@
             </div>
             {% elif drip_ses %}
             <div class="row form-group">
-              <div class="col-5">
+              <div class="col-md">
                 <label class="mb-0">Drip*</label>
               </div>
-              <div class="col-7">
+              <div class="col-md">
                 <select class="form-control" name="drip" id="id_drip">
                   {% if drip_ses %}
                   <option value="{{drip_ses}}">{{ses_drip}}</option>

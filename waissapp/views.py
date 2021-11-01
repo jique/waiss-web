@@ -996,6 +996,7 @@ def new_irrigation(request):
 		request.session.pop('drip_ses', None)
 		request.session['furrow_ses'] = furrow.id #create session for furrow
 		return redirect('/new_fieldunit/')
+	#sprinkler
 	if sprinkler_name == None:
 		sprinkler_form = SprinklerForm()
 		selected_sprinkler_text = "--choose--"
@@ -1047,18 +1048,16 @@ def new_irrigation(request):
 		selected_drip_text = "--choose--"
 		selected_drip = ""
 	else:
-		drip_name = Drip.objects.get(id=drip_name)
-		drip_form = DripForm(request.POST or None, instance=drip_name)
-		selected_drip = drip_name
-		selected_drip_text = drip_name
+		selected_drip = Drip.objects.get(id=drip_name)
+		drip_form = DripForm(request.POST or None, instance=selected_drip)
+		selected_drip_text = selected_drip
 		select_ses = 'drip'
 	drip_list = Drip.objects.filter(author=request.user) #Loading database
 	if request.method == 'POST' and 'loadData_drip' in request.POST:
 		pk=request.POST.get('loadData_drip')
-		id = Drip.objects.get(name=pk)
-		drip_form = DripForm(instance=id)
-		selected_drip = id
-		selected_drip_text = id
+		selected_drip = Drip.objects.get(name=pk)
+		drip_form = DripForm(instance=selected_drip)
+		selected_drip_text = selected_drip
 		select_ses = 'drip'
 	if request.method == 'POST' and 'submit-drip' in request.POST:
 		drip_form = DripForm(request.POST)
