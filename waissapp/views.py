@@ -544,27 +544,20 @@ def new_sensor(request):
 		formset = SensorFormSet(queryset=Sensor.objects.none())
 	else:
 		fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
-		sensors_ses = Sensor.objects.filter(fieldunit__in=fieldunit)
-		if len(sensors_ses) == 0:
-			SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3)
-		if len(sensors_ses) == 1:
-			SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=2)
-		if len(sensors_ses) == 2:
-			SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=1)
-		if len(sensors_ses) == 3:
-			SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=0)
-		formset = SensorFormSet(queryset=sensors_ses)
+		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, max_num=3)
+		formset = SensorFormSet(queryset=Sensor.objects.filter(fieldunit__in=fieldunit))
 		
 	if request.method == 'POST':
-		formset = SensorFormSet(request.POST)
+		formset = SensorFormSet(request.POST, instance=formset)
 		if formset.is_valid():
 			for form in formset:
 				data = {
 					'name': form.cleaned_data.get('name'),
 					'fieldunit': form.cleaned_data.get('fieldunit'),
-					'depth': form.cleaned_data.get('depth'),
 				}
 				sensors, created = Sensor.objects.get_or_create(**data)
+				sensors.depth = form.cleaned_data.get('depth')
+				sensors.save()
 			return redirect('/new_system/')
 	
 	context = {
