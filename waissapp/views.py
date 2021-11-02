@@ -1,5 +1,6 @@
 import re
 from django.core.exceptions import ValidationError
+from django.db.models.fields import Field
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, PercentShaded, Rainfall, Gravimetric, Basin, Furrow, Border, Drip, Sprinkler
@@ -549,22 +550,20 @@ def new_sensor(request):
 	if request.method == 'POST':
 		formset = SensorFormSet(request.POST)
 		sensors, created = Sensor.objects.get_or_create(name=request.POST.get('name'), fieldunit=request.POST.get('fieldunit'))
-		sensors.fieldunit = request.POST.get('fieldunit')
-		sensors.depth = request.POST.get('depth')
-		def clean(self):
-			fieldunits = []
-			names = []
-			for form in self.forms:
-				fieldunit = form.cleaned_data.get('fieldunit')
-				name = form.cleaned_data.get('name')
-				depth = form.cleaned_data.get('depth')
-				if fieldunit in fieldunits:
-					if name in names:
-						raise ValidationError("Sensor name already exists in the same field unit. Please rename sensor.")
-				if fieldunit == "" or name == "" or depth == "":
-					raise ValidationError("Fieldunit, Sensor Name and Depth fields are required.")
-				sensors.save()
-				return redirect('/new_system/')
+		name = request.POST.get('name')
+		fieldunit = request.POST.get('fieldunit')
+		depth = request.POST.get('depth')
+		fieldunits = FieldUnit.objects.all()
+		names = Sensor.objects.all()
+		if fieldunit in fieldunits:
+			if name in names:
+				raise ValidationError("Sensor name already exists in the same field unit. Please rename sensor.")
+		if fieldunit == "" or name == "" or depth == "":
+			raise ValidationError("Fieldunit, Sensor Name and Depth fields are required.")
+		sensors.fieldunit = fieldunit
+		sensors.depth = depth
+		sensors.save()
+		return redirect('/new_system/')
 	
 	context = {
 		"formset": formset,
