@@ -25,17 +25,16 @@
                 <div class="col-md-2 d-flex align-items-center mt-3">
                     <div class="btn btn-sm btn-outline-info"><b>Sensor #{{forloop.counter}}</b></div>
                 </div>
-                <div class="hiddden">{{form.id|as_crispy_field}}</div>
+                <div class="hidden">{{form.id|as_crispy_field}}</div>
                 <div class="col-md small">{{form.fieldunit|as_crispy_field}}</div>
                 <div class="col-md small">{{form.name|as_crispy_field}}</div> 
                 <div class="col-md small">{{form.depth|as_crispy_field}}</div>
                 {% if fieldunit_ses %}
-                <div class="col-md-1 d-flex align-items-center mt-3">{{form.DELETE}}&emsp; <b><i><small>Delete</small></i></b></div>
+                <div class="col-md-1 d-flex align-items-center mt-3">{{form.DELETE}}&emsp;<b><i><small>Delete</small></i></b></div>
                 {% endif %}
               </div>
               {% endfor%}
               <hr>
-              {{form.errors}}
               <div class="text-center">
                 <input type="submit" value="Next" class="btn btn-info">
             </div>
