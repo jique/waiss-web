@@ -550,14 +550,9 @@ def new_sensor(request):
 	if request.method == 'POST':
 		formset = SensorFormSet(request.POST)
 		if formset.is_valid():
-			for form in formset:
-				sensors, created = Sensor.objects.get_or_create(name=request.POST.get('name'), fieldunit=request.POST.get('fieldunit'))
-				sensors.fieldunit = request.POST.get('fieldunit')
-				sensors.depth = request.POST.get('depth')
-				sensors.save()
+			sensors, created = Sensor.objects.get_or_create(**formset.cleaned_data)
+			sensors.save()
 			return redirect('/new_system/')
-		else:
-			formset = SensorFormSet()
 	
 	context = {
 		"formset": formset,
