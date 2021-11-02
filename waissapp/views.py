@@ -550,17 +550,18 @@ def new_sensor(request):
 	if request.method == 'POST':
 		formset = SensorFormSet(request.POST)
 		if formset.is_valid():
-			instances = formset.save(commit=False)
-			for obj in formset.deleted_objects:
-				obj.delete()
 			for form in formset:
 				data = {
 					'name': form.cleaned_data.get('name'),
 					'fieldunit': form.cleaned_data.get('fieldunit'),
 				}
-				sensors, created = Sensor.objects.get_or_create(**data)
-				sensors.depth = form.cleaned_data.get('depth')
-				sensors.save()
+				form_delete = form.cleaned_data.get('DELETE')
+				if form_delete == "on":
+					form.delete()
+				else:
+					sensors, created = Sensor.objects.get_or_create(**data)
+					sensors.depth = form.cleaned_data.get('depth')
+					sensors.save()
 			return redirect('/new_system/')
 	
 	context = {
