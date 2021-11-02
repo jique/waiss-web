@@ -25,15 +25,10 @@
                 <div class="col-md-2 d-flex align-items-center mt-3">
                     <div class="btn btn-sm btn-outline-info"><b>Sensor #{{forloop.counter}}</b></div>
                 </div>
-                <div class="col-md small">
-                    {{form.fieldunit|as_crispy_field}}
-                </div>
-                <div class="col-md small">
-                    {{form.name|as_crispy_field}}
-                </div>
-                <div class="col-md small">
-                    {{form.depth|as_crispy_field}}
-                </div>
+                <div class="hiddden">{{form.id|as_crispy_field}}</div>
+                <div class="col-md small">{{form.fieldunit|as_crispy_field}}</div>
+                <div class="col-md small">{{form.name|as_crispy_field}}</div> 
+                <div class="col-md small">{{form.depth|as_crispy_field}}</div>
               </div>
               {% endfor%}
               <hr>

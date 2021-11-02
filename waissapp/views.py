@@ -556,11 +556,8 @@ def new_sensor(request):
 					'fieldunit': form.cleaned_data.get('fieldunit'),
 				}
 				sensors, created = Sensor.objects.get_or_create(**data)
-				if created:
-					form.save()
-				else:
-					sensors.depth = form.cleaned_data.get('depth')
-					sensors.save()
+				sensors.depth = form.cleaned_data.get('depth')
+				sensors.save()
 			return redirect('/new_system/')
 	
 	context = {
