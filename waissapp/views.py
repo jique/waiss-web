@@ -554,9 +554,9 @@ def new_sensor(request):
 		fieldunits = FieldUnit.objects.all()
 		names = Sensor.objects.all()
 		for form in formset:
-			fieldunit = form.cleaned_data.get('fieldunit')
-			name = form.cleaned_data.get('name')
-			depth = form.cleaned_data.get('depth')
+			fieldunit = request.POST.get('fieldunit')
+			name = request.POST.get('name')
+			depth = request.POST.get('depth')
 			if fieldunit in fieldunits:
 				if name in names:
 					raise ValidationError("Sensor name already exists in the same field unit. Please rename sensor.")
