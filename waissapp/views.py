@@ -545,25 +545,25 @@ def new_sensor(request):
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3)
 		fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
 		formset = SensorFormSet(queryset=Sensor.objects.filter(fieldunit__in=fieldunit))
+		
 	if request.method == 'POST':
 		formset = SensorFormSet(request.POST)
 		sensors, created = Sensor.objects.get_or_create(name=request.POST.get('name'), fieldunit=request.POST.get('fieldunit'))
 		sensors.fieldunit = request.POST.get('fieldunit')
 		sensors.depth = request.POST.get('depth')
-		def clean(self):
-			fieldunits = []
-			names = []
-			for form in self.forms:
-				fieldunit = form.cleaned_data.get('fieldunit')
-				name = form.cleaned_data.get('name')
-				depth = form.cleaned_data.get('depth')
-				if fieldunit in fieldunits:
-					if name in names:
-						raise ValidationError("Sensor name already exists in the same field unit. Please rename sensor.")
-				if fieldunit == "" or name == "" or depth == "":
-					raise ValidationError("Fieldunit, Sensor Name and Depth fields are required.")
-				sensors.save()
-				return redirect('/new_system/')
+		fieldunits = FieldUnit.objects.all()
+		names = Sensor.objects.all()
+		for form in formset:
+			fieldunit = form.cleaned_data.get('fieldunit')
+			name = form.cleaned_data.get('name')
+			depth = form.cleaned_data.get('depth')
+			if fieldunit in fieldunits:
+				if name in names:
+					raise ValidationError("Sensor name already exists in the same field unit. Please rename sensor.")
+			if fieldunit == "" or name == "" or depth == "":
+				raise ValidationError("Fieldunit, Sensor Name and Depth fields are required.")
+			sensors.save()
+			return redirect('/new_system/')
 	
 	context = {
 		"formset": formset,
