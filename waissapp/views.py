@@ -551,19 +551,20 @@ def new_sensor(request):
 		sensors, created = Sensor.objects.get_or_create(name=request.POST.get('name'), fieldunit=request.POST.get('fieldunit'))
 		sensors.fieldunit = request.POST.get('fieldunit')
 		sensors.depth = request.POST.get('depth')
-		fieldunits = FieldUnit.objects.all()
-		names = Sensor.objects.all()
-		for form in formset:
-			fieldunit = request.POST.get('fieldunit')
-			name = request.POST.get('name')
-			depth = request.POST.get('depth')
-			if fieldunit in fieldunits:
-				if name in names:
-					raise ValidationError("Sensor name already exists in the same field unit. Please rename sensor.")
-			if fieldunit == "" or name == "" or depth == "":
-				raise ValidationError("Fieldunit, Sensor Name and Depth fields are required.")
-			sensors.save()
-			return redirect('/new_system/')
+		def clean(self):
+			fieldunits = []
+			names = []
+			for form in self.forms:
+				fieldunit = form.cleaned_data.get('fieldunit')
+				name = form.cleaned_data.get('name')
+				depth = form.cleaned_data.get('depth')
+				if fieldunit in fieldunits:
+					if name in names:
+						raise ValidationError("Sensor name already exists in the same field unit. Please rename sensor.")
+				if fieldunit == "" or name == "" or depth == "":
+					raise ValidationError("Fieldunit, Sensor Name and Depth fields are required.")
+				sensors.save()
+				return redirect('/new_system/')
 	
 	context = {
 		"formset": formset,
