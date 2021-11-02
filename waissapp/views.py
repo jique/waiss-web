@@ -550,6 +550,8 @@ def new_sensor(request):
 	if request.method == 'POST':
 		formset = SensorFormSet(request.POST)
 		if formset.is_valid():
+			for obj in formset.deleted_objects:
+				obj.delete()
 			for form in formset:
 				data = {
 					'name': form.cleaned_data.get('name'),
