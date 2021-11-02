@@ -540,11 +540,11 @@ def new_sensor(request):
 	fieldunit_ses = request.session.get('fieldunit_ses', None)
 	fieldunit_list = FieldUnit.objects.filter(author=current_user)
 	if fieldunit_ses == None:
-		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3)
+		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, can_delete=True)
 		formset = SensorFormSet(queryset=Sensor.objects.none())
 	else:
 		fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
-		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, max_num=3)
+		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, max_num=3, can_delete=True)
 		formset = SensorFormSet(queryset=Sensor.objects.filter(fieldunit__in=fieldunit))
 		
 	if request.method == 'POST':
