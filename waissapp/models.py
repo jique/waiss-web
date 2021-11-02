@@ -62,7 +62,7 @@ class FieldUnit(models.Model):
         ordering = ('name',)
 
 class Sensor(models.Model):
-    name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True)
+    name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True, unique=True)
     fieldunit = models.ForeignKey (FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True, blank=True)
     depth = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Depth, m", null=True)
 
