@@ -556,7 +556,7 @@ def new_sensor(request):
 		formset = SensorFormSet(queryset=sensors_ses)
 		
 	if request.method == 'POST':
-		formset = SensorFormSet(request.POST, request.FILES)
+		formset = SensorFormSet(request.POST)
 		if formset.is_valid():
 			for form in formset:
 				data = {
