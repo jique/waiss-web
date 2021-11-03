@@ -40,7 +40,7 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-                <div class="text-danger text-right small"><span id="error_farm"></span></div>
+                <div class="text-danger text-left small"><b><span id="error_farm"></span></b></div>
               </div>
               <div class="col-md">
                 <label class="mb-0 small">Farm Manager*</label>
@@ -54,7 +54,7 @@
                   <option value="{{f.id}}">{{f.first_name}} {{f.last_name}}</option>
                   {% endfor %}
                 </select>
-                <div class="text-danger text-right small"><span id="error_farm"></span></div>
+                <div class="text-danger text-right small"><span id="error_farm_manager"></span></div>
               </div>
             </div>
             <div class="row form-group">
@@ -70,7 +70,7 @@
                   <option value="{{f.id}}">{{f.crop}}</option>
                   {% endfor %}
                 </select>
-                <div class="text-danger text-right small"><span id="error_farm"></span></div>
+                <div class="text-danger text-right small"><span id="error_crop"></span></div>
               </div>
               <div class="col-md">
                 <label class="mb-0 small">Soil*</label>
@@ -84,7 +84,7 @@
                   <option value="{{f.id}}">{{f.soiltype}}</option>
                   {% endfor %}
                 </select>
-                <div class="text-danger text-right small"><span id="error_farm"></span></div>
+                <div class="text-danger text-right small"><span id="error_soil"></span></div>
               </div>
             </div>
             <div class="row form-group">
@@ -100,7 +100,7 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-                <div class="text-danger text-right small"><span id="error_farm"></span></div>
+                <div class="text-danger text-right small"><span id="error_fieldunit"></span></div>
               </div>
               <div class="col-md">
                 <label class="mb-0 small">Calibration Equation*</label>
@@ -114,7 +114,7 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-                <div class="text-danger text-right small"><span id="error_farm"></span></div>
+                <div class="text-danger text-right small"><span id="error_calib"></span></div>
               </div>
             </div>
             <div class="row form-group"> <!--SENSORS -->
@@ -266,35 +266,32 @@
     var calib = document.getElementById('id_calib')
     var e_calib = document.getElementById('error_calib')
 
-    if(farm.value == "") {
+    if (farm.value == "") {
       e_farm.innerText = "Farm field is required."
       farm.focus();
       return false;
-    }
-    else if(farm_manager.value == "") {
-      e_farm_manager.value = "Farm Manager field is required."
+    } else if (farm_manager.value == "") {
+      e_farm_manager.innerText = "Farm Manager field is required."
       farm_manager.focus();
       return false;
-    }
-    if(crop.value == "") {
-      e_crop.value = "Crop field is required."
+    } else if (crop.value == "") {
+      e_crop.innerText = "Crop field is required."
       crop.focus();
       return false;
-    }
-    if(soil.value == "") {
-      e_soil.value = "Soil field is required."
+    } else if (soil.value == "") {
+      e_soil.innerText = "Soil field is required."
       soil.focus();
       return false;
-    }
-    if(calib.value == "") {
-      e_calib.value = "Calibration Equation field is required."
+    } else if (calib.value == "") {
+      e_calib.innerText = "Calibration Equation field is required."
       calib.focus();
       return false;
-    }
-    if(fieldunit.value == "") {
-      e_fieldunit.value = "Fieldunit field is required."
+    } else if (fieldunit.value == "") {
+      e_fieldunit.innerText = "Fieldunit field is required."
       fieldunit.focus();
       return false;
+    } else {
+      return true;
     }
   }
 </script>
