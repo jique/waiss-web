@@ -259,9 +259,9 @@
 <script type="text/javascript">
   function validateForm(form) {
     var farm = document.getElementById('id_farm')
-    if(farm.value=="") {
-      alert("Complete required fields.");
-      document.getElementById('error_farm') = "Farm field is required."
+    var e_farm = document.getElementById('error_farm')
+    if(farm.value == "") {
+      e_farm.value = "Farm field is required."
       farm.focus();
       return false;
     }
