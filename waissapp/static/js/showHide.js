@@ -343,5 +343,5 @@ var drip = {{drip_ses}};
 var sprinkler = {{sprinkler_ses}}; 
 
 $(document).ready(function() {
-  $("#id_fieldunit option[value='1']").prop('selected', true);
+  $("#id_fieldunit").val('2');
 }
