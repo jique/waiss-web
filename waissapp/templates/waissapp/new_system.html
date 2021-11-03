@@ -265,7 +265,7 @@ function validateForm() {
   let soil = document.forms["myForm"]["soil"].value;
   let fieldunit = document.forms["myForm"]["fieldunit"].value;
   let calib = document.forms["myForm"]["calib"].value;
-  if (farm == "" || fieldunit == "") {
+  if (farm == "") {
     alert("Name must be filled out");
     return false;
   }
