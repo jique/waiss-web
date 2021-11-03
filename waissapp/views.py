@@ -539,6 +539,7 @@ def new_sensor(request):
 	current_user = request.user
 	fieldunit_ses = request.session.get('fieldunit_ses', None)
 	fieldunit_list = FieldUnit.objects.filter(author=current_user)
+	num_sensors = 0
 	if fieldunit_ses == None:
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, can_delete=True)
 		formset = SensorFormSet(queryset=Sensor.objects.none())
@@ -546,7 +547,7 @@ def new_sensor(request):
 		fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, max_num=3, can_delete=True)
 		formset = SensorFormSet(queryset=Sensor.objects.filter(fieldunit__in=fieldunit))
-	num_sensors = len(Sensor.objects.filter(fieldunit__in=fieldunit))
+		num_sensors = len(Sensor.objects.filter(fieldunit__in=fieldunit))
 	if request.method == 'POST' and 'delete_sensor' in request.POST:
 		sensor_id = request.POST.get('delete_sensor')
 		sensor_obj = Sensor.objects.get(id=sensor_id)
