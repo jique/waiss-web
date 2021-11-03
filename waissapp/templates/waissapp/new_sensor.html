@@ -24,13 +24,13 @@
           {% csrf_token %} 
           {% for form in formset %}
           <div class="row">
-              <div class="col-md-auto d-flex align-items-center mt-3">
+              <div class="col-md d-flex align-items-center mt-3">
                   <div class="btn btn-sm btn-outline-info"><b>Sensor #{{forloop.counter}}</b></div>
               </div>
               <div class="hidden">{{form.id|as_crispy_field}}</div>
-              <div class="col-md-auto small">{{form.fieldunit|as_crispy_field}}</div>
-              <div class="col-md-auto small">{{form.name|as_crispy_field}}</div> 
-              <div class="col-md-auto small">{{form.depth|as_crispy_field}}</div>
+              <div class="col-md small">{{form.fieldunit|as_crispy_field}}</div>
+              <div class="col-md small">{{form.name|as_crispy_field}}</div> 
+              <div class="col-md-2 small">{{form.depth|as_crispy_field}}</div>
           </div>
           {% endfor%}
           <hr>
@@ -41,23 +41,23 @@
       </div>
       {% if excess == True %}
       <div class="col-md-4">
-        <small><b>Succesfully created sensors.</b></small>
+        <small><b>Succesfully created sensors.</b></small><hr>
         {% for sensor in sensors_list %}
         <div class="row justify-content-md-right">
           <div class="col-md">{{sensor.fieldunit}}</div>
-          <div class="col-md-auto">{{sensor.name}}</div> 
-          <div class="col-md-auto">{{sensor.depth}}</div>
-          <div class="col-md-auto d-flex align-items-center mt-3">
+          <div class="col-md">{{sensor.name}}</div> 
+          <div class="col-md-2">{{sensor.depth}}</div>
+          <div class="col-md-1 d-flex align-items-center mt-3">
             <form class="form-group" action="" method="POST">
               {% csrf_token %} 
               <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
             </form>
           </div>
         </div>
+        {% endfor%}
         <small>
           <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. Please delete one (1) sensor.</i></span>
         </small>
-        {% endfor%}
       </div>
       {% endif %}
     </div>
