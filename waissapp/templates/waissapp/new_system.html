@@ -266,8 +266,8 @@
 <script type="text/javascript">
 $(document).ready(function () {
   var e = document.getElementById("id_fieldunit");
-  e.options[e.selectedIndex].value = {{fieldunit_ses}};
-  e.options[e.selectedIndex].text = {{ses_fieldunit}}
+  e.value = {{fieldunit_ses}};
+  e.text = {{ses_fieldunit}}
 
   var farm = {{farm_ses}};
   var farm_manager = {{farm_manager_ses}};
