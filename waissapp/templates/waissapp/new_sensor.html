@@ -44,10 +44,10 @@
         <small><b>Succesfully created sensors.</b></small><hr>
         {% for sensor in sensors_list %}
         <div class="row">
-          <div class="col-md"><b>#{{forloop.counter}}</b></div>
+          <div class="col-md-1"><b>#{{forloop.counter}}</b></div>
           <div class="col-md">{{sensor.name}}</div> 
           <div class="col-md-2">{{sensor.depth}}</div>
-          <div class="col-md-1 d-flex align-items-center mt-3">
+          <div class="col-md-1">
             <form class="form-group" action="" method="POST">
               {% csrf_token %} 
               <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
