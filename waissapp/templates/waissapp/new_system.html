@@ -27,13 +27,10 @@
             <div class="row">
               <div class="col">{{form.date_transplanted|as_crispy_field }}</div>
             </div>
-            <div class="row">
-              <div class="col">{{form.fieldunit|as_crispy_field }}</div>
-            </div>
             <div class="row form-group">
               <div class="col-md">
                 <label class="mb-0 small">Farm*</label>
-                <select class="form-control" name="farm" id="id_farm">
+                <select class="select form-control custom-select" name="farm" id="id_farm">
                   {% if farm_ses %}
                   <option value="{{farm_ses}}">{{ses_farm}}</option>
                   {% else %}
