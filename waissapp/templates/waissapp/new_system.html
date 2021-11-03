@@ -17,7 +17,7 @@
       <small>Almost there! Validate each fields and press confirm!</small>
   </div>
         <div class="card-body">
-          <form class="form-group" action="" method="post">
+          <form class="form-group" action="" method="post" onsubmit="return validateForm()" name="myForm">
             {% csrf_token %}
             <small><b>Fields with asterisks (*) are required.</b></small>
             <hr>
@@ -250,7 +250,7 @@
             {% endif %}
             <hr>
             <div class="text-center">
-              <input type="submit" value="Finish!" class="btn btn-info" onclick="myFunction()">
+              <input type="submit" value="Finish!" class="btn btn-info">
             </div>
           </form>
         </div>
@@ -258,8 +258,12 @@
     </div>
 </div>
 <script>
-  function myFunction() {
-    alert("Complete required fields!");
+function validateForm() {
+  let x = document.forms["myForm"]["fieldunit"].value;
+  if (x == "") {
+    alert("Name must be filled out");
+    return false;
   }
+}
 </script>
 {% endblock %}
