@@ -15,42 +15,51 @@
 <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
   <div class="card-header rounded-0 border-0"><small>Sensor & Depth</small></div>
   <div class="card-body">
-      <form  class="form-group" action="" method="POST">
-        <small><b>Fields with asterisks (*) are required.</b></small>
-        <hr>
-        {{formset.management_form}}
-        {% csrf_token %} 
-        {% for form in formset %}
-        <div class="row">
-            <div class="col-md-2 d-flex align-items-center mt-3">
-                <div class="btn btn-sm btn-outline-info"><b>Sensor #{{forloop.counter}}</b></div>
-            </div>
-            <div class="hidden">{{form.id|as_crispy_field}}</div>
-            <div class="col-md small">{{form.fieldunit|as_crispy_field}}</div>
-            <div class="col-md small">{{form.name|as_crispy_field}}</div> 
-            <div class="col-md small">{{form.depth|as_crispy_field}}</div>
+    <div class="row">
+      <div class="col-md">
+        <form  class="form-group" action="" method="POST">
+          <small><b>Fields with asterisks (*) are required.</b></small>
+          <hr>
+          {{formset.management_form}}
+          {% csrf_token %} 
+          {% for form in formset %}
+          <div class="row">
+              <div class="col-md-2 d-flex align-items-center mt-3">
+                  <div class="btn btn-sm btn-outline-info"><b>Sensor #{{forloop.counter}}</b></div>
+              </div>
+              <div class="hidden">{{form.id|as_crispy_field}}</div>
+              <div class="col-md small">{{form.fieldunit|as_crispy_field}}</div>
+              <div class="col-md small">{{form.name|as_crispy_field}}</div> 
+              <div class="col-md small">{{form.depth|as_crispy_field}}</div>
           </div>
           {% endfor%}
           <hr>
           <div class="text-center">
             <input type="submit" value="Next" class="btn btn-info" name="btn_submit">
           </div>
-        </div>
-      </form>
-      {% if excess == True %}
-      {% for sensor in sensors_list %}
-      <div class="row small">
-        <div class="col-md small">{{sensor.fieldunit}}</div>
-        <div class="col-md small">{{sensor.name}}</div> 
-        <div class="col-md small">{{sensor.depth}}</div>
-        <div class="col-md-1 d-flex align-items-center mt-3">
-          <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
-        </div>
+        </form>
       </div>
-      {% endfor%}
+      {% if excess == True %}
+      <div class="col-md-4">
+        <small>Succesfully created sensors. <br>
+          <span class="text-danger">It seems that you are exceeding the maximum of three (3) sensors per field unit. Please delete one (1) sensor.</span>
+        </small>
+        {% for sensor in sensors_list %}
+        <div class="row justify-content-md-right">
+          <div class="col-md">{{sensor.fieldunit}}</div>
+          <div class="col-md">{{sensor.name}}</div> 
+          <div class="col-md">{{sensor.depth}}</div>
+          <div class="col-md-1 d-flex align-items-center mt-3">
+            <form class="form-group" action="" method="POST">
+            <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
+            </form>
+          </div>
+        </div>
+        {% endfor%}
+      </div>
       {% endif %}
+    </div>
   </div>
 </div>
-
 </div>
 {% endblock %}
