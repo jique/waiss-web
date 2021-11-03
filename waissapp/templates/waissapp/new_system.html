@@ -27,9 +27,6 @@
             <div class="row">
               <div class="col">{{form.date_transplanted|as_crispy_field }}</div>
             </div>
-            <div class="row">
-              <div class="col">{{form.fieldunit|as_crispy_field }}</div>
-            </div>
             <div class="row form-group">
               <div class="col-md">
                 <label class="mb-0 small">Farm*</label>
@@ -100,7 +97,6 @@
             </div>
             <div class="row form-group">
               <div class="col-md">
-                <!--
                 <label class="mb-0 small">Field Unit*</label>
                 <select class="select form-control custom-select" name="fieldunit" id="id_fieldunit">
                   {% if fieldunit_ses %}
@@ -116,7 +112,6 @@
                   <i><small><b>{{empty_fieldunit}}</b></small></i>
                 </div>
               </div>
-              -->
               <div class="col-md">
                 <label class="mb-0 small">Calibration Equation*</label>
                 <select class="select form-control custom-select" name="calib" id="id_calib">
@@ -262,22 +257,4 @@
       </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-var farm = {{farm_ses}};
-var farm_manager = {{farm_manager_ses}};
-var crop = {{crop_ses}};
-var soil = {{soil_ses}};
-var calib = {{calib_ses}};
-var fieldunit = {{fieldunit_ses}};
-var basin = {{basin_ses}};
-var border = {{border_ses}};
-var furrow = {{furrow_ses}};
-var drip = {{drip_ses}};
-var sprinkler = {{sprinkler_ses}}; 
-
-$(document).ready(function() {
-  $("#id_fieldunit").val('3');
-}
-</script>
 {% endblock %}

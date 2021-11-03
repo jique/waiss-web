@@ -101,17 +101,18 @@ def new_system(request):
 	sprinkler_ses = request.session.get('sprinkler_ses', None)
 
 	#GetFromInputBox
-	fieldunit = request.POST.get('fieldunit')
 	farm = request.POST.get('farm')
 	farm_manager = request.POST.get('farm_manager')
 	crop = request.POST.get('crop')
 	soil = request.POST.get('soil')
 	calib = request.POST.get('calib')
+	fieldunit = request.POST.get('fieldunit')
 	basin = request.POST.get('basin')
 	border = request.POST.get('border')
 	furrow = request.POST.get('furrow')
 	sprinkler = request.POST.get('sprinkler')
 	drip = request.POST.get('drip')
+
 	empty_farm = ""
 	empty_farm_manager = ""
 	empty_crop = ""
@@ -120,7 +121,32 @@ def new_system(request):
 	empty_fieldunit = ""
 
 	form = WAISSystemsForm(request.POST or None)
-	def form_validation():
+	if request.method == 'POST':  # data sent by user
+		if farm == "" :
+			empty_farm = "Select/Create farm."
+		else:
+			farm = Farm.objects.get(id=farm)
+		if farm_manager == "":
+			empty_farm_manager = "Select/Create farm manager."
+		else:
+			farm_manager = Personnel.objects.get(id=farm_manager)
+		if crop == "" :
+			empty_crop = "Select/Create crop."
+		else:
+			crop = Crop.objects.get(id=crop)
+		if soil == "" :
+			empty_soil = "Select/Create soil."
+		else:
+			soil = Soil.objects.get(id=soil)
+		if calib == "" :
+			empty_calib = "Select/Create calibration equation."
+		else:
+			calib = CalibrationConstant.objects.get(id=calib)	
+		if fieldunit == "" :
+			empty_fieldunit = "Select/Create field unit."
+		else:
+			fieldunit = FieldUnit.objects.get(id=fieldunit)
+
 		form = WAISSystemsForm(request.POST)
 		waiss, created = WAISSystems.objects.get_or_create(name=request.POST.get('name'))
 		waiss.author = request.user
@@ -133,64 +159,20 @@ def new_system(request):
 		for key in request.POST:
 			value = request.POST.get(key)
 			if value != "":
-				def irrigation_keys ():
-					if key == 'basin':
-						waiss.basin = basin
-					if key == "border":
-						waiss.border = border
-					if key == "furrow":
-						waiss.furrow = furrow
-					if key == "sprinkler":
-						waiss.sprinkler = sprinkler
-					if key == "drip":
-						waiss.drip = drip
+				if key == 'basin':
+					waiss.basin = basin
+				if key == "border":
+					waiss.border = border
+				if key == "furrow":
+					waiss.furrow = furrow
+				if key == "sprinkler":
+					waiss.sprinkler = sprinkler
+				if key == "drip":
+					waiss.drip = drip
 		waiss.save()
 		return redirect('/dashboard/')
-	if request.method == 'POST':  # data sent by user
-		if farm == "" :
-			empty_farm = "Select/Create farm."
-		else:
-			form.farm = Farm.objects.get(id=farm)
-		if farm_manager == "":
-			empty_farm_manager = "Select/Create farm manager."
-		else:
-			form.farm_manager = Personnel.objects.get(id=farm_manager)
-		if crop == "" :
-			empty_crop = "Select/Create crop."
-		else:
-			form.crop = Crop.objects.get(id=crop)
-		if soil == "" :
-			empty_soil = "Select/Create soil."
-		else:
-			form.soil = Soil.objects.get(id=soil)
-		if calib == "" :
-			empty_calib = "Select/Create calibration equation."
-		else:
-			form.calib = CalibrationConstant.objects.get(id=calib)	
-		if fieldunit == "" :
-			empty_fieldunit = "Select/Create field unit."
-		else:
-			form.fieldunit = FieldUnit.objects.get(id=fieldunit)
-		#IRRIGATION
-		if basin_ses != None:
-			form.basin = Basin.objects.get(id=basin)
-			form_validation()
-		elif border != None:
-			form.border = Border.objects.get(id=border)
-			form_validation()
-		elif furrow != None:
-			form.furrow = Furrow.objects.get(id=furrow)
-			form_validation()
-		elif sprinkler != None:
-			form.sprinkler = Sprinkler.objects.get(id=sprinkler)
-			form_validation()
-		elif drip != None:
-			form.drip = Drip.objects.get(id=drip)
-			form_validation()
-		else:
-			form_validation()
-	#getnameofsessions
-	ses_farm = ""
+
+	ses_farm = "" #blank sessions .text
 	ses_farm_manager = ""
 	ses_crop = ""
 	ses_soil = ""
@@ -202,7 +184,7 @@ def new_system(request):
 	ses_drip = ""
 	ses_sprinkler = ""
 	
-	if farm_ses != None:
+	if farm_ses != None: #get sessions .text
 		ses_farm = Farm.objects.get(id=farm_ses)
 	if farm_manager_ses != None:
 		ses_farm_manager = Personnel.objects.get(id=farm_manager_ses)
