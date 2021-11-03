@@ -328,20 +328,3 @@ function showHide8() {
     $("#collapse_irrig_5").collapse('show');  
   }
 }
-
-
-var farm = {{farm_ses}};
-var farm_manager = {{farm_manager_ses}};
-var crop = {{crop_ses}};
-var soil = {{soil_ses}};
-var calib = {{calib_ses}};
-var fieldunit = {{fieldunit_ses}};
-var basin = {{basin_ses}};
-var border = {{border_ses}};
-var furrow = {{furrow_ses}};
-var drip = {{drip_ses}};
-var sprinkler = {{sprinkler_ses}}; 
-
-$(document).ready(function() {
-  $("#id_fieldunit").val('3');
-}

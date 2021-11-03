@@ -262,5 +262,22 @@
       </div>
     </div>
 </div>
-<script src="{% static 'js/showHide.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+var farm = {{farm_ses}};
+var farm_manager = {{farm_manager_ses}};
+var crop = {{crop_ses}};
+var soil = {{soil_ses}};
+var calib = {{calib_ses}};
+var fieldunit = {{fieldunit_ses}};
+var basin = {{basin_ses}};
+var border = {{border_ses}};
+var furrow = {{furrow_ses}};
+var drip = {{drip_ses}};
+var sprinkler = {{sprinkler_ses}}; 
+
+$(document).ready(function() {
+  $("#id_fieldunit").val('3');
+}
+</script>
 {% endblock %}
