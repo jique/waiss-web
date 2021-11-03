@@ -27,6 +27,9 @@
             <div class="row">
               <div class="col">{{form.date_transplanted|as_crispy_field }}</div>
             </div>
+            <div class="row">
+              <div class="col">{{form.fieldunit|as_crispy_field }}</div>
+            </div>
             <div class="row form-group">
               <div class="col-md">
                 <label class="mb-0 small">Farm*</label>
@@ -97,6 +100,22 @@
             </div>
             <div class="row form-group">
               <div class="col-md">
+                <label class="mb-0 small">Field Unit*</label>
+                <select class="form-control" name="fieldunit" id="id_fieldunit">
+                  {% if fieldunit_ses %}
+                  <option value="{{fieldunit_ses}}">{{ses_fieldunit}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in fieldunit_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
+                <div class="text-danger text-right">
+                  <i><small><b>{{empty_fieldunit}}</b></small></i>
+                </div>
+              </div>
+              <div class="col-md">
                 <label class="mb-0 small">Calibration Equation*</label>
                 <select class="form-control" name="calib" id="id_calib">
                   {% if calib_ses %}
@@ -112,21 +131,26 @@
                   <i><small><b>{{empty_calib}}</b></small></i>
                 </div>
               </div>
-              <div class="col-md">
-                <label class="mb-0 small">Field Unit*</label>
-                <select class="form-control" name="fieldunit" id="id_fieldunit">
-                  {% if fieldunit_ses %}
-                  <option value="{{fieldunit_ses}}">{{ses_fieldunit}}</option>
-                  {% else %}
-                  <option value="">----------</option>
-                  {% endif %}
-                  {% for f in fieldunit_list %}
-                  <option value="{{f.id}}">{{f.name}}</option>
-                  {% endfor %}
-                </select>
-                <div class="text-danger text-right">
-                  <i><small><b>{{empty_fieldunit}}</b></small></i>
+            </div>
+            <div class="row form-group"> <!--SENSORS -->
+              <div class="col-md small">
+                {% for sensor in sensors_list %}
+                <div class="row">
+                  <div class="col"><b>#{{forloop.counter}}</b>&emsp;{{sensor.name}}</div>
+                  <div class="col">
+                    <form class="form-group" action="" method="POST">
+                      {% csrf_token %}
+                      {{sensor.depth}}&emsp;
+                      <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
+                    </form>
+                  </div>
                 </div>
+                {% endfor%}
+                {% if excess == True %}
+                <small>
+                  <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. Please delete the excess sensor(s).</i></span>
+                </small>
+                {% endif %}
               </div>
             </div>
             {% if basin_ses %}
@@ -221,7 +245,7 @@
             </div>
             {% else %}
             <div class="row">
-              <div class="col text-center text-dark">
+              <div class="col text-center text-danger small">
                 <p><i><b>Warning!</b> You do not have an irrigation system. To add, go back to the <kbd class="text-dark"><a href={% url 'waiss:new_irrigation' %}>irrigation</a></kbd> tab. <br>
                 If correct, click <kbd>Finish</kbd>.</i></p>
               </div>
@@ -239,51 +263,21 @@
 {% endblock %}
 
 {% block bottom_script_block %}
-<!--
 <script>
   // Run on page load
   window.onload = function() {
-      // If values are not blank, restore them to the fields
-      var farm = sessionStorage.getItem('farm');
-      var farm_manager = sessionStorage.getItem('farm_manager');
-      var crop = sessionStorage.getItem('crop');
-      var soil = sessionStorage.getItem('soil');
-      var calib = sessionStorage.getItem('calib');
-      var fieldunit = sessionStorage.getItem('fieldunit');
-      var basin = sessionStorage.getItem('basin');
-      var border = sessionStorage.getItem('border');
-      var furrow = sessionStorage.getItem('furrow');
-      var sprinkler = sessionStorage.getItem('sprinkler');
-      var drip = sessionStorage.getItem('drip');
-
-      if (farm !== null) $('#id_farm').val(farm);
-      if (farm_manager !== null) $('#id_farm_manager').val(farm_manager);
-      if (crop !== null) $('#id_crop').val(crop);
-      if (soil !== null) $('#id_soil').val(soil);
-      if (calib !== null) $('#id_calib').val(calib);
-      if (fieldunit !== null) $('#id_fieldunit').val(fieldunit);
-      if (basin !== null) $('#id_basin').val(basin);
-      if (border !== null) $('#id_border').val(border);
-      if (furrow !== null) $('#id_furrow').val(furrow);
-      if (sprinkler !== null) $('#id_sprinkler').val(sprinkler);
-      if (drip !== null) $('#id_drip').val(drip);
+      $('#id_farm').val({{farm_ses}});
+      $('#id_farm_manager').val({{farm_manager_ses}});
+      $('#id_crop').val({{crop_ses}});
+      $('#id_soil').val({{soil_ses}});
+      $('#id_calib').val({{calib_ses}});
+      $('#id_fieldunit').val({{fieldunit_ses}});
+      $('#id_basin').val({{basin_ses}});
+      $('#id_border').val({{border_ses}});
+      $('#id_furrow').val({{furrow_ses}});
+      $('#id_sprinkler').val({{sprinkler_ses}});
+      $('#id_drip').val({{drip_ses}});
   }
-
-  window.onbeforeunload = function() {
-	// Before refreshing the page, save the form data to sessionStorage
-    sessionStorage.setItem("farm", $('#id_farm').val());
-    sessionStorage.setItem("farm_manager", $('#id_farm_manager').val());
-    sessionStorage.setItem("crop", $('#id_crop').val());
-    sessionStorage.setItem("soil", $('#id_soil').val());
-    sessionStorage.setItem("calib", $('#id_calib').val());
-    sessionStorage.setItem("fieldunit", $('#id_fieldunit').val());
-    sessionStorage.setItem("basin", $('#id_basin').val());
-    sessionStorage.setItem("border", $('#id_border').val());
-    sessionStorage.setItem("furrow", $('#id_furrow').val());
-    sessionStorage.setItem("sprinkler", $('#id_sprinkler').val());
-    sessionStorage.setItem("drip", $('#id_drip').val());
-  }
-</script> 
--->
+</script>
 {% endblock %}
     

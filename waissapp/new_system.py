@@ -124,7 +124,7 @@ def new_system(request):
 		form = WAISSystemsForm(request.POST)
 		waiss, created = WAISSystems.objects.get_or_create(name=request.POST.get('name'))
 		waiss.author = request.user
-		waiss.fieldunit =fieldunit
+		waiss.fieldunit = fieldunit
 		waiss.farm = farm
 		waiss.farm_manager = farm_manager
 		waiss.crop = crop
@@ -133,16 +133,17 @@ def new_system(request):
 		for key in request.POST:
 			value = request.POST.get(key)
 			if value != "":
-				if key == 'basin':
-					waiss.basin = basin
-				if key == "border":
-					waiss.border = border
-				if key == "furrow":
-					waiss.furrow = furrow
-				if key == "sprinkler":
-					waiss.sprinkler = sprinkler
-				if key == "drip":
-					waiss.drip = drip
+				def irrigation_keys ():
+					if key == 'basin':
+						waiss.basin = basin
+					if key == "border":
+						waiss.border = border
+					if key == "furrow":
+						waiss.furrow = furrow
+					if key == "sprinkler":
+						waiss.sprinkler = sprinkler
+					if key == "drip":
+						waiss.drip = drip
 		waiss.save()
 		return redirect('/dashboard/')
 	if request.method == 'POST':  # data sent by user
