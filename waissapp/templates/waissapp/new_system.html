@@ -263,10 +263,27 @@
 {% endblock %}
 
 {% block bottom_script_block %}
-<script>
+<script type="text/javascript">
 $(document).ready(function () {
-  var fieldunit = {{fieldunit_ses}}
-  $('input[name="fieldunit"]').val(fieldunit);
+  var fieldunit = {{fieldunit_ses}};
+  var farm = {{farm_ses}};
+  var farm_manager = {{farm_manager_ses}};
+	var crop = {{crop_ses}};
+	var soil = {{soil_ses}};
+	var calib = {{calib_ses}};
+	var fieldunit = {{fieldunit_ses}};
+	var basin = {{basin_ses}};
+	var border = {{border_ses}};
+	var furrow = {{furrow_ses}};
+	var drip = {{drip_ses}};
+	var sprinkler = {{sprinkler_ses}}; 
+
+  selectElement('fieldunit', fieldunit)
+
+  function selectElement(id, valueToSelect) {    
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+  }
 }
 </script>
 {% endblock %}
