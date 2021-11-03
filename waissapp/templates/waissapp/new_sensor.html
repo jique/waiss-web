@@ -38,7 +38,7 @@
         </div>
       </form>
       {% if excess == True %}
-      {% for sensor in sensor_list %}
+      {% for sensor in sensors_list %}
       <div class="row small">
         <div class="col-md small">{{sensor.fieldunit|as_crispy_field}}</div>
         <div class="col-md small">{{sensor.name|as_crispy_field}}</div> 
