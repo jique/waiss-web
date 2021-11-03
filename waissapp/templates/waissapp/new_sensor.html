@@ -29,7 +29,7 @@
                 <div class="col-md small">{{form.fieldunit|as_crispy_field}}</div>
                 <div class="col-md small">{{form.name|as_crispy_field}}</div> 
                 <div class="col-md small">{{form.depth|as_crispy_field}}</div>
-                {% if num_sensors => 4 %}
+                {% if excess == True %}
                 <div class="col-md-1 d-flex align-items-center mt-3">
                   <button class="btn text-danger btn-sm" name="delete_sensor" value="{{form.id}}"><i class="fas fa-trash"></i></button>
                 </div>
