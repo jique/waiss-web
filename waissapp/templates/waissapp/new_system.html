@@ -17,7 +17,7 @@
       <small>Almost there! Validate each fields and press confirm!</small>
   </div>
         <div class="card-body">
-          <form class="form-group" action="new_waiss.html" method="post" onsubmit="return validateForm();" name="myForm">
+          <form class="form-group" method="post" onsubmit="return validateForm();" name="myForm">
             {% csrf_token %}
             <small><b>Fields with asterisks (*) are required.</b></small>
             <hr>
@@ -259,16 +259,9 @@
 </div>
 <script>
 function validateForm() {
-  let farm = document.forms["myForm"]["farm"].value;
-  let manager = document.forms["myForm"]["manager"].value;
-  let crop = document.forms["myForm"]["crop"].value;
-  let soil = document.forms["myForm"]["soil"].value;
-  let fieldunit = document.forms["myForm"]["fieldunit"].value;
-  let calib = document.forms["myForm"]["calib"].value;
-  if (farm == "") {
-    alert("Name must be filled out");
+  if(document.getElementById('farm').value=="") {
+    alert("enter something valid");
     return false;
-    document.myForm.farm.focus() ;
   }
 }
 </script>
