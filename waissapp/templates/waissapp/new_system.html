@@ -267,11 +267,11 @@
     var e_calib = document.getElementById('error_calib')
 
     if(farm.value == "") {
-      e_farm.value = "Farm field is required."
+      e_farm.innerText = "Farm field is required."
       farm.focus();
       return false;
     }
-    if(farm_manager.value == "") {
+    else if(farm_manager.value == "") {
       e_farm_manager.value = "Farm Manager field is required."
       farm_manager.focus();
       return false;
