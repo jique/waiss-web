@@ -45,9 +45,10 @@
         {% for sensor in sensors_list %}
         <div class="row">
           <div class="col"><b>#{{forloop.counter}}</b>&emsp;{{sensor.name}}</div>
-          <div class="col">{{sensor.depth}}&emsp;
+          <div class="col">
             <form class="form-group" action="" method="POST">
-              {% csrf_token %} 
+              {% csrf_token %}
+              {{sensor.depth}}&emsp;
               <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
             </form>
           </div>
