@@ -40,9 +40,9 @@
       {% if excess == True %}
       {% for sensor in sensors_list %}
       <div class="row small">
-        <div class="col-md small">{{sensor.fieldunit|as_crispy_field}}</div>
-        <div class="col-md small">{{sensor.name|as_crispy_field}}</div> 
-        <div class="col-md small">{{sensor.depth|as_crispy_field}}</div>
+        <div class="col-md small">{{sensor.fieldunit}}</div>
+        <div class="col-md small">{{sensor.name}}</div> 
+        <div class="col-md small">{{sensor.depth}}</div>
         <div class="col-md-1 d-flex align-items-center mt-3">
           <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
         </div>
