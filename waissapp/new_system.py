@@ -113,39 +113,14 @@ def new_system(request):
 	sprinkler = request.POST.get('sprinkler')
 	drip = request.POST.get('drip')
 
-	empty_farm = ""
-	empty_farm_manager = ""
-	empty_crop = ""
-	empty_soil = ""
-	empty_calib = ""
-	empty_fieldunit = ""
-
 	form = WAISSystemsForm(request.POST or None)
 	if request.method == 'POST':  # data sent by user
-		if farm == "" :
-			empty_farm = "Select/Create farm."
-		else:
-			farm = Farm.objects.get(id=farm)
-		if farm_manager == "":
-			empty_farm_manager = "Select/Create farm manager."
-		else:
-			farm_manager = Personnel.objects.get(id=farm_manager)
-		if crop == "" :
-			empty_crop = "Select/Create crop."
-		else:
-			crop = Crop.objects.get(id=crop)
-		if soil == "" :
-			empty_soil = "Select/Create soil."
-		else:
-			soil = Soil.objects.get(id=soil)
-		if calib == "" :
-			empty_calib = "Select/Create calibration equation."
-		else:
-			calib = CalibrationConstant.objects.get(id=calib)	
-		if fieldunit == "" :
-			empty_fieldunit = "Select/Create field unit."
-		else:
-			fieldunit = FieldUnit.objects.get(id=fieldunit)
+		farm = Farm.objects.get(id=farm)
+		farm_manager = Personnel.objects.get(id=farm_manager)
+		crop = Crop.objects.get(id=crop)
+		soil = Soil.objects.get(id=soil)
+		calib = CalibrationConstant.objects.get(id=calib)
+		fieldunit = FieldUnit.objects.get(id=fieldunit)
 
 		form = WAISSystemsForm(request.POST)
 		waiss, created = WAISSystems.objects.get_or_create(name=request.POST.get('name'))
