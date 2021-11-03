@@ -27,6 +27,9 @@
             <div class="row">
               <div class="col">{{form.date_transplanted|as_crispy_field }}</div>
             </div>
+            <div class="row">
+              <div class="col">{{form.fieldunit|as_crispy_field }}</div>
+            </div>
             <div class="row form-group">
               <div class="col-md">
                 <label class="mb-0 small">Farm*</label>
@@ -46,7 +49,7 @@
               </div>
               <div class="col-md">
                 <label class="mb-0 small">Farm Manager*</label>
-                <select class="form-control" name="farm_manager" id="id_farm_manager">
+                <select class="select form-control custom-select" name="farm_manager" id="id_farm_manager">
                   {% if farm_manager_ses %}
                   <option value="{{farm_manager_ses}}">{{ses_farm_manager}}</option>
                   {% else %}
@@ -64,7 +67,7 @@
             <div class="row form-group">
               <div class="col-md">
                 <label class="mb-0 small">Crop*</label>
-                <select class="form-control" name="crop" id="id_crop">
+                <select class="select form-control custom-select" name="crop" id="id_crop">
                   {% if crop_ses %}
                   <option value="{{crop_ses}}">{{ses_crop}}</option>
                   {% else %}
@@ -80,7 +83,7 @@
               </div>
               <div class="col-md">
                 <label class="mb-0 small">Soil*</label>
-                <select class="form-control" name="soil" id="id_soil">
+                <select class="select form-control custom-select" name="soil" id="id_soil">
                   {% if soil_ses %}
                   <option value="{{soil_ses}}">{{ses_soil}}</option>
                   {% else %}
@@ -98,7 +101,7 @@
             <div class="row form-group">
               <div class="col-md">
                 <label class="mb-0 small">Field Unit*</label>
-                <select class="form-control" name="fieldunit" id="id_fieldunit">
+                <select class="select form-control custom-select" name="fieldunit" id="id_fieldunit">
                   {% if fieldunit_ses %}
                   <option value="{{fieldunit_ses}}">{{ses_fieldunit}}</option>
                   {% else %}
@@ -114,7 +117,7 @@
               </div>
               <div class="col-md">
                 <label class="mb-0 small">Calibration Equation*</label>
-                <select class="form-control" name="calib" id="id_calib">
+                <select class="select form-control custom-select" name="calib" id="id_calib">
                   {% if calib_ses %}
                   <option value="{{calib_ses}}">{{ses_calib}}</option>
                   {% else %}
@@ -156,7 +159,7 @@
                 <label class="mb-0 small">Basin*</label>
               </div>
               <div class="col-md">
-                <select class="form-control" name="basin" id="id_basin">
+                <select class="select form-control custom-select" name="basin" id="id_basin">
                   {% if basin_ses %}
                   <option value="{{basin_ses}}">{{ses_basin}}</option>
                   {% else %}
@@ -174,7 +177,7 @@
                 <label class="mb-0 small">Border*</label>
               </div>
               <div class="col-md">
-                <select class="form-control" name="border" id="id_border">
+                <select class="select form-control custom-select" name="border" id="id_border">
                   {% if border_ses %}
                   <option value="{{border_ses}}">{{ses_border}}</option>
                   {% else %}
@@ -192,7 +195,7 @@
                 <label class="mb-0 small">Furrow*</label>
               </div>
               <div class="col-md">
-                <select class="form-control" name="furrow" id="id_furrow">
+                <select class="select form-control custom-select" name="furrow" id="id_furrow">
                   {% if furrow_ses %}
                   <option value="{{furrow_ses}}">{{ses_furrow}}</option>
                   {% else %}
@@ -210,7 +213,7 @@
                 <label class="mb-0 small">Sprinkler*</label>
               </div>
               <div class="col-md">
-                <select class="form-control" name="sprinkler" id="id_sprinkler">
+                <select class="select form-control custom-select" name="sprinkler" id="id_sprinkler">
                   {% if sprinkler_ses %}
                   <option value="{{sprinkler_ses}}">{{ses_sprinkler}}</option>
                   {% else %}
@@ -228,7 +231,7 @@
                 <label class="mb-0 small">Drip*</label>
               </div>
               <div class="col-md">
-                <select class="form-control" name="drip" id="id_drip">
+                <select class="select form-control custom-select" name="drip" id="id_drip">
                   {% if drip_ses %}
                   <option value="{{drip_ses}}">{{ses_drip}}</option>
                   {% else %}
@@ -262,7 +265,10 @@
 {% block bottom_script_block %}
 <script type="text/javascript">
 $(document).ready(function () {
-  var fieldunit = {{fieldunit_ses}};
+  var e = document.getElementById("id_fieldunit");
+  e.options[e.selectedIndex].value = {{fieldunit_ses}};
+  e.options[e.selectedIndex].text = {{ses_fieldunit}}
+
   var farm = {{farm_ses}};
   var farm_manager = {{farm_manager_ses}};
 	var crop = {{crop_ses}};
@@ -274,13 +280,6 @@ $(document).ready(function () {
 	var furrow = {{furrow_ses}};
 	var drip = {{drip_ses}};
 	var sprinkler = {{sprinkler_ses}}; 
-
-  selectElement('id_fieldunit', fieldunit)
-
-  function selectElement(id, valueToSelect) {    
-    let element = document.getElementById(id);
-    element.value = valueToSelect;
-  }
 }
 </script>
 {% endblock %}
