@@ -24,8 +24,8 @@
           {% csrf_token %} 
           {% for form in formset %}
           <div class="row">
-              <div class="col-md d-flex align-items-center mt-3">
-                  <div class="btn btn-sm btn-outline-info"><b>Sensor #{{forloop.counter}}</b></div>
+              <div class="col-md-1 d-flex align-items-center mt-3">
+                  <div class="btn btn-sm btn-outline-info"><b>#{{forloop.counter}}</b></div>
               </div>
               <div class="hidden">{{form.id|as_crispy_field}}</div>
               <div class="col-md small">{{form.fieldunit|as_crispy_field}}</div>
@@ -43,7 +43,10 @@
       <div class="col-md-4">
         <small><b>Succesfully created sensors.</b></small><hr>
         {% for sensor in sensors_list %}
-        <div class="row justify-content-md-right">
+        <div class="row">
+          <div class="col-md-1 d-flex align-items-center mt-3">
+            <div class="btn btn-sm btn-outline-info"><b>#{{forloop.counter}}</b></div>
+          </div>
           <div class="col-md">{{sensor.fieldunit}}</div>
           <div class="col-md">{{sensor.name}}</div> 
           <div class="col-md-2">{{sensor.depth}}</div>
@@ -56,7 +59,7 @@
         </div>
         {% endfor%}
         <small>
-          <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. Please delete one (1) sensor.</i></span>
+          <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. Please delete the excess sensor(s).</i></span>
         </small>
       </div>
       {% endif %}
