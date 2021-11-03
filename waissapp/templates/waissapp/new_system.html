@@ -266,17 +266,8 @@
 <script>
   // Run on page load
   window.onload = function() {
-      $('#id_farm').val({{farm_ses}});
-      $('#id_farm_manager').val({{farm_manager_ses}});
-      $('#id_crop').val({{crop_ses}});
-      $('#id_soil').val({{soil_ses}});
-      $('#id_calib').val({{calib_ses}});
-      $('#id_fieldunit').val({{fieldunit_ses}});
-      $('#id_basin').val({{basin_ses}});
-      $('#id_border').val({{border_ses}});
-      $('#id_furrow').val({{furrow_ses}});
-      $('#id_sprinkler').val({{sprinkler_ses}});
-      $('#id_drip').val({{drip_ses}});
+    var fieldunit = {{fieldunit_ses}}
+    $('input[name="fieldunit"]').val(fieldunit);
   }
 </script>
 {% endblock %}
