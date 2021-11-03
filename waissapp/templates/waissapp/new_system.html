@@ -263,12 +263,7 @@
 {% endblock %}
 
 {% block bottom_script_block %}
-<script type="text/javascript">
-$(document).ready(function () {
-  var e = document.getElementById("id_fieldunit");
-  e.value = {{fieldunit_ses}};
-  e.text = {{ses_fieldunit}}
-
+<script>
   var farm = {{farm_ses}};
   var farm_manager = {{farm_manager_ses}};
 	var crop = {{crop_ses}};
@@ -280,7 +275,10 @@ $(document).ready(function () {
 	var furrow = {{furrow_ses}};
 	var drip = {{drip_ses}};
 	var sprinkler = {{sprinkler_ses}}; 
+
+  $(document).ready(function() {
+    $("#fieldunit").val('fieldunit');
+  }
 }
 </script>
 {% endblock %}
-    
