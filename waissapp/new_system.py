@@ -219,11 +219,5 @@ def new_system(request):
 		"ses_furrow": ses_furrow,
 		"ses_sprinkler": ses_sprinkler,
 		"ses_drip": ses_drip,
-		"empty_farm": empty_farm,
-		"empty_farm_manager": empty_farm_manager,
-		"empty_crop": empty_crop,
-		"empty_soil": empty_soil,
-		"empty_calib": empty_calib,
-		"empty_fieldunit": empty_fieldunit,
 	}
 	return render(request, 'waissapp/new_system.html', context)
