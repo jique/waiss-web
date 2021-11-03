@@ -114,7 +114,7 @@ def new_system(request):
 	drip = request.POST.get('drip')
 
 	form = WAISSystemsForm(request.POST or None)
-	if request.method == 'POST':  # data sent by user
+	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		farm = Farm.objects.get(id=farm)
 		farm_manager = Personnel.objects.get(id=farm_manager)
 		crop = Crop.objects.get(id=crop)

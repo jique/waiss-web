@@ -119,23 +119,22 @@
             </div>
             <div class="row form-group"> <!--SENSORS -->
               <div class="col-md-6">
-                {% for sensor in sensors_list %}
-                <div class="row">
-                  <div class="col"><b>#{{forloop.counter}}</b>&emsp;{{sensor.name}}</div>
-                  <div class="col">
-                    <form class="form-group" action="" method="POST">
-                      {% csrf_token %}
-                      {{sensor.depth}}&emsp;
-                      <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
-                    </form>
-                  </div>
-                </div>
-                {% endfor%}
                 {% if excess == True %}
                 <small>
                   <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. Please delete the excess sensor(s).</i></span>
                 </small>
                 {% endif %}
+                {% for sensor in sensors_list %}
+                <div class="row">
+                  <div class="col small">Sensor #{{forloop.counter}}&emsp;{{sensor.name}}&emsp;{{sensor.depth}}</div>
+                  <div class="col small">
+                    <form class="form-group" action="" method="POST">
+                      {% csrf_token %}
+                      <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
+                    </form>
+                  </div>
+                </div>
+                {% endfor%}
               </div>
             </div>
             {% if basin_ses %}
@@ -238,7 +237,7 @@
             {% endif %}
             <hr>
             <div class="text-center">
-              <input type="submit" value="Finish!" class="btn btn-info">
+              <input type="submit" value="Finish!" class="btn btn-info" name="btn_submit">
             </div>
           </form>
         </div>
