@@ -552,7 +552,6 @@ def new_sensor(request):
 		excess = True
 	else:
 		excess= False
-	print(excess)
 	if request.method == 'POST' and 'delete_sensor' in request.POST:
 		sensor_id = request.POST.get('delete_sensor')
 		sensor_obj = Sensor.objects.get(id=sensor_id)

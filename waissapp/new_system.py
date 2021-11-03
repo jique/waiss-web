@@ -1,7 +1,7 @@
 #WAISSYSTEMS
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
-from .models import Personnel, Farm, FieldUnit, Soil, Crop, CalibrationConstant, WAISSystems, Basin, Furrow, Border, Drip, Sprinkler
+from .models import Personnel, Farm, FieldUnit, Sensor, Soil, Crop, CalibrationConstant, WAISSystems, Basin, Furrow, Border, Drip, Sprinkler
 from .forms import WAISSystemsForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -184,6 +184,14 @@ def new_system(request):
 		ses_sprinkler = Sprinkler.objects.get(id=sprinkler_ses)
 	if drip_ses != None:
 		ses_drip = Drip.objects.get(id=drip_ses)
+
+	sensors_list = Sensor.objects.filter(fieldunit__in=fieldunit)
+	num_sensors = len(sensors_list)
+	if num_sensors > 3:
+		excess = True
+	else:
+		excess= False
+
 	context = {
 		"form": form,
 		"basin_ses": basin_ses,
@@ -219,5 +227,7 @@ def new_system(request):
 		"ses_furrow": ses_furrow,
 		"ses_sprinkler": ses_sprinkler,
 		"ses_drip": ses_drip,
+		"sensor_list": sensors_list,
+		"excess": excess,
 	}
 	return render(request, 'waissapp/new_system.html', context)

@@ -215,6 +215,8 @@ def index(request):
 
 	crop_model = crop.root_growth_model # for computation of the actual depth of rootzone
 	crop_drz = float(crop.drz)
+	if crop.root_ini == None:
+		crop.root_ini = 0
 	crop_ro = float(crop.root_ini)
 
 	def calculateDRZ(crop_dat):
