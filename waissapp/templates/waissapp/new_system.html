@@ -264,11 +264,10 @@
 
 {% block bottom_script_block %}
 <script>
-  // Run on page load
-  window.onload = function() {
-    var fieldunit = {{fieldunit_ses}}
-    $('input[name="fieldunit"]').val(fieldunit);
-  }
+$(document).ready(function () {
+  var fieldunit = {{fieldunit_ses}}
+  $('input[name="fieldunit"]').val(fieldunit);
+}
 </script>
 {% endblock %}
     
