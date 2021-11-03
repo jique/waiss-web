@@ -546,11 +546,15 @@ def new_sensor(request):
 		fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, max_num=3, can_delete=True)
 		formset = SensorFormSet(queryset=Sensor.objects.filter(fieldunit__in=fieldunit))
-		
-	if request.method == 'POST':
+	num_sensors = len(Sensor.objects.filter(fieldunit__in=fieldunit))
+	if request.method == 'POST' and 'delete_sensor' in request.POST:
+		sensor_id = request.POST.get('delete_sensor')
+		sensor_obj = Sensor.objects.get(id=sensor_id)
+		sensor_obj.delete()
+		return redirect('/new_sensor/')
+	if request.method == 'POST' and 'btn_submit' in request.POST:
 		formset = SensorFormSet(request.POST)
 		if formset.is_valid():
-			formset.save()
 			for form in formset:
 				data = {
 					'name': form.cleaned_data.get('name'),
@@ -565,6 +569,7 @@ def new_sensor(request):
 		"formset": formset,
 		"fieldunit_list": fieldunit_list,
 		"fieldunit_ses": fieldunit_ses,
+		"num_sensors": num_sensors,
 	}
 
 	return render(request, 'waissapp/new_sensor.html', context)

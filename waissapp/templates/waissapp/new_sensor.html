@@ -30,13 +30,13 @@
                 <div class="col-md small">{{form.name|as_crispy_field}}</div> 
                 <div class="col-md small">{{form.depth|as_crispy_field}}</div>
                 {% if fieldunit_ses %}
-                <div class="col-md-1 d-flex align-items-center mt-3">{{form.DELETE}}&nbsp;<b><i><small>Delete</small></i></b></div>
+                <div class="col-md-1 d-flex align-items-center mt-3"><button class="btn text-danger btn-sm" name="delete_sensor" value="{{form.id}}"><i class="fas fa-trash"></i></button>
                 {% endif %}
               </div>
               {% endfor%}
               <hr>
               <div class="text-center">
-                <input type="submit" value="Next" class="btn btn-info">
+                <input type="submit" value="Next" class="btn btn-info" name="btn_submit">
             </div>
       </div>
   </div>
