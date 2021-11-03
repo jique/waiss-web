@@ -250,11 +250,16 @@
             {% endif %}
             <hr>
             <div class="text-center">
-              <input type="submit" value="Finish!" class="btn btn-info">
+              <input type="submit" value="Finish!" class="btn btn-info" onclick="myFunction()">
             </div>
           </form>
         </div>
       </div>
     </div>
 </div>
+<script>
+  function myFunction() {
+    alert("Complete required fields!");
+  }
+</script>
 {% endblock %}
