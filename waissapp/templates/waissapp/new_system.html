@@ -260,8 +260,10 @@
 
 <script type="text/javascript">
   function validateForm(form) {
-    if(document.getElementById('id_farm').value=="") {
+    var farm = document.getElementById('id_farm')
+    if(farm.value=="") {
       alert("Complete required fields.");
+      farm.focus();
       return false;
     }
   }
