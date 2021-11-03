@@ -539,14 +539,15 @@ def new_sensor(request):
 	current_user = request.user
 	fieldunit_ses = request.session.get('fieldunit_ses', None)
 	fieldunit_list = FieldUnit.objects.filter(author=current_user)
+	fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
 	if fieldunit_ses == None:
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, can_delete=True)
 		formset = SensorFormSet(queryset=Sensor.objects.none())
 	else:
-		fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, max_num=3, can_delete=True)
 		formset = SensorFormSet(queryset=Sensor.objects.filter(fieldunit__in=fieldunit))
-		num_sensors = len(Sensor.objects.filter(fieldunit__in=fieldunit))
+	sensors_list = Sensor.objects.filter(fieldunit__in=fieldunit)
+	num_sensors = len(sensors_list)
 	if num_sensors > 3:
 		excess = True
 	else:
@@ -556,6 +557,7 @@ def new_sensor(request):
 		sensor_obj = Sensor.objects.get(id=sensor_id)
 		sensor_obj.delete()
 		return redirect('/new_sensor/')
+
 	if request.method == 'POST' and 'btn_submit' in request.POST:
 		formset = SensorFormSet(request.POST)
 		if formset.is_valid():
@@ -574,6 +576,7 @@ def new_sensor(request):
 		"fieldunit_list": fieldunit_list,
 		"fieldunit_ses": fieldunit_ses,
 		"excess": excess,
+		"sensors_list": sensors_list
 	}
 
 	return render(request, 'waissapp/new_sensor.html', context)
