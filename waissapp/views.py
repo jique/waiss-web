@@ -489,7 +489,7 @@ def new_fieldunit(request):
 		"fieldunit_form": form,
 		"fieldunit_list": fieldunit_list,
 		"selected_fieldunit": selected_fieldunit,
-		"selected_fieldunit_text": selected_fieldunit_text
+		"selected_fieldunit_text": selected_fieldunit_text,
 	}
 
 	return render(request, 'waissapp/new_fieldunit.html', context)
