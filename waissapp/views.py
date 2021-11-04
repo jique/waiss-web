@@ -211,7 +211,10 @@ def new_crop(request):
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = CropForm(request.POST)
 		personal_get = request.POST.get('crop')
-		personal_value = Crop.objects.filter(crop=personal_get).first().personal
+		try:
+			personal_value = Crop.objects.get(crop=personal_get).personal
+		except:
+			personal_value = True
 		if personal_value == False:
 			if form.is_valid():
 				form = form.save(commit=False)
