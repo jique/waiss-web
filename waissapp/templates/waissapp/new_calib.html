@@ -39,35 +39,35 @@
                     {{calib_form.name|as_crispy_field}}
                     {{calib_form.calib_equation|as_crispy_field}}
                     <div class="row collapse" id="collapse_calib_1">
-                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = a * (reading) + b</b></small></div>
+                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = ax + b</b></small></div>
                         <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
                     </div>
                     <div class="row collapse" id="collapse_calib_2">
-                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></small></div>
+                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = ax<sup>2</sup> + bx + c</b></small></div>
                         <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_c|as_crispy_field}}</div>
                     </div>
                     <div class="row collapse" id="collapse_calib_3">
-                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></small></div>
+                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = ae<sup>b</sup> * x</b></small></div>
                         <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
                     </div>
                     <div class="row collapse" id="collapse_calib_4">
-                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = a * ln(reading) + b</b></small></div>
+                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = a * ln(x) + b</b></small></div>
                         <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
                     </div>
                     <div class="row collapse" id="collapse_calib_5">
-                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></small></div><br>
+                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = d + (a - d)/(1 + (x/c)<sup>b</sup>)</b></small></div><br>
                         <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_c|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_d|as_crispy_field}}</div>
                     </div>
                     <div class="row collapse" id="collapse_calib_6">
-                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></small></div><br>
+                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = d + (a - d)/((1 + (x/c)<sup>b</sup>))<sup>m</sup></b></small></div><br>
                         <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_c|as_crispy_field}}</div>
