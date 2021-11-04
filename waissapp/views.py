@@ -211,6 +211,7 @@ def new_crop(request):
 		selected_crop = id
 		selected_crop_text = id
 		personal = selected_crop.personal
+	print(personal)
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = CropForm(request.POST)
 		if personal == False:
