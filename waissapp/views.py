@@ -20,7 +20,7 @@ import io, csv
 from .decorators import unauthenticated_user
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from decimal import Decimal
+from django.core.exceptions import ObjectDoesNotExist
 
 @unauthenticated_user
 def register(request):
@@ -191,13 +191,11 @@ def new_crop(request):
 		form = CropForm()
 		selected_crop_text = '--choose--'
 		selected_crop = ""
-		personal = True
 	else:
 		crop_name = Crop.objects.get(id=crop_name)
 		form = CropForm(instance=crop_name)
 		selected_crop = crop_name
 		selected_crop_text = crop_name
-		personal = selected_crop.personal
 	current_user = request.user
 	current_user_list = Crop.objects.filter(author=current_user)
 	public_use_list = Crop.objects.filter(personal=False)
@@ -210,11 +208,11 @@ def new_crop(request):
 		form = CropForm(instance=id)
 		selected_crop = id
 		selected_crop_text = id
-		personal = selected_crop.personal
-	print(personal)
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = CropForm(request.POST)
-		if personal == False:
+		personal_get = request.POST.get('crop')
+		personal_value = Crop.objects.filter(crop=personal_get).first().personal
+		if personal_value == False:
 			if form.is_valid():
 				form = form.save(commit=False)
 				form.author = request.user
