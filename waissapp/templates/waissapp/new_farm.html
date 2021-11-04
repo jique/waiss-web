@@ -79,7 +79,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6"><div class="mt-2" id="tracemap" style="height:475px; width:100%;"></div></div>
+        <div class="col-lg-6"><div class="mt-2" id="tracemap" style="height:500px; width:100%;"></div></div>
       </div>
     </div>
   </div>
@@ -163,7 +163,9 @@ function buildMap(){
     });
 
     function writeResults(results) {
-        $('input[name="farm_area"]').val(parseFloat(results.area));
+        var area = results.area
+        area = +area.toFixed(4)
+        $('input[name="farm_area"]').val(parseFloat(area));
         document.getElementById('id_farm_map').value = JSON.stringify(
         {
             area: results.area,
@@ -178,8 +180,12 @@ function buildMap(){
         2
         );
         var center = L.polygon(results.points).getBounds().getCenter();
-        $('input[name="lat"]').val(parseFloat(center.lat));
-        $('input[name="long"]').val(parseFloat(center.lng));
+        var lat = center.lat;
+        var lng = center.lng;
+        lat = +lat.toFixed(4)
+        lng = +lng.toFixed(4)
+        $('input[name="lat"]').val(parseFloat(lat));
+        $('input[name="long"]').val(parseFloat(lng));
     }
 
     map.on('click', function(e){
