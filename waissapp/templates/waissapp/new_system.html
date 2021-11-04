@@ -119,12 +119,9 @@
                 <div class="text-danger text-right small"><b><span id="error_calib"></span></b></div>
               </div>
             </div>
-            {% if basin_ses %}
             <div class="row form-group">
-              <div class="col-md">
+            {% if basin_ses %}
                 <label class="mb-0 small">Basin*</label>
-              </div>
-              <div class="col-md">
                 <select class="select form-control custom-select" name="basin" id="id_basin">
                   {% if basin_ses %}
                   <option value="{{basin_ses}}">{{ses_basin}}</option>
@@ -135,14 +132,8 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-              </div>
-            </div>
             {% elif border_ses %}
-            <div class="row form-group">
-              <div class="col-md">
                 <label class="mb-0 small">Border*</label>
-              </div>
-              <div class="col-md">
                 <select class="select form-control custom-select" name="border" id="id_border">
                   {% if border_ses %}
                   <option value="{{border_ses}}">{{ses_border}}</option>
@@ -153,14 +144,8 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-              </div>
-            </div>
             {% elif furrow_ses %}
-            <div class="row form-group">
-              <div class="col-md">
                 <label class="mb-0 small">Furrow*</label>
-              </div>
-              <div class="col-md">
                 <select class="select form-control custom-select" name="furrow" id="id_furrow">
                   {% if furrow_ses %}
                   <option value="{{furrow_ses}}">{{ses_furrow}}</option>
@@ -171,14 +156,8 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-              </div>
-            </div>
             {% elif sprinkler_ses %}
-            <div class="row form-group">
-              <div class="col-md">
                 <label class="mb-0 small">Sprinkler*</label>
-              </div>
-              <div class="col-md">
                 <select class="select form-control custom-select" name="sprinkler" id="id_sprinkler">
                   {% if sprinkler_ses %}
                   <option value="{{sprinkler_ses}}">{{ses_sprinkler}}</option>
@@ -189,14 +168,8 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-              </div>
-            </div>
             {% elif drip_ses %}
-            <div class="row form-group">
-              <div class="col-md">
                 <label class="mb-0 small">Drip*</label>
-              </div>
-              <div class="col-md">
                 <select class="select form-control custom-select" name="drip" id="id_drip">
                   {% if drip_ses %}
                   <option value="{{drip_ses}}">{{ses_drip}}</option>
@@ -207,7 +180,6 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-              </div>
             </div>
             {% endif %}
             <hr>
