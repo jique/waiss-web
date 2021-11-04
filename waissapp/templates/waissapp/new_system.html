@@ -246,7 +246,7 @@
                 <td class="align-middle ">{{sensor.name}}</td>
                 <td class="align-middle ">{{sensor.depth}}</td>
                 <td class="align-middle ">
-                  <form class="form-group" action="" method="POST">
+                  <form class="" action="" method="POST">
                     {% csrf_token %}
                     <button class="btn btn-sm text-danger" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
                   </form>
@@ -308,7 +308,7 @@
       e_fieldunit.innerText = "Fieldunit field is required."
       fieldunit.focus();
       return false;
-    } else if ("{{excess}}" == True) {
+    } else if ("{{excess}}" == "True") {
       fieldunit.focus();
       return false;
     } else {

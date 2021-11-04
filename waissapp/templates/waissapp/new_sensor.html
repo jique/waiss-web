@@ -62,7 +62,7 @@
                 <td class="align-middle ">{{sensor.name}}</td>
                 <td class="align-middle ">{{sensor.depth}}</td>
                 <td class="align-middle ">
-                  <form class="form-group" action="" method="POST">
+                  <form class="" action="" method="POST">
                     {% csrf_token %}
                     <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button></td>
                   </form>
