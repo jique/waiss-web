@@ -461,7 +461,7 @@ def new_fieldunit(request):
 	
 	if request.method == 'POST' and 'loadData' in request.POST:
 		pk=request.POST.get('loadData')
-		id = FieldUnit.objects.get(soiltype=pk)
+		id = FieldUnit.objects.get(name=pk)
 		form = FieldUnitForm(instance=id)
 		selected_fieldunit = id
 		selected_fieldunit_text = id
