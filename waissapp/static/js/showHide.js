@@ -258,7 +258,7 @@ function showHide9() {
     $("#collapse_irrig_No").collapse('show');
     $('#id_nozzle_diameter').prop('required', true);
     $('#id_operating_pressure').prop('required', true);
-    $('#id_discharge').pop('required', false);
+    $('#id_discharge').prop('required', false);
   }
 }
 //add_drip
@@ -272,10 +272,10 @@ function showHide10() {
   var checkedValue = $("#id_bln_ii").val();
   if (checkedValue == "yes") {
     $("#collapse_irrig_II").collapse('show');
-    $('#id_irrigation_interval').pop('required', true);
+    $('#id_irrigation_interval').prop('required', true);
   } else if (checkedValue == "no") {
     $("#collapse_irrig_II").collapse('hide');
-    $('#id_irrigation_interval').pop('required', false);
+    $('#id_irrigation_interval').prop('required', false);
   }
 }
 //new_irrigation
