@@ -466,7 +466,7 @@ def new_fieldunit(request):
 		selected_fieldunit = id
 		selected_fieldunit_text = id
 
-	if request.method == 'POST':  # data sent by user
+	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = FieldUnitForm(request.POST)
 		fieldunit, created = FieldUnit.objects.get_or_create(name=request.POST.get('name'))
 		fieldunit.usk = request.POST.get('usk')

@@ -19,7 +19,7 @@
             <div class="col-md-4">
                 {% if fieldunit_list %}
                 <div class="row bg-light">
-                    <form method="post" class="form-group col-md">
+                    <form method="post" class="form-group col-md" name="loadData">
                     {% csrf_token %}
                     <small><b>Load existing fieldunits.</b></small><hr>
                     <select class="form-control" id="selected_fieldunit" name="loadData" onchange="this.form.submit()">
@@ -48,7 +48,7 @@
                     </div>
                     <hr>
                     <div class="text-center">
-                        <input type="submit" value="Next" class="btn btn-info">
+                        <input type="submit" value="Next" class="btn btn-info" name"btn_submit">
                     </div>
                 </form>
             </div>
