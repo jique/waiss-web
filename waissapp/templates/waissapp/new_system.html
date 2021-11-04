@@ -248,9 +248,10 @@
                 <td class="align-middle ">
                   <form class="form-group" action="" method="POST">
                     {% csrf_token %}
-                    <button class="btn text-danger btn-sm d-flex align-items-center mt-3" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button></td>
+                    <button class="text-danger" name="delete_sensor" value={{sensor.id}}><span class="glyphicon glyphicon-th"></span></button>
                   </form>
-                </tr>
+                </td>
+              </tr>
                 {% endfor%}
             </table>
           </div>
