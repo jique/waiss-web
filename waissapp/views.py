@@ -446,9 +446,9 @@ def edit_soil(request, id):
 #FIELDUNIT_PARAMETERS
 @login_required
 def new_fieldunit(request):
+	current_user = request.user
 	fieldunit_name = request.session.get('fieldunit_ses', None)
-	#sessions and list
-	fieldunit_list = FieldUnit.objects.filter(author=request.user)
+	fieldunit_list = FieldUnit.objects.filter(author=current_user)
 	if fieldunit_name == None:
 		form = FieldUnitForm()
 		selected_fieldunit = ""
