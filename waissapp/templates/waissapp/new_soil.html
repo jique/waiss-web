@@ -16,8 +16,8 @@
     <div class="card-header rounded-0 border-0"><small>Soil & Physical Properties</small></div>
     <div class="card-body">
         <div class="row">
+          {% if soil_list %}
           <div class="col-md-4">
-            {% if soil_list %}
             <div class="row bg-light">
               <form method="post" class="form-group col-md">
                 {% csrf_token %}
@@ -30,8 +30,8 @@
                 </select>
               </form>
             </div>
-            {% endif %}
           </div>
+          {% endif %}
           <div class="col-md">
             <form class="form-group" action="" method="post">
               {% csrf_token %}

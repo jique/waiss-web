@@ -46,7 +46,7 @@
           {% endif %}
           <form method="post" class="form-group">
             {% csrf_token %}
-            <hr>
+            <small><b>Fields with asterisks (*) are required.</b></small><hr>
             {{ farm_form.name|as_crispy_field }}
             <div class="row">
               <div class="col-md">{{ farm_form.brgy|as_crispy_field }}</div>

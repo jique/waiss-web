@@ -17,22 +17,22 @@
     <div class="card-header border-0 rounded-0"><small>Name & Mobile Number to whom advisories are sent.</small></div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-4">
         {% if personnel_list %}
-        <div class="row bg-light">
-          <form method="post" class="form-group col-md">
-            {% csrf_token %}
-            <small><b>Load existing personnel.</b></small><hr>
-            <select class="form-control" id="selected_personnel" name="loadData" onchange="this.form.submit()">
-              <option value={{selected_id}}>{{selected_personnel}}</option>
-              {% for personnel in personnel_list %}
-              <option value="{{personnel.id}}">{{personnel.first_name}} {{personnel.last_name}}</option>
-              {% endfor %}
-            </select>
-          </form>
+        <div class="col-md-4">
+          <div class="row bg-light">
+            <form method="post" class="form-group col-md">
+              {% csrf_token %}
+              <small><b>Load existing personnel.</b></small><hr>
+              <select class="form-control" id="selected_personnel" name="loadData" onchange="this.form.submit()">
+                <option value={{selected_id}}>{{selected_personnel}}</option>
+                {% for personnel in personnel_list %}
+                <option value="{{personnel.id}}">{{personnel.first_name}} {{personnel.last_name}}</option>
+                {% endfor %}
+              </select>
+            </form>
+          </div>
         </div>
         {% endif %}
-        </div>
         <div class="col-md">
           <form method="post" class="form-group">
             {% csrf_token %}
