@@ -546,12 +546,14 @@ def new_sensor(request):
 	else:
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, max_num=3, can_delete=True)
 		formset = SensorFormSet(queryset=Sensor.objects.filter(fieldunit__in=fieldunit))
+	
 	sensors_list = Sensor.objects.filter(fieldunit__in=fieldunit)
 	num_sensors = len(sensors_list)
 	if num_sensors > 3:
 		excess = True
 	else:
 		excess= False
+
 	if request.method == 'POST' and 'delete_sensor' in request.POST:
 		sensor_id = request.POST.get('delete_sensor')
 		sensor_obj = Sensor.objects.get(id=sensor_id)
@@ -572,9 +574,13 @@ def new_sensor(request):
 				sensors, created = Sensor.objects.get_or_create(**data)
 				sensors.depth = form.cleaned_data.get('depth')
 				sensors.save()
-			if excess == True:
+			sensors_list = Sensor.objects.filter(fieldunit__in=fieldunit)
+			num_sensors = len(sensors_list)
+			if num_sensors > 3:
+				excess = True
 				return redirect('/new_sensor/')
 			else:
+				excess= False
 				return redirect('/new_system/')
 	
 	context = {
