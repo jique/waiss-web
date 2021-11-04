@@ -41,22 +41,36 @@
       </div>
       {% if excess == True %}
       <div class="col-md-4">
-        <small><b>Succesfully created sensors.</b></small><hr>
-        {% for sensor in sensors_list %}
-        <div class="row">
-          <div class="col"><b>#{{forloop.counter}}</b>&emsp;{{sensor.name}}</div>
-          <div class="col">
-            <form class="form-group" action="" method="POST">
-              {% csrf_token %}
-              {{sensor.depth}}&emsp;
-              <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
-            </form>
-          </div>
-        </div>
-        {% endfor%}
+        <small><b>Error!</b></small><hr>
         <small>
           <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. Please delete the excess sensor(s).</i></span>
         </small>
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <table class="table table-hover border-bottom-secondary sensor-table" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                  <tr class="text-center">
+                    <th class="align-top">#</th>
+                    <th class="align-top ">Sensor</th>
+                    <th class="align-top ">Depth (m)</th>
+                    <th class="align-top ">Delete</th>
+                  </tr>
+              </thead>
+              {% for sensor in sensors_list %}
+              <tr class="text-center">
+                <td class="align-middle ">{{forloop.counter}}</td>
+                <td class="align-middle ">{{sensor.name}}</td>
+                <td class="align-middle ">{{sensor.depth}}</td>
+                <td class="align-middle ">
+                  <form class="form-group" action="" method="POST">
+                    {% csrf_token %}
+                    <button class="btn text-danger btn-sm d-flex align-items-center mt-3" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button></td>
+                  </form>
+                </tr>
+                {% endfor%}
+            </table>
+          </div>
+        </div>
       </div>
       {% endif %}
     </div>
