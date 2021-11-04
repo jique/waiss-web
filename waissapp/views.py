@@ -191,17 +191,19 @@ def new_crop(request):
 		form = CropForm()
 		selected_crop_text = '--choose--'
 		selected_crop = ""
+		personal = True
 	else:
 		crop_name = Crop.objects.get(id=crop_name)
 		form = CropForm(instance=crop_name)
 		selected_crop = crop_name
 		selected_crop_text = crop_name
+		personal = selected_crop.personal
 	current_user = request.user
 	current_user_list = Crop.objects.filter(author=current_user)
 	public_use_list = Crop.objects.filter(personal=False)
 	combined_list = set(public_use_list) - set(current_user_list)
 	crop_list = sorted(chain(current_user_list, combined_list), key=attrgetter('crop'))
-	personal = True
+	
 	if request.method == 'POST' and 'loadData' in request.POST:
 		pk=request.POST.get('loadData')
 		id = Crop.objects.get(crop=pk)
