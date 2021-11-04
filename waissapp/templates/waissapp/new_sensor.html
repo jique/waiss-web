@@ -64,7 +64,7 @@
                 <td class="align-middle ">
                   <form class="form-group" action="" method="POST">
                     {% csrf_token %}
-                    <button class="btn text-danger btn-sm d-flex align-items-center mt-3" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button></td>
+                    <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button></td>
                   </form>
                 </tr>
                 {% endfor%}
