@@ -59,12 +59,16 @@
                         <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
                     </div>
-                    <div class="row collapse" id="collapse_calib_5">
-                        <small><b>MC<sub>v</sub> = d + (a - d)/(1 + (x/c)<sup>b</sup>)</b></small>
-                        <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
-                        <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
-                        <div class="col-md">{{calib_form.coeff_c|as_crispy_field}}</div>
-                        <div class="col-md">{{calib_form.coeff_d|as_crispy_field}}</div>
+                    <div class="collapse" id="collapse_calib_5">
+                        <div class="row">
+                            <small><b>MC<sub>v</sub> = d + (a - d)/(1 + (x/c)<sup>b</sup>)</b></small>
+                        </div>
+                        <div class="row">
+                            <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
+                            <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
+                            <div class="col-md">{{calib_form.coeff_c|as_crispy_field}}</div>
+                            <div class="col-md">{{calib_form.coeff_d|as_crispy_field}}</div>
+                        </div>
                     </div>
                     <div class="row collapse" id="collapse_calib_6">
                         <small><b>MC<sub>v</sub> = d + (a - d)/((1 + (x/c)<sup>b</sup>))<sup>m</sup></b></small>
