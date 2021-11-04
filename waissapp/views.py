@@ -210,59 +210,67 @@ def new_crop(request):
 
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = CropForm(request.POST)
-		crop, created = Crop.objects.get_or_create(crop=request.POST.get('crop'))
-		crop.growingperiod = request.POST.get('growingperiod')
-		crop.root_ini = request.POST.get('root_ini')
-		crop.drz = request.POST.get('drz')
-		crop.mad = request.POST.get('mad')
-		crop.root_growth_model = request.POST.get('root_growth_model')
-		crop.select_drip = request.POST.get('select_drip')
-		peak_Etcrop = request.POST.get('peak_Etcrop')
-		transpiration_ratio = request.POST.get('transpiration_ratio')
-		eqnform = request.POST.get('eqnform')
-		root_a = request.POST.get('root_a')
-		root_b = request.POST.get('root_b')
-		root_c = request.POST.get('root_c')
-		kc_ini = request.POST.get('kc_ini')
-		kc_mid = request.POST.get('kc_mid')
-		kc_end = request.POST.get('kc_end')
-		kc_cc_1 = request.POST.get('kc_cc_1')
-		kc_cc_2 = request.POST.get('kc_cc_2')
-		kc_cc_3 = request.POST.get('kc_cc_3')
-		source = request.POST.get('source')
-		crop.author = request.user
-		for key in request.POST:
-			value = request.POST.get(key)
-			if value != "":
-				if key == 'peak_Etcrop':
-					crop.peak_Etcrop = peak_Etcrop
-				if key == 'transpiration_ratio':
-					crop.transpiration_ratio = transpiration_ratio
-				if key == 'eqnform':
-					crop.eqnform = eqnform
-				if key == 'root_a':
-					crop.root_a = root_a
-				if key == 'root_b':
-					crop.root_b = root_b
-				if key == 'root_c':
-					crop.root_c = root_c
-				if key == 'kc_ini':
-					crop.kc_ini = kc_ini
-				if key == 'kc_mid':
-					crop.kc_mid = kc_mid
-				if key == 'kc_end':
-					crop.kc_end = kc_end
-				if key == 'kc_cc_1':
-					crop.kc_cc_1 = kc_cc_1
-				if key == 'kc_cc_2':
-					crop.kc_cc_2 =kc_cc_2
-				if key == 'kc_cc_3':
-					crop.kc_cc_3 = kc_cc_3
-				if key == 'source':
-					crop.source = source
-		crop.save()
-		request.session['crop_ses'] = crop.id
-		return redirect('/new_soil/')
+		if selected_crop.personal == False:
+			if form.is_valid():
+				form = form.save(commit=False)
+				form.author = request.user
+				form.save()
+				request.session['crop_ses'] = form.id
+				return redirect('/new_soil/')
+		else:
+			crop, created = Crop.objects.get_or_create(crop=request.POST.get('crop'))
+			crop.growingperiod = request.POST.get('growingperiod')
+			crop.root_ini = request.POST.get('root_ini')
+			crop.drz = request.POST.get('drz')
+			crop.mad = request.POST.get('mad')
+			crop.root_growth_model = request.POST.get('root_growth_model')
+			crop.select_drip = request.POST.get('select_drip')
+			peak_Etcrop = request.POST.get('peak_Etcrop')
+			transpiration_ratio = request.POST.get('transpiration_ratio')
+			eqnform = request.POST.get('eqnform')
+			root_a = request.POST.get('root_a')
+			root_b = request.POST.get('root_b')
+			root_c = request.POST.get('root_c')
+			kc_ini = request.POST.get('kc_ini')
+			kc_mid = request.POST.get('kc_mid')
+			kc_end = request.POST.get('kc_end')
+			kc_cc_1 = request.POST.get('kc_cc_1')
+			kc_cc_2 = request.POST.get('kc_cc_2')
+			kc_cc_3 = request.POST.get('kc_cc_3')
+			source = request.POST.get('source')
+			crop.author = request.user
+			for key in request.POST:
+				value = request.POST.get(key)
+				if value != "":
+					if key == 'peak_Etcrop':
+						crop.peak_Etcrop = peak_Etcrop
+					if key == 'transpiration_ratio':
+						crop.transpiration_ratio = transpiration_ratio
+					if key == 'eqnform':
+						crop.eqnform = eqnform
+					if key == 'root_a':
+						crop.root_a = root_a
+					if key == 'root_b':
+						crop.root_b = root_b
+					if key == 'root_c':
+						crop.root_c = root_c
+					if key == 'kc_ini':
+						crop.kc_ini = kc_ini
+					if key == 'kc_mid':
+						crop.kc_mid = kc_mid
+					if key == 'kc_end':
+						crop.kc_end = kc_end
+					if key == 'kc_cc_1':
+						crop.kc_cc_1 = kc_cc_1
+					if key == 'kc_cc_2':
+						crop.kc_cc_2 =kc_cc_2
+					if key == 'kc_cc_3':
+						crop.kc_cc_3 = kc_cc_3
+					if key == 'source':
+						crop.source = source
+			crop.save()
+			request.session['crop_ses'] = crop.id
+			return redirect('/new_soil/')
 
 	context = {
 		'crop_form': form,
