@@ -219,48 +219,49 @@
       {% if excess or no_irrigation %}
       <div class="col-md-4">
         <small class="text-danger"><b>Warnings/Errors!</b></small><hr>
-        {% if excess == True %}<!--SENSOR ERROR-->
         <div class="card shadow mb-4">
           <div class="card-body">
+            {% if excess == True %}<!--SENSOR ERROR-->
             <small>
               <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. 
                 <b>Please delete the excess sensor(s).</b></i></span>
             </small>
-            <table class="table table-hover border-bottom-secondary table-sm small" width="100%" cellspacing="0">
-              <thead>
-                  <tr class="text-center">
-                    <th class="align-top">#</th>
-                    <th class="align-top ">Sensor</th>
-                    <th class="align-top ">Depth (m)</th>
-                    <th class="align-top ">Delete</th>
-                  </tr>
-              </thead>
-              {% for sensor in sensors_list %}
-              <tr class="text-center">
-                <td class="align-middle ">{{forloop.counter}}</td>
-                <td class="align-middle ">{{sensor.name}}</td>
-                <td class="align-middle ">{{sensor.depth}}</td>
-                <td class="align-middle ">
-                  <form class="" action="" method="POST">
-                    {% csrf_token %}
-                    <button class="btn btn-sm text-danger" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
-                  </form>
-                </td> 
-              </tr>
-              {% endfor%}
-            </table>
+            <div class="table-responsive-md">
+              <table class="table table-hover border-bottom-secondary table-sm small" width="100%" cellspacing="0">
+                <thead>
+                    <tr class="text-center">
+                      <th class="align-top">#</th>
+                      <th class="align-top ">Sensor</th>
+                      <th class="align-top ">Depth (m)</th>
+                      <th class="align-top ">Delete</th>
+                    </tr>
+                </thead>
+                {% for sensor in sensors_list %}
+                <tr class="text-center">
+                  <td class="align-middle ">{{forloop.counter}}</td>
+                  <td class="align-middle ">{{sensor.name}}</td>
+                  <td class="align-middle ">{{sensor.depth}}</td>
+                  <td class="align-middle ">
+                    <form class="" action="" method="POST">
+                      {% csrf_token %}
+                      <button class="btn btn-sm text-danger" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
+                    </form>
+                  </td> 
+                </tr>
+                {% endfor%}
+              </table>
+            </div>
+            {% endif %}<!--SENSOR ERROR-->
+            {% if no_irrigation == True %} <!--IRRIGATION WARNING-->
+            <div class="row">
+              <div class="col text-center text-danger small">
+                <p><i><b>Warning!</b> You do not have an irrigation system. To add, go back to the <kbd class="text-dark"><a href={% url 'waiss:new_irrigation' %}>irrigation</a></kbd> tab. <br>
+                If correct, click <kbd>Finish</kbd>.</i></p>
+              </div>
+            </div>
+            {% endif %}<!--IRRIGATION WARNING-->
           </div>
         </div>
-        {% endif %}<!--SENSOR ERROR-->
-        {% if no_irrigation == True %} <!--IRRIGATION WARNING-->
-        <div class="row">
-          <div class="col text-center text-danger small">
-            <p><i><b>Warning!</b> You do not have an irrigation system. To add, go back to the <kbd class="text-dark"><a href={% url 'waiss:new_irrigation' %}>irrigation</a></kbd> tab. <br>
-            If correct, click <kbd>Finish</kbd>.</i></p>
-          </div>
-        </div>
-        {% endif %} 
-        <!--IRRIGATION WARNING-->
       {% endif %} 
       </div> <!--ERROR COL-->
       </div> <!--row-->

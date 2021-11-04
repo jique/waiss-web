@@ -191,7 +191,8 @@ def new_system(request):
 	if drip_ses != None:
 		ses_drip = Drip.objects.get(id=drip_ses)
 
-	fieldunit = FieldUnit.objects.filter(id=fieldunit_ses) #to check excess sensors
+	#to delete and check excess sensors
+	fieldunit = FieldUnit.objects.filter(id=fieldunit_ses) 
 	sensors_list = Sensor.objects.filter(fieldunit__in=fieldunit)
 	num_sensors = len(sensors_list)
 	if num_sensors > 3:
