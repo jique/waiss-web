@@ -446,12 +446,26 @@ def edit_soil(request, id):
 #FIELDUNIT_PARAMETERS
 @login_required
 def new_fieldunit(request):
-	fieldunit = request.session.get('fieldunit_ses', None)
-	if fieldunit == None:
+	fieldunit_name = request.session.get('fieldunit_ses', None)
+	#sessions and list
+	fieldunit_list = FieldUnit.objects.filter(author=request.user)
+	if fieldunit_name == None:
 		form = FieldUnitForm()
+		selected_fieldunit = ""
+		selected_fieldunit_text = '--choose--'
 	else:
-		fieldunit_id = FieldUnit.objects.get(id=fieldunit)
-		form = FieldUnitForm(instance=fieldunit_id)
+		fieldunit_name = FieldUnit.objects.get(id=fieldunit_name)
+		form = FieldUnitForm(instance=fieldunit_name)
+		selected_fieldunit = fieldunit_name
+		selected_fieldunit_text = fieldunit_name
+	
+	if request.method == 'POST' and 'loadData' in request.POST:
+		pk=request.POST.get('loadData')
+		id = FieldUnit.objects.get(soiltype=pk)
+		form = FieldUnitForm(instance=id)
+		selected_fieldunit = id
+		selected_fieldunit_text = id
+
 	if request.method == 'POST':  # data sent by user
 		form = FieldUnitForm(request.POST)
 		fieldunit, created = FieldUnit.objects.get_or_create(name=request.POST.get('name'))
@@ -473,7 +487,9 @@ def new_fieldunit(request):
 	
 	context ={
 		"fieldunit_form": form,
-		"fieldunit": fieldunit
+		"fieldunit_list": fieldunit_list,
+		"selected_fieldunit": selected_fieldunit,
+		"selected_fieldunit_text": selected_fieldunit_text
 	}
 
 	return render(request, 'waissapp/new_fieldunit.html', context)
