@@ -250,14 +250,14 @@ function showHide9() {
   if (checkedValue == "True") {
     $("#collapse_irrig_Yes").collapse('show');
     $("#collapse_irrig_No").collapse('hide');
-    $('#id_discharge').pop('required', true);
-    $('#id_nozzle_diameter').pop('required', false);
-    $('#id_operating_pressure').pop('required', false);
+    $('#id_discharge').prop('required', true);
+    $('#id_nozzle_diameter').prop('required', false);
+    $('#id_operating_pressure').prop('required', false);
   } else if (checkedValue == "False") {
     $("#collapse_irrig_Yes").collapse('hide');
     $("#collapse_irrig_No").collapse('show');
-    $('#id_nozzle_diameter').pop('required', true);
-    $('#id_operating_pressure').pop('required', true);
+    $('#id_nozzle_diameter').prop('required', true);
+    $('#id_operating_pressure').prop('required', true);
     $('#id_discharge').pop('required', false);
   }
 }
