@@ -379,11 +379,12 @@ def new_soil(request):
 		except:
 			personal_value = True
 		if personal_value == False:
-			form = form.save(commit=False)
-			form.author = request.user
-			form.save()
-			request.session['soil_ses'] = form.id
-			return redirect('/new_calib/')
+			if form.is_valid():
+				form = form.save(commit=False)
+				form.author = request.user
+				form.save()
+				request.session['soil_ses'] = form.id
+				return redirect('/new_calib/')
 		else:
 			soil, created = Soil.objects.get_or_create(soiltype=request.POST.get('soiltype'))
 			soil.fc = request.POST.get('fc')
