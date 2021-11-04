@@ -556,7 +556,10 @@ def new_sensor(request):
 		sensor_id = request.POST.get('delete_sensor')
 		sensor_obj = Sensor.objects.get(id=sensor_id)
 		sensor_obj.delete()
-		return redirect('/new_sensor/')
+		if excess == True:
+			return redirect('/new_sensor/')
+		else:
+			return redirect('/new_system/')
 
 	if request.method == 'POST' and 'btn_submit' in request.POST:
 		formset = SensorFormSet(request.POST)

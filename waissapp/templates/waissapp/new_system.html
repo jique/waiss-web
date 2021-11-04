@@ -16,7 +16,9 @@
   <div class="card-header rounded-0 border-0">
       <small>Almost there! Validate each fields and press confirm!</small>
   </div>
-        <div class="card-body">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md">
           <form class="form-group" method="post" onsubmit="return validateForm(this);" name="myForm">
             {% csrf_token %}
             <small><b>Fields with asterisks (*) are required.</b></small>
@@ -117,25 +119,6 @@
                 <div class="text-danger text-right small"><b><span id="error_calib"></span></b></div>
               </div>
             </div>
-            {% if excess == True %}
-            <div class="row form-group"> <!--SENSORS -->
-              <div class="col-md-6">
-                <small>
-                  <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. Please delete the excess sensor(s).</i></span>
-                </small>
-                {% for sensor in sensors_list %}
-                <div class="row">
-                  <div class="col small">Sensor #{{forloop.counter}}&emsp;{{sensor.name}}&emsp;{{sensor.depth}}&emsp;
-                    <form class="form-group" action="" method="POST">
-                      {% csrf_token %}
-                      <button name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button>
-                    </form>
-                  </div>
-                </div>
-                {% endfor%}
-              </div>
-            </div>
-            {% endif %}
             {% if basin_ses %}
             <div class="row form-group">
               <div class="col-md">
@@ -239,9 +222,45 @@
               <input type="submit" value="Finish!" class="btn btn-info" name="btn_submit">
             </div>
           </form>
+        </div> <!--col-->
+        {% if excess == True %}
+      <div class="col-md-4">
+        <small><b>Error!</b></small><hr>
+        <small>
+          <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. Please delete the excess sensor(s).</i></span>
+        </small>
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <table class="table table-hover border-bottom-secondary table-sm small" width="100%" cellspacing="0">
+              <thead>
+                  <tr class="text-center">
+                    <th class="align-top">#</th>
+                    <th class="align-top ">Sensor</th>
+                    <th class="align-top ">Depth (m)</th>
+                    <th class="align-top ">Delete</th>
+                  </tr>
+              </thead>
+              {% for sensor in sensors_list %}
+              <tr class="text-center">
+                <td class="align-middle ">{{forloop.counter}}</td>
+                <td class="align-middle ">{{sensor.name}}</td>
+                <td class="align-middle ">{{sensor.depth}}</td>
+                <td class="align-middle ">
+                  <form class="form-group" action="" method="POST">
+                    {% csrf_token %}
+                    <button class="btn text-danger btn-sm d-flex align-items-center mt-3" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button></td>
+                  </form>
+                </tr>
+                {% endfor%}
+            </table>
+          </div>
         </div>
       </div>
+      {% endif %}
+      </div> <!--row-->
+      </div>
     </div>
+  </div>
 </div>
 
 <script type="text/javascript">
@@ -286,6 +305,9 @@
       return false;
     } else if (fieldunit.value == "") {
       e_fieldunit.innerText = "Fieldunit field is required."
+      fieldunit.focus();
+      return false;
+    } else if ({{excess}} == True) {
       fieldunit.focus();
       return false;
     } else {
