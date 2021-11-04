@@ -102,9 +102,9 @@ def new_system(request):
 
 	no_irrigation = ""
 	if basin_ses or border_ses or furrow_ses or sprinkler_ses or drip_ses:
-		pass
+		no_irrigation = False
 	else:
-		no_irrigation = "True"
+		no_irrigation = True
 
 	#GetFromInputBox
 	farm = request.POST.get('farm')
