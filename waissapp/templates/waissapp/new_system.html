@@ -216,7 +216,7 @@
             </div>
           </form>
         </div> <!--col-->
-      {% if excess == True or no_irrigation ==True %}
+      {% if excess or no_irrigation %}
       <div class="col-md-4">
         <small class="text-danger"><b>Warnings/Errors!</b></small><hr>
         {% if excess == True %}<!--SENSOR ERROR-->
