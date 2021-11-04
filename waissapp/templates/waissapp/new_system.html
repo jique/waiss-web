@@ -121,7 +121,7 @@
             </div>
             <div class="row form-group">
               <div class="col-md">
-            {% if basin_ses %}
+                {% if basin_ses %}
                 <label class="mb-0 small">Basin*</label>
                 <select class="select form-control custom-select" name="basin" id="id_basin">
                   {% if basin_ses %}
@@ -133,7 +133,7 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-            {% elif border_ses %}
+                {% elif border_ses %}
                 <label class="mb-0 small">Border*</label>
                 <select class="select form-control custom-select" name="border" id="id_border">
                   {% if border_ses %}
@@ -145,7 +145,7 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-            {% elif furrow_ses %}
+                {% elif furrow_ses %}
                 <label class="mb-0 small">Furrow*</label>
                 <select class="select form-control custom-select" name="furrow" id="id_furrow">
                   {% if furrow_ses %}
@@ -157,7 +157,7 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-            {% elif sprinkler_ses %}
+                {% elif sprinkler_ses %}
                 <label class="mb-0 small">Sprinkler*</label>
                 <select class="select form-control custom-select" name="sprinkler" id="id_sprinkler">
                   {% if sprinkler_ses %}
@@ -169,7 +169,7 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
-            {% elif drip_ses %}
+                {% elif drip_ses %}
                 <label class="mb-0 small">Drip*</label>
                 <select class="select form-control custom-select" name="drip" id="id_drip">
                   {% if drip_ses %}
@@ -181,9 +181,10 @@
                   <option value="{{f.id}}">{{f.name}}</option>
                   {% endfor %}
                 </select>
+                {% endif %}
               </div>
             </div>
-            {% endif %}
+            
             <hr>
             <div class="text-center">
               <input type="submit" value="Finish!" class="btn btn-info" name="btn_submit">
