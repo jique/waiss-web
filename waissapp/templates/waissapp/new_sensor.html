@@ -49,28 +49,30 @@
               <b>Please delete the excess sensor(s).</b></i>
               </span>
             </small>
-            <table class="table table-hover border-bottom-secondary table-sm small" width="100%" cellspacing="0">
-              <thead>
-                  <tr class="text-center">
-                    <th class="align-top">#</th>
-                    <th class="align-top ">Sensor</th>
-                    <th class="align-top ">Depth (m)</th>
-                    <th class="align-top ">Delete</th>
+            <div class="table-responsive-xl">
+              <table class="table table-hover border-bottom-secondary table-sm small" width="100%" cellspacing="0">
+                <thead>
+                    <tr class="text-center">
+                      <th class="align-top">#</th>
+                      <th class="align-top ">Sensor</th>
+                      <th class="align-top ">Depth (m)</th>
+                      <th class="align-top ">Delete</th>
+                    </tr>
+                </thead>
+                {% for sensor in sensors_list %}
+                <tr class="text-center">
+                  <td class="align-middle ">{{forloop.counter}}</td>
+                  <td class="align-middle ">{{sensor.name}}</td>
+                  <td class="align-middle ">{{sensor.depth}}</td>
+                  <td class="align-middle ">
+                    <form class="" action="" method="POST">
+                      {% csrf_token %}
+                      <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button></td>
+                    </form>
                   </tr>
-              </thead>
-              {% for sensor in sensors_list %}
-              <tr class="text-center">
-                <td class="align-middle ">{{forloop.counter}}</td>
-                <td class="align-middle ">{{sensor.name}}</td>
-                <td class="align-middle ">{{sensor.depth}}</td>
-                <td class="align-middle ">
-                  <form class="" action="" method="POST">
-                    {% csrf_token %}
-                    <button class="btn text-danger btn-sm" name="delete_sensor" value={{sensor.id}}><i class="fas fa-trash"></i></button></td>
-                  </form>
-                </tr>
-                {% endfor%}
-            </table>
+                  {% endfor%}
+              </table>
+            </div>
           </div>
         </div>
       </div>

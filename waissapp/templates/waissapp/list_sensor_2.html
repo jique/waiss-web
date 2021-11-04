@@ -3,7 +3,7 @@
 <tr class="text-center">
     <td class="align-middle ">{{forloop.counter}}</td>
     <td class="align-middle ">{{sensor.name}}</td>
-    <td class="align-middle ">{{sensor.fieldunit}}</td>
+    <td class="align-middle min">{{sensor.fieldunit}}</td>
     <td class="align-middle ">{{sensor.depth}}</td>
     <td><a href={% url 'waiss:list_mc' sensor.name %}>Show</a></td>
     <td class="min">
