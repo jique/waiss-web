@@ -373,23 +373,35 @@ def new_soil(request):
 
 	if request.method == 'POST' and 'btn_submit' in request.POST: # data sent by user
 		form = SoilForm(request.POST)
-		soil, created = Soil.objects.get_or_create(soiltype=request.POST.get('soiltype'))
-		soil.fc = request.POST.get('fc')
-		soil.pwp = request.POST.get('pwp')
-		soil.bln_surface_irrigation = request.POST.get('bln_surface_irrigation')
-		intakefamily = request.POST.get('intakefamily')
-		source = request.POST.get('source')
-		for key in request.POST:
-			value = request.POST.get(key)
-			if value != "":
-				if key == 'intakefamily':
-					soil.intakefamily = intakefamily
-				if key == 'source':
-					soil.source = source
-		soil.author = request.user
-		soil.save()
-		request.session['soil_ses'] = soil.id
-		return redirect('/new_calib/')
+		personal_get = request.POST.get('soiltype')
+		try:
+			personal_value = Soil.objects.get(soiltype=personal_get).personal
+		except:
+			personal_value = True
+		if personal_value == False:
+			form = form.save(commit=False)
+			form.author = request.user
+			form.save()
+			request.session['soil_ses'] = form.id
+			return redirect('/new_calib/')
+		else:
+			soil, created = Soil.objects.get_or_create(soiltype=request.POST.get('soiltype'))
+			soil.fc = request.POST.get('fc')
+			soil.pwp = request.POST.get('pwp')
+			soil.bln_surface_irrigation = request.POST.get('bln_surface_irrigation')
+			intakefamily = request.POST.get('intakefamily')
+			source = request.POST.get('source')
+			for key in request.POST:
+				value = request.POST.get(key)
+				if value != "":
+					if key == 'intakefamily':
+						soil.intakefamily = intakefamily
+					if key == 'source':
+						soil.source = source
+			soil.author = request.user
+			soil.save()
+			request.session['soil_ses'] = soil.id
+			return redirect('/new_calib/')
 
 	context = {
 		'soil_form': form,
