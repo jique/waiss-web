@@ -223,8 +223,8 @@
           <div class="card-body">
             {% if excess == True %}<!--SENSOR ERROR-->
             <small>
-              <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. <br>
-                <b>Please delete the excess sensor(s).</b></i></span>
+              <span class="text-danger"><i><b>Error!</b> It seems that you are exceeding the maximum of three (3) sensors per field unit. <br>
+                <b>Please delete the excess sensor(s).</b></i></span><br>
             </small>
             <div class="table-responsive-xl">
               <table class="table table-hover border-bottom-secondary table-sm small" width="100%" cellspacing="0">
@@ -254,7 +254,7 @@
             {% endif %}<!--SENSOR ERROR-->
             {% if no_irrigation == True %} <!--IRRIGATION WARNING-->
             <div class="row">
-              <div class="col text-center text-danger small">
+              <div class="col text-danger small">
                 <p><i><b>Warning!</b> You do not have an irrigation system. To add, go back to the <kbd class="bg-success"><a class="text-light" href={% url 'waiss:new_irrigation' %}>irrigation</a></kbd> tab. <br>
                 If correct, click <kbd class="bg-info">Finish</kbd>.</i></p>
               </div>
