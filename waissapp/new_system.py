@@ -100,6 +100,12 @@ def new_system(request):
 	drip_ses = request.session.get('drip_ses', None)
 	sprinkler_ses = request.session.get('sprinkler_ses', None)
 
+	no_irrigation = ""
+	if basin_ses or border_ses or furrow_ses or sprinkler_ses or drip_ses:
+		pass
+	else:
+		no_irrigation = "True"
+
 	#GetFromInputBox
 	farm = request.POST.get('farm')
 	farm_manager = request.POST.get('farm_manager')
@@ -197,7 +203,7 @@ def new_system(request):
 		sensor_obj = Sensor.objects.get(id=sensor_id)
 		sensor_obj.delete()
 		return redirect('/new_system/')
-		
+
 	context = {
 		"form": form,
 		"basin_ses": basin_ses,
@@ -235,5 +241,6 @@ def new_system(request):
 		"ses_drip": ses_drip,
 		"sensors_list": sensors_list,
 		"excess": excess,
+		"no_irrigation": no_irrigation,
 	}
 	return render(request, 'waissapp/new_system.html', context)

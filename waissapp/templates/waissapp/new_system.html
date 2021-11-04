@@ -209,13 +209,6 @@
                 </select>
               </div>
             </div>
-            {% else %}
-            <div class="row">
-              <div class="col text-center text-danger small">
-                <p><i><b>Warning!</b> You do not have an irrigation system. To add, go back to the <kbd class="text-dark"><a href={% url 'waiss:new_irrigation' %}>irrigation</a></kbd> tab. <br>
-                If correct, click <kbd>Finish</kbd>.</i></p>
-              </div>
-            </div>
             {% endif %}
             <hr>
             <div class="text-center">
@@ -223,13 +216,15 @@
             </div>
           </form>
         </div> <!--col-->
-        {% if excess == True %}
+      {% if excess == True or no_irrigation ==True %}
       <div class="col-md-4">
-        <small><b>Error!</b></small><hr>
+        <small class="text-danger"><b>Warnings/Errors!</b></small><hr>
+        {% if excess == True %}<!--SENSOR ERROR-->
         <div class="card shadow mb-4">
           <div class="card-body">
             <small>
-              <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. Please delete the excess sensor(s).</i></span>
+              <span class="text-danger"><i>It seems that you are exceeding the maximum of three (3) sensors per field unit. 
+                <b>Please delete the excess sensor(s).</b></i></span>
             </small>
             <table class="table table-hover border-bottom-secondary table-sm small" width="100%" cellspacing="0">
               <thead>
@@ -256,10 +251,19 @@
             </table>
           </div>
         </div>
-      </div>
-      {% endif %}
+        {% endif %}<!--SENSOR ERROR-->
+        {% if no_irrigation ==True %} <!--IRRIGATION WARNING-->
+        <div class="row">
+          <div class="col text-center text-danger small">
+            <p><i><b>Warning!</b> You do not have an irrigation system. To add, go back to the <kbd class="text-dark"><a href={% url 'waiss:new_irrigation' %}>irrigation</a></kbd> tab. <br>
+            If correct, click <kbd>Finish</kbd>.</i></p>
+          </div>
+        </div>
+        <!--IRRIGATION WARNING-->
+      {% endif %} 
+      </div> <!--ERROR COL-->
       </div> <!--row-->
-      </div>
+    </div>
     </div>
   </div>
 </div>
