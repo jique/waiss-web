@@ -52,8 +52,7 @@ class CropForm(forms.ModelForm):
 class FieldUnitForm(forms.ModelForm):
     timestart = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Start Time", required=True)
     timestop = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Stop Time", required=True)
-    number = PhoneNumberField(
-        widget=PhoneNumberPrefixWidget, required=True)
+    number = PhoneNumberField(widget=PhoneNumberPrefixWidget)
     def __init__(self, *args, **kwargs):
         super(FieldUnitForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
