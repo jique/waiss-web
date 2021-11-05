@@ -74,11 +74,15 @@
       return true;
     }
     
-    
     function validateForm(form) {
         num_str = String(number.value)
-        console.log(num_str)
+        num_first = num_str.charAt(0);
+        console.log(num_str, num_first)
         if (number.value.length != 10) {
+            number.focus();
+            error_number.innerText = "Make sure to input a valid number.";
+            return false;
+        } else if (num_first != '9') {
             number.focus();
             error_number.innerText = "Make sure to input a valid number.";
             return false;
