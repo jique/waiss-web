@@ -64,10 +64,12 @@
   var number = document.getElementById('id_number');
   var error_number = document.getElementById('error_number');
 
-  window.onload = (event) => {
-    number.value = {{num_load}};
-  };
-
+  if ({{num_load}} != "") {
+    num_load = String({{num_load}}).slice(2)
+    window.onload = (event) => {
+      number.value = num_load;
+    };
+  }
   function isNumber(evt) {
     evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;
