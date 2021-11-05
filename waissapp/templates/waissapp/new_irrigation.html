@@ -254,12 +254,14 @@
         <br>
         <div class="row bg-light"><!--Discharge Calculator-->
           <div class="col-md">
-            <p><b>Discharge Calculator</b></p><hr>
-            <label for="id_nozzle_diameter" class="small">Nozzle Diameter</label>
+            <br>
+            <p><b>Discharge Calculator</b></p>
+            <label for="id_nozzle_diameter" class="small">Nozzle Diameter (cm)</label>
             <input type="number" id="id_nozzle_diameter" class="form-control numberinput" step="0.0001">
-            <label for="id_operating_pressure" class="small">Operating Pressure</label>
-            <input type="number" id="id_operating_pressure" class="form-control numberinput" step="0.01"><hr>
+            <label for="id_operating_pressure" class="small">Operating Pressure (kPa)</label>
+            <input type="number" id="id_operating_pressure" class="form-control numberinput" step="0.01">
             <button type="submit" class="btn btn-sm btn-block text-wrap btn-outline-info" onclick="calculateDischarge()">Calculate Discharge</button>
+            <br>
           </div>
         </div>
       </div><!--Discharge Calculator-->
@@ -343,7 +345,7 @@
     var nozzle_diameter = document.getElementById('id_nozzle_diameter');
     var operating_pressure = document.getElementById('id_operating_pressure');
     discharge = 0.1109543178 * 0.96 * parseFloat(nozzle_diameter.value)**2 * parseFloat(operating_pressure.value)**0.5 //original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)| C=0.96
-    $('input[name="discharge"]').val(lat);
+    $('input[name="discharge"]').val(discharge);
   }
 
   var drip_eu = document.getElementById('EU');
