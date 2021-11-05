@@ -823,7 +823,7 @@ def new_personnel(request):
 		selected_id = id.id
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = PersonnelForm(request.POST)
-		personnel, created = Personnel.objects.get_or_create(first_name=request.POST.get('first_name'), last_name=request.POST.get('last_name'), number=request.POST.get('number'))
+		personnel, created = Personnel.objects.get_or_create(first_name=request.POST.get('first_name'), last_name=request.POST.get('last_name'))
 		personnel.first_name = request.POST.get('first_name')
 		personnel.last_name = request.POST.get('last_name')
 		personnel.number = request.POST.get('number')

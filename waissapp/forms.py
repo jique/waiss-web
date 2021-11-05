@@ -1,11 +1,11 @@
 from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, Farm, FieldUnit, Sensor, MoistureContent, WAISSystems, Rainfall, Gravimetric, PercentShaded, Basin, Furrow, Border, Drip, Sprinkler
 from django.forms import ModelForm
 from django import forms
+from django.core.exceptions import ValidationError
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from phonenumber_field.modelfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 class RegistrationForm(UserCreationForm):
@@ -175,6 +175,11 @@ class PersonnelForm(ModelForm):
         self.helper = FormHelper()
         self.helper.label_class = 'small'
         self.fields['number'].widget = PhoneNumberPrefixWidget(attrs={"class": "form-control", "placeholder": "9152958197"})
+
+    def clean_number(self):
+        number = self.cleaned_data['number']
+        return number
+
     class Meta:
         model = Personnel
         exclude = ('author', 'personal',)
