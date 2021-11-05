@@ -131,7 +131,7 @@ class SprinklerInline(admin.TabularInline):
     model = Sprinkler
 
 class SprinklerAdmin(admin.ModelAdmin):
-    list_display =('name', 'discharge', 'ea', 'lateral_spacing', 'sprinkler_spacing', 'nozzle_diameter', 'operating_pressure', 'author', 'personal', 'timestamp')
+    list_display =('name', 'discharge', 'ea', 'lateral_spacing', 'sprinkler_spacing', 'author', 'personal', 'timestamp')
 
 class DripInline(admin.TabularInline):
     model = Drip
