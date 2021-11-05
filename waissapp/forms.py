@@ -176,13 +176,6 @@ class PersonnelForm(ModelForm):
         self.helper.label_class = 'small'
         self.fields['number'].widget = PhoneNumberPrefixWidget(attrs={"class": "form-control"})
 
-    def clean_number(self):
-        number = self.cleaned_data['number']
-        if number.is_valid():
-            return number
-        else:
-            raise ValidationError("Make sure to input a valid mobile number.")
-
     class Meta:
         model = Personnel
         exclude = ('author', 'personal',)
