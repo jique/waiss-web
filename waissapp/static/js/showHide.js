@@ -17,10 +17,6 @@ $(document).ready(function () {
   $('#modal-calib').on('shown.bs.modal', function (e) {
     repeat3();
   });
-  repeat4();
-  $('#modal-sprinkler').on('shown.bs.modal', function (e) {
-    repeat4();
-  });
   repeat5();
   $('#modal-drip').on('shown.bs.modal', function (e) {
     repeat5();
