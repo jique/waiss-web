@@ -239,10 +239,10 @@
       <div class="col-md-4">
         {% if sprinkler_list %}<hr>
         <div class="card rounded-0">
+          <div class="card-header small"><b>Load existing sprinkler irrigation systems.</b></div>
           <div class="card-body">
             <form method="post" class="form-group col-md">
               {% csrf_token %}
-              <small><b>Load existing sprinkler irrigation systems.</b></small><hr>
               <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
                 <option value="{{selected_sprinkler}}">{{selected_sprinkler_text}}</option>
                 {% for sprinkler in sprinkler_list %}
@@ -363,7 +363,7 @@
     if (nozzle_diameter.value == "") {
       nozzle_diameter.focus();
     }
-    if (operating_pressure.value == "") {
+    else if (operating_pressure.value == "") {
       operating_pressure.focus();
     }
     $('input[name="discharge"]').val(discharge);
