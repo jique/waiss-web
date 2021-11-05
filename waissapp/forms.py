@@ -5,7 +5,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from phonenumber_field.modelfields import PhoneNumberField, PhoneNumberPrefixWidget
+from phonenumber_field.modelfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -51,7 +52,8 @@ class CropForm(forms.ModelForm):
 class FieldUnitForm(forms.ModelForm):
     timestart = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Start Time", required=True)
     timestop = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Stop Time", required=True)
-
+    number = PhoneNumberField(
+        widget=PhoneNumberPrefixWidget, required=True)
     def __init__(self, *args, **kwargs):
         super(FieldUnitForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -170,15 +172,11 @@ class WAISSystemsForm(ModelForm):
         exclude = ('author', 'id', 'personal', )  # this says to include all fields from model to the form 
         
 class PersonnelForm(ModelForm):
-    number = PhoneNumberField(
-        widget= PhoneNumberPrefixWidget(attrs={'class': "form-control"}),
-        required=False,
-        initial='+52'
-    )
     def __init__(self, *args, **kwargs):
         super(PersonnelForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.label_class = 'small'
+        self.fields['number'].widget = PhoneNumberPrefixWidget()
     class Meta:
         model = Personnel
         exclude = ('author', 'personal',)
