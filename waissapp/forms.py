@@ -1,6 +1,6 @@
+from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, Farm, FieldUnit, Sensor, MoistureContent, WAISSystems, Rainfall, Gravimetric, PercentShaded, Basin, Furrow, Border, Drip, Sprinkler
 from django.forms import ModelForm
 from django import forms
-from .models import SentMsgs, Personnel, Soil, Crop, CalibrationConstant, Farm, FieldUnit, Sensor, MoistureContent, WAISSystems, Rainfall, Gravimetric, PercentShaded, Basin, Furrow, Border, Drip, Sprinkler
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.contrib.auth.models import User
@@ -52,7 +52,7 @@ class CropForm(forms.ModelForm):
 class FieldUnitForm(forms.ModelForm):
     timestart = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Start Time", required=True)
     timestop = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}), label="Stop Time", required=True)
-    number = PhoneNumberField(widget=PhoneNumberPrefixWidget)
+    number = PhoneNumberField(widget=PhoneNumberPrefixWidget, required=True)
     def __init__(self, *args, **kwargs):
         super(FieldUnitForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
