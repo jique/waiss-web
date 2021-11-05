@@ -236,8 +236,8 @@
       </div>
     </div><!--Furrow Row Collapse-->
     <div class="row collapse" id="collapse_irrig_4"><!--Sprinkler Row Collapse-->
-      {% if sprinkler_list %}
-      <div class="col-md-4"><hr>
+      <div class="col-md-4">
+        {% if sprinkler_list %}<hr>
         <div class="row bg-light">
           <form method="post" class="form-group col-md">
             {% csrf_token %}
@@ -250,8 +250,14 @@
             </select>
           </form>
         </div>
+        <div class="row bg-light"><!--Discharge Calculator-->
+          <label for="" class="small"></label>
+          <input type="text" id="id_nozzle_diameter" class="form-control">
+          <label for=""></label>
+          <input type="text" id="id_operating_pressure" class="form-control">
+        </div>
+        {% endif %}
       </div>
-      {% endif %}
       <div class="col-md">
         <form class="form-group" action="" method="post">
           {% csrf_token %} <hr>
@@ -269,7 +275,7 @@
             </div>
           </div>
           <div class="row collapse" id="collapse_irrig_No">
-            <div class="col-md">rinkler.nozzle_diameter|as_crispy_field}}</div>
+            <div class="col-md">{{srinkler.nozzle_diameter|as_crispy_field}}</div>
             <div class="col-md">{{sprinkler.operating_pressure|as_crispy_field}}<!--Use ave discharge coefficient (0.96)--></div>
           </div>
           <hr>
