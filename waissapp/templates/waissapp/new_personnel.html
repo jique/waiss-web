@@ -43,9 +43,8 @@
               <div class="col-md">{{personnel_form.last_name|as_crispy_field}}</div>
             </div>
             <div class="row">
-              <div class="col-md">(+63)</div>
               <div class="col-md">
-                <label class="mb-0 small">Mobile Number*</label>
+                <label class="mb-0 small">Mobile Number (+63)*</label>
                 <input id="id_number" name="number" class="form-control textinput" onkeypress="return isNumber(event)">
                 <b><span class="small" id="error_number"></span></b>
               </div>
@@ -73,8 +72,9 @@
     }
     return true;
   }
-  number_str = String(number.value)
-  console.log(number_str)
+  number_str = String(number.value);
+  num = number.value.toString();
+  console.log(number.value, number_str)
   function validateForm(form) {
     if (number.length != 10) {
       number.focus();
@@ -88,5 +88,6 @@
       return true;
     }
   }
+  console.log(validateForm)
 </script>
 {% endblock %}
