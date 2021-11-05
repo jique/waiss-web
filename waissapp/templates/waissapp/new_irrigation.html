@@ -341,7 +341,8 @@
   var discharge = document.getElementById('id_discharge');
 
   function calculateDischarge() {
-    discharge.value = 0.1109543178 * 0.96 * nozzle_diameter**2 * operating_pressure**0.5 //original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)| C=0.96
+    discharge = 0.1109543178 * 0.96 * parseFloat(nozzle_diameter.value)**2 * parseFloat(operating_pressure.value)**0.5 //original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)| C=0.96
+    discharge.value = parseFloat(discharge)
   }
 
   var drip_eu = document.getElementById('EU');
