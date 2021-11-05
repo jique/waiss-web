@@ -72,11 +72,8 @@
     }
     return true;
   }
-  number_str = String(number.value);
-  num = number.value.toString();
-  console.log(number.value, number_str)
   function validateForm(form) {
-    if (number.length != 10) {
+    if (number.value.length != 10) {
       number.focus();
       error_number.innerText = "Make sure to input a valid number.";
       return false;
