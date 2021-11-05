@@ -41,7 +41,7 @@ class Personnel(models.Model):
 class FieldUnit(models.Model):
     name = models.CharField(max_length=100, null=True, verbose_name="Field Unit Name", unique=True)
     usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True)
-    number = PhoneNumberField(null=True)
+    number = PhoneNumberField(null=True, verbose_name="Mobile Number")
     fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", null=True, blank=True)
     withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", null=True, blank=True)
     automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", null=True, blank=True)

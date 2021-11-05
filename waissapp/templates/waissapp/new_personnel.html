@@ -45,8 +45,8 @@
             <div class="row">
               <div class="col-md">
                 <label class="mb-0 small">Mobile Number (+63)*</label>
-                <input id="id_number" name="number" class="form-control textinput" onkeypress="return isNumber(event)">
-                <b><span class="small" id="error_number"></span></b>
+                <input type="tel" id="id_number" name="number" class="form-control textinput textInput" onkeypress="return isNumber(event)">
+                <b><span class="small text-danger" id="error_number"></span></b>
               </div>
             </div>
             <hr>
@@ -73,16 +73,8 @@
     return true;
   }
 
-  number_val = number.value;
-  //number_str = number_val.charAt(0)
-  console.log(number_val)
-  
   function validateForm(form) {
     if (number.value.length != 10) {
-      number.focus();
-      error_number.innerText = "Make sure to input a valid number.";
-      return false;
-    } else if (number_str != '9') {
       number.focus();
       error_number.innerText = "Make sure to input a valid number.";
       return false;
@@ -90,6 +82,5 @@
       return true;
     }
   }
-  console.log(validateForm)
 </script>
 {% endblock %}

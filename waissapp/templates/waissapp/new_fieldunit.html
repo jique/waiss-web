@@ -33,14 +33,18 @@
             </div>
             {% endif %}
             <div class="col-md">
-                <form class="form-group" action="" method="post">
+                <form class="form-group" action="" method="post" onsubmit="return validateForm(this);">
                     {% csrf_token %}
                     <small><b>Fields with asterisks (*) are required.</b></small>
                     <hr>
                     {{ fieldunit_form.name|as_crispy_field }}
                     <div class="row">
                         <div class="col-md">{{ fieldunit_form.usk|as_crispy_field}}</div>
-                        <div class="col-md">{{ fieldunit_form.number|as_crispy_field}}</div>
+                        <div class="col-md">
+                            <label class="mb-0 small">Mobile Number (+63)*</label>
+                            <input type="tel" id="id_number" name="number" class="form-control textinput textInput" onkeypress="return isNumber(event)">
+                            <b><span class="small text-danger" id="error_number"></span></b>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md">{{ fieldunit_form.timestart|as_crispy_field}}</div>
@@ -57,4 +61,30 @@
 </div>
 </div>
 </div>
+<script>
+    var number = document.getElementById('id_number');
+    var error_number = document.getElementById('error_number');
+  
+    function isNumber(evt) {
+      evt = (evt) ? evt : window.event;
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+          return false;
+      }
+      return true;
+    }
+    
+    
+    function validateForm(form) {
+        num_str = String(number.value)
+        console.log(num_str)
+        if (number.value.length != 10) {
+            number.focus();
+            error_number.innerText = "Make sure to input a valid number.";
+            return false;
+        } else {
+            return true;
+        }
+    }
+  </script>
 {% endblock %}
