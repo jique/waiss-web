@@ -56,12 +56,12 @@
 </div>
 </div>
 <script>
-  var number = document.getElementById('id_number')
-  var error_number = document.getElementById('error_number')
+  var number = document.getElementById('id_number_1');
+  var error_number = document.getElementById('error_number');
   function validateForm(form) {
     if (number.length != 10) {
-    number.focus()
-    error_number.innerText = "Make sure to input a valid number."
+    number.focus();
+    error_number.innerText = "Make sure to input a valid number.";
     return false;
     } 
   }
