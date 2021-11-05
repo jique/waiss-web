@@ -816,6 +816,7 @@ def new_personnel(request):
 		form = PersonnelForm(instance=personnel_name)
 		selected_personnel = str(personnel_name.first_name) + ' ' + str(personnel_name.last_name)
 		selected_id = personnel_name.id
+		num_load = personnel_name.number
 	if request.method == 'POST' and 'loadData' in request.POST:
 		pk=request.POST.get('loadData')
 		id = Personnel.objects.get(id=pk)
