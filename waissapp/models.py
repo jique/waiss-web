@@ -87,8 +87,8 @@ class MoistureContent(models.Model):
 
 class Soil(models.Model):
     soiltype = models.CharField(max_length=30, verbose_name="Soil", unique=True)
-    fc = models.DecimalField(max_digits=4, min_value=0, decimal_places=2, verbose_name="Field Capacity (% vol)", null=True, validators=[MinValueValidator(1), MaxValueValidator(60)])
-    pwp = models.DecimalField(max_digits=5, min_value=0, decimal_places=2, verbose_name="Permanent Wilting Point (% vol)", null=True, validators=[MinValueValidator(1), MaxValueValidator(50)])
+    fc = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Field Capacity (% vol)", null=True, validators=[MinValueValidator(1), MaxValueValidator(60)])
+    pwp = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Permanent Wilting Point (% vol)", null=True, validators=[MinValueValidator(1), MaxValueValidator(50)])
 
     clay_005= 'clay (0.05)'
     clay_01= 'clay (0.1)'
