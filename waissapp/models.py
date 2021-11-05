@@ -25,7 +25,7 @@ class Farm(models.Model):
 class Personnel(models.Model):
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30, null=True)
-    number = models.CharField(max_length=11, validators=[MinLengthValidator(11)], null=True, verbose_name="Mobile Number (09)")
+    number = models.CharField(max_length=11, validators=[MinLengthValidator(11, message="Make sure to have 11 digit number."), MaxLengthValidator(11, message="Make sure to have 11 digit number."), ProhibitNullCharactersValidator(message=None, code=None)], null=True, verbose_name="Mobile Number (09)")
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
@@ -391,8 +391,6 @@ class Sprinkler(models.Model):
     lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True, validators=[MinValueValidator(0.01)])
     with_q_bln = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you know the sprinkler discharge?", null=True)
     sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True, validators=[MinValueValidator(0.01)])
-    nozzle_diameter = models.DecimalField(max_digits=5, decimal_places=4, verbose_name="Nozzle Diameter (cm)", null=True, blank=True, validators=[MinValueValidator(0.0001)])
-    operating_pressure = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Operating Pressure (kPa)", null=True, blank=True, validators=[MinValueValidator(0.01)])
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)

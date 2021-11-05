@@ -250,29 +250,6 @@ function showHide6() {
     $("#id_coeff_m").prop('required',true);
   }
 }
-//add_sprinkler
-function repeat4() {
-  showHide9();
-  $("#id_with_q_bln").change(function () {
-  showHide9();
-  });
-}
-function showHide9() {
-  var checkedValue = $("#id_with_q_bln").val();
-  if (checkedValue == "True") {
-    $("#collapse_irrig_Yes").collapse('show');
-    $("#collapse_irrig_No").collapse('hide');
-    $('#id_discharge').prop('required', true);
-    $('#id_nozzle_diameter').prop('required', false);
-    $('#id_operating_pressure').prop('required', false);
-  } else if (checkedValue == "False") {
-    $("#collapse_irrig_Yes").collapse('hide');
-    $("#collapse_irrig_No").collapse('show');
-    $('#id_nozzle_diameter').prop('required', true);
-    $('#id_operating_pressure').prop('required', true);
-    $('#id_discharge').prop('required', false);
-  }
-}
 //add_drip
 function repeat5() {
   showHide10();

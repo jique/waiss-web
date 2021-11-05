@@ -474,13 +474,7 @@ def index(request):
 			Sl = float(sprinkler.sprinkler_spacing)
 			Sm = float(sprinkler.lateral_spacing)
 			ea = float(sprinkler.ea)/100
-			if sprinkler.bln_irrigation == "True":
-				d = float(sprinkler.nozzle_diameter)
-				P = float(sprinkler.operating_pressure)
-				C = float(0.96)
-				q = 0.1109543178 * C * d**2 * P**0.5 #original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)
-			else:
-				q = float(irrigation_q)
+			q = float(irrigation_q)
 			
 			Etcrop = float(crop.peak_Etcrop)
 			irrigation_interval = round(net_application_depth/Etcrop)

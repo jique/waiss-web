@@ -257,9 +257,9 @@
           <input type="text" id="id_nozzle_diameter" class="form-control">
           <label for="id_operating_pressure">Operating Pressure</label>
           <input type="text" id="id_operating_pressure" class="form-control">
-          <input type="button" class="btn btn-sm" value="Calculate">
+          <input type="button" class="btn btn-sm" value="Calculate" onclick="calculateDischarge()">
         </div>
-      </div>
+      </div><!--Discharge Calculator-->
       <div class="col-md">
         <form class="form-group" action="" method="post">
           {% csrf_token %} <hr>
@@ -271,15 +271,7 @@
           </div>
           {{sprinkler.ea|as_crispy_field}}
           {{sprinkler.with_q_bln|as_crispy_field}}
-          <div class="row collapse" id="collapse_irrig_Yes">
-            <div class="col-md">
-            {{sprinkler.discharge|as_crispy_field}}
-            </div>
-          </div>
-          <div class="row collapse" id="collapse_irrig_No">
-            <div class="col-md">{{sprinkler.nozzle_diameter|as_crispy_field}}</div>
-            <div class="col-md">{{sprinkler.operating_pressure|as_crispy_field}}<!--Use ave discharge coefficient (0.96)--></div>
-          </div>
+          {{sprinkler.discharge|as_crispy_field}}
           <hr>
           <div class="text-center"><input type="submit" value="Next" class="btn btn-info" name="submit-sprinkler"></div>
         </form>
@@ -343,4 +335,20 @@
 </div>
 </div>
 <script src="{% static 'js/showHide.js' %}"></script>
+<script>
+  var nozzle_diameter = document.getElementById('id_nozzle_diameter');
+  var operating_pressure = document.getElementById('id_operating_pressure');
+  var discharge = document.getElementById('id_discharge');
+
+  function calculateDischarge() {
+    discharge.value = 0.1109543178 * 0.96 * nozzle_diameter**2 * operating_pressure**0.5 //original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)| C=0.96
+  }
+
+  var drip_eu = document.getElementById('EU');
+
+  function calculateEU() {
+    const mean = 0
+    const n = 0
+  }
+</script>
 {% endblock %}
