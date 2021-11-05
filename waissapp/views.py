@@ -806,6 +806,7 @@ def new_personnel(request):
 	current_user = request.user
 	personnel_list = Personnel.objects.filter(author=current_user)
 	personnel_name = request.session.get('personnel_ses', None) #Session
+	num_load = ""
 	if personnel_name == None:
 		form = PersonnelForm()
 		selected_personnel = '--choose--'
@@ -821,6 +822,7 @@ def new_personnel(request):
 		form = PersonnelForm(instance=id)
 		selected_personnel = str(id.first_name) + ' ' + str(id.last_name)
 		selected_id = id.id
+		num_load = id.number
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = PersonnelForm(request.POST)
 		personnel, created = Personnel.objects.get_or_create(first_name=request.POST.get('first_name'), last_name=request.POST.get('last_name'))
@@ -836,6 +838,7 @@ def new_personnel(request):
 		'personnel_list': personnel_list,
 		'selected_personnel': selected_personnel,
 		'selected_id': selected_id,
+		'num_load': num_load
 	}
 
 	return render(request, 'waissapp/new_personnel.html', context)
