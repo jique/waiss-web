@@ -58,8 +58,6 @@ ROOT_URLCONF = 'waiss.urls'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-#GDAL_LIBRARY_PATH = r"C:\Program Files (x86)\GDAL\gdal303.dll"
-
 SESSION_ENGINE ='django.contrib.sessions.backends.file'
 TEMPLATES = [
     {
