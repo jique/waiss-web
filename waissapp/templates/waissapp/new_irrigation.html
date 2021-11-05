@@ -23,6 +23,7 @@
           <label class="small">Do you have an irrigation system?</label>
           <select class="form-control" id="id_bln_irrigation" name="bln_irrigation">
               <option value={{bln_irrigation}}>{{bln_irrigation_text}}</option>
+              <option value="" selected>---------</option>
               <option value="True">Yes, I do!</option>
               <option value="False">No, I don't!</option>
           </select>
@@ -76,7 +77,7 @@
           <label class="small">What kind of irrigation system?&emsp;</label>
           <select class="form-control" id="id_select_irrigation" name="select_irrigation">
               <option value={{select_irrigation}}>{{select_irrigation}}</option>
-              <option value="">---------</option>
+              <option value="" selected>---------</option>
               <option value="basin">basin</option>
               <option value="border">border</option>
               <option value="furrow">furrow</option>
