@@ -26,7 +26,7 @@ class Farm(models.Model):
 class Personnel(models.Model):
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30, null=True)
-    number = models.CharField(max_length=11, validators=[MinLengthValidator(11, message="Make sure to have 11 digit number."), MaxLengthValidator(11, message="Make sure to have 11 digit number.")], null=True, verbose_name="Mobile Number (09)")
+    number = models.PhoneNumberField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
@@ -41,7 +41,7 @@ class Personnel(models.Model):
 class FieldUnit(models.Model):
     name = models.CharField(max_length=100, null=True, verbose_name="Field Unit Name", unique=True)
     usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True)
-    number = models.CharField(max_length=11, validators=[MinLengthValidator(11)], null=True, verbose_name="Mobile Number (09)")
+    number = models.PhoneNumberField()
     fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", null=True, blank=True)
     withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", null=True, blank=True)
     automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", null=True, blank=True)
@@ -87,8 +87,8 @@ class MoistureContent(models.Model):
 
 class Soil(models.Model):
     soiltype = models.CharField(max_length=30, verbose_name="Soil", unique=True)
-    fc = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Field Capacity (% vol)", null=True, validators=[MinValueValidator(1), MaxValueValidator(60)])
-    pwp = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Permanent Wilting Point (% vol)", null=True, validators=[MinValueValidator(1), MaxValueValidator(50)])
+    fc = models.DecimalField(max_digits=4, min_value=0, decimal_places=2, verbose_name="Field Capacity (% vol)", null=True, validators=[MinValueValidator(1), MaxValueValidator(60)])
+    pwp = models.DecimalField(max_digits=5, min_value=0, decimal_places=2, verbose_name="Permanent Wilting Point (% vol)", null=True, validators=[MinValueValidator(1), MaxValueValidator(50)])
 
     clay_005= 'clay (0.05)'
     clay_01= 'clay (0.1)'
