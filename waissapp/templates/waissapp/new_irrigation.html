@@ -238,17 +238,19 @@
     <div class="row collapse" id="collapse_irrig_4"><!--Sprinkler Row Collapse-->
       <div class="col-md-4">
         {% if sprinkler_list %}<hr>
-        <div class="row bg-light">
-          <form method="post" class="form-group col-md">
-            {% csrf_token %}
-            <small><b>Load existing sprinkler irrigation systems.</b></small><hr>
-            <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
-              <option value="{{selected_sprinkler}}">{{selected_sprinkler_text}}</option>
-              {% for sprinkler in sprinkler_list %}
-              <option value="{{sprinkler.name}}">{{sprinkler.name}}</option>
-              {% endfor %}
-            </select>
-          </form>
+        <div class="card rounded-0">
+          <div class="card-body">
+            <form method="post" class="form-group col-md">
+              {% csrf_token %}
+              <small><b>Load existing sprinkler irrigation systems.</b></small><hr>
+              <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
+                <option value="{{selected_sprinkler}}">{{selected_sprinkler_text}}</option>
+                {% for sprinkler in sprinkler_list %}
+                <option value="{{sprinkler.name}}">{{sprinkler.name}}</option>
+                {% endfor %}
+              </select>
+            </form>
+          </div>
         </div>
         {% endif %}
         <br>
@@ -260,7 +262,6 @@
             <label for="id_operating_pressure" class="small">Operating Pressure (kPa)</label>
             <input type="number" id="id_operating_pressure" class="form-control form-control-sm numberinput" step="0.01"><br>
             <button type="submit" class="btn btn-sm btn-block text-wrap btn-outline-info" onclick="calculateDischarge()">Calculate Discharge</button>
-            <br>
           </div>
         </div><!--Discharge Calculator-->
       </div>
