@@ -26,7 +26,7 @@ class Farm(models.Model):
 class Personnel(models.Model):
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30, null=True)
-    number = PhoneNumberField()
+    number = PhoneNumberField(null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
@@ -41,7 +41,7 @@ class Personnel(models.Model):
 class FieldUnit(models.Model):
     name = models.CharField(max_length=100, null=True, verbose_name="Field Unit Name", unique=True)
     usk = models.CharField(verbose_name="Unique Security Key", max_length=8, null=True)
-    number = PhoneNumberField()
+    number = PhoneNumberField(null=True)
     fieldunitstatus = models.BooleanField(verbose_name="Field Unit Status", null=True, blank=True)
     withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", null=True, blank=True)
     automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", null=True, blank=True)
