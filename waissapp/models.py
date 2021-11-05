@@ -26,7 +26,7 @@ class Farm(models.Model):
 class Personnel(models.Model):
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30, null=True)
-    number = PhoneNumberField(null=True)
+    number = PhoneNumberField(null=True, verbose_name="Mobile Number")
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
