@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'leaflet',
     'sslserver',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+PHONENUMBER_DEFAULT_REGION = 'Asia/Manila'

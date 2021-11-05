@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxLengthValidator, MaxValueValidator, MinLengthValidator, MinValueValidator
+from phonenumber_field.modelfields import PhoneNumberField
 
 class Farm(models.Model):
     name = models.CharField(max_length=50, unique="True", verbose_name="Farm Name")
@@ -181,7 +182,7 @@ class CalibrationConstant(models.Model):
 
 class Crop(models.Model):
     crop = models.CharField(max_length=100, unique=True, null=True, verbose_name="Crop")
-    growingperiod = models.Positives(verbose_name="Growing Period, days", null=True, validators=[MinValueValidator(30)])
+    growingperiod = models.PositiveIntegerField(verbose_name="Growing Period, days", null=True, validators=[MinValueValidator(30)])
     root_ini = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True)
     drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True, validators=[MinValueValidator(0.1)])
     mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True, validators=[MinValueValidator(0.1), MaxValueValidator(1)])
