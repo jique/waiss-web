@@ -174,7 +174,7 @@ class PersonnelForm(ModelForm):
         super(PersonnelForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.label_class = 'small'
-        self.fields['number'].widget = PhoneNumberPrefixWidget(attrs={"class": "form-control"})
+        #self.fields['number'].widget = PhoneNumberPrefixWidget(attrs={"class": "form-control"})
 
     class Meta:
         model = Personnel

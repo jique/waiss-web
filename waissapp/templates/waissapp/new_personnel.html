@@ -42,8 +42,14 @@
               <div class="col-md">{{personnel_form.first_name|as_crispy_field}}</div>
               <div class="col-md">{{personnel_form.last_name|as_crispy_field}}</div>
             </div>
-            {{personnel_form.number|as_crispy_field}}
-            <div class="text-danger text-right small"><b><span id="error_number"></span></b></div>
+            <div class="row">
+              <div class="col-md">(+63)</div>
+              <div class="col-md">
+                <label class="mb-0 small">Mobile Number*</label>
+                <input id="id_number" name="number" class="form-control textinput" onkeypress="return isNumber(event)">
+                <b><span class="small" id="error_number"></span></b>
+              </div>
+            </div>
             <hr>
             <div class="text-center">
               <input type="submit" value="Next" class="btn btn-info" name="btn_submit">
@@ -56,8 +62,18 @@
 </div>
 </div>
 <script>
-  var number = document.getElementById('id_number_1');
+  var number = document.getElementById('id_number');
   var error_number = document.getElementById('error_number');
+
+  function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+  }
+  print(number.text.slice(0,1))
   function validateForm(form) {
     if (number.length != 10) {
       number.focus();
