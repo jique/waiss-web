@@ -151,7 +151,7 @@
                 <option value="55">55</option>
                 <option value="60">60</option>
                 <option value="70">70</option>
-                <option value="75" selected>75</option>
+                <option value="75">75</option>
                 <option value="80">80</option>
                 <option value="85">85</option>
                 <option value="90">90</option>
@@ -278,12 +278,11 @@
             <div class="col-md">
               <label for="id_ea" class="small">Application Efficiency (%)<span class="asteriskField">*</span></label>
               <select name="ea" class="select form-control custom-select" required="" id="id_ea">
-                <option value=0>0</option>
                 <option value="50">50</option>
                 <option value="55">55</option>
                 <option value="60">60</option>
                 <option value="70">70</option>
-                <option value="75" selected>75</option>
+                <option value="75">75</option>
                 <option value="80">80</option>
                 <option value="85">85</option>
                 <option value="90">90</option>
@@ -362,11 +361,11 @@
     discharge = 0.1109543178 * 0.96 * parseFloat(nozzle_diameter.value)**2 * parseFloat(operating_pressure.value)**0.5 //original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)| C=0.96
     if (nozzle_diameter.value == "") {
       nozzle_diameter.focus();
-    }
-    else if (operating_pressure.value == "") {
+    } else if (operating_pressure.value == "") {
       operating_pressure.focus();
-    }
+    } else {
     $('input[name="discharge"]').val(discharge);
+    }
   }
 
   var drip_eu = document.getElementById('EU');

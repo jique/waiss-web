@@ -45,11 +45,11 @@ class FieldUnit(models.Model):
     withirrigation = models.BooleanField(verbose_name="With Irrigation (?)", null=True, blank=True)
     automaticthreshold = models.BooleanField(verbose_name="Automatic Threshold (?)", null=True, blank=True)
     samples = models.DecimalField(max_digits=3, decimal_places=0, verbose_name="No. of Samples", null=True, blank=True)
-    sensorintegrationtime = models.IntegerField(verbose_name='Sensor Integration Time (ms)', null=True, blank=True)
+    sensorintegrationtime = models.PositiveIntegerField(verbose_name='Sensor Integration Time (ms)', null=True, blank=True)
     timestart = models.TimeField(verbose_name='Starting Time', null=True)
     timestop = models.TimeField(verbose_name='Stopping Time', null=True)
-    delay = models.IntegerField(verbose_name='Sending Delay (ms)', null=True, blank=True)
-    clockcorrection = models.IntegerField(verbose_name='Clock Correction (s)', null=True, blank=True)
+    delay = models.PositiveIntegerField(verbose_name='Sending Delay (ms)', null=True, blank=True)
+    clockcorrection = models.PositiveIntegerField(verbose_name='Clock Correction (s)', null=True, blank=True)
 
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
@@ -181,7 +181,7 @@ class CalibrationConstant(models.Model):
 
 class Crop(models.Model):
     crop = models.CharField(max_length=100, unique=True, null=True, verbose_name="Crop")
-    growingperiod = models.IntegerField(verbose_name="Growing Period, days", null=True, validators=[MinValueValidator(30)])
+    growingperiod = models.Positives(verbose_name="Growing Period, days", null=True, validators=[MinValueValidator(30)])
     root_ini = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True)
     drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True, validators=[MinValueValidator(0.1)])
     mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True, validators=[MinValueValidator(0.1), MaxValueValidator(1)])
@@ -375,7 +375,7 @@ class Sprinkler(models.Model):
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="sprinkler")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
-    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, blank=True, validators=[MinValueValidator(0.01)])
+    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
     EFF_CHOICES = [
         (50, '50'),
         (55, '55'),
@@ -389,7 +389,6 @@ class Sprinkler(models.Model):
     ]
     ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True, validators=[MinValueValidator(1)])
     lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True, validators=[MinValueValidator(0.01)])
-    with_q_bln = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you know the sprinkler discharge?", null=True)
     sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True, validators=[MinValueValidator(0.01)])
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
