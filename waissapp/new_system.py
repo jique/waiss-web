@@ -118,6 +118,7 @@ def new_system(request):
 	furrow = request.POST.get('furrow')
 	sprinkler = request.POST.get('sprinkler')
 	drip = request.POST.get('drip')
+	date_transplanted = request.POST.get('date_transplanted')
 
 	form = WAISSystemsForm(request.POST or None)
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
@@ -131,6 +132,7 @@ def new_system(request):
 		form = WAISSystemsForm(request.POST)
 		waiss, created = WAISSystems.objects.get_or_create(name=request.POST.get('name'))
 		waiss.author = request.user
+		waiss.date_transplanted = date_transplanted
 		waiss.fieldunit = fieldunit
 		waiss.farm = farm
 		waiss.farm_manager = farm_manager
