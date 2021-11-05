@@ -141,15 +141,15 @@ def new_system(request):
 			value = request.POST.get(key)
 			if value != "":
 				if key == 'basin':
-					waiss.basin = basin
+					waiss.basin = Basin.objects.get(id=basin)
 				if key == "border":
-					waiss.border = border
+					waiss.border = Border.objects.get(id=border)
 				if key == "furrow":
-					waiss.furrow = furrow
+					waiss.furrow = Furrow.objects.get(id=furrow)
 				if key == "sprinkler":
-					waiss.sprinkler = sprinkler
+					waiss.sprinkler = Sprinkler.objects.get(id=sprinkler)
 				if key == "drip":
-					waiss.drip = drip
+					waiss.drip = Drip.objects.get(id=drip)
 		waiss.save()
 		return redirect('/dashboard/')
 
