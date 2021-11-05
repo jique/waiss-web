@@ -72,13 +72,15 @@
     }
     return true;
   }
-  number_str = String(number.value);
+  number_val = number.value;
+  number_str = number_val.charAt(0)
+  console.log(number_str)
   function validateForm(form) {
     if (number.value.length != 10) {
       number.focus();
       error_number.innerText = "Make sure to input a valid number.";
       return false;
-    } else if (number_str.slice(0,1) != '9') {
+    } else if (number_str != '9') {
       number.focus();
       error_number.innerText = "Make sure to input a valid number.";
       return false;
