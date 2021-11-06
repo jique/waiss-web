@@ -358,7 +358,7 @@
               <div class="card-body" id="id_card_q">
                 <label for="id_q" class="small">Emitter Discharge (l/min) Samples</label>
                 <div class="row">
-                  <div class="col-md">
+                  <div class="col-md-2">
                     <button type="button" class="btn btn-sm btn-info" onclick="addSample()"><i class="fas fa-plus-circle" alt="add button" data-toggle="tooltip" data-placement="right" title=""></i></button>
                   </div>
                   <div class="col-md">
@@ -423,12 +423,14 @@
     var _id_qs = $("._id_q");
     for (var i = 0; i < _id_qs.length; i++) {
       var _id_q = _id_qs[i];
-      console.log(_id_q.value)
       array_q[i] = _id_q.value;
     }
     console.log(array_q);
-    const mean = 0
-    const n = 0
+    const sum = array_q.reduce((a, b) => a + b, 0);
+    const n = array_q.length;
+    const avg = (sum / n) || 0;
+    const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n)
+    console.log(sum, n, avg, stdev);
   }
 </script>
 {% endblock %}
