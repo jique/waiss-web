@@ -437,7 +437,7 @@
 
     var validateCV = document.getElementById('validateCV');
     validateCV_val = stdev/avg
-    if (validateCV_val <= 1) {
+    if (validateCV_val.value <= 1) {
       validateCV.innerText = "The # of samples is enough."
     } else {
       validateCV.innerText = "The # of samples is not ideal. It is recommended to add more data."
