@@ -356,15 +356,20 @@
             <div class="card rounded-0"><!--EU Calculator-->
               <div class="card-header"><b>EU Calculator</b></div>
               <div class="card-body" id="id_card_q">
+                <label for="id_q" class="small">Emitter Discharge (l/min) Samples</label>
                 <div class="row">
-                  <div class="col-md"><label for="id_q" class="small">Emitter Discharge (l/min) Samples</label></div>
-                  <button type="button" class="btn btn-sm btn-info" onclick="addSample()"><i class="fas fa-plus-circle" alt="add button" data-toggle="tooltip" data-placement="right" title="Create new WAISS."></i></button>
+                  <div class="col-md">
+                    <button type="button" class="btn btn-sm btn-info" onclick="addSample()"><i class="fas fa-plus-circle" alt="add button" data-toggle="tooltip" data-placement="right" title=""></i></button>
+                  </div>
+                  <div class="col-md">
+                    <button type="button" class="btn btn-sm btn-info" onclick="calculateEUnow()">Compute Now</button>
+                  </div>
                 </div>
+                <p><span id="validateCV" class="small"></span></p>
                 <div class="row" id="id_div_q">
                   <div class="col-md-6 col-mx-auto"><input type="number" id="id_q" class="form-control form-control-sm numberinput _id_q" step="0.01"></div>
                 </div>
-                <button type="button" class="btn btn-sm btn-info" onclick="calculateEUnow()">Compute Now</button>
-                <p><span id="validateCV" class="small"></span></p>
+                
               </div>
             </div><!--EU Calculator-->
           </div>
@@ -416,8 +421,9 @@
     var _id_q = document.getElementById('id_q');
     var array_q = [];
     var _id_qs = $("._id_q");
-    for (var i = 0; i < array_q.length; i++) {
+    for (var i = 0; i < _id_qs.length; i++) {
       var _id_q = _id_qs[i];
+      console.log(_id_q.value)
       array_q[i] = _id_q.value;
     }
     console.log(array_q);
