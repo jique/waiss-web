@@ -424,7 +424,7 @@
       var _id_q = _id_qs[i];
         array_q[i] = _id_q.value;
     }
-    array_q.filter(n => n)
+    array_q = array_q.filter(n => n)
     array_q = array_q.map(Number)
     console.log(array_q);
     const q_min = Math.min(...array_q);
