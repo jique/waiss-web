@@ -371,11 +371,10 @@
                   <div class="col-md-6 small">Please input date here: </div>
                   <div class="col-md-6"><input type="number" id="id_q" class="form-control form-control-sm numberinput _id_q" step="0.01"></div>
                 </div>
-                <br>
               </div>
+              <br><br>
             </div><!--EU Calculator-->
           </div>
-  
           <hr>
           <div class="text-center">
               <input type="submit" value="Next" class="btn btn-info" name="submit-drip">
@@ -435,7 +434,7 @@
     var EU_val = (q_min/avg)*(1-1.27*((stdev/avg)/Math.sqrt(n)));
     EU_val = EU_val.toFixed(2);
     $('input[name="EU"]').val(EU_val);
-    avg = (avg.toFixed(2))*1.44;
+    avg = (avg*1.44).toFixed(2);
     $('input[name="ave_discharge"]').val(avg);
 
     var validateCV = document.getElementById('validateCV');
