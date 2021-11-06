@@ -349,7 +349,7 @@ class Drip(models.Model):
         ("yes", 'Yes, I do!'),
         ("no", 'No, I dont.'),
     ]
-    bln_ii = models.CharField(choices=yes_or_no, max_length=6, verbose_name="Has preferred irrigation interval", null=True)
+    bln_ii = models.CharField(choices=yes_or_no, max_length=6, verbose_name="Do you have preferred irrigation interval? (day)", null=True)
     irrigation_interval = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Irrigation Interval (days)", null=True, blank=True, validators=[MinValueValidator(1)])
     EU = models.DecimalField(max_digits=3, decimal_places=3, verbose_name="Design Emission Uniformity", null=True, validators=[MinValueValidator(0.001)])
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
