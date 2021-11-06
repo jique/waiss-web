@@ -355,8 +355,8 @@
               <div class="d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap" type="button" onclick="calculateEU()">Calculate Q & EU</button></div>
             </div>
             <div class="col-md card rounded-0"><!--EU Calculator-->
-              <small><b>Q & EU Calculator</b></small><hr>
-              <div class="card-body" id="id_card_q">
+              <p><small><b>Q & EU Calculator</b></small></p><hr>
+              <div id="id_card_q">
                 <label for="id_q" class="small"><b>Emitter Discharge (ml/min) Samples</b></label>
                 <div class="row">
                   <div class="col-2">
@@ -368,9 +368,9 @@
                 </div>
                 <p><span id="validateCV" class="small danger"></span></p>
                 <div class="row" id="id_div_q">
-                  <div class="col-md-6 mx-auto"><input type="number" id="id_q" class="form-control form-control-sm numberinput _id_q" step="0.01"></div>
+                  <div class="col-md-6">Please input date here: </div>
+                  <div class="col-md-6"><input type="number" id="id_q" class="form-control form-control-sm numberinput _id_q" step="0.01"></div>
                 </div>
-                
               </div>
             </div><!--EU Calculator-->
           </div>
@@ -439,7 +439,8 @@
 
     var validateCV = document.getElementById('validateCV');
     const validateCV_val = stdev/avg;
-    if (validateCV_val.value <= 1) {
+    console.log(validateCV_val)
+    if (validateCV_val <= 1) {
       validateCV.innerText = "The # of samples is enough."
     } else {
       validateCV.innerText = "The # of samples is not ideal. It is recommended to add more data."
