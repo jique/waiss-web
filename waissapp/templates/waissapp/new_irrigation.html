@@ -427,7 +427,7 @@
     }
     array_q = array_q.map(Number)
     console.log(array_q);
-    const sum = array_q.reduce((a, b) => a + b, 0);
+    const sum = array_q.reduce(add, 0);
     const n = array_q.length;
     const avg = (sum / n) || 0;
     const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n)
