@@ -425,6 +425,7 @@
       var _id_q = _id_qs[i];
       array_q[i] = _id_q.value;
     }
+    array_q = array_q.map(Number)
     console.log(array_q);
     const sum = array_q.reduce((a, b) => a + b, 0);
     const n = array_q.length;
