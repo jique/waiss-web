@@ -356,10 +356,12 @@
             <div class="card rounded-0"><!--EU Calculator-->
               <div class="card-header"><b>EU Calculator</b></div>
               <div class="card-body" id="id_card_q">
-                <div class="row" id="id_div_q">
+                <div class="row">
                   <div class="col-md"><label for="id_q" class="small">Emitter Discharge (l/min)</label></div>
-                  <div class="col-md"><input type="number" id="id_q" class="form-control form-control-sm numberinput" step="0.01"></div>
                   <button type="button" class="btn btn-sm btn-info" onclick="addSample()"><i class="fas fa-plus-circle" alt="add button" data-toggle="tooltip" data-placement="right" title="Create new WAISS."></i></button>
+                </div>
+                <div class="row" id="id_div_q">
+                  <div class="col-md"><input type="number" id="id_q" class="form-control form-control-sm numberinput" step="0.01"></div>
                 </div>
               </div>
             </div><!--EU Calculator-->
@@ -404,7 +406,8 @@
   
   function calculateEU() {
     var drip_eu = document.getElementById('EU');
-
+    var id_q = document.getElementById('id_q');
+    id_q.focus();
     const mean = 0
     const n = 0
   }
