@@ -433,7 +433,7 @@
     const avg = (sum / n) || 0;
     const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n);
     const EU_val = (q_min/avg)*(1-1.27*((stdev/avg)/Math.sqrt(n)));
-    drip_eu.value = +EU_val.toString(2);
+    drip_eu.value = +EU_val.toFixed(2);
 
     var validateCV = document.getElementById('validateCV');
     validateCV_val = stdev/avg
