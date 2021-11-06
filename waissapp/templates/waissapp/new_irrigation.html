@@ -285,7 +285,7 @@
               </select>
               <div class="row">
                 <div class="col-md">{{sprinkler.discharge|as_crispy_field}}</div>
-                <div class="col-md d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap" type="button" onclick="calculateDischarge()">Calculate Discharge</button></div>
+                <div class="col-md d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap small" type="button" onclick="calculateDischarge()">Calculate Discharge</button></div>
               </div>
             </div>
             <div class="col-md">
@@ -300,6 +300,7 @@
                     <div class="col-md"><label for="id_operating_pressure" class="small">Operating Pressure (kPa)</label></div>
                     <div class="col-md"><input type="number" id="id_operating_pressure" class="form-control form-control-sm numberinput" step="0.01"></div>
                   </div>
+                  <div class="col-md d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap small" type="button" onclick="calculateDischarge()">Calculate Discharge</button></div>
                 </div>
               </div><!--Discharge Calculator-->
             </div>
@@ -355,7 +356,7 @@
               <div class="d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap" type="button" onclick="calculateEU()">Calculate Q & EU</button></div>
             </div>
             <div class="col-md card rounded-0"><!--EU Calculator-->
-              <span style="margin-top: 10px;"><b>Q & EU Calculator</b></span>
+              <span style="margin-top: 10px;"><b><u>Q & EU Calculator</b></u></span>
               <div id="id_card_q">
                 <label for="id_q" class="small"><b>Emitter Discharge (ml/min) Samples</b></label>
                 <div class="row">
