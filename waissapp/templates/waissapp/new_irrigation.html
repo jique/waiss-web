@@ -355,7 +355,7 @@
               <div class="d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap" type="button" onclick="calculateEU()">Calculate Q & EU</button></div>
             </div>
             <div class="col-md card rounded-0"><!--EU Calculator-->
-              <div class="card-header"><b>Q & EU Calculator</b></div>
+              <small><b>Q & EU Calculator</b></small><hr>
               <div class="card-body" id="id_card_q">
                 <label for="id_q" class="small">Emitter Discharge (l/min) Samples</label>
                 <div class="row">
@@ -366,9 +366,9 @@
                     <button type="button" class="btn btn-sm btn-info" onclick="calculateEUnow()">Compute Now</button>
                   </div>
                 </div>
-                <p><span id="validateCV" class="small"></span></p>
+                <p><span id="validateCV" class="small danger"></span></p>
                 <div class="row" id="id_div_q">
-                  <div class="col-md-6 col-mx-auto"><input type="number" id="id_q" class="form-control form-control-sm numberinput _id_q" step="0.01"></div>
+                  <div class="col-md-6 mx-auto"><input type="number" id="id_q" class="form-control form-control-sm numberinput _id_q" step="0.01"></div>
                 </div>
                 
               </div>
@@ -404,7 +404,7 @@
     $('input[name="discharge"]').val(discharge);
     }
   }
-  
+  var id_q = document.getElementById('id_q');
   function calculateEU() {
     id_q.focus();
   }
@@ -417,7 +417,6 @@
   }
 
   function calculateEUnow() {
-    var id_q = document.getElementById('id_q');
     var _id_q = document.getElementById('id_q');
     var array_q = [];
     var _id_qs = $("._id_q");
