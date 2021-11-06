@@ -493,7 +493,7 @@ def index(request):
 				area_shaded = float(20)
 			else:
 				area_shaded = PercentShaded.objects.filter(fieldunit=fieldunit).latest().area_shaded
-			q = float(drip.discharge)
+			q = float(drip.ave_discharge)
 			bln_single_lateral = drip.bln_single_lateral
 			bln_ii = drip.bln_ii
 			Np = float(drip.emitters_per_plant)

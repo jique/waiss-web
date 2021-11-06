@@ -137,7 +137,7 @@ class DripInline(admin.TabularInline):
     model = Drip
 
 class DripAdmin(admin.ModelAdmin):
-    list_display =('name', 'discharge', 'bln_single_lateral', 'emitters_per_plant', 'emitter_spacing', 'plant_spacing', 'row_spacing', 'wetted_dia', 'bln_ii', 'irrigation_interval', 'EU', 'author', 'personal', 'timestamp')
+    list_display =('name', 'ave_discharge', 'bln_single_lateral', 'emitters_per_plant', 'emitter_spacing', 'plant_spacing', 'row_spacing', 'wetted_dia', 'bln_ii', 'irrigation_interval', 'EU', 'author', 'personal', 'timestamp')
 
 admin.site.register(Basin, BasinAdmin)
 admin.site.register(Border, BorderAdmin)

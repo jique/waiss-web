@@ -338,8 +338,8 @@ class Drip(models.Model):
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="drip")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
-    bln_single_lateral = models.BooleanField (verbose_name="Single Straight Lateral", null=True)
-    discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Discharge (l/day)", null=True, validators=[MinValueValidator(0.01)])
+    bln_single_lateral = models.BooleanField (verbose_name="Is it a single straight lateral?", null=True)
+    ave_discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Average Emitter Discharge (l/day)", null=True, validators=[MinValueValidator(0.01)])
     emitters_per_plant = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="No. of Emitters per Plant", null=True, validators=[MinValueValidator(1)])
     emitter_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Spacing (m)", null=True, validators=[MinValueValidator(0.01)])
     plant_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Plant spacing (m)", null=True, validators=[MinValueValidator(0.01)])
