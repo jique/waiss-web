@@ -357,7 +357,7 @@
             <div class="col-md card rounded-0"><!--EU Calculator-->
               <small><b>Q & EU Calculator</b></small><hr>
               <div class="card-body" id="id_card_q">
-                <label for="id_q" class="small">Emitter Discharge (l/min) Samples</label>
+                <label for="id_q" class="small"><b>Emitter Discharge (ml/min) Samples</b></label>
                 <div class="row">
                   <div class="col-2">
                     <button type="button" class="btn btn-sm btn-info" onclick="addSample()"><i class="fas fa-plus-circle" alt="add button" data-toggle="tooltip" data-placement="right" title=""></i></button>
@@ -429,11 +429,12 @@
     const q_min = Math.min(...array_q);
     const sum = array_q.reduce(function(a, b) { return a + b; }, 0);
     const n = array_q.length;
-    const avg = (sum / n) || 0;
+    var avg = (sum / n) || 0;
     const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n);
     var EU_val = (q_min/avg)*(1-1.27*((stdev/avg)/Math.sqrt(n)));
     EU_val = EU_val.toFixed(2);
     $('input[name="EU"]').val(EU_val);
+    avg = (avg.toFixed(2))*1.44;
     $('input[name="ave_discharge"]').val(avg);
 
     var validateCV = document.getElementById('validateCV');
