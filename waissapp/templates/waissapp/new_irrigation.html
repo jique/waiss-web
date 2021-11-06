@@ -120,22 +120,23 @@
     </div><!--With irrigation system-->
     <div class="row collapse" id="collapse_irrig_1"><!--Basin Row Collapse-->
       
-      <div class="col-md-4"><hr><!--Picture Guide-->
-        
-      </div>
+      <div class="col-md-4"><!--Picture Guide--></div>
+
       <div class="col-md"> <hr>
         {% if basin_list %}
         <div class="row bg-light">
-          <form method="post" class="form-group col-md">
-            {% csrf_token %}
-            <small><b>Load existing basin irrigation systems.</b></small><hr>
-            <select class="form-control" id="selected_basin" name="loadData_basin" onchange="this.form.submit()">
-              <option value="{{selected_basin}}">{{selected_basin_text}}</option>
-              {% for basin in basin_list %}
-              <option value="{{basin.name}}">{{basin.name}}</option>
-              {% endfor %}
-            </select>
-          </form>
+          <div class="row-md">
+            <form method="post" class="form-group col-md">
+              {% csrf_token %}
+              <small><b>Load existing basin irrigation systems.</b></small><hr>
+              <select class="form-control" id="selected_basin" name="loadData_basin" onchange="this.form.submit()">
+                <option value="{{selected_basin}}">{{selected_basin_text}}</option>
+                {% for basin in basin_list %}
+                <option value="{{basin.name}}">{{basin.name}}</option>
+                {% endfor %}
+              </select>
+            </form>
+          </div>
         </div>
         {% endif %}
         <form class="form-group" action="" method="post">
@@ -199,23 +200,24 @@
       </div>
     </div><!--Border Row Collapse-->
     <div class="row collapse" id="collapse_irrig_3"><!--Furrow Row Collapse-->
-      {% if furrow_list %}
-      <div class="col-md-4"><hr>
-        <div class="row bg-light">
-          <form method="post" class="form-group col-md">
-            {% csrf_token %}
-            <small><b>Load existing furrow irrigation systems.</b></small><hr>
-            <select class="form-control" id="selected_furrow" name="loadData_furrow" onchange="this.form.submit()">
-              <option value="{{selected_furrow}}">{{selected_furrow_text}}</option>
-              {% for furrow in furrow_list %}
-              <option value="{{furrow.name}}">{{furrow.name}}</option>
-              {% endfor %}
-            </select>
-          </form>
-        </div>
-      </div>
-      {% endif %}
+      
+      <div class="col-md-4"></div>
+      
       <div class="col-md">
+        {% if furrow_list %}
+          <div class="row bg-light"><!--Dropdown Database-->
+            <form method="post" class="form-group col-md">
+              {% csrf_token %}
+              <small><b>Load existing furrow irrigation systems.</b></small><hr>
+              <select class="form-control" id="selected_furrow" name="loadData_furrow" onchange="this.form.submit()">
+                <option value="{{selected_furrow}}">{{selected_furrow_text}}</option>
+                {% for furrow in furrow_list %}
+                <option value="{{furrow.name}}">{{furrow.name}}</option>
+                {% endfor %}
+              </select>
+            </form>
+          </div>
+        {% endif %}<!--Dropdown Database-->
         <form class="form-group" action="" method="post">
           {% csrf_token %} <hr>
           <small><b>Fields with asterisks (*) are required.</b></small><hr>
@@ -239,10 +241,12 @@
     </div><!--Furrow Row Collapse-->
     <div class="row collapse" id="collapse_irrig_4"><!--Sprinkler Row Collapse-->
       <div class="col-md-4">
-        {% if sprinkler_list %}<hr>
-        <div class="card rounded-0">
-          <div class="card-header small"><b>Load existing sprinkler irrigation systems.</b></div>
+        
+      </div>
+      <div class="col-md">
+        {% if sprinkler_list %}
           <div class="card-body">
+            <small>><b>Load existing sprinkler irrigation systems.</b></small><hr>
             <form method="post" class="form-group col-md">
               {% csrf_token %}
               <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
@@ -253,21 +257,7 @@
               </select>
             </form>
           </div>
-        </div>
         {% endif %}
-        <br>
-        <div class="card rounded-0"><!--Discharge Calculator-->
-          <div class="card-header"><b>Discharge Calculator</b></div>
-          <div class="card-body">
-            <label for="id_nozzle_diameter" class="small">Nozzle Diameter (cm)</label>
-            <input type="number" id="id_nozzle_diameter" class="form-control form-control-sm numberinput" step="0.0001">
-            <label for="id_operating_pressure" class="small">Operating Pressure (kPa)</label>
-            <input type="number" id="id_operating_pressure" class="form-control form-control-sm numberinput" step="0.01"><br>
-            <button type="submit" class="btn btn-sm btn-block text-wrap btn-outline-info" onclick="calculateDischarge()">Calculate Discharge</button>
-          </div>
-        </div><!--Discharge Calculator-->
-      </div>
-      <div class="col-md">
         <form class="form-group" action="" method="post">
           {% csrf_token %} <hr>
           <small><b>Fields with asterisks (*) are required.</b></small><hr>
@@ -290,9 +280,23 @@
                 <option value="90">90</option>
                 <option value="95">95</option>
               </select>
+              <div class="row">
+                <div class="col-md">{{sprinkler.discharge|as_crispy_field}}</div>
+                <div class="col-md"><button type="submit" class="btn btn-sm btn-block text-wrap btn-outline-info" onclick="calculateDischarge()">Calculate Discharge</button></div>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="card rounded-0"><!--Discharge Calculator-->
+                <div class="card-header"><b>Discharge Calculator</b></div>
+                <div class="card-body">
+                  <label for="id_nozzle_diameter" class="small">Nozzle Diameter (cm)</label>
+                  <input type="number" id="id_nozzle_diameter" class="form-control form-control-sm numberinput" step="0.0001">
+                  <label for="id_operating_pressure" class="small">Operating Pressure (kPa)</label>
+                  <input type="number" id="id_operating_pressure" class="form-control form-control-sm numberinput" step="0.01"><br>
+                </div>
+              </div><!--Discharge Calculator-->
             </div>
           </div>
-          {{sprinkler.discharge|as_crispy_field}}
           <hr>
           <div class="text-center"><input type="submit" value="Next" class="btn btn-info" name="submit-sprinkler"></div>
         </form>
