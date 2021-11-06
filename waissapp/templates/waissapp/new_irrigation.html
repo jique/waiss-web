@@ -310,12 +310,17 @@
       </div>
     </div><!--Sprinkler Row Collapse-->
     <div class="row collapse" id="collapse_irrig_5"><!--Drip Row Collapse-->
-      {% if drip_list %}
-      <div class="col-md-4"><hr>
+      
+      <div class="col-md-4">
+
+      </div>
+      
+      <div class="col-md">
+        {% if drip_list %}
         <div class="row bg-light">
           <form method="post" class="form-group col-md">
             {% csrf_token %}
-            <small><b>Load existing drip irrigation systems.</b></small><hr>
+            <small><b>Load existing drip irrigation systems.</b></small>
             <select class="form-control" id="selected_drip" name="loadData_drip" onchange="this.form.submit()">
               <option value="{{selected_drip}}">{{selected_drip_text}}</option>
               {% for drip in drip_list %}
@@ -324,35 +329,48 @@
             </select>
           </form>
         </div>
-      </div>
-      {% endif %}
-      <div class="col-md">
+        {% endif %}
         <form class="form-group" action="" method="post">
           {% csrf_token %} <hr>
           <small><b>Fields with asterisks (*) are required.</b></small><hr>
           {{drip.name|as_crispy_field}}
           <div class="row">
-            <div class="col-md">{{drip.bln_single_lateral|as_crispy_field}}</div>
-            <div class="col-md">{{drip.discharge|as_crispy_field}}</div>
-          </div>
-          <div class="row">
-            <div class="col-md">{{drip.emitters_per_plant|as_crispy_field}}</div>
-            <div class="col-md">{{drip.emitter_spacing|as_crispy_field}}</div>
-          </div>
-          <div class="row">
             <div class="col-md">{{drip.plant_spacing|as_crispy_field}}</div>
             <div class="col-md">{{drip.row_spacing|as_crispy_field}}</div>
           </div>
           <div class="row">
+            <div class="col-md">{{drip.emitters_per_plant|as_crispy_field}}</div>
+            <div class="col-md">{{drip.emitter_spacing|as_crispy_field}}</div>
             <div class="col-md">{{drip.wetted_dia|as_crispy_field}}</div>
-            <div class="col-md">{{drip.EU|as_crispy_field}}</div>
           </div>
-          {{drip.bln_ii|as_crispy_field}}
+          <div class="row">
+            <div class="col-md">{{drip.bln_single_lateral|as_crispy_field}}</div>
+            {{drip.bln_ii|as_crispy_field}}
           <div class="row collapse" id="collapse_irrig_II">
             <div class="col-md">
               {{drip.irrigation_interval|as_crispy_field}}
             </div>
           </div>
+            
+          </div>
+          
+          
+          <div class="row">
+            <div class="col-md">
+              <div class="row">
+                <div class="col-md">{{drip.EU|as_crispy_field}}</div>
+                <div class="col-md d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap" type="button" onclick="calculateEU()">Calculate EU</button></div>
+              </div>
+            </div>
+            <div class="card rounded-0"><!--EU Calculator-->
+              <div class="card-header"><b>EU Calculator</b></div>
+              <div class="card-body">
+                <div class="row">
+                </div>
+              </div>
+            </div><!--EU Calculator-->
+          </div>
+          
           <hr>
           <div class="text-center">
               <input type="submit" value="Next" class="btn btn-info" name="submit-drip">
@@ -372,6 +390,8 @@
     var nozzle_diameter = document.getElementById('id_nozzle_diameter');
     var operating_pressure = document.getElementById('id_operating_pressure');
     discharge = 0.1109543178 * 0.96 * parseFloat(nozzle_diameter.value)**2 * parseFloat(operating_pressure.value)**0.5 //original equation in english system q=28.95Cd^2P^0.5 (gpm, in, psi)| C=0.96
+    discharge = +discharge.toFixed(2)
+
     if (nozzle_diameter.value == "") {
       nozzle_diameter.focus();
     } else if (operating_pressure.value == "") {
