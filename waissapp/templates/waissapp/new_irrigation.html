@@ -427,12 +427,12 @@
     }
     array_q = array_q.map(Number)
     console.log(array_q);
-    const q_min = Math.min(array_q)
+    const q_min = Math.min(...array_q)
     const sum = array_q.reduce(function(a, b) { return a + b; }, 0);
     const n = array_q.length;
     const avg = (sum / n) || 0;
     const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n);
-    const EU_val = (q_min/avg)*(1-1.27*(stdev/(n**1/2)))*100;
+    const EU_val = (q_min/avg)*(1-1.27*(stdev/(Math.sqrt(n)))*100;
     console.log(q_min, avg, sum, n, stdev, EU_val);
   }
 </script>
