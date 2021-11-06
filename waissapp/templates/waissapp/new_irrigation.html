@@ -122,7 +122,7 @@
       
       <div class="col-md-4"><!--Picture Guide--></div>
 
-      <div class="col-md"> <hr>
+      <div class="col-md">
         {% if basin_list %}
         <div class="row bg-light">
           <div class="col-md">
@@ -172,7 +172,7 @@
       <div class="col-md-4"></div>
 
       <div class="col-md">
-        {% if border_list %}<hr>
+        {% if border_list %}
           <div class="row bg-light">
             <form method="post" class="form-group col-md">
               {% csrf_token %}
@@ -247,16 +247,18 @@
       <div class="col-md">
         {% if sprinkler_list %}
         <div class="row bg-light">
-          <small><b>Load existing sprinkler irrigation systems.</b></small><hr>
-          <form method="post" class="form-group col-md">
-              {% csrf_token %}
-              <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
-                <option value="{{selected_sprinkler}}">{{selected_sprinkler_text}}</option>
-                {% for sprinkler in sprinkler_list %}
-                <option value="{{sprinkler.name}}">{{sprinkler.name}}</option>
-                {% endfor %}
-              </select>
-          </form>
+          <div class="col-md">
+            <small><b>Load existing sprinkler irrigation systems.</b></small><hr>
+            <form method="post" class="form-group col-md">
+                {% csrf_token %}
+                <select class="form-control" id="selected_sprinkler" name="loadData_sprinkler" onchange="this.form.submit()">
+                  <option value="{{selected_sprinkler}}">{{selected_sprinkler_text}}</option>
+                  {% for sprinkler in sprinkler_list %}
+                  <option value="{{sprinkler.name}}">{{sprinkler.name}}</option>
+                  {% endfor %}
+                </select>
+            </form>
+          </div>
         </div>
         {% endif %}
         <form class="form-group" action="" method="post">
@@ -283,7 +285,7 @@
               </select>
               <div class="row">
                 <div class="col-md">{{sprinkler.discharge|as_crispy_field}}</div>
-                <div class="col-md d-flex align-items-center mt-3"><button type="submit" class="btn btn-outline-info btn-sm btn-block text-wrap" onclick="calculateDischarge()">Calculate Discharge</button></div>
+                <div class="col-md d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap" onclick="calculateDischarge()">Calculate Discharge</button></div>
               </div>
             </div>
             <div class="col-md">
