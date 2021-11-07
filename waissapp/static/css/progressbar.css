@@ -6,11 +6,11 @@
 #progressbar {
     margin-bottom: 30px;
     overflow: hidden;
-    color: lightgrey
+    color: #858796;
 }
 
 #progressbar .active {
-    color: #000000
+    color: #1abc9c;
 }
 
 #progressbar li {
@@ -29,7 +29,7 @@
 
 #progressbar #crop:before {
     font-family: FontAwesome;
-    content: "\f18c";
+    content: "\f4d8";
 }
 
 #progressbar #soil:before {
@@ -65,7 +65,7 @@
     font-size: 18px;
     text-align: center;
     color: #ffffff;
-    background: lightgray;
+    background: #858796;
     border-radius: 50%;
     margin: 0 auto 10px auto;
     padding: 2px
@@ -75,7 +75,7 @@
     content: '';
     width: 100%;
     height: 2px;
-    background: lightgray;
+    background: #858796;
     position: absolute;
     left: 0;
     top: 25px;
@@ -84,5 +84,5 @@
 
 #progressbar li.active:before,
 #progressbar li.active:after {
-    background: #4fbfa8
+    background:#1abc9c;
 }
