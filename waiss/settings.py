@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fontawesome-free',
+    'fontawesome_free',
     'crispy_forms',
     'leaflet',
     'sslserver',
