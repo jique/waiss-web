@@ -1,3 +1,6 @@
+#progress_bar_div {
+    width: 100%;
+}
 #progressbar {
     margin-bottom: 30px;
     overflow: hidden;
@@ -11,7 +14,7 @@
 #progressbar li {
     list-style-type: none;
     font-size: 12px;
-    width: 14.2857%;
+    width: 11.11%;
     float: left;
     position: relative;
 }
