@@ -23,37 +23,37 @@
 }
 
 #progressbar #farm:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: "\e065";
 }
 
 #progressbar #crop:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: "\f4d8";
 }
 
 #progressbar #soil:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: "\f0c9";
 }
 
 #progressbar #station:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: "\f0e8";
 }
 
 #progressbar #croppingseason:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: "\f073";
 }
 
 #progressbar #data:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: "\f022";
 }
 
 #progressbar #confirm:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: "\f00c";
 }
 
