@@ -5,15 +5,15 @@
 {% block progressbar_block %}
 <div class="progress_bar_div">
     <ul id="progressbar">
-        <li class="active" id="farm"><a href={% url 'waiss:new_personnel' %}>Farm</a></li>
+      <a href={% url 'waiss:new_farm' %}><li class="active" id="farm"><strong>Farm</strong></li></a>
         <a href={% url 'waiss:new_personnel' %}><li id="farm_manager">Farm Manager</li></a>
-        <li id="crop"><strong>Crop</strong></li>
-        <li id="soil"><a href={% url 'waiss:new_soil' %}>Soil</a></li>
-        <li id="calib"><a href={% url 'waiss:new_calib' %}>Calibration</a></li>
-        <li id="irrig"><a href={% url 'waiss:new_irrigation' %}>Irrigation</a></li>
-        <li id="fieldunit"><a href={% url 'waiss:new_fieldunit' %}>Field Unit</a></li>
-        <li id="sensor"><a href={% url 'waiss:new_sensor' %}>Sensors</a></li>
-        <li id="confirm"><a href={% url 'waiss:new_system' %}>Finish</a></li>
+        <li id="crop">Crop</li>
+        <a href={% url 'waiss:new_soil' %}><li id="soil">Soil</li></a>
+        <a href={% url 'waiss:new_calib' %}><li id="calib">Calibration</li></a>
+        <a href={% url 'waiss:new_irrigation' %}><li id="irrig">Irrigation</li></a>
+        <a href={% url 'waiss:new_fieldunit' %}><li id="fieldunit">Field Unit</li></a>
+        <a href={% url 'waiss:new_sensor' %}><li id="sensor">Sensors</li></a>
+        <a href={% url 'waiss:new_system' %}><li id="confirm">Finish</li></a>
     </ul>
 </div>
 {% endblock %}
