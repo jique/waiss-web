@@ -30,7 +30,7 @@
           {% csrf_token %} 
           {% for form in formset %}
           <div class="row">
-              <div class="col-1 d-flex align-items-center mt-3">
+              <div class="col-md-1 d-flex align-items-center mt-3">
                   <div class="btn btn-sm btn-outline-info"><b>#{{forloop.counter}}</b></div>
               </div>
               <div class="hidden">{{form.id|as_crispy_field}}</div>

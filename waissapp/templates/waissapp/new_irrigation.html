@@ -288,8 +288,11 @@
                 <option value="90">90</option>
                 <option value="95">95</option>
               </select>
-              {{sprinkler.discharge|as_crispy_field}}
-              <div class="d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap small" type="button" onclick="calculateDischarge()">Calculate</button></div>
+              <br>
+              <div class="row">
+                <div class="col-md">{{sprinkler.discharge|as_crispy_field}}</div>
+                <div class="col-md d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap small" type="button" onclick="calculateDischarge()">Calculate</button></div>
+              </div>
             </div>
             <div class="col-md">
               <div class="card rounded-0"><!--Discharge Calculator-->
