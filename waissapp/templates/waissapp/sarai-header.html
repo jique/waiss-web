@@ -323,12 +323,16 @@
             <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
               <div class="">
                 {% block header_block %}
-                <h4 class="display-4 p-3" style="color: #1abc9c; font-size: 35px;">Let's get started! <span></span></h4>
-                <p class="lead p-3" style="font-size: 15px;">Input required information for each parameters.</p>
+                <h4 class="display-4 p-5" style="color: #1abc9c; font-size: 35px;">Let's get started! <span></span></h4>
+                <p class="lead p-5" style="font-size: 15px;">Input required information for each parameters.</p>
                 {% endblock %}
 
-                {% block form_block %}
-                {% endblock %}
+                
+                <div class="p-5">
+                  {% block form_block %}
+                  {% endblock %}
+                </div>
+                
                 <br>
               </div>
             </div>
