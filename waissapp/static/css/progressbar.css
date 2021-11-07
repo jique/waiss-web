@@ -1,52 +1,101 @@
-.container_prog {
-    width: 100%;
-    margin-right: 10px;
+$primary-color: #c0a359;
+$light-gray-color: #dad6ce;
+
+html,
+body {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  font-family: "Exo", sans-serif;
+  color: #4b4b4b;
+  counter-reset: step-count;
 }
-.progressbar {
-    counter-reset: step;
+
+.progress-bar {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
 }
-.progressbar li {
-    list-style-type: none;
-    width: 11.11%;
-    float: left;
-    font-size: 12px;
-    position: relative;
-    text-align: center;
-    text-transform: uppercase;
-    color: #7d7d7d;
-}
-.progressbar li:before {
-    width: 30px;
-    height: 30px;
-    content: counter(step);
-    counter-increment: step;
-    line-height: 30px;
-    border: 2px solid #7d7d7d;
-    display: block;
-    text-align: center;
-    margin: 0 auto 10px auto;
-    border-radius: 50%;
-    background-color: white;
-}
-.progressbar li:after {
-    width: 100%;
+
+.progress-step {
+  text-align: center;
+  position: relative;
+
+  &:before,
+  &:after {
+    background-color: $primary-color;
+    content: "";
     height: 2px;
-    content: '';
     position: absolute;
-    background-color: #7d7d7d;
-    top: 15px;
-    left: -50%;
     z-index: -1;
+    top: 20px;
+  }
+
+  &:after {
+    left: 50%;
+    width: 100%;
+  }
+  
+  &:last-of-type.is-active:after {
+    background-color: $primary-color;
+    }
+
+  @media screen and (min-width: 640px) {
+    &:first-of-type:before {
+      right: 50%;
+      width: 50%;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    &:first-of-type:before,
+    &:last-of-type:after {
+      background-color: white !important;
+    }
+  }
+
+  &:last-of-type:after {
+    left: 50%;
+    width: 50%;
+  }
+    
+  .step-count {
+    background-color: $primary-color;
+    height: 30px;
+    width: 30px;
+    margin: 0 auto;
+    border-radius: 50%;
+    color: white;
+    line-height: 30px;
+    z-index: 100;
+    border: 7px solid white;
+    font-size: 0.8rem;
+    font-weight: 500;
+
+    &:before {
+      counter-increment: step-count;
+      content: counter(step-count);
+    }
+  }
+
+  &.is-active {
+    .step-description {
+      font-weight: 500;
+    }
+    &:after {
+      background-color: $light-gray-color;
+    }
+      
+    ~ .progress-step .step-count {
+      background-color: $light-gray-color;
+    }
+
+    ~ .progress-step:after {
+      background-color: $light-gray-color;
+    }
+  }
 }
-.progressbar li:first-child:after {
-    content: none;
-}
-.progressbar li.active {
-    color: green;
-}
-.progressbar li.active:before {
-    border-color: #55b776;
-}
-.progressbar li.active + li:after {
-    background-color: #55b776;
+
+.step-description {
+  font-size: 0.8rem;
 }
