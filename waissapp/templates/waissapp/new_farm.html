@@ -13,7 +13,7 @@
 </style>
 {% endblock %}
 
-{% block form_block %}
+{% block progressbar_block %}
 <div class="progress_bar_div">
     <ul id="progressbar">
         <li class="active" id="farm"><strong>Farm</strong></li>
@@ -27,6 +27,8 @@
         <li id="confirm"><a href={% url 'waiss:new_system' %}>Finish</a></li>
     </ul>
 </div>
+{% endblock %}
+{% block form_block %}
 <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
   <div class="card-header rounded-0 border-0"><small>Farm Name & Location</small></div>
     <div class="card-body">
