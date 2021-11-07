@@ -1,4 +1,11 @@
-@import url("https://use.fontawesome.com/releases/v5.0.9/css/all.css");
+/* Step 1: Common Properties: All required to make icons render reliably */
+.icon::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
 
 #progress_bar_div {
     width: 100%;
@@ -25,37 +32,37 @@
 }
 
 #progressbar #farm:before {
-    font-family: "Font Awesome 5 Free";
-    content: "\e065";
+    font-family: FontAwesome;
+    content: "\f965";
 }
 
 #progressbar #crop:before {
-    font-family: "Font Awesome 5 Free";
+    font-family: FontAwesome;
     content: "\f4d8";
 }
 
 #progressbar #soil:before {
-    font-family: "Font Awesome 5 Free";
+    font-family: FontAwesome;
     content: "\f0c9";
 }
 
 #progressbar #station:before {
-    font-family: "Font Awesome 5 Free";
+    font-family: FontAwesome;
     content: "\f0e8";
 }
 
 #progressbar #croppingseason:before {
-    font-family: "Font Awesome 5 Free";
+    font-family: FontAwesome;
     content: "\f073";
 }
 
 #progressbar #data:before {
-    font-family: "Font Awesome 5 Free";
+    font-family: FontAwesome;
     content: "\f022";
 }
 
 #progressbar #confirm:before {
-    font-family: "Font Awesome 5 Free";
+    font-family: FontAwesome;
     content: "\f00c";
 }
 
