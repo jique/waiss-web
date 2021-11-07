@@ -10,7 +10,8 @@
 #progress_bar_div {
     width: 100%;
     text-align: center;
-    position: relative;
+    margin: 0;
+    padding: 0;
 }
 #progressbar {
     margin-bottom: 30px;
@@ -37,6 +38,7 @@
 #progressbar #farm:before {
     font-family: FontAwesome;
     content: "\f015";
+    margin-left: 0px;
 }
 
 #progressbar #crop:before {
