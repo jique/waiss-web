@@ -1,5 +1,7 @@
 #progress_bar_div {
     width: 100%;
+    text-align: center;
+    position: relative;
 }
 #progressbar {
     margin-bottom: 30px;
@@ -17,11 +19,12 @@
     width: 11.11%;
     float: left;
     position: relative;
+    text-align: center;
 }
 
 #progressbar #farm:before {
     font-family: FontAwesome;
-    content: "\f009";
+    content: "\e065";
 }
 
 #progressbar #crop:before {
@@ -55,11 +58,12 @@
 }
 
 #progressbar li:before {
-    width: 50px;
-    height: 50px;
-    line-height: 45px;
+    width: 30px;
+    height: 30px;
+    line-height: 25px;
     display: block;
     font-size: 18px;
+    text-align: center;
     color: #ffffff;
     background: lightgray;
     border-radius: 50%;
