@@ -37,6 +37,7 @@
     float: left;
     position: relative;
     text-align: center;
+    z-index: 0;
 }
 
 #progressbar a {
