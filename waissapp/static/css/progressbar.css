@@ -3,6 +3,12 @@
     padding: 0
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* Step 1: Common Properties: All required to make icons render reliably */
 .icon::before {
     display: inline-block;
@@ -13,8 +19,9 @@
 }
 
 #progress_bar_div {
-    width: 100%;
     text-align: center;
+    position: relative;
+    margin-top: 20px;
     box-sizing: border-box;
 }
 
