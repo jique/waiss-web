@@ -2,16 +2,22 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block form_block %}
-<div class="progress_bar">
-    <div class="pro-bar">
-        <small class="progress_bar_title">
-            <a href={% url 'waiss:new_farm' %} style="color: #858796">Farm</a> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> |<span style="color: #1abc9c; font-size: large;"><b> Field Unit</b></span> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="color:#858796">System</a>
-          <span class="progress_number">77%</span>
-        </small>
-        <span class="progress-bar-inner" style="background-color: #1abc9c; width: 77%;" data-value="77" data-percentage-value="77"></span>
-    </div>
+{% block progressbar_block %}
+<div class="progress_bar_div">
+    <ul id="progressbar">
+        <a href={% url 'waiss:new_farm' %}><li id="farm">Farm</li></a>
+        <a href={% url 'waiss:new_personnel' %}><li id="farm_manager">Farm Manager</li></a>
+        <a href={% url 'waiss:new_crop' %}><li id="crop">Crop</li></a>
+        <a href={% url 'waiss:new_soil' %}><li id="soil">Soil</li></a>
+        <a href={% url 'waiss:new_calib' %}><li id="calib"Calibration</strong></li></a>
+        <a href={% url 'waiss:new_irrigation' %}><li id="irrig">Irrigation</li></strong></a>
+        <li class="active" id="fieldunit"><strong>Field Unit</strong></li>
+        <a href={% url 'waiss:new_sensor' %}><li id="sensor">Sensors</li></a>
+        <a href={% url 'waiss:new_system' %}><li id="confirm">Finish</li></a>
+    </ul>
 </div>
+{% endblock %}
+{% block form_block %}
 <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
     <div class="card-header rounded-0 border-0"><small>Field Unit & Initial Settings</small></div>
     <div class="card-body">
