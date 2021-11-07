@@ -1,13 +1,8 @@
 * {
     margin: 0;
-    padding: 0
+    padding: 0;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
 
 /* Step 1: Common Properties: All required to make icons render reliably */
 .icon::before {
@@ -50,7 +45,6 @@
 #progressbar #farm:before {
     font-family: FontAwesome;
     content: "\f015";
-    margin-left: 0px;
 }
 
 #progressbar #crop:before {
