@@ -28,9 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["10.0.93.165","172.16.5.113","127.0.0.1"]
 
-import sys
-
-sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fontawesome_free',
     'crispy_forms',
     'leaflet',
     'sslserver',
