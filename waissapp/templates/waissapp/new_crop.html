@@ -2,33 +2,22 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block progressbar_block %}
+<div class="progress_bar_div">
+    <ul id="progressbar">
+        <li class="active" id="farm"><a href={% url 'waiss:new_personnel' %}>Farm</a></li>
+        <a href={% url 'waiss:new_personnel' %}></a><li id="farm_manager">Farm Manager</li></a>
+        <li id="crop"><strong>Crop</strong></li>
+        <li id="soil"><a href={% url 'waiss:new_soil' %}>Soil</a></li>
+        <li id="calib"><a href={% url 'waiss:new_calib' %}>Calibration</a></li>
+        <li id="irrig"><a href={% url 'waiss:new_irrigation' %}>Irrigation</a></li>
+        <li id="fieldunit"><a href={% url 'waiss:new_fieldunit' %}>Field Unit</a></li>
+        <li id="sensor"><a href={% url 'waiss:new_sensor' %}>Sensors</a></li>
+        <li id="confirm"><a href={% url 'waiss:new_system' %}>Finish</a></li>
+    </ul>
+</div>
+{% endblock %}
 {% block form_block %}
-<!--
-<div class="progress_bar">
-  <div class="pro-bar">
-      <small class="progress_bar_title">
-        <a href={% url 'waiss:new_farm' %} style="color:#858796">Farm</a> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <span style="color: #1abc9c; font-size: large;"><b>Crop</b></span> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> | <a href={% url 'waiss:new_fieldunit' %} style="color:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="color:#858796">System</a>
-          <span class="progress_number">33%</span>
-      </small>
-      <span class="progress-bar-inner" style="background-color: #1abc9c; width: 33%;" data-value="33" data-percentage-value="33"></span>
-  </div>
-</div>
--->
-<div class="row">
-  <div class="container_prog">
-      <ul class="progressbar">
-          <li>Farm</li>
-          <li class="active">Farm Manager</li>
-          <li>Crop</li>
-          <li>Soil</li>
-          <li>Calibration</li>
-          <li>Irrigation</li>
-          <li>Field Unit</li>
-          <li>Sensors</li>
-          <li>WAISS Setup</li>
-      </ul>
-  </div>
-</div>
 <div class="card rounded-0 border-0" style="background-color: rgba(251, 251, 251, 0.5)">
   <div class="card-header border-0 rounded-0"><small>Crop & Characteristics</small></div>
     <div class="card-body">
