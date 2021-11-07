@@ -5,9 +5,9 @@
 {% block progressbar_block %}
 <div class="progress_bar_div">
     <ul id="progressbar">
-      <a href={% url 'waiss:new_farm' %}><li class="active" id="farm"><strong>Farm</strong></li></a>
+      <a href={% url 'waiss:new_farm' %}><li id="farm">Farm</li></a>
         <a href={% url 'waiss:new_personnel' %}><li id="farm_manager">Farm Manager</li></a>
-        <li id="crop">Crop</li>
+        <li class="active" id="crop"><strong>Crop</strong></li>
         <a href={% url 'waiss:new_soil' %}><li id="soil">Soil</li></a>
         <a href={% url 'waiss:new_calib' %}><li id="calib">Calibration</li></a>
         <a href={% url 'waiss:new_irrigation' %}><li id="irrig">Irrigation</li></a>
