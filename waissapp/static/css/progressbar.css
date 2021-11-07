@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0
+}
+
 /* Step 1: Common Properties: All required to make icons render reliably */
 .icon::before {
     display: inline-block;
@@ -10,9 +15,9 @@
 #progress_bar_div {
     width: 100%;
     text-align: center;
-    margin: 0;
-    padding: 0;
+    box-sizing: border-box;
 }
+
 #progressbar {
     margin-bottom: 30px;
     overflow: hidden;
