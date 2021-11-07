@@ -1,6 +1,6 @@
 .container_prog {
     width: 100%;
-    margin: 10px auto; 
+    margin: auto; 
 }
 .progressbar {
     counter-reset: step;
