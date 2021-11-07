@@ -31,6 +31,9 @@
     text-align: center;
 }
 
+#progressbar a {
+    color:#858796;
+}
 #progressbar #farm:before {
     font-family: FontAwesome;
     content: "\f015";
