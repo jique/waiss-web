@@ -51,15 +51,25 @@
     content: "\f007";
 }
 
-#progressbar #croppingseason:before {
+#progressbar #calib:before {
     font-family: FontAwesome;
-    content: "\f073";
+    content: "\f201";
 }
 
-#progressbar #data:before {
+#progressbar #irrig:before {
     font-family: FontAwesome;
-    content: "\f022";
+    content: "\f043";
 }
+
+#progressbar #fieldunit:before {
+    font-family: FontAwesome;
+    content: "\f277";
+}
+
+#progressbar #sensor:before {
+    font-family: FontAwesome;
+    content: "\f233";
+} 
 
 #progressbar #confirm:before {
     font-family: FontAwesome;

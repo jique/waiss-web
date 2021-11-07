@@ -18,7 +18,7 @@
 <div class="progress_bar">
   <div class="pro-bar">
       <small class="progress_bar_title">
-          <span style="color: #1abc9c; font-size: large;"><b>Farm</b></span> | <a href={% url 'waiss:new_personnel' %} style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> | <a href={% url 'waiss:new_fieldunit' %} style="color:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="color:#858796">System</a>
+          <span style="color: #1abc9c; font-size: large;"><b>Farm</b></span> |  style="color:#858796">Personnel</a> | <a href={% url 'waiss:new_crop' %} style="color:#858796">Crop</a> | <a href={% url 'waiss:new_soil' %} style="color:#858796">Soil</a> | <a href={% url 'waiss:new_calib' %} style="color:#858796">Calibration</a> | <a href={% url 'waiss:new_irrigation' %} style="color: #858796">Irrigation</a> | <a href={% url 'waiss:new_fieldunit' %} style="color:#858796">Field Unit</a> | <a href={% url 'waiss:new_sensor' %} style="color:#858796">Sensor</a> | <a href={% url 'waiss:new_system' %} style="color:#858796">System</a>
         
           <span class="progress_number">11%</span>
       </small>
@@ -29,13 +29,13 @@
 <div class="progress_bar_div">
     <ul id="progressbar">
         <li class="active" id="farm"><strong>Farm</strong></li>
-        <li id="farm_manager"><strong>Station</strong></li>
+        <li id="farm_manager"><strong><a href={% url 'waiss:new_personnel' %}>Farm Manager</a></strong></li>
         <li id="crop"><strong>Crop</strong></li>
         <li id="soil"><strong>Soil</strong></li>
-        <li id="croppingseason"><strong>Cropping Season</strong></li>
-        <li id="data"><strong>Data</strong></li>
-        <li id="confirm"><strong>Finish</strong></li>
-        <li id="confirm"><strong>Finish</strong></li>
+        <li id="calib"><strong>Calibration</strong></li>
+        <li id="irrig"><strong>Irrigation</strong></li>
+        <li id="fieldunit"><strong>Field Unit</strong></li>
+        <li id="sensor"><strong>Sensors</strong></li>
         <li id="confirm"><strong>Finish</strong></li>
     </ul>
 </div>
