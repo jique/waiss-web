@@ -41,6 +41,15 @@ def register(request):
 	return render(request, 'registration/register.html', context)
 
 def login_request(request):
+	farm_list = Farm.objects.all()
+	lat = []
+	long = []
+	for farm in farm_list:
+		lat_i = farm.lat
+		lat = lat.append(lat_i)
+		long_i = farm.long
+		long = long.append(long_i)
+	print (lat, long)
 	if request.method == 'POST':
 		form = AuthenticationForm()
 		form = AuthenticationForm(request.POST)
