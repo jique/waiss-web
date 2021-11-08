@@ -288,7 +288,7 @@
                 <option value="90">90</option>
                 <option value="95">95</option>
               </select>
-              <br>
+              <br><br>
               <div class="row">
                 <div class="col-md">{{sprinkler.discharge|as_crispy_field}}</div>
                 <div class="col-md d-flex align-items-center mt-3"><button class="btn btn-outline-info btn-sm btn-block text-wrap small" type="button" onclick="calculateDischarge()">Calculate</button></div>
@@ -299,11 +299,11 @@
                 <div class="card-header"><b>Discharge Calculator</b></div>
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-md-7"><label for="id_nozzle_diameter" class="small">Nozzle Diameter (cm)</label></div>
+                    <div class="col-md"><label for="id_nozzle_diameter" class="small">Nozzle Diameter (cm)</label></div>
                     <div class="col-md"><input type="number" id="id_nozzle_diameter" class="form-control form-control-sm numberinput" step="0.0001"></div>
                   </div>
                   <div class="row">
-                    <div class="col-md-7"><label for="id_operating_pressure" class="small">Operating Pressure (kPa)</label></div>
+                    <div class="col-md"><label for="id_operating_pressure" class="small">Operating Pressure (kPa)</label></div>
                     <div class="col-md"><input type="number" id="id_operating_pressure" class="form-control form-control-sm numberinput" step="0.01"></div>
                   </div>
                   <div class="row">

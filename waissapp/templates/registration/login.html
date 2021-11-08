@@ -96,6 +96,20 @@ WAISS Login
     </div>    
   </div>
 </section>
+<section>
+  <div class="row">
+    <div class="col-lg-12"  hidden="true">
+      <div id="div_id_farm_map" class="form-group">
+        <label for="id_farm_map" class="">Farm Map Properties</label>
+        <div class="">
+          <textarea name="farm_map" col-mds="40" rows="10" class="textarea form-control" id="id_farm_map">{}</textarea>
+          <input type="hidden" name="initial-farm_map" value="{}" id="initial-id_farm_map">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6"><div class="mt-2" id="tracemap" style="height:525px; width:100%;"></div></div>
+  </div>
+</section>
 <section class="bar background-white no-mb">
   <div class="container">
       <div class="col-md-12">
@@ -113,3 +127,146 @@ WAISS Login
   </div>
 </section>
 {% endblock %}
+<script src="{% static 'js/leaflet-mouseposition.js' %}"></script>
+<script src="{% static 'js/leaflet.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.min.js"></script>
+<script src="{% static 'js/leaflet.awesome-markers.js"></script>
+<script src="https://npmcdn.com/leaflet.path.drag/src/Path.Drag.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-editable@1.2.0/src/Leaflet.Editable.min.js"></script>
+<script >
+var map = L.map('tracemap');
+var mapCenter = [14.16358, 121.25078];     
+var markCenter = L.marker(mapCenter).addTo(map);  
+    
+function buildMap(){ 
+    if (!isNaN($('input[name="lat"]').val()) && $('input[name="lat"]').val() != "" && !isNaN($('input[name="long').val()) && $('input[name="long').val() != ""){
+        mapCenter = [parseFloat($('input[name="lat"]').val()), parseFloat($('input[name="long').val())];
+    }
+    markCenter.setLatLng(mapCenter).addTo(map);
+    map.setView(mapCenter, 10);
+        
+    var mapboxUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ3JtYiIsImEiOiJja3QyZTB1emEwbWpyMm5ueGNsM3p6ZWZxIn0.qosdXRuQF0PUAo2XT48_0g';
+
+    L.tileLayer(mapboxUrl, {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 20,
+        id: 'mapbox/satellite-streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiZ3JtYiIsImEiOiJja3QyZTB1emEwbWpyMm5ueGNsM3p6ZWZxIn0.qosdXRuQF0PUAo2XT48_0g'
+    }).addTo(map);
+
+    if ($('input[name="initial-farm_map"]').val() && $('input[name="initial-farm_map"]').val() != "" && $('input[name="initial-farm_map"]').val() != '{}'){
+        var points = JSON.parse($('input[name="initial-farm_map"]').val())['points'];
+        latlngs = [];
+        for (i=0; i<points.length; i++){
+            latlngs[i] = [points[i]['lat'], points[i]['lng']];
+        }  
+        coords = [latlngs];
+        L.polygon(coords).addTo(map);
+        map.fitBounds(latlngs);
+    }
+
+    L.control.measure({
+        primaryLengthUnit: 'meters',
+        secondaryLengthUnit: 'kilometers',
+        primaryAreaUnit: 'sqmeters',
+        secondaryAreaUnit: 'hectares',
+        position: 'topleft'
+    }).addTo(map);
+
+    map.on('measurefinish', function(evt) {
+        writeResults(evt);
+    });
+
+    function writeResults(results) {
+        var area = results.area
+        area = +area.toFixed(2)
+        $('input[name="farm_area"]').val(parseFloat(area));
+        document.getElementById('id_farm_map').value = JSON.stringify(
+        {
+            area: results.area,
+            areaDisplay: results.areaDisplay,
+            lastCoord: results.lastCoord,
+            length: results.length,
+            lengthDisplay: results.lengthDisplay,
+            pointCount: results.pointCount,
+            points: results.points
+        },
+        null,
+        2
+        );
+        var center = L.polygon(results.points).getBounds().getCenter();
+        var lat = center.lat;
+        var lng = center.lng;
+        lat = +lat.toFixed(4)
+        lng = +lng.toFixed(4)
+        $('input[name="lat"]').val(parseFloat(lat));
+        $('input[name="long"]').val(parseFloat(lng));
+    }
+
+    map.on('click', function(e){
+        var coord = e.latlng;
+        var lat = coord.lat;
+        var lng = coord.lng;
+        lat = +lat.toFixed(4)
+        lng = +lng.toFixed(4)
+        $('input[name="lat"]').val(lat);
+        $('input[name="long"]').val(lng);
+    });
+
+        
+    $('body').on('change', 'input[name="lat"]', function () {
+        var x = $(this).val();
+        var y = $('input[name="long"]').val();
+        if(x == ""){
+            x = mapCenter[0];
+        }
+        if(y == ""){
+            y = mapCenter[1];
+        }
+        map.panTo({lat:x, lng:y});
+        markCenter.setLatLng({lat:x, lng:y});
+    });
+        
+    $('body').on('change', 'input[name="long"]', function () {
+        var x = $('input[name="lat"]').val();
+        var y = $(this).val();
+        if(x == ""){
+            x = mapCenter[0];
+        }
+        if(y == ""){
+            y = mapCenter[1];
+        }
+        map.panTo({lat:x, lng:y});
+        markCenter.setLatLng({lat:x, lng:y});
+    });     
+    L.control.mousePosition().addTo(map);
+}
+buildMap();
+    
+/*--AJAX LOADED HTML DATA--*/
+function fetch(){
+    var form = $('form');
+    var url = window.location.href;
+    var section = $('.section');
+
+    $.ajax({
+        url: url,
+        data: form.serialize(),
+        success: function (response) {
+            section.html(response);       
+            map.remove();
+            map = L.map('tracemap');
+            buildMap();           
+        }
+    }); 
+}
+/*--end of AJAX LOADED HTML DATA--*/
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  $("[data-toggle=popover]").popover({
+    container: 'body'
+  });
+})
+</script>
