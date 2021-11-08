@@ -31,10 +31,12 @@
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link href={% static "css/footer.css" %} rel="stylesheet" type="text/css">
-        <link href={% static "css/progress-bar.css" %} rel="stylesheet" type="text/css">
         <link href={% static "css/sb-admin-2.min.css" %} rel="stylesheet">
         <link rel="stylesheet" href=/static/base/css/custom.css>
         <link rel="stylesheet" href=/static/base/css/style.default.css>
+
+        {% block meta_block %}
+        {% endblock %}
     </head>
     <body >
         {% block style_block %}
