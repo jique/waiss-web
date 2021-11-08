@@ -12,7 +12,7 @@ from .forms import SentMsgsForm, PersonnelForm, SoilForm, CalibForm, CropForm, F
 from itertools import chain
 from operator import attrgetter
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -39,6 +39,17 @@ def register(request):
 		"form" : form,
 	}
 	return render(request, 'registration/register.html', context)
+
+def login_request(request):
+	if request.method == 'POST':
+		form = AuthenticationForm()
+		form = AuthenticationForm(request.POST)
+		if form.is_valid():
+			form.save()
+	context = {
+		'form': form,
+	}
+	return render(request, 'accounts/login.html', context)
 
 @login_required
 def profile(request):
