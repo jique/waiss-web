@@ -126,6 +126,7 @@ WAISS Login
   </div>
 </section>
 {% endblock %}
+{% block bottom_script_block %}
 <script src="{% static 'js/leaflet-mouseposition.js' %}"></script>
 <script src="{% static 'js/leaflet.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.min.js"></script>
@@ -143,4 +144,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiamFxbG8iLCJhIjoiY2t2cTVsaHlrNGVudDJ1bnljN3I5ZXRvaCJ9.gq4iSHiGefSJ8qLTwoxtBw'
 }).addTo(mymap);
+
+var marker = L.marker([51.5, -0.09]).addTo(mymap);
 </script>
+{% endblock %}
