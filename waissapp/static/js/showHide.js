@@ -173,37 +173,38 @@ function repeat3() {
 function showHide6() {
   var checkedValue = $("#id_calib_equation").val();
   if (checkedValue == "linear") {
-    $("coeff_c").prop('disabled', true);
-    $("coeff_d").prop('disabled', true);
-    $("coeff_m").prop('disabled', true);
+    $("#coeff_c").prop('disabled', true);
+    $("#coeff_d").prop('disabled', true);
+    $("#coeff_m").prop('disabled', true);
     $("#eqn_form").text("MC<sub>v</sub> = ax + b");
   } else if (checkedValue == "quadratic") {
-    $("coeff_c").prop('disabled', false);
-    $("coeff_d").prop('disabled', true);
-    $("coeff_m").prop('disabled', true);
+    $("#coeff_c").prop('disabled', false);
+    $("#coeff_d").prop('disabled', true);
+    $("#coeff_m").prop('disabled', true);
     $("#id_coeff_c").prop('required',true);
     $("#eqn_form").text("MC<sub>v</sub> = ax<sup>2</sup> + bx + c");
   } else if (checkedValue == "exponential") {
-    $("coeff_c").prop('disabled', true);
-    $("coeff_d").prop('disabled', true);
-    $("coeff_m").prop('disabled', true);
+    $("#id_coeff_c").prop('disabled', true);
+    $("#id_coeff_d").prop('disabled', true);
+    $("#id_coeff_m").prop('disabled', true);
     $("#eqn_form").text("MC<sub>v</sub> = axe<sup>b</sup>");
   } else if (checkedValue == "logarithmic") {
-    $("coeff_c").prop('disabled', true);
-    $("coeff_d").prop('disabled', true);
-    $("coeff_m").prop('disabled', true);
+    $("#id_coeff_c").prop('disabled', true);
+    $("#id_coeff_d").prop('disabled', true);
+    $("#id_coeff_m").prop('disabled', true);
+    $("#id_coeff_c").val('');
     $("#eqn_form").text("MC<sub>v</sub> = aln(x) + b");
   } else if (checkedValue == "symmetrical sigmoidal") {
-    $("coeff_c").prop('disabled', false);
-    $("coeff_d").prop('disabled', false);
-    $("coeff_m").prop('disabled', true);
+    $("#id_coeff_c").prop('disabled', false);
+    $("#id_coeff_d").prop('disabled', false);
+    $("#id_coeff_m").prop('disabled', true);
     $("#id_coeff_c").prop('required',true);
     $("#id_coeff_d").prop('required',true);
     $("#eqn_form").text("MC<sub>v</sub> = d + (a - d)/(1 + (x/c)<sup>b</sup>)");
   } else if (checkedValue == "asymmetrical sigmoidal") {   
-    $("coeff_c").prop('disabled', false);
-    $("coeff_d").prop('disabled', false);
-    $("coeff_m").prop('disabled', false);
+    $("#id_coeff_c").prop('disabled', false);
+    $("#id_coeff_d").prop('disabled', false);
+    $("#id_coeff_m").prop('disabled', false);
     $("#id_coeff_c").prop('required',true);
     $("#id_coeff_d").prop('required',true);
     $("#id_coeff_m").prop('required',true);
