@@ -108,7 +108,11 @@ def new_calib(request):
 		if form.is_valid():
 			instance = form.save(commit=False)
 			c_list = CalibrationConstant.objects.all()
-			if any(instance.name == c for c in c_list):
+			n_list = []
+			for c in c_list:
+				n_list.append(c.name)
+
+			if instance.name in n_list:
 				c = CalibrationConstant.objects.get(name=request.POST.get('name'))
 				id = c.id
 				print(id)
