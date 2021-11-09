@@ -173,14 +173,14 @@ function repeat3() {
 function showHide6() {
   var checkedValue = $("#id_calib_equation").val();
   if (checkedValue == "linear") {
-    $("#coeff_c").prop('disabled', null);
-    $("#coeff_d").prop('disabled', null);
-    $("#coeff_m").prop('disabled', null);
+    $("#id_coeff_c").prop('disabled', null);
+    $("#id_coeff_d").prop('disabled', null);
+    $("#id_coeff_m").prop('disabled', null);
     $("#eqn_form").text("MC<sub>v</sub> = ax + b");
   } else if (checkedValue == "quadratic") {
-    $("#coeff_c").prop('disabled', false);
-    $("#coeff_d").prop('disabled', true);
-    $("#coeff_m").prop('disabled', true);
+    $("#id_coeff_c").prop('disabled', false);
+    $("#id_coeff_d").prop('disabled', true);
+    $("#id_coeff_m").prop('disabled', true);
     $("#id_coeff_c").prop('required',true);
     $("#eqn_form").text("MC<sub>v</sub> = ax<sup>2</sup> + bx + c");
   } else if (checkedValue == "exponential") {
