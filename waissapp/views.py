@@ -60,13 +60,8 @@ def articles_waiss(request):
 
 def home(request):
 	farm_list = Farm.objects.all()
-	coords = []
-	for point in farm_list:
-		point_i = point.coord
-		coords.append(point_i)
-	print(coords)
 	context = {
-		"coords": coords,
+		"farm_list": farm_list,
 	}
 	return render(request, 'waissapp/home_page.html', context)
 
