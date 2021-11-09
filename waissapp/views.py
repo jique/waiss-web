@@ -1,12 +1,6 @@
-import re
-from django.core.exceptions import ValidationError
-from django.db.models.fields import Field
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, PercentShaded, Rainfall, Gravimetric, Basin, Furrow, Border, Drip, Sprinkler
-import datetime
-from datetime import date, datetime
-from django import forms
 from django.forms import modelformset_factory
 from .forms import SentMsgsForm, PersonnelForm, SoilForm, CalibForm, CropForm, FarmForm, FieldUnitForm, SensorForm, MCForm, BasinForm, DripForm, SprinklerForm, FurrowForm, BorderForm, PercentShadedForm, GravimetricForm, RainfallForm, RegistrationForm, UserForm
 from itertools import chain
@@ -20,7 +14,6 @@ import io, csv
 from .decorators import unauthenticated_user
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.core.exceptions import ObjectDoesNotExist
 
 @unauthenticated_user
 def register(request):
@@ -46,7 +39,7 @@ def login_request(request):
 	for farm in farm_list:
 		coords = tuple([farm.lat, farm.long])
 		coords_list = coords_list.append(coords)
-	print(coords_list)
+	print(farm_list)
 	if request.method == 'POST':
 		form = AuthenticationForm()
 		form = AuthenticationForm(request.POST)
