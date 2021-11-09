@@ -39,7 +39,7 @@
             </div>
             {% endif %}
             <div class="col-md">
-                <form method="post" class="form-group" onsubmit="return validateForm(this);" name="myForm" onload="test()">
+                <form method="post" class="form-group">
                     {% csrf_token %}
                     <small><b>Fields with asterisks (*) are required.</b></small><hr>
                     {{calib_form.name|as_crispy_field}}
@@ -87,6 +87,7 @@
 {% block bottom_script_block %}
 <script src="{% static 'js/showHide.js' %}"></script>
 <script>
+    document.getElementById("id_calib_equation").addEventListener("load", test);
     function test() {
         var eqn_form = document.getElementById('id_calib_equation');
         var coeff_c = document.getElementById('id_coeff_c');
