@@ -38,6 +38,7 @@ def login_request(request):
 	coords_list = []
 	for farm in farm_list:
 		coords = tuple([farm.lat, farm.long])
+		print(farm.lat, farm.long, farm.name)
 		coords_list.append(coords)
 	print(coords_list)
 	if request.method == 'POST':
