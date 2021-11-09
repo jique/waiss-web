@@ -487,7 +487,7 @@
         var coords_list = "{{coords_list}}";
         console.log(coords_list)
         for (xy in coords_list) {
-        xy = [xy];
+        xy = xy;
         var farm_point = L.marker(xy).addTo(mymap);
         farm_point.setLatLng(xy).addTo(mymap);
         }
