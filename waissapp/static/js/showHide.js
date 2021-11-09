@@ -172,13 +172,12 @@ function repeat3() {
 }
 function showHide6() {
   var checkedValue = $("#id_calib_equation").val();
+  var coeff_c = document.getElementById('id_coeff_c')
   if (checkedValue == "linear") {
-    $("#id_coeff_c").prop("disabled", "disabled");
-    $("#id_coeff_d").prop("disabled", "disabled");
-    $("#id_coeff_m").prop("disabled", "disabled");
+    coeff_c.setAttribute('disabled', 'disabled'); 
     $("#eqn_form").text("MC<sub>v</sub> = ax + b");
   } else if (checkedValue == "quadratic") {
-    $("#id_coeff_c").prop("disabled",false);
+    coeff_c.removeAttribute('disabled');  
     $("#id_coeff_d").prop("disabled", "disabled");
     $("#id_coeff_m").prop("disabled", "disabled";
     $("#id_coeff_c").prop('required',true);
