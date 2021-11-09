@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from datetime import datetime
 import pytz
+import datetime as dt
+import operator
 
 @login_required
 def index(request):
@@ -48,20 +50,22 @@ def index(request):
 	sensor_2 = None #for single sensor fieldunit
 	sensor_3 = None
 	
+	#mytime = dt.datetime.strptime('0130','%H%M').time()
+	#mydatetime = dt.datetime.combine(dt.date.today(), mytime)
 	error_msg_no_sensor_data = ""
 	error_msg_excess_sensor_data = ""
 
 	if num_sensors == 1:
 		sensor_1 = Sensor.objects.all().filter(fieldunit=fieldunit)[:1]
 		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
-		mc_1_sorted = sorted(mc_1, key=attrgetter('timestamp')) # sorting mc analog readings based on inputted datetime
+		mc_1_sorted = sorted(mc_1, key=operator.attrgetter('date', 'time')) # sorting mc analog readings based on inputted datetime
 	if num_sensors == 2:
 		sensor_1 = Sensor.objects.all().filter(fieldunit=fieldunit)[:1]  # getting sensors
 		sensor_2 = Sensor.objects.all().filter(fieldunit=fieldunit)[1:2]
 		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
 		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2)
-		mc_1_sorted = sorted(mc_1, key=attrgetter('timestamp')) # sorting mc analog readings based on inputted datetime
-		mc_2_sorted = sorted(mc_2, key=attrgetter('timestamp'))
+		mc_1_sorted = sorted(mc_1, key=operator.attrgetter('date', 'time')) # sorting mc analog readings based on inputted datetime
+		mc_2_sorted = sorted(mc_2, key=operator.attrgetter('date', 'time'))
 	if num_sensors == 3:
 		sensor_1 = Sensor.objects.all().filter(fieldunit=fieldunit)[:1]  # getting sensors
 		sensor_2 = Sensor.objects.all().filter(fieldunit=fieldunit)[1:2]
@@ -69,9 +73,9 @@ def index(request):
 		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
 		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2)
 		mc_3 = MoistureContent.objects.all().filter(sensor=sensor_3)
-		mc_1_sorted = sorted(mc_1, key=attrgetter('timestamp')) # sorting mc analog readings based on inputted datetime
-		mc_2_sorted = sorted(mc_2, key=attrgetter('timestamp'))
-		mc_3_sorted = sorted(mc_3, key=attrgetter('timestamp'))
+		mc_1_sorted = sorted(mc_1, key=operator.attrgetter('date', 'time')) # sorting mc analog readings based on inputted datetime
+		mc_2_sorted = sorted(mc_2, key=operator.attrgetter('date', 'time'))
+		mc_3_sorted = sorted(mc_3, key=operator.attrgetter('date', 'time'))
 	if num_sensors == 0:
 		error_msg_no_sensor_data = "Please add sensors!"
 	else: 
