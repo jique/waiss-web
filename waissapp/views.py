@@ -71,9 +71,9 @@ def home(request):
 		long.append(long_i)
 		farm.append(farm_i)
 	context = {
-		'lat_i': lat_i,
-		'long_i': long_i,
-		'farm_i': farm_i,
+		'lat': lat,
+		'long': long,
+		'farm': farm,
 	}
 	return render(request, 'waissapp/home_page.html', context)
 
