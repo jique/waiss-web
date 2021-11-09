@@ -81,7 +81,7 @@ class MoistureContent(models.Model):
 
     class Meta:
         verbose_name_plural = "9. Moisture Content"
-        get_latest_by = "timestamp"
+        get_latest_by = "date"
     def __str__(self):
         return str(self.sensor)
 
@@ -460,7 +460,7 @@ class Rainfall(models.Model):
     date = models.DateField(verbose_name='Date Measured', null=True)
     class Meta:
         verbose_name_plural = "Rainfall"
-        get_latest_by = "timestamp"
+        get_latest_by = "date"
 
 class Gravimetric(models.Model):
     fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True)
@@ -468,7 +468,9 @@ class Gravimetric(models.Model):
     date = models.DateField(verbose_name='Date Measured', null=True)
     mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="MCv (%)", null=True)
     note = models.CharField(max_length=100, verbose_name="Remarks", null=True, blank=True)
-
+    class Meta:
+        verbose_name_plural = "Rainfall"
+        get_latest_by = "date"
 class PercentShaded(models.Model):
     fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True)
     area_shaded =  models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area Shaded (%)", null=True)
