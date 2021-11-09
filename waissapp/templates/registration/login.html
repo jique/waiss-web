@@ -139,6 +139,7 @@ var mark_center = L.marker(map_center).addTo(mymap);
 mark_center.setLatLng(map_center).addTo(mymap);
 mymap.setView(map_center, 10);
 
+var marker = L.marker([14.16358, 121.25078]).addTo(mymap);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -148,6 +149,6 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiamFxbG8iLCJhIjoiY2t2cTVsaHlrNGVudDJ1bnljN3I5ZXRvaCJ9.gq4iSHiGefSJ8qLTwoxtBw'
 }).addTo(mymap);
 
-var marker = L.marker([51.5, -0.09]).addTo(mymap);
+
 </script>
 {% endblock %}

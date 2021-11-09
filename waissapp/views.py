@@ -42,14 +42,11 @@ def register(request):
 
 def login_request(request):
 	farm_list = Farm.objects.all()
-	lat = []
-	long = []
+	coords_list = []
 	for farm in farm_list:
-		lat_i = farm.lat
-		lat = lat.append(lat_i)
-		long_i = farm.long
-		long = long.append(long_i)
-	print (lat, long)
+		coords = tuple([farm.lat, farm.long])
+		coords_list = coords_list.append(coords)
+	print (coords_list)
 	if request.method == 'POST':
 		form = AuthenticationForm()
 		form = AuthenticationForm(request.POST)
