@@ -105,10 +105,7 @@ WAISS Login
 <section class="bar no-mb">
   <div class="container">
     <div class="heading text-center"><h2>WHERE WE ARE</h2></div>
-    <div clas="row">
-      <div class="col-lg-6"><p class="lead text-center">UPLB</p></div>
-    <div class="col-lg-6"><div class="mt" id="tracemap" style="height:525px; width:100%;"></div></div>
-    </div>
+    <div class="col-md-12"><div class="mt" id="tracemap" style="height:525px; width:100%;"></div></div>
   </div>
 </section>
 <section class="bar no-mb" style="background-color: #75cff0;">
@@ -138,7 +135,7 @@ WAISS Login
 <script >
 var mymap = L.map('tracemap');
 var map_center = [14.16358, 121.25078];     
-var mark_enter = L.marker(map_center).addTo(mymap);
+var mark_center = L.marker(map_center).addTo(mymap);
 mark_center.setLatLng(map_center).addTo(mymap);
 mymap.setView(map_center, 10);
 
