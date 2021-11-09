@@ -8,9 +8,12 @@
       </button>
 	</div>
 	<div class="modal-body">
-        <div class="col">{{form.fieldunit|as_crispy_field}}</div>
-        <div class="col">{{form.timestamp|as_crispy_field}}</div>
-        <div class="col">{{form.amount|as_crispy_field}}</div>
+        {{form.fieldunit|as_crispy_field}}
+		<div class="row">
+			<div class="col">{{form.date|as_crispy_field}}</div>
+			<div class="col">{{form.time|as_crispy_field}}</div>
+		</div>
+        {{form.amount|as_crispy_field}}
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

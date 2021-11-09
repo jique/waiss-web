@@ -85,13 +85,6 @@ class SensorForm(ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
 
 class MCForm(forms.ModelForm):
-    timestamp = forms.DateTimeField(
-        input_formats=['%d/%m/%Y %H:%M'],
-        widget=forms.DateTimeInput(attrs={
-            'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
-        })
-    )
     def __init__(self, *args, **kwargs):
         super(MCForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -191,13 +184,6 @@ class SentMsgsForm(ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
 
 class RainfallForm(forms.ModelForm):
-    timestamp = forms.DateTimeField(
-        input_formats=['%d/%m/%Y %H:%M'],
-        widget=forms.DateTimeInput(attrs={
-            'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
-        })
-    )
     def __init__(self, *args, **kwargs):
         super(RainfallForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -222,13 +208,6 @@ class PercentShadedForm(forms.ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
 
 class GravimetricForm(forms.ModelForm):
-    timestamp = forms.DateTimeField(
-        input_formats=['%d/%m/%Y %H:%M'],
-        widget=forms.DateTimeInput(attrs={
-            'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
-        })
-    )
     def __init__(self, *args, **kwargs):
         super( GravimetricForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()

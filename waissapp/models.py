@@ -75,7 +75,8 @@ class Sensor(models.Model):
 
 class MoistureContent(models.Model):
     sensor = models.ForeignKey(Sensor, on_delete=models.SET_NULL, null=True)
-    timestamp = models.DateTimeField(verbose_name='Date & Time Measured', null=True)
+    time = models.TimeField(verbose_name='Time Measured', null=True)
+    date = models.Date(verbose_name='Date Measured', null=True)
     mc_data = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Analog Reading", null=True)
 
     class Meta:
@@ -455,7 +456,8 @@ class SentMsgs(models.Model):
 
 class Rainfall(models.Model):
     fieldunit = models.ForeignKey (FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True, blank=True)
-    amount = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Rainfall (mm)", null=True, blank=True)
+    time = models.TimeField(verbose_name='Time Measured', null=True)
+    date = models.Date(verbose_name='Date Measured', null=True)
     timestamp = models.DateTimeField(verbose_name='Date & Time', null=True, blank=True)
     class Meta:
         verbose_name_plural = "Rainfall"
@@ -463,7 +465,8 @@ class Rainfall(models.Model):
 
 class Gravimetric(models.Model):
     fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True)
-    timestamp = models.DateTimeField(verbose_name='Date & Time', null=True)
+    time = models.TimeField(verbose_name='Time Measured', null=True)
+    date = models.Date(verbose_name='Date Measured', null=True)
     mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="MCv (%)", null=True)
     note = models.CharField(max_length=100, verbose_name="Remarks", null=True, blank=True)
 

@@ -15,28 +15,17 @@
 		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 		</button>
-  </div>
-  <div class="modal-body">
-    {{form.fieldunit|as_crispy_field}}
-    <div class="input-group">
-			<div class="input-group-prepend">
-				Date & Time*&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<span class="rounded-left">{{form.timestamp}}</span>&emsp;</div>
-			<div class="input-group-append" data-target="#id_timestamp" data-toggle="datetimepicker">
-				<div class="input-group-text rounded" id="inputGroup-sizing-default"><i class="fa fa-calendar"></i></div>
-			</div>
+  	</div>
+  	<div class="modal-body">
+		{{form.fieldunit|as_crispy_field}}
+		<div class="row">
+			<div class="col">{{form.date|as_crispy_field}}</div>
+			<div class="col">{{form.time|as_crispy_field}}</div>
 		</div>
-		<script>
-			$(function () {
-			  $("#id_timestamp").datetimepicker({
-				format: 'DD/MM/YYYY HH:mm',
-			  });
-			});
-		</script>
-		<br>
-    {{form.amount|as_crispy_field}}
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-info">Create</button>
-  </div>
+		{{form.amount|as_crispy_field}}
+	</div>
+  	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-info">Create</button>
+  	</div>
 </form>

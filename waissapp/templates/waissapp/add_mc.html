@@ -19,21 +19,10 @@
 	</div>
 	<div class="modal-body">
 		{{form.sensor|as_crispy_field}}
-		<div class="input-group">
-			<div class="input-group-prepend">
-				Date & Time*&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<span class="rounded-left">{{form.timestamp}}</span>&emsp;</div>
-			<div class="input-group-append" data-target="#id_timestamp" data-toggle="datetimepicker">
-				<div class="input-group-text rounded" id="inputGroup-sizing-default"><i class="fa fa-calendar"></i></div>
-			</div>
+		<div class="row">
+			<div class="col">{{form.date|as_crispy_field}}</div>
+			<div class="col">{{form.time|as_crispy_field}}</div>
 		</div>
-		<script>
-			$(function () {
-			  $("#id_timestamp").datetimepicker({
-				format: 'DD/MM/YYYY HH:mm',
-			  });
-			});
-		</script>
-		<br>
 		{{form.mc_data|as_crispy_field}}
 		<div class="row">
 			<div class="col text-center">
