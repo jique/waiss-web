@@ -11,62 +11,48 @@
         {{form.name|as_crispy_field}}
         {{form.calib_equation|as_crispy_field}}
         <div class="row collapse" id="collapse_calib_1">
-            <div class="col-2"></div>
-            <div class="col">
                 <small><b>MC<sub>v</sub> = a * (reading) + b</b></small><hr>
-                {{form.coeff_a|as_crispy_field}}
-                {{form.coeff_b|as_crispy_field}} <hr>
-            </div>
+                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div><hr>
         </div>
         <div class="row collapse" id="collapse_calib_2">
-            <div class="col-2"></div>
-            <div class="col">
                 <small><b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></small><hr>
-                {{form.coeff_a|as_crispy_field}}
-                {{form.coeff_b|as_crispy_field}}
-                {{form.coeff_c|as_crispy_field}}<hr>
-            </div>
+                div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_c|as_crispy_field}}</div><hr>
         </div>
         <div class="row collapse" id="collapse_calib_3">
-            <div class="col-2"></div>
-            <div class="col">
                 <small><b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></small><hr>
-                {{form.coeff_a|as_crispy_field}}
-                {{form.coeff_b|as_crispy_field}}<hr>
-            </div>
+                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div><hr>
         </div>
         <div class="row collapse" id="collapse_calib_4">
-            <div class="col-2"></div>
-            <div class="col">
                 <small><b>MC<sub>v</sub> = a * ln(reading) + b</b></small><hr>
-                {{form.coeff_a|as_crispy_field}}
-                {{form.coeff_b|as_crispy_field}}<hr>
-            </div>
+                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div><hr>
         </div>
         <div class="row collapse" id="collapse_calib_5">
-            <div class="col-2"></div>
-            <div class="col">
                 <small><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></small><hr>
-                {{form.coeff_a|as_crispy_field}}
-                {{form.coeff_b|as_crispy_field}}
-                {{form.coeff_c|as_crispy_field}}
-                {{form.coeff_d|as_crispy_field}}<hr>
-            </div>
+                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_c|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_d|as_crispy_field}}</div><hr>
         </div>
         <div class="row collapse" id="collapse_calib_6">
-            <div class="col-2"></div>
-            <div class="col">
-                <small><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></small><hr>
-                {{form.coeff_a|as_crispy_field}}
-                {{form.coeff_b|as_crispy_field}}
-                {{form.coeff_c|as_crispy_field}}
-                {{form.coeff_d|as_crispy_field}}
-                {{form.coeff_m|as_crispy_field}}<hr>
+                <small><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></small>
+                <hr>
+                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_c|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_d|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_m|as_crispy_field}}</div>
             </div>
         </div>
-        {{form.date_tested|as_crispy_field}}
-        {{form.tested_by|as_crispy_field}}
-    </div>
+        <div class="row">
+            <div class="col">{{form.date_tested|as_crispy_field}}</div>
+            <div class="col">{{form.tested_by|as_crispy_field}}</div>
+        </div>
+	</div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-info">Save Changes</button>
