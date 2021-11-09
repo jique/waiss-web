@@ -87,11 +87,13 @@ def new_calib(request):
 		form = CalibForm()
 		selected_calib_text = '--choose--'
 		selected_calib = ""
+		select_value = ""
 	else:
 		calib_name = CalibrationConstant.objects.get(id=calib_name)
 		form = CalibForm(instance=calib_name)
 		selected_calib = calib_name
 		selected_calib_text = calib_name
+		select_value = calib_name.calib_equation
 	current_user = request.user
 	calib_list = CalibrationConstant.objects.filter(author=current_user) #Loading database
 	if request.method == 'POST' and 'loadData' in request.POST:
@@ -100,6 +102,7 @@ def new_calib(request):
 		form = CalibForm(instance=id)
 		selected_calib = id
 		selected_calib_text = id
+		select_value = id.calib_equation
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = CalibForm(request.POST)
 		calib, created = CalibrationConstant.objects.get_or_create(name=request.POST.get('name'))
@@ -134,7 +137,8 @@ def new_calib(request):
 		'calib_form': form,
 		'calib_list': calib_list,
 		'selected_calib': selected_calib,
-		'selected_calib_text': selected_calib_text
+		'selected_calib_text': selected_calib_text,
+		'select_value': select_value
 	}
 	return render(request, 'waissapp/new_calib.html', context)
 
