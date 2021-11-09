@@ -4,7 +4,8 @@
   <td class="align-middle ">{{forloop.counter}}</td>
   <td class="align-middle ">{{mc.sensor}}</td>
   <td class="align-middle ">{{mc.mc_data}}</td>
-  <td class="align-middle ">{{mc.timestamp}}</td>
+  <td class="align-middle ">{{mc.date}}</td>
+  <td class="align-middle ">{{mc.time}}</td>
   <td class="min">
     <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_mc' mc.id %}"><i class="fas fa-edit"></i></button>
     <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ mc.id }}"><i class="fas fa-trash"></i></button>
