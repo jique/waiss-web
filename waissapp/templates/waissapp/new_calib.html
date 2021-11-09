@@ -120,10 +120,9 @@
 
     function validateForm(form) {
         if (eqn_form.value == "linear" || eqn_form.value == "logarithmic" || eqn_form.value == "exponential") {
-            coeff_c.value = '';
-            coeff_d.value = '';
-            coeff_m.value = '';
-            return true;
+            if (coeff_c.value != '' || coeff_d.value != '' || coeff_m.value != '') {
+                return false;
+            }
         } else if (eqn_form.value == "quadratic") {
             coeff_d.value = '';
             coeff_m.value = '';
