@@ -60,6 +60,8 @@ def articles_waiss(request):
 
 def home(request):
 	farm_list = Farm.objects.all()
+	lat_list = list(farm_list.lat)
+	print(lat_list)
 	context = {
 		"farm_list": farm_list,
 	}
