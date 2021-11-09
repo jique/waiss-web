@@ -39,7 +39,7 @@
             </div>
             {% endif %}
             <div class="col-md">
-                <form method="post" class="form-group">
+                <form method="post" class="form-group" novalidate>
                     {% csrf_token %}
                     <small><b>Fields with asterisks (*) are required.</b></small><hr>
                     {{calib_form.name|as_crispy_field}}
