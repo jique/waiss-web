@@ -177,9 +177,9 @@ function showHide6() {
     coeff_c.setAttribute('disabled', 'disabled'); 
     $("#eqn_form").text("MC<sub>v</sub> = ax + b");
   } else if (checkedValue == "quadratic") {
-    coeff_c.removeAttribute('disabled');  
+    coeff_c.removeAttribute('disabled');
     $("#id_coeff_d").prop("disabled", "disabled");
-    $("#id_coeff_m").prop("disabled", "disabled";
+    $("#id_coeff_m").prop("disabled", "disabled");
     $("#id_coeff_c").prop('required',true);
     $("#eqn_form").text("MC<sub>v</sub> = ax<sup>2</sup> + bx + c");
   } else if (checkedValue == "exponential") {
