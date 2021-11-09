@@ -173,13 +173,13 @@ function repeat3() {
 function showHide6() {
   var checkedValue = $("#id_calib_equation").val();
   if (checkedValue == "linear") {
-    $("#id_coeff_c").prop('disabled',true);
+    $("#id_coeff_c").prop('disabled',"disabled");
     $("#id_coeff_d").prop('disabled',true);
     $("#id_coeff_m").prop('disabled',true);
     $("#eqn_form").text("MC<sub>v</sub> = ax + b");
   } else if (checkedValue == "quadratic") {
     $("#id_coeff_c").prop('disabled',false);
-    $("#id_coeff_d").prop('disabled',true);
+    $("#id_coeff_d").prop('disabled',"disabled");
     $("#id_coeff_m").prop('disabled',true);
     $("#id_coeff_c").prop('required',true);
     $("#eqn_form").text("MC<sub>v</sub> = ax<sup>2</sup> + bx + c");

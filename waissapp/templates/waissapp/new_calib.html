@@ -47,7 +47,10 @@
                     <div class="row">
                         <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
-                        <div class="col-md">{{calib_form.coeff_c|as_crispy_field}}</div>
+                        <div id="div_id_coeff_c" class="form-group">
+                            <label for="id_coeff_c" class="small">c</label>
+                            <div class=""><input type="number" name="coeff_c" disabled="disabled" step="0.0001" class="numberinput form-control" id="id_coeff_c"></div>
+                        </div>
                         <div class="col-md">{{calib_form.coeff_d|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_m|as_crispy_field}}</div>
                     </div>
