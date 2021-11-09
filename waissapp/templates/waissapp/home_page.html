@@ -489,9 +489,9 @@
         var f_list = {{f_list|safe}};
 
         for (var i=0; i < lat_list.length; i++) {
-            var lat_i = i.value;
+            var lat_i = lat_list[i].value;
             for (var i=0; i < long_list.length; i++) {
-                var lng_i = i.value;
+                var lng_i = long_list[i].value;
                 var xy = [lat_i, lng_i]
                 console.log(xy)
                 var farm_point = L.marker(xy).addTo(mymap);
