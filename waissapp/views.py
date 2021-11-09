@@ -64,9 +64,9 @@ def home(request):
 	long_list = []
 	f_list = []
 	for f in farm_list:
-		lat_list.append(f_list.lat)
-		long_list.append(f_list.long)
-		f_list.append(f_list.name)
+		lat_list.append(f.lat)
+		long_list.append(f.long)
+		f_list.append(f.name)
 	print(lat_list, long_list, f_list)
 	context = {
 		"lat_list": lat_list,
