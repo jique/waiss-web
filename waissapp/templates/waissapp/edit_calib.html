@@ -11,13 +11,13 @@
         {{form.name|as_crispy_field}}
         {{form.calib_equation|as_crispy_field}}
         <div class="row collapse" id="collapse_calib_1">
-                <small><b>MC<sub>v</sub> = a * (reading) + b</b></small><hr>
-                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div><hr>
+            <small><b>MC<sub>v</sub> = a * (reading) + b</b></small><hr>
+            <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+            <div class="col-md">{{form.coeff_b|as_crispy_field}}</div><hr>
         </div>
         <div class="row collapse" id="collapse_calib_2">
                 <small><b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></small><hr>
-                div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
                 <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
                 <div class="col-md">{{form.coeff_c|as_crispy_field}}</div><hr>
         </div>
