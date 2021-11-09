@@ -47,12 +47,24 @@
                     <div class="row">
                         <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
-                        <div id="div_id_coeff_c" class="form-group">
-                            <label for="id_coeff_c" class="small">c</label>
-                            <div class=""><input type="number" name="coeff_c" disabled="disabled" step="0.0001" class="numberinput form-control" id="id_coeff_c"></div>
+                        <div class="col-md">
+                            <div id="div_id_coeff_c" class="form-group">
+                                <label for="id_coeff_c" class="small">c</label>
+                                <div class=""><input type="number" name="coeff_c" disabled="disabled" step="0.0001" class="numberinput form-control" id="id_coeff_c"></div>
+                            </div>
                         </div>
-                        <div class="col-md">{{calib_form.coeff_d|as_crispy_field}}</div>
-                        <div class="col-md">{{calib_form.coeff_m|as_crispy_field}}</div>
+                        <div class="col-md">
+                            <div id="div_id_coeff_d" class="form-group">
+                                <label for="id_coeff_d" class="small">d</label>
+                                <div class=""><input type="number" name="coeff_d" disabled="disabled" step="0.0001" class="numberinput form-control" id="id_coeff_d"></div>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div id="div_id_coeff_m" class="form-group">
+                                <label for="id_coeff_m" class="small">m</label>
+                                <div class=""><input type="number" name="coeff_m" disabled="disabled" step="0.0001" class="numberinput form-control" id="id_coeff_m"></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md">{{calib_form.date_tested|as_crispy_field}}</div>
