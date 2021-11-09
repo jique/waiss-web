@@ -85,6 +85,8 @@ class SensorForm(ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form 
 
 class MCForm(forms.ModelForm):
+    date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True)
+    time = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}),required=True)
     def __init__(self, *args, **kwargs):
         super(MCForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -184,6 +186,8 @@ class SentMsgsForm(ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
 
 class RainfallForm(forms.ModelForm):
+    date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True)
+    time = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}),required=True)
     def __init__(self, *args, **kwargs):
         super(RainfallForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -193,12 +197,7 @@ class RainfallForm(forms.ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
 
 class PercentShadedForm(forms.ModelForm):
-    date = forms.DateField(
-    widget=forms.TextInput(     
-        attrs={'type': 'date'}
-        ),
-    required=True
-    )
+    date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True)
     def __init__(self, *args, **kwargs):
         super(PercentShadedForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -208,6 +207,8 @@ class PercentShadedForm(forms.ModelForm):
         exclude = ('author', 'personal',)  # this says to include all fields from model to the form
 
 class GravimetricForm(forms.ModelForm):
+    date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True)
+    time = forms.TimeField(widget=forms.TextInput(attrs={'type': 'time'}),required=True)
     def __init__(self, *args, **kwargs):
         super( GravimetricForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
