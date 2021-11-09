@@ -9,14 +9,15 @@
 	</div>
 	<div class="modal-body">
 		{{form.soiltype|as_crispy_field}}
-		{{form.fc|as_crispy_field}}
-		{{form.pwp|as_crispy_field}}
-		{{form.bln_surface_irrigation|as_crispy_field}}
-				
-		<div class="row collapse" id="collapse4">
-			<div class="col">{{form.intake_family|as_crispy_field}}</div>
+		<div class="row">
+			<div class="col">{{form.fc|as_crispy_field}}</div>
+			<div class="col">{{form.pwp|as_crispy_field}}</div>
 		</div>
-		{{form.source|as_crispy_field}}
+        {{form.bln_surface_irrigation|as_crispy_field}}
+		<div class="row collapse" id="collapse4">
+            <div class="col">{{form.intake_family|as_crispy_field}}</div>
+        </div>
+    	{{form.source|as_crispy_field}}
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

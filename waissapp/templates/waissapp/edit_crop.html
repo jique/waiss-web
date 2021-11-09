@@ -75,13 +75,8 @@
     </div><!--User-Defined Equation-->
     {{form.select_drip|as_crispy_field}}
     <div class="row collapse" id="collapseOne"><!--Additional information required for drip irrigation.-->
-      <div class="col-2"></div>
-      <div class="col">
-        <hr>
-        {{form.peak_Etcrop|as_crispy_field}}
-        {{form.transpiration_ratio|as_crispy_field}}
-        <hr>
-      </div>
+      <div class="col-md">{{form.peak_Etcrop|as_crispy_field}}</div>
+      <div class="col-md">{{form.transpiration_ratio|as_crispy_field}}</div>
     </div><!--Additional information required for drip irrigation.-->
     {{form.source|as_crispy_field}}
   </div>
