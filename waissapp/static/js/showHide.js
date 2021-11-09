@@ -173,9 +173,9 @@ function repeat3() {
 function showHide6() {
   var checkedValue = $("#id_calib_equation").val();
   if (checkedValue == "linear") {
-    $("#coeff_c").prop('disabled', true);
-    $("#coeff_d").prop('disabled', true);
-    $("#coeff_m").prop('disabled', true);
+    $("#coeff_c").prop('disabled', null);
+    $("#coeff_d").prop('disabled', null);
+    $("#coeff_m").prop('disabled', null);
     $("#eqn_form").text("MC<sub>v</sub> = ax + b");
   } else if (checkedValue == "quadratic") {
     $("#coeff_c").prop('disabled', false);
