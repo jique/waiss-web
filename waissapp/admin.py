@@ -29,7 +29,7 @@ class MoistureContentInline(admin.TabularInline):
     extra=3
 
 class MoistureContentAdmin(admin.ModelAdmin):
-    list_display = ('sensor', 'mc_data', 'timestamp')
+    list_display = ('sensor', 'mc_data', 'date', 'time')
     ordering = ['timestamp']
 
 class SensorInline(admin.TabularInline):
@@ -86,13 +86,13 @@ class RainfallInline(admin.TabularInline):
     model = Rainfall
 
 class RainfallAdmin(admin.ModelAdmin):
-    list_display =('fieldunit', 'amount', 'timestamp')
+    list_display =('fieldunit', 'amount', 'date', 'time')
 
 class GravimetricInline(admin.TabularInline):
     model = Gravimetric
 
 class GravimetricAdmin(admin.ModelAdmin):
-    list_display =('timestamp', 'fieldunit', 'mc_data')
+    list_display =('date', 'time', 'fieldunit', 'mc_data')
 
 admin.site.register(Soil, SoilAdmin)
 admin.site.register(Crop, CropAdmin)
