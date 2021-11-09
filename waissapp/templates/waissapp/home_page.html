@@ -485,6 +485,7 @@
         }).addTo(mymap);
 
         var lat = "{{lat|safe}}";
+        lat = lat.filter(n => n)
         console.log(lat)
         for (xy in coords_list) {
         xy = xy;
