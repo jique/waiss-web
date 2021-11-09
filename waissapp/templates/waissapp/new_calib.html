@@ -97,8 +97,17 @@
             coeff_d.disabled = true;
             coeff_m.disabled = true;
         } else if (eqn_form.value == "quadratic") {
+            coeff_c.disabled = false;
             coeff_d.disabled = true;
             coeff_m.disabled = true;
+        } else if (eqn_form.value == "symmetrical sigmoidal") {
+            coeff_c.disabled = false;
+            coeff_d.disabled = false;
+            coeff_m.disabled = true;
+        } else if (eqn_form.value == "asymmetrical sigmoidal") {
+            coeff_c.disabled = false;
+            coeff_d.disabled = false;
+            coeff_m.disabled = false;
         }
     }
 </script>
