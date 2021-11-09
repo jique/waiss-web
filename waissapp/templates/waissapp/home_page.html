@@ -487,15 +487,10 @@
         var lat_list = {{lat_list}};
         var long_list = {{long_list}};
         var f_list = {{f_list|safe}};
-        var lat;
         for (var i=0; i < lat_list.length; i++) {
             var lat_i = lat_list[i];
-            var lat = lat_i;
-        }
-        for (var i=0; i < long_list.length; i++) {
             var lng_i = long_list[i];
-            var lng = lng_i;
-            var xy = [lat, lng];
+            var xy = [lat_i, lng_i];
             console.log(xy)
             var farm_point = L.marker(xy).addTo(mymap);
             farm_point.setLatLng(xy).addTo(mymap);
