@@ -111,7 +111,7 @@ def new_calib(request):
 			if any(instance.name == c for c in c_list):
 				c = CalibrationConstant.objects.get(name=request.POST.get('name'))
 				id = c.id
-				form = CalibForm(instance="id")
+				form = CalibForm(request.POST, instance=id)
 				form.save()
 			else:
 				instance.save()
