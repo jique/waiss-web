@@ -172,42 +172,15 @@ function repeat3() {
 }
 function showHide6() {
   var checkedValue = $("#id_calib_equation").val();
-  var coeff_c = document.getElementById('id_coeff_c')
-  if (checkedValue == "linear") {
-    coeff_c.setAttribute('disabled', 'disabled'); 
-    $("#eqn_form").text("MC<sub>v</sub> = ax + b");
-  } else if (checkedValue == "quadratic") {
-    coeff_c.removeAttribute('disabled');
-    $("#id_coeff_d").prop("disabled", "disabled");
-    $("#id_coeff_m").prop("disabled", "disabled");
+  if (checkedValue == "quadratic") {
     $("#id_coeff_c").prop('required',true);
-    $("#eqn_form").text("MC<sub>v</sub> = ax<sup>2</sup> + bx + c");
-  } else if (checkedValue == "exponential") {
-    $("#id_coeff_c").prop("disabled", "disabled");
-    $("#id_coeff_d").prop("disabled", "disabled");
-    $("#id_coeff_m").prop("disabled", "disabled");
-    $("#eqn_form").text("MC<sub>v</sub> = axe<sup>b</sup>");
-  } else if (checkedValue == "logarithmic") {
-    $("#id_coeff_c").prop("disabled", "disabled");
-    $("#id_coeff_d").prop("disabled", "disabled");
-    $("#id_coeff_m").prop("disabled", "disabled");
-    $('#id_coeff_c').val('');
-    $("#eqn_form").text("MC<sub>v</sub> = aln(x) + b");
   } else if (checkedValue == "symmetrical sigmoidal") {
-    $("#id_coeff_c").prop("disabled",false);
-    $("#id_coeff_d").prop("disabled",false);
-    $("#id_coeff_m").prop("disabled", "disabled");
     $("#id_coeff_c").prop('required',true);
     $("#id_coeff_d").prop('required',true);
-    $("#eqn_form").text("MC<sub>v</sub> = d + (a - d)/(1 + (x/c)<sup>b</sup>)");
-  } else if (checkedValue == "asymmetrical sigmoidal") {   
-    $("#id_coeff_c").prop("disabled",false);
-    $("#id_coeff_d").prop("disabled",false);
-    $("#id_coeff_m").prop("disabled",false);
+  } else if (checkedValue == "asymmetrical sigmoidal") {
     $("#id_coeff_c").prop('required',true);
     $("#id_coeff_d").prop('required',true);
     $("#id_coeff_m").prop('required',true);
-    $("#eqn_form").text("MC<sub>v</sub> = d + (a - d)/((1 + (x/c)<sup>b</sup>))<sup>m</sup>");
   }
 }
 //add_drip
