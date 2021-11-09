@@ -62,14 +62,14 @@ def home(request):
 	farm_list = Farm.objects.all()
 	lat = []
 	long = []
-	farm = []
+	farm_n = []
 	for farm in farm_list:
 		lat_i = farm.lat
 		long_i = farm.long
 		farm_i = farm.name
 		lat.append(lat_i)
 		long.append(long_i)
-		farm.append(farm_i)
+		farm_n.append(farm_i)
 	context = {
 		'lat': lat,
 		'long': long,
