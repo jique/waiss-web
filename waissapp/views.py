@@ -38,8 +38,8 @@ def login_request(request):
 	coords_list = []
 	for farm in farm_list:
 		coords = tuple([farm.lat, farm.long])
-		coords_list = coords_list.append(coords)
-		print(coords_list)
+		coords_list.append(coords)
+	print(coords_list)
 	if request.method == 'POST':
 		form = AuthenticationForm()
 		form = AuthenticationForm(request.POST)
