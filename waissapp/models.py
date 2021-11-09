@@ -162,8 +162,8 @@ class CalibrationConstant(models.Model):
         verbose_name="Equation Form", null=True,
     )
 
-    coeff_a = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" a", null=True, blank=True)
-    coeff_b = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" b", null=True, blank=True)
+    coeff_a = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" a", null=True)
+    coeff_b = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" b", null=True)
     coeff_c = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" c", null=True, blank=True)
     coeff_d = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" d", null=True, blank=True)
     coeff_m = models.DecimalField(max_digits=20, decimal_places=4, verbose_name=" m", null=True, blank=True)
