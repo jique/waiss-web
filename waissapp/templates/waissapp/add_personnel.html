@@ -10,9 +10,11 @@
 	<div class="modal-body">
         <small><em>Add personnel and their respective mobile numbers (11 digits) where the irrigation advisories are to be sent.</em></small>
         <br><br>
-        <div class="col">{{form.last_name|as_crispy_field }}</div>
-        <div class="col">{{form.first_name|as_crispy_field }}</div>
-        <div class="col">{{form.number|as_crispy_field }}</div>
+		<div class="row">
+			<div class="col">{{form.first_name|as_crispy_field }}</div>
+			<div class="col">{{form.last_name|as_crispy_field }}</div>
+		</div>
+		{{form.number|as_crispy_field }}
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
