@@ -8,12 +8,15 @@
     </button>
 	</div>
 	<div class="modal-body">
-    <small></small>
     {{form.crop|as_crispy_field}}
-    {{form.drz|as_crispy_field}}
-    {{form.root_ini|as_crispy_field}}
-    {{form.growingperiod|as_crispy_field}}
-    {{form.mad|as_crispy_field}}
+    <div class="row">
+      <div class="col-md">{{form.growingperiod|as_crispy_field}}</div>
+      <div class="col-md">{{form.mad|as_crispy_field}}</div>
+    </div>
+    <div class="row">
+      <div class="col-md">{{form.root_ini|as_crispy_field}}</div>
+      <div class="col-md">{{form.drz|as_crispy_field}}</div>
+    </div>
     {{form.root_growth_model|as_crispy_field}}
     <div class="row collapse" id="collapse1"><!--Borg-Grimes Model-->
       <div class="col-2"></div>
@@ -25,54 +28,62 @@
       </div>
     </div><!--Borg-Grimes Model-->
     <div class="row collapse" id="collapse2"><!--Inverse Kc-->
-        <div class="col-2"></div>
-        <div class="col">
-          <hr>
-          <i><b>Inverse K<sub>c</sub></b></i><br>
-          {{form.kc_ini|as_crispy_field}}
-          {{form.kc_mid|as_crispy_field}}
-          {{form.kc_end|as_crispy_field}}
-          {{form.kc_cc_1|as_crispy_field}}
-          {{form.kc_cc_2|as_crispy_field}}
-          {{form.kc_cc_3|as_crispy_field}}
-          <hr>
+      <div class="col-2"></div>
+      <div class="col">
+        <hr>
+        <i><b>Inverse K<sub>c</sub></b></i><br>
+        <div class="row">
+          <div class="col-md">{{form.kc_ini|as_crispy_field}}</div>
+          <div class="col-md">{{form.kc_mid|as_crispy_field}}</div>
+          <div class="col-md">{{form.kc_end|as_crispy_field}}</div>
         </div>
-      </div> <!--Inverse Kc-->
-      <div class="row collapse" id="collapse3"> <!--User-Defined Equation-->
-        <div class="col-2"></div>
-        <div class="col">
-          <hr>
-          <i><b>User-Defined Equation</b></i> <br>
-          {{form.eqnform|as_crispy_field}}
-          <div class="row collapse" id="panel1">
-            <div class="col">
-              <small>MC<sub>v</sub> = (reading)*a + b</small>
-              {{form.root_a|as_crispy_field}}
-              {{form.root_b|as_crispy_field}}
+        <div class="row">
+          <div class="col-md">{{form.kc_cc_1|as_crispy_field}}</div>
+          <div class="col-md">{{form.kc_cc_2|as_crispy_field}}</div>
+          <div class="col-md">{{form.kc_cc_3|as_crispy_field}}</div>
+        </div>
+        <hr>
+      </div>
+    </div><!--Inverse Kc-->
+    <div class="row collapse" id="collapse3"><!--User-Defined Equation-->
+      <div class="col-2"></div>
+      <div class="col">
+        <hr>
+        <i><b>User-Defined Equation</b></i> <br>
+        {{form.eqnform|as_crispy_field}}
+        <div class="row collapse" id="panel1">
+          <div class="col">
+            <small>MC<sub>v</sub> = (reading)*a + b</small>
+            <div class="row">
+              <div class="col-md">{{form.root_a|as_crispy_field}}</div>
+              <div class="col-md">{{form.root_b|as_crispy_field}}</div>
             </div>
           </div>
-          <div class="row collapse" id="panel2">
-            <div class="col">
-              <small>MC<sub>v</sub> = (reading)<sup>2</sup>*a + (reading)*b + c</small>
-              {{form.root_a|as_crispy_field}}
-              {{form.root_b|as_crispy_field}}
-              {{form.root_c|as_crispy_field}}
+        </div>
+        <div class="row collapse" id="panel2">
+          <div class="col">
+            <small>MC<sub>v</sub> = (reading)<sup>2</sup>*a + (reading)*b + c</small>
+            <div class="row">
+              <div class="col-md">{{form.root_a|as_crispy_field}}</div>
+              <div class="col-md">{{form.root_b|as_crispy_field}}</div>
+              <div class="col-md">{{form.root_c|as_crispy_field}}</div>
             </div>
           </div>
-          <hr>
         </div>
-      </div><!--User-Defined Equation-->
-      {{form.select_drip|as_crispy_field}}
-      <div class="row collapse" id="collapseOne"><!--Additional information required for drip irrigation.-->
-        <div class="col-2"></div>
-        <div class="col">
-          <hr>
-          {{form.peak_Etcrop|as_crispy_field}}
-          {{form.transpiration_ratio|as_crispy_field}}
-          <hr>
-        </div>
-      </div><!--Additional information required for drip irrigation.-->
-      {{form.source|as_crispy_field}}
+        <hr>
+      </div>
+    </div><!--User-Defined Equation-->
+    {{form.select_drip|as_crispy_field}}
+    <div class="row collapse" id="collapseOne"><!--Additional information required for drip irrigation.-->
+      <div class="col-2"></div>
+      <div class="col">
+        <hr>
+        {{form.peak_Etcrop|as_crispy_field}}
+        {{form.transpiration_ratio|as_crispy_field}}
+        <hr>
+      </div>
+    </div><!--Additional information required for drip irrigation.-->
+    {{form.source|as_crispy_field}}
   </div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
