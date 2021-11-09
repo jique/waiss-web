@@ -67,11 +67,11 @@ def home(request):
 		lat_list.append(f.lat)
 		long_list.append(f.long)
 		f_list.append(f.name)
-	newlist = [float(i) for i in lat_list]
-	print(newlist)
+	lt_list = [float(i) for i in lat_list]
+	lng_list = [float(i) for i in long_list]
 	context = {
-		"lat_list": lat_list,
-		"long_list": long_list,
+		"lat_list": lt_list,
+		"long_list": lng_list,
 		"f_list": f_list,
 	}
 	return render(request, 'waissapp/home_page.html', context)

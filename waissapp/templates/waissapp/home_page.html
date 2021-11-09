@@ -484,13 +484,18 @@
             accessToken: 'pk.eyJ1IjoiamFxbG8iLCJhIjoiY2t2cTVsaHlrNGVudDJ1bnljN3I5ZXRvaCJ9.gq4iSHiGefSJ8qLTwoxtBw'
         }).addTo(mymap);
 
-        var path = [];
-       
-        {% for position in farm_list %}
-            var xy = path.push((new mymap.maps.Latlng({{ position.coord.x }}), {{ position.coord.y }}));
-            var farm_point = L.marker(xy).addTo(mymap);
-            farm_point.setLatLng(xy).addTo(mymap);
-        {% endfor %}
+        var lat_list = {{lat_list}};
+        var long_list = {{long_list}};
+        var f_list = {{f_list}};
+        for (i in lat_list) {
+            var lat_i = i
+            for (i in lat_list) {
+                var lng_i = i
+                xy = [lat_i, lng_i]
+                var farm_point = L.marker(xy).addTo(mymap);
+                farm_point.setLatLng(xy).addTo(mymap);
+            }
+        }
         console.log(xy)
         </script>
         {% endblock %}
