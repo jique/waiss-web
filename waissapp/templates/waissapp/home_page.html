@@ -490,10 +490,10 @@
 
         for (var i=0; i < lat_list.length; i++) {
             var lat_i = lat_list[i];
-            lat = lat_i.value
+            var lat = lat_i.value
             for (var i=0; i < long_list.length; i++) {
                 var lng_i = long_list[i];
-                lng = lng_i.value;
+                var lng = lng_i.value;
                 var xy = [lat, lng]
                 console.log(xy)
                 var farm_point = L.marker(xy).addTo(mymap);
