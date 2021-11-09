@@ -39,7 +39,7 @@
             </div>
             {% endif %}
             <div class="col-md">
-                <form method="post" class="form-group" novalidate>
+                <form method="post" class="form-group" onsubmit="return validateForm(this);" name="myForm">
                     {% csrf_token %}
                     <small><b>Fields with asterisks (*) are required.</b></small><hr>
                     {{calib_form.name|as_crispy_field}}
@@ -103,5 +103,18 @@
     </div>
 </div>
 </div>
-<script src="{% static 'js/showHide.js' %}"></script>  
+<script src="{% static 'js/showHide.js' %}"></script>
+<script type="text/javascript">
+    function validateForm(form) {
+      var calib_eqn = document.getElementById('id_calib_equation')
+      var coeff_a = document.getElementById('id_coeff_a')
+      var coeff_b = document.getElementById('id_coeff_b')
+      var coeff_c = document.getElementById('id_coeff_c')
+      var coeff_d = document.getElementById('id_coeff_d')
+      var coeff_m = document.getElementById('id_coeff_m')
+
+      var e_coeff_c = document.getElementById('error_c')
+
+    }
+  </script>
 {% endblock %}
