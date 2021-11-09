@@ -35,18 +35,16 @@ def register(request):
 
 def login_request(request):
 	farm_list = Farm.objects.all()
-	print(farm_list)
+	print("farm_list")
 	coords_list = []
 	for farm in farm_list:
 		coords = tuple([farm.lat, farm.long])
 		print(farm.lat, farm.long, farm.name)
 		coords_list.append(coords)
 	print(coords_list)
+	form = AuthenticationForm()
 	if request.method == 'POST':
-		form = AuthenticationForm()
 		form = AuthenticationForm(request.POST)
-		if form.is_valid():
-			form.save()
 	context = {
 		'form': form,
 		'coords_list': coords_list,
