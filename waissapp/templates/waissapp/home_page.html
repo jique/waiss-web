@@ -490,10 +490,12 @@
         for (var i=0; i < lat_list.length; i++) {
             var lat_i = lat_list[i];
             var lng_i = long_list[i];
+            var farm_i = f_list[i];
             var xy = [lat_i, lng_i];
             console.log(xy)
             var farm_point = L.marker(xy).addTo(mymap);
             farm_point.setLatLng(xy).addTo(mymap);
+            farm_point.bindPopup(farm_i)
         }
         
         </script>
