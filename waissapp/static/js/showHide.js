@@ -201,7 +201,7 @@ function showHide6() {
     $("#id_coeff_d").prop('required',true);
     $("#eqn_form").text("MC<sub>v</sub> = d + (a - d)/(1 + (x/c)<sup>b</sup>)");
   } else if (checkedValue == "asymmetrical sigmoidal") {   
-    $("#collapse_calib_2").collapse('hide');
+    $("#collapse_calib_2").collapse('show');
     $("#collapse_calib_5").collapse('show');
     $("#collapse_calib_6").collapse('show');
     $("#id_coeff_c").prop('required',true);
