@@ -458,6 +458,7 @@ class Rainfall(models.Model):
     fieldunit = models.ForeignKey (FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True, blank=True)
     time = models.TimeField(verbose_name='Time Measured', null=True)
     date = models.DateField(verbose_name='Date Measured', null=True)
+    amount = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Rainfall (mm)", null=True)
     class Meta:
         verbose_name_plural = "Rainfall"
         get_latest_by = "date"
