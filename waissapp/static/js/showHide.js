@@ -192,7 +192,7 @@ function showHide6() {
     $("#id_coeff_c").prop('disabled', true);
     $("#id_coeff_d").prop('disabled', true);
     $("#id_coeff_m").prop('disabled', true);
-    $("#id_coeff_c").val('');
+    $('#id_coeff_c').val('');
     $("#eqn_form").text("MC<sub>v</sub> = aln(x) + b");
   } else if (checkedValue == "symmetrical sigmoidal") {
     $("#id_coeff_c").prop('disabled', false);
