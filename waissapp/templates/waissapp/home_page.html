@@ -43,13 +43,6 @@
         {% endblock %}
     </head>
     <body >
-        {% block style_block %}
-        <style>
-            .leaflet a {
-                color: gray;
-            }
-        </style>
-        {% endblock %}
         <div>
             <div class="top-bar border-bottom bg-light" style="height: 61px;padding: 3px;">
               <div class="container">
@@ -217,10 +210,10 @@
                 </div>
             </section>
             {% endblock %}
-            <section class="bar no-mb color-white padding-big text-md-center bg-primary">
+            <section class="bar no-mb padding-big text-md-center bg-primary">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 color-white">
                             <h2 class="text-uppercase">WHERE WE ARE</h2>
                             <br><br>
                             <p class="lead mb-small">This web application uses evapotranspiration or agrometeorological data to generate an irrigation schedule and irrigation advisories for farms. </p>
