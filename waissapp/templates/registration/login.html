@@ -148,7 +148,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiamFxbG8iLCJhIjoiY2t2cTVsaHlrNGVudDJ1bnljN3I5ZXRvaCJ9.gq4iSHiGefSJ8qLTwoxtBw'
 }).addTo(mymap);
 
-var coords_list = {{coords_list}};
+var coords_list = "{{coords_list}}";
 for (xy in coords_list) {
   xy = [xy];
   L.marker(xy).addTo(mymap);
