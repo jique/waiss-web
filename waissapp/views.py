@@ -112,6 +112,7 @@ def new_calib(request):
 				c = CalibrationConstant.objects.get(name=request.POST.get('name'))
 				id = c.id
 				form = CalibForm(instance="id")
+				form.save()
 			else:
 				instance.save()
 		return redirect('/new_irrigation/')
