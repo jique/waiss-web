@@ -33,24 +33,6 @@ def register(request):
 	}
 	return render(request, 'registration/register.html', context)
 
-def login_request(request):
-	farm_list = Farm.objects.all()
-	print("farm_list")
-	coords_list = []
-	for farm in farm_list:
-		coords = tuple([farm.lat, farm.long])
-		print(farm.lat, farm.long, farm.name)
-		coords_list.append(coords)
-	print(coords_list)
-	form = AuthenticationForm()
-	if request.method == 'POST':
-		form = AuthenticationForm(request.POST)
-	context = {
-		'form': form,
-		'coords_list': coords_list,
-	}
-	return render(request, 'accounts/login.html', context)
-
 @login_required
 def profile(request):
 	user = get_object_or_404(User, id=request.user.id)
@@ -77,7 +59,16 @@ def articles_waiss(request):
 	return render(request, 'waissapp/learnmore_waiss.html')
 
 def home(request):
-	return render(request, 'waissapp/home_page.html')
+	farm_list = Farm.objects.all()
+	coords_list = []
+	for farm in farm_list:
+		coords = tuple([farm.lat, farm.long])
+		print(farm.lat, farm.long, farm.name)
+		coords_list.append(coords)
+	context = {
+		'coords_list': coords_list,
+	}
+	return render(request, 'waissapp/home_page.html', context)
 
 def sarai_header(request):
 	return render(request, 'waissapp/sarai-header.html')

@@ -35,6 +35,10 @@
         <link rel="stylesheet" href=/static/base/css/custom.css>
         <link rel="stylesheet" href=/static/base/css/style.default.css>
 
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+        <!-- Make sure you put this AFTER Leaflet's CSS -->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
         {% block meta_block %}
         {% endblock %}
     </head>
@@ -208,6 +212,22 @@
                 </div>
             </section>
             {% endblock %}
+            <section class="bar no-mb color-white padding-big text-md-center bg-primary">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 class="text-uppercase">WHERE WE ARE</h2>
+                            <br><br>
+                            <p class="lead mb-small">This web application uses evapotranspiration or agrometeorological data to generate an irrigation schedule and irrigation advisories for farms. </p>
+                            <p class="mb-small">This enables accurate crop water and irrigation water management especially for farmers and farm workers, continuous and distanced monitoring for agricultural extension workers and managers, and a handy irrigation scheduler and calculator for students, teachers, researchers, etc.</p>
+                            <p><a href="#" class="btn btn-template-outlined-white">Read more</a></p>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <div id="tracemap" style="height:650px; width:100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             {% block etcal_section_block %}
             <section class="bar background-pentagon no-mb text-md-center">
                 <div class="container">
@@ -445,6 +465,33 @@
         <script src=/static/all/js/script.js></script>
         <script src=/static/all/js/avatar.js></script>
         {% block bottom_script_block %}
+        <script src="{% static 'js/leaflet-mouseposition.js' %}"></script>
+        <script src="{% static 'js/leaflet.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.min.js"></script>
+        <script src="{% static 'js/leaflet.awesome-markers.js' %}"></script>
+        <script src="https://npmcdn.com/leaflet.path.drag/src/Path.Drag.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet-editable@1.2.0/src/Leaflet.Editable.min.js"></script>
+        <script >
+        var mymap = L.map('tracemap');
+        var map_center = [11.9436, 122.5654];
+        mymap.setView(map_center, 6);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoiamFxbG8iLCJhIjoiY2t2cTVsaHlrNGVudDJ1bnljN3I5ZXRvaCJ9.gq4iSHiGefSJ8qLTwoxtBw'
+        }).addTo(mymap);
+
+        var coords_list = "{{coords_list}}";
+        console.log(coords_list)
+        for (xy in coords_list) {
+        xy = [xy];
+        var farm_point = L.marker(xy).addTo(mymap);
+        farm_point.setLatLng(xy).addTo(mymap);
+        }
+        </script>
         {% endblock %}
     </body>
 </html>
