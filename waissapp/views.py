@@ -35,6 +35,7 @@ def register(request):
 
 def login_request(request):
 	farm_list = Farm.objects.all()
+	print(farm_list)
 	coords_list = []
 	for farm in farm_list:
 		coords = tuple([farm.lat, farm.long])
