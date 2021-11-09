@@ -179,9 +179,6 @@ function showHide6() {
     $("#collapse_calib_4").collapse('hide');
     $("#collapse_calib_5").collapse('hide');
     $("#collapse_calib_6").collapse('hide');
-    $("#id_coeff_c").prop('required',false);
-    $("#id_coeff_d").prop('required',false);
-    $("#id_coeff_m").prop('required',false);
   } else if (checkedValue == "quadratic") {
     $("#collapse_calib_1").collapse('hide');
     $("#collapse_calib_2").collapse('show');
@@ -190,8 +187,6 @@ function showHide6() {
     $("#collapse_calib_5").collapse('hide');
     $("#collapse_calib_6").collapse('hide');
     $("#id_coeff_c").prop('required',true);
-    $("#id_coeff_d").prop('required',false);
-    $("#id_coeff_m").prop('required',false);
   } else if (checkedValue == "exponential") {
     $("#collapse_calib_1").collapse('hide');
     $("#collapse_calib_2").collapse('hide');
@@ -199,9 +194,6 @@ function showHide6() {
     $("#collapse_calib_4").collapse('hide');
     $("#collapse_calib_5").collapse('hide');
     $("#collapse_calib_6").collapse('hide');
-    $("#id_coeff_c").prop('required',false);
-    $("#id_coeff_d").prop('required',false);
-    $("#id_coeff_m").prop('required',false);
   } else if (checkedValue == "logarithmic") {
     $("#collapse_calib_1").collapse('hide');
     $("#collapse_calib_2").collapse('hide');
@@ -209,9 +201,6 @@ function showHide6() {
     $("#collapse_calib_4").collapse('show');
     $("#collapse_calib_5").collapse('hide');
     $("#collapse_calib_6").collapse('hide');
-    $("#id_coeff_c").prop('required',false);
-    $("#id_coeff_d").prop('required',false);
-    $("#id_coeff_m").prop('required',false);
   } else if (checkedValue == "symmetrical sigmoidal") {
     $("#collapse_calib_1").collapse('hide');
     $("#collapse_calib_2").collapse('hide');
@@ -219,11 +208,8 @@ function showHide6() {
     $("#collapse_calib_4").collapse('hide');
     $("#collapse_calib_5").collapse('show');
     $("#collapse_calib_6").collapse('hide');
-    $("#id_coeff_a").prop('required',true);
-    $("#id_coeff_b").prop('required',true);
     $("#id_coeff_c").prop('required',true);
     $("#id_coeff_d").prop('required',true);
-    $("#id_coeff_m").prop('required',false);
   } else if (checkedValue == "asymmetrical sigmoidal") {
     $("#collapse_calib_1").collapse('hide');      
     $("#collapse_calib_2").collapse('hide');
@@ -231,8 +217,6 @@ function showHide6() {
     $("#collapse_calib_4").collapse('hide');
     $("#collapse_calib_5").collapse('hide');
     $("#collapse_calib_6").collapse('show');
-    $("#id_coeff_a").prop('required',true);
-    $("#id_coeff_b").prop('required',true);
     $("#id_coeff_c").prop('required',true);
     $("#id_coeff_d").prop('required',true);
     $("#id_coeff_m").prop('required',true);

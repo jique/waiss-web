@@ -44,49 +44,30 @@
                     <small><b>Fields with asterisks (*) are required.</b></small><hr>
                     {{calib_form.name|as_crispy_field}}
                     {{calib_form.calib_equation|as_crispy_field}}
-                    <div class="row collapse" id="collapse_calib_1">
-                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = ax + b</b></small></div>
+                    <div class="row">
                         <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
                         <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
                     </div>
-                    <div class="row collapse" id="collapse_calib_2">
-                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = ax<sup>2</sup> + bx + c</b></small></div>
-                        <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
-                        <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
-                        <div class="col-md">{{calib_form.coeff_c|as_crispy_field}}</div>
+                    <div class="row collapse" id="collapse_calib_1">
+                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = ax + b</b></small></div>
                     </div>
                     <div class="row collapse" id="collapse_calib_3">
                         <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = axe<sup>b</sup></b></small></div>
-                        <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
-                        <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
                     </div>
                     <div class="row collapse" id="collapse_calib_4">
                         <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = aln(x) + b</b></small></div>
-                        <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
-                        <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
+                    </div>
+                    <div class="row collapse" id="collapse_calib_2">
+                        <div class="col-md">{{calib_form.coeff_c|as_crispy_field}}</div>
+                        <div class="col-md d-flex align-items-center mt-3"><small><b>MC<sub>v</sub> = ax<sup>2</sup> + bx + c</b></small></div>
                     </div>
                     <div class="collapse" id="collapse_calib_5">
-                        <div class="row">
-                            <p>&nbsp;<small><b>MC<sub>v</sub> = d + (a - d)/(1 + (x/c)<sup>b</sup>)</b></small></p>
-                        </div>
-                        <div class="row">
-                            <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
-                            <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
-                            <div class="col-md">{{calib_form.coeff_c|as_crispy_field}}</div>
-                            <div class="col-md">{{calib_form.coeff_d|as_crispy_field}}</div>
-                        </div>
+                        <div class="row"><div class="col-md">{{calib_form.coeff_d|as_crispy_field}}</div></div>
+                        <div class="row"><p>&nbsp;<small><b>MC<sub>v</sub> = d + (a - d)/(1 + (x/c)<sup>b</sup>)</b></small></p></div>
                     </div>
                     <div class="collapse" id="collapse_calib_6">
-                        <div class="row">
-                            <p>&nbsp;<small><b>MC<sub>v</sub> = d + (a - d)/((1 + (x/c)<sup>b</sup>))<sup>m</sup></b></small></p>
-                        </div>
-                        <div class="row">
-                            <div class="col-md">{{calib_form.coeff_a|as_crispy_field}}</div>
-                            <div class="col-md">{{calib_form.coeff_b|as_crispy_field}}</div>
-                            <div class="col-md">{{calib_form.coeff_c|as_crispy_field}}</div>
-                            <div class="col-md">{{calib_form.coeff_d|as_crispy_field}}</div>
-                            <div class="col-md">{{calib_form.coeff_m|as_crispy_field}}</div>
-                        </div>
+                        <div class="row"><div class="col-md">{{calib_form.coeff_m|as_crispy_field}}</div></div>
+                        <div class="row"><p>&nbsp;<small><b>MC<sub>v</sub> = d + (a - d)/((1 + (x/c)<sup>b</sup>))<sup>m</sup></b></small></p></div>
                     </div>
                     <div class="row">
                         <div class="col-md">{{calib_form.date_tested|as_crispy_field}}</div>
@@ -104,17 +85,4 @@
 </div>
 </div>
 <script src="{% static 'js/showHide.js' %}"></script>
-<script type="text/javascript">
-    function validateForm(form) {
-      var calib_eqn = document.getElementById('id_calib_equation')
-      var coeff_a = document.getElementById('id_coeff_a')
-      var coeff_b = document.getElementById('id_coeff_b')
-      var coeff_c = document.getElementById('id_coeff_c')
-      var coeff_d = document.getElementById('id_coeff_d')
-      var coeff_m = document.getElementById('id_coeff_m')
-
-      var e_coeff_c = document.getElementById('error_c')
-
-    }
-  </script>
 {% endblock %}
