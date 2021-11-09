@@ -111,8 +111,7 @@ def new_calib(request):
 			n_list = []
 			for c in c_list:
 				n_list.append(c.name)
-			print(instance.name)
-			if instance.name in n_list:
+			if request.POST.get('name') in n_list:
 				c = CalibrationConstant.objects.get(name=request.POST.get('name'))
 				id = c.id
 				print(id)
