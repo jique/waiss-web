@@ -9,20 +9,13 @@
 	</div>
 	<div class="modal-body">
 		{{ form.name|as_crispy_field}}
-		{{ form.lateral_spacing|as_crispy_field }}
-		{{ form.sprinkler_spacing|as_crispy_field }}
-		{{ form.ea|as_crispy_field }}
-		{{ form.with_q_bln|as_crispy_field }}
-		<div class="row collapse" id="collapse_irrig_Yes">
-			<div class="col">
-				{{ form.discharge|as_crispy_field}}
-			</div>
+		<div class="row">
+			<div class="col">{{ form.lateral_spacing|as_crispy_field }}</div>
+			<div class="col">{{ form.sprinkler_spacing|as_crispy_field }}</div>
 		</div>
-		<div class="row collapse" id="collapse_irrig_No">
-			<div class="col">
-				{{ form.nozzle_diameter|as_crispy_field }}
-				{{ form.operating_pressure|as_crispy_field }}<!--Use ave discharge coefficient (0.96)-->
-			</div>
+		<div class="row">
+			<div class="col">{{ form.discharge|as_crispy_field}}</div>
+			<div class="col">{{ form.ea|as_crispy_field }}</div>
 		</div>
 	</div>
 	<div class="modal-footer">
