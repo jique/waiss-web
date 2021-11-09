@@ -8,16 +8,17 @@
 		</button>
 	</div>
 	<div class="modal-body">
-        {{form.name|as_crispy_field}}
-		{{form.farm_area|as_crispy_field}}
-		{{form.brgy|as_crispy_field}}
-		{{form.municipality|as_crispy_field}}
-		{{form.province|as_crispy_field}}
-		{{form.select_coordinates|as_crispy_field}}
-		<div class="collapse" id="collapseOne">
-			{{form.lat|as_crispy_field}}
-			{{form.long|as_crispy_field}}
+		{{form.name|as_crispy_field}}
+		<div class="row">
+		  <div class="col">{{form.brgy|as_crispy_field}}</div>
+		  <div class="col">{{form.municipality|as_crispy_field}}</div>
+		  <div class="col">{{form.province|as_crispy_field}}</div>
 		</div>
+		<div class="row">
+		  <div class="col">{{form.lat|as_crispy_field}}</div>
+		  <div class="col">{{form.long|as_crispy_field}}</div>
+		</div>
+		{{form.farm_area|as_crispy_field}}
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
