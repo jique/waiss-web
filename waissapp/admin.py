@@ -30,7 +30,7 @@ class MoistureContentInline(admin.TabularInline):
 
 class MoistureContentAdmin(admin.ModelAdmin):
     list_display = ('sensor', 'mc_data', 'date', 'time')
-    ordering = ['timestamp']
+    ordering = ['date']
 
 class SensorInline(admin.TabularInline):
     model = Sensor
