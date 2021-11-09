@@ -67,10 +67,8 @@ def home(request):
 		lat_list.append(f.lat)
 		long_list.append(f.long)
 		f_list.append(f.name)
-	lat_l = []
-	for l in lat_list:
-		lat_l.append(l)
-	print(lat_l)
+	newlist = [float(i) for i in lat_list]
+	print(newlist)
 	context = {
 		"lat_list": lat_list,
 		"long_list": long_list,
