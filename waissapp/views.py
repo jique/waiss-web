@@ -118,15 +118,15 @@ def new_calib(request):
 				if key == 'coeff_c':
 					calib.coeff_c = coeff_c
 				else:
-					calib.coeff_c = ''
+					calib.coeff_c = 0
 				if key == 'coeff_d':
 					calib.coeff_d = coeff_d
 				else:
-					calib.coeff_d = ''
+					calib.coeff_d = 0
 				if key == 'coeff_m':
 					calib.coeff_m = coeff_m
 				else:
-					calib.coeff_m = ''
+					calib.coeff_m = 0
 				if key == 'date_tested':
 					calib.date_tested = date_tested
 				else:
