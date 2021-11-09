@@ -105,20 +105,42 @@ def new_calib(request):
 		select_value = id.calib_equation
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = CalibForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
-			c_list = CalibrationConstant.objects.all()
-			n_list = []
-			for c in c_list:
-				n_list.append(c.name)
-			if request.POST.get('name') in n_list:
-				c = CalibrationConstant.objects.get(name=request.POST.get('name'))
-				id = c.id
-				print(id)
-				form = CalibForm(request.POST, instance=id)
-				form.save()
+		calib, created = CalibrationConstant.objects.update_or_create(name=request.POST.get('name'))
+		calib.calib_equation = request.POST.get('calib_equation')
+		calib.coeff_a = request.POST.get('coeff_a')
+		calib.coeff_b = request.POST.get('coeff_b')
+		coeff_c = request.POST.get('coeff_c')
+		coeff_d = request.POST.get('coeff_d')
+		coeff_m = request.POST.get('coeff_m')
+		date_tested = request.POST.get('date_tested')
+		tested_by = request.POST.get('tested_by')
+		calib.author = request.user
+		for key in request.POST:
+			value = request.POST.get(key)
+			if value != "":
+				if key == 'coeff_c':
+					calib.coeff_c = coeff_c
+				if key == 'coeff_d':
+					calib.coeff_d = coeff_d
+				if key == 'coeff_m':
+					calib.coeff_m = coeff_m
+				if key == 'date_tested':
+					calib.date_tested = date_tested
+				if key == 'tested_by':
+					calib.tested_by = tested_by
 			else:
-				instance.save()
+				if key == 'coeff_c':
+					calib.coeff_c = None
+				if key == 'coeff_d':
+					calib.coeff_d = None
+				if key == 'coeff_m':
+					calib.coeff_m = None
+				if key == 'date_tested':
+					calib.date_tested = None
+				if key == 'tested_by':
+					calib.tested_by = None
+		calib.save()
+		request.session['calib_ses'] = calib.id
 		return redirect('/new_irrigation/')
 	context = {
 		'calib_form': form,
