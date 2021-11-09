@@ -117,5 +117,21 @@
             coeff_m.disabled = false;
         }
     }
+
+    function validateForm(form) {
+        if (eqn_form.value == "linear" || eqn_form.value == "logarithmic" || eqn_form.value == "exponential") {
+            coeff_c.value = '';
+            coeff_d.value = '';
+            coeff_m.value = '';
+            return true;
+        } else if (eqn_form.value == "quadratic") {
+            coeff_d.value = '';
+            coeff_m.value = '';
+            return true;
+        } else if (eqn_form.value == "symmetrical sigmoidal") {
+            coeff_m.value = '';
+            return true;
+        } 
+    }
 </script>
 {% endblock %}
