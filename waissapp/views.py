@@ -115,26 +115,23 @@ def new_calib(request):
 		date_tested = request.POST.get('date_tested')
 		tested_by = request.POST.get('tested_by')
 		calib.author = request.user
+		if request.POST.get('calib_equation') == "quadratic":
+			calib.coeff_c = coeff_c
+		elif request.POST.get('calib_equation') == "symmetrical sigmoidal":
+			calib.coeff_c = coeff_c
+			calib.coeff_d = coeff_d
+		elif request.POST.get('calib_equation') == "asymmetrical sigmoidal":
+			calib.coeff_c = coeff_c
+			calib.coeff_d = coeff_d
+			calib.coeff_m = coeff_m
 		for key in request.POST:
 			value = request.POST.get(key)
 			if value != "":
-				if key == 'coeff_c':
-					calib.coeff_c = coeff_c
-				if key == 'coeff_d':
-					calib.coeff_d = coeff_d
-				if key == 'coeff_m':
-					calib.coeff_m = coeff_m
 				if key == 'date_tested':
 					calib.date_tested = date_tested
 				if key == 'tested_by':
 					calib.tested_by = tested_by
 			else:
-				if key == 'coeff_c':
-					calib.coeff_c = 0
-				if key == 'coeff_d':
-					calib.coeff_d = 0
-				if key == 'coeff_m':
-					calib.coeff_m = 0
 				if key == 'date_tested':
 					calib.date_tested = None
 				if key == 'tested_by':
