@@ -60,20 +60,13 @@ def articles_waiss(request):
 
 def home(request):
 	farm_list = Farm.objects.all()
-	lat = []
-	long = []
-	farm_n = []
-	for farm in farm_list:
-		lat_i = farm.lat
-		long_i = farm.long
-		farm_i = farm.name
-		lat.append(lat_i)
-		long.append(long_i)
-		farm_n.append(farm_i)
+	coords = []
+	for point in farm_list:
+		point_i = point.coord
+		coords.append(point_i)
+	print(coords)
 	context = {
-		'lat': lat,
-		'long': long,
-		'farm': farm,
+		"coords": coords,
 	}
 	return render(request, 'waissapp/home_page.html', context)
 

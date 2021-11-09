@@ -484,7 +484,7 @@
             accessToken: 'pk.eyJ1IjoiamFxbG8iLCJhIjoiY2t2cTVsaHlrNGVudDJ1bnljN3I5ZXRvaCJ9.gq4iSHiGefSJ8qLTwoxtBw'
         }).addTo(mymap);
 
-        var lat = "{{lat|safe}}";
+        var lat = {{coords}};
         lat = lat.filter(n => n)
         console.log(lat)
         for (xy in coords_list) {

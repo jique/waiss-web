@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.gis.db import models
 
 class Farm(models.Model):
     name = models.CharField(max_length=50, unique="True", verbose_name="Farm Name")
@@ -14,7 +15,7 @@ class Farm(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
-
+    coord = models.PointField(null=True, blank=True)
     class Meta:
         verbose_name_plural = "1. Farms"
         ordering = ('name',)
