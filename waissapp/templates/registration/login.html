@@ -137,7 +137,7 @@ var mymap = L.map('tracemap');
 var map_center = [14.16358, 121.25078];     
 var mark_center = L.marker(map_center).addTo(mymap);
 mark_center.setLatLng(map_center).addTo(mymap);
-mymap.setView(map_center, 10);
+mymap.setView(map_center, 3);
 
 var marker = L.marker([14.16358, 121.25078]).addTo(mymap);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {

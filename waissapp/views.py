@@ -46,7 +46,7 @@ def login_request(request):
 	for farm in farm_list:
 		coords = tuple([farm.lat, farm.long])
 		coords_list = coords_list.append(coords)
-	print (coords_list)
+	print(coords_list)
 	if request.method == 'POST':
 		form = AuthenticationForm()
 		form = AuthenticationForm(request.POST)
@@ -54,6 +54,7 @@ def login_request(request):
 			form.save()
 	context = {
 		'form': form,
+		'coords_list': coords_list,
 	}
 	return render(request, 'accounts/login.html', context)
 
