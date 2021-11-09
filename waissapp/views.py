@@ -130,11 +130,11 @@ def new_calib(request):
 					calib.tested_by = tested_by
 			else:
 				if key == 'coeff_c':
-					calib.coeff_c = None
+					calib.coeff_c = 0
 				if key == 'coeff_d':
-					calib.coeff_d = None
+					calib.coeff_d = 0
 				if key == 'coeff_m':
-					calib.coeff_m = None
+					calib.coeff_m = 0
 				if key == 'date_tested':
 					calib.date_tested = None
 				if key == 'tested_by':
