@@ -8,16 +8,24 @@
 		</button>
 	</div>
 	<div class="modal-body">
-		<div class="col">{{form.name|as_crispy_field }}</div>
-        <div class="col">{{form.usk|as_crispy_field}}</div>
-        <div class="col">{{form.number|as_crispy_field}}</div>
-        <div class="col">{{form.timestart|as_crispy_field}}</div>
-        <div class="col">{{form.timestop|as_crispy_field}}</div>
-        <div class="col">{{form.sensorintegrationtime|as_crispy_field}}</div>
-        <div class="col">{{form.delay|as_crispy_field}}</div>
-        <div class="col">{{form.samples|as_crispy_field}}</div>
-        <div class="col">{{form.clockcorrection|as_crispy_field}}</div>
-	</div>
+		{{form.name|as_crispy_field }}
+		<div class="row">
+			<div class="col">{{form.usk|as_crispy_field}}</div>
+        	<div class="col">{{form.number|as_crispy_field}}</div>
+		</div>
+        <div class="row">
+			<div class="col">{{form.timestart|as_crispy_field}}</div>
+        	<div class="col">{{form.timestop|as_crispy_field}}</div>
+		</div>
+		<div class="row">
+			<div class="col">{{form.delay|as_crispy_field}}</div>
+			<div class="col">{{form.sensorintegrationtime|as_crispy_field}}</div>
+		</div>
+		<div class="row">
+			<div class="col">{{form.samples|as_crispy_field}}</div>
+        	<div class="col">{{form.clockcorrection|as_crispy_field}}</div>
+		</div>
+    </div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 		<button type="submit" class="btn btn-info">Save Changes</button>
