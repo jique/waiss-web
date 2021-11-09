@@ -492,12 +492,13 @@
             var lat_i = i.value;
             for (var i=0; i < long_list.length; i++) {
                 var lng_i = i.value;
-                xy = [lat_i, lng_i]
+                var xy = [lat_i, lng_i]
+                console.log(xy)
                 var farm_point = L.marker(xy).addTo(mymap);
                 farm_point.setLatLng(xy).addTo(mymap);
             }
         }
-        console.log(xy)
+        
         </script>
         {% endblock %}
     </body>
