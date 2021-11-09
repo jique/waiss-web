@@ -10,37 +10,59 @@
 	<div class="modal-body">
         {{form.name|as_crispy_field}}
         {{form.calib_equation|as_crispy_field}}
-        <div class="row collapse" id="collapse_calib_1">
-            <small><b>MC<sub>v</sub> = a * (reading) + b</b></small><hr>
-            <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
-            <div class="col-md">{{form.coeff_b|as_crispy_field}}</div><hr>
-        </div>
-        <div class="row collapse" id="collapse_calib_2">
-                <small><b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></small><hr>
+        <div class="collapse" id="collapse_calib_1">
+            <div class="row">
+                <div class="col"><small><b>MC<sub>v</sub> = a * (reading) + b</b></small></div>
+            </div>
+            <div class="row">
                 <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
                 <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_c|as_crispy_field}}</div><hr>
+            </div>
         </div>
-        <div class="row collapse" id="collapse_calib_3">
-                <small><b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></small><hr>
-                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div><hr>
-        </div>
-        <div class="row collapse" id="collapse_calib_4">
-                <small><b>MC<sub>v</sub> = a * ln(reading) + b</b></small><hr>
-                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div><hr>
-        </div>
-        <div class="row collapse" id="collapse_calib_5">
-                <small><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></small><hr>
+        <div class="collapse" id="collapse_calib_2">
+            <div class="row">
+                <div class="col"><small><b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></small></div>
+            </div>
+            <div class="row">
                 <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
                 <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
                 <div class="col-md">{{form.coeff_c|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_d|as_crispy_field}}</div><hr>
+            </div>
         </div>
-        <div class="row collapse" id="collapse_calib_6">
-                <small><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></small>
-                <hr>
+        <div class="collapse" id="collapse_calib_3">
+            <div class="row">
+                <div class="col"><small><b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></small></div>
+            </div>
+            <div class="row">
+                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
+            </div>
+        </div>
+        <div class="collapse" id="collapse_calib_4">
+            <div class="row">
+                <div class="col"><small><b>MC<sub>v</sub> = a * ln(reading) + b</b></small></div>
+            </div>
+            <div class="row">
+                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
+            </div>
+        </div>
+        <div class="collapse" id="collapse_calib_5">
+            <div class="row">
+                <div class="col"><small><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></small></div>
+            </div>
+            <div class="row">
+                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_c|as_crispy_field}}</div>
+                <div class="col-md">{{form.coeff_d|as_crispy_field}}</div>
+            </div>
+        </div>
+        <div class="collapse" id="collapse_calib_6">
+            <div class="row">
+                <div class="col"><small><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></small></div>
+            </div>
+            <div class="row">
                 <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
                 <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
                 <div class="col-md">{{form.coeff_c|as_crispy_field}}</div>
