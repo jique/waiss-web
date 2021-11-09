@@ -105,8 +105,10 @@ WAISS Login
 <section class="bar no-mb">
   <div class="container">
     <div class="heading text-center"><h2>WHERE WE ARE</h2></div>
-    <div class="col-lg-6"><p>UPLB</p></div>
-    <div class="col-lg-6"><div class="mt" id="tracemap" style="height:600px; width:100%;"></div></div>
+    <div clas="row">
+      <div class="col-lg-6"><p class="lead text-center">UPLB</p></div>
+    <div class="col-lg-6"><div class="mt" id="tracemap" style="height:525px; width:100%;"></div></div>
+    </div>
   </div>
 </section>
 <section class="bar no-mb" style="background-color: #75cff0;">
@@ -134,7 +136,11 @@ WAISS Login
 <script src="https://npmcdn.com/leaflet.path.drag/src/Path.Drag.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet-editable@1.2.0/src/Leaflet.Editable.min.js"></script>
 <script >
-var mymap = L.map('tracemap').setView([51.505, -0.09], 13);
+var mymap = L.map('tracemap');
+var map_center = [14.16358, 121.25078];     
+var mark_enter = L.marker(map_center).addTo(mymap);
+mark_center.setLatLng(map_center).addTo(mymap);
+mymap.setView(map_center, 10);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
