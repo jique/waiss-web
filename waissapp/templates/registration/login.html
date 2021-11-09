@@ -102,13 +102,13 @@ WAISS Login
     </div>    
   </div>
 </section>
-<section class="bar no-mb">
+<section class="bar no-mb" style="background-color: #75cff0;">
   <div class="container">
     <div class="heading text-center"><h2>WHERE WE ARE</h2></div>
     <div class="col-md-12"><div class="mt" id="tracemap" style="height:525px; width:100%;"></div></div>
   </div>
 </section>
-<section class="bar no-mb" style="background-color: #75cff0;">
+<section class="bar no-mb">
   <div class="container">
       <div class="col-md-12">
           <div class="heading text-center">
@@ -139,9 +139,6 @@ var mark_center = L.marker(map_center).addTo(mymap);
 mark_center.setLatLng(map_center).addTo(mymap);
 mymap.setView(map_center, 5);
 
-for (xy in {{coords_list}}) {
-  L.marker(xy).addTo(mymap);
-}
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -151,6 +148,9 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiamFxbG8iLCJhIjoiY2t2cTVsaHlrNGVudDJ1bnljN3I5ZXRvaCJ9.gq4iSHiGefSJ8qLTwoxtBw'
 }).addTo(mymap);
 
-
+var coords_list = {{coords_list}}
+for (xy in coords_list) {
+  L.marker(xy).addTo(mymap);
+}
 </script>
 {% endblock %}
