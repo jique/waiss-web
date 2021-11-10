@@ -293,6 +293,9 @@ def new_crop(request):
 						crop.kc_cc_3 = kc_cc_3
 					if key == 'source':
 						crop.source = source
+				else:
+					if key == 'source':
+						crop.source = None
 			crop.save()
 			request.session['crop_ses'] = crop.id
 			return redirect('/new_soil/')
@@ -419,6 +422,9 @@ def new_soil(request):
 						soil.intakefamily = intakefamily
 					if key == 'source':
 						soil.source = source
+				else:
+					if key == 'source':
+						soil.source = None
 			soil.author = request.user
 			soil.save()
 			request.session['soil_ses'] = soil.id
@@ -1573,7 +1579,7 @@ def edit_mc(request, id):
 def list_mc(request, name):
 	sensor_instance = Sensor.objects.get(name=name)
 	get_mc = MoistureContent.objects.filter(sensor=sensor_instance)
-	mcs = reversed(sorted(get_mc, key=attrgetter('timestamp')))
+	mcs = reversed(sorted(get_mc, key=operator.attrgetter('date', 'time')))
 
 	if request.method == 'POST':
 		pk=request.POST.get('deleteModal')
