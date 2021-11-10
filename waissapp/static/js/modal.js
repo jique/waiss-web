@@ -649,7 +649,7 @@ $(document).ready(function(){
 				if(data.form_is_valid){
 					$('.gravi-table tbody').html(data.list_gravi);
 					$('.modal').modal('hide');
-					location.reload();
+					window.location.reload(true);
 				} else {
 					$('#modal-gravi .modal-content').html(data.html_form)
 				}
