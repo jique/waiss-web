@@ -33,20 +33,22 @@
             <div class="col-md">{{form.coeff_d|as_crispy_field}}</div>
             <div class="col-md">{{form.coeff_m|as_crispy_field}}</div>
         </div>
-        <div class="col font-monospace small">
-            <h6><u>Equation Standard Forms:</u></h6>
-            <ul style="list-style: none;">
-                <li>Linear: <b>MC<sub>v</sub> = a * (reading) + b</b></li>
-                <li>Quadratic: <b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></li>
-                <li>Exponential: <b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></li>
-                <li>Logarithmic: <b>MC<sub>v</sub> = a * ln(reading) + b</b></li>
-                <li>Symmetrical Sigmoidal: <br><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></li>
-                <li>Asymmetrical Sigmoidal: <br><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></li>
-            </ul>
-        </div>
         <div class="row">
             <div class="col-md">{{form.date_tested|as_crispy_field}}</div>
             <div class="col-md">{{form.tested_by|as_crispy_field}}</div>
+        </div>
+        <div class="row">
+            <div class="col font-monospace small">
+                <h6><u>Equation Standard Forms:</u></h6>
+                <ul style="list-style: none;">
+                    <li>Linear: <b>MC<sub>v</sub> = a * (reading) + b</b></li>
+                    <li>Quadratic: <b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></li>
+                    <li>Exponential: <b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></li>
+                    <li>Logarithmic: <b>MC<sub>v</sub> = a * ln(reading) + b</b></li>
+                    <li>Symmetrical Sigmoidal: <br><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></li>
+                    <li>Asymmetrical Sigmoidal: <br><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></li>
+                </ul>
+            </div>
         </div>
 	</div>
 	<div class="modal-footer">
