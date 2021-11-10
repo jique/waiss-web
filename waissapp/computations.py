@@ -88,12 +88,14 @@ def index(request):
 	rainfall_collection = []
 
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
-		p_time = p.timestamp
+		p_time = p.time
+		p_date = p.date
 		p_amount = (p.amount)
 		j = len(rainfall_collection)
 		for i, m in enumerate(mc_list, start=1):
-			m_time = m.timestamp
-			if p_time == m_time:
+			m_time = m.time
+			m_date = m.date
+			if p_time == m_time and p_date == m_date:
 				z = i-j-1
 				for x in range(0, z):
 					rainfall_collection.append(0.0)
