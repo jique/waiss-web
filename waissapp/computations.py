@@ -90,7 +90,7 @@ def index(request):
 		p_amount = (p.amount)
 		j = len(rainfall_collection)
 		for i, m in enumerate(mc_list, start=1):
-			m_time = m.time.replace(seconds=0)
+			m_time = m.time.replace(second=0)
 			m_date = m.date
 			if p_time == m_time and p_date == m_date:
 				z = i-j-1
