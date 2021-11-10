@@ -534,7 +534,7 @@ def index(request):
 			farm = selected_system.farm
 			farm_area = farm.farm_area
 			no_irrigation = True
-			total_volume = net_application_depth * farm_area * 0.20 #[Assumption]
+			total_volume = net_application_depth * farm_area * float(0.20) #[Assumption]
 		
 	#FOR DISPLAY
 		net_application_depth = round(net_application_depth, 2)
