@@ -493,7 +493,7 @@
             console.log(xy)
             var farm_point = L.marker(xy).addTo(mymap);
             farm_point.setLatLng(xy).addTo(mymap);
-            farm_point.bindPopup(farm_i)
+            farm_point.bindPopup(farm_i, {autoClose:false}).openPopup();
         }
         
         </script>
