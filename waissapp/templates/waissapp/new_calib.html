@@ -22,8 +22,9 @@
     <div class="card-header rounded-0 border-0"><small>Sensors Calibration Equation</small></div>
     <div class="card-body">
         <div class="row">
-            {% if calib_list %}
+           
             <div class="col-md-4">
+                {% if calib_list %}
                 <div class="row bg-light">
                     <form method="post" class="form-group col-md">
                         {% csrf_token %}
@@ -36,8 +37,19 @@
                         </select>
                     </form>
                 </div>
+                {% endif %}
+                <br><br>
+                <div class="row bg-light">
+                    <div class="col font-monospace small">
+                        Linear: <b>MC<sub>v</sub> = a * (reading) + b</b>
+                        Exponential: <b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b>
+                        Logarithmic: <b>MC<sub>v</sub> = a * ln(reading) + b</b>
+                        Symmetrical Sigmoidal: <b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b>
+                        Asymmetrical Sigmoidal: <b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b>
+                    </div>
+                </div>
             </div>
-            {% endif %}
+            
             <div class="col-md">
                 <form method="post" class="form-group">
                     {% csrf_token %}
