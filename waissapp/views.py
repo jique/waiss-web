@@ -1178,7 +1178,7 @@ def new_irrigation(request):
 		drip_form = DripForm(request.POST)
 		drip, created = Drip.objects.get_or_create(name=request.POST.get('name'))
 		drip.author = request.user
-		drip.discharge = request.POST.get('discharge')
+		drip.ave_discharge = request.POST.get('ave_discharge')
 		drip.bln_single_lateral = bool(request.POST.get('bln_single_lateral'))
 		drip.emitters_per_plant = request.POST.get('emitters_per_plant')
 		drip.emitter_spacing = request.POST.get('emitter_spacing')
