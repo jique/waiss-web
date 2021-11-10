@@ -243,8 +243,8 @@ class Basin(models.Model):
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Irrigation System Type", null=True, blank=True, default="basin")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
-    basin_length = models.DecimalField(max_digits=20, decimal_places=1, verbose_name="Basin Length (m)", null=True, validators=[MinValueValidator(0.01)])
-    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
+    basin_length = models.DecimalField(max_digits=20, decimal_places=1, verbose_name="Basin Length (m)", null=True)
+    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
     EFF_CHOICES = [
         (50, '50'),
         (55, '55'),
@@ -281,12 +281,12 @@ class Furrow(models.Model):
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="furrow")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
-    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
-    mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, validators=[MinValueValidator(0.0001)])
-    area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True, validators=[MinValueValidator(0.0001)])
+    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
+    mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
+    area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True)
     bln_furrow_type = models.BooleanField (verbose_name="Is it an open-ended furrow?", null=True, default=True)
-    furrow_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Spacing", null=True, validators=[MinValueValidator(0.01)])
-    furrow_length = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Length", null=True, validators=[MinValueValidator(0.01)])
+    furrow_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Spacing", null=True)
+    furrow_length = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Furrow Length", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True)
     personal = models.BooleanField(default=True)
@@ -311,9 +311,9 @@ class Border(models.Model):
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="border")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
-    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
-    mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True, validators=[MinValueValidator(0.0001)])
-    area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True, validators=[MinValueValidator(0.0001)])
+    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
+    mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
+    area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True)
     personal = models.BooleanField(default=True)
@@ -339,12 +339,12 @@ class Drip(models.Model):
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="drip")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
     bln_single_lateral = models.BooleanField (verbose_name="Is it a single straight lateral?", null=True)
-    ave_discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Average Emitter Discharge (l/day)", null=True, validators=[MinValueValidator(0.01)])
+    ave_discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Average Emitter Discharge (l/day)", null=True)
     emitters_per_plant = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="No. of Emitters per Plant", null=True, validators=[MinValueValidator(1)])
-    emitter_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Spacing (m)", null=True, validators=[MinValueValidator(0.01)])
-    plant_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Plant spacing (m)", null=True, validators=[MinValueValidator(0.01)])
-    row_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Row spacing (m)", null=True, validators=[MinValueValidator(0.01)])
-    wetted_dia = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Wetted diameter (m)", null=True, validators=[MinValueValidator(0.01)])
+    emitter_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Emitter Spacing (m)", null=True)
+    plant_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Plant spacing (m)", null=True)
+    row_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Row spacing (m)", null=True)
+    wetted_dia = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Wetted diameter (m)", null=True)
     yes_or_no = [
         ("yes", 'Yes, I do!'),
         ("no", 'No, I dont.'),
@@ -376,7 +376,7 @@ class Sprinkler(models.Model):
     ]
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="sprinkler")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
-    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True, validators=[MinValueValidator(0.01)])
+    discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
     EFF_CHOICES = [
         (50, '50'),
         (55, '55'),
@@ -389,8 +389,8 @@ class Sprinkler(models.Model):
         (95, '95'),
     ]
     ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True, validators=[MinValueValidator(1)])
-    lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True, validators=[MinValueValidator(0.01)])
-    sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True, validators=[MinValueValidator(0.01)])
+    lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True)
+    sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     personal = models.BooleanField(default=True)

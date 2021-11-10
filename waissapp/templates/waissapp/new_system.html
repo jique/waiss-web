@@ -9,7 +9,7 @@
         <a href={% url 'waiss:new_personnel' %}><li id="farm_manager">Farm Manager</li></a>
         <a href={% url 'waiss:new_crop' %}><li id="crop">Crop</li></a>
         <a href={% url 'waiss:new_soil' %}><li id="soil">Soil</li></a>
-        <a href={% url 'waiss:new_calib' %}><li id="calib"Calibration</strong></li></a>
+        <a href={% url 'waiss:new_calib' %}><li id="calib">Calibration</strong></li></a>
         <a href={% url 'waiss:new_irrigation' %}><li id="irrig">Irrigation</li></strong></a>
         <a href={% url 'waiss:new_fieldunit' %}><li id="fieldunit">Field Unit</li></a>
         <a href={% url 'waiss:new_sensor' %}><li id="sensor">Sensors</strong></li></a>
@@ -197,7 +197,7 @@
             </div>
           </form>
         </div> <!--col-->
-      {% if excess or no_irrigation or drip_ses%}
+      {% if excess or no_irrigation%}
       <div class="col-md-4">
         <small class="text-danger"><b>Warnings/Errors!</b></small><hr>
         <div class="card shadow mb-4">
