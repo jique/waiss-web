@@ -528,6 +528,8 @@ def index(request):
 			else:
 				Td = Etcrop*(Pd + 0.15*(1 - Pd))
 				irrigation_interval = net_application_depth/Td
+				if irrigation_interval <= 1:
+					irrigation_interval = 1
 			gross_volume_per_plant = (gross_application_depth*Sp*So/irrigation_interval) #(L/day)
 			irrigation_period = (gross_volume_per_plant/(Np*q))*24*60
 			total_volume = gross_volume_per_plant
