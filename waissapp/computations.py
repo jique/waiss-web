@@ -5,7 +5,7 @@ from operator import attrgetter
 import math
 from django.contrib.auth.decorators import login_required
 import datetime
-from datetime import datetime
+from datetime import time
 import pytz
 import operator
 
@@ -91,7 +91,6 @@ def index(request):
 		j = len(rainfall_collection)
 		for i, m in enumerate(mc_list, start=1):
 			m_time = m.time.replace(second=0, microsecond=0)
-			print(m_time)
 			m_date = m.date
 			if p_time == m_time and p_date == m_date:
 				z = i-j-1
