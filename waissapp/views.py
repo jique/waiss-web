@@ -1634,7 +1634,7 @@ def edit_rainfall(request, id):
 @login_required
 def list_rainfall(request):
 	queryset = Rainfall.objects.all()
-	rainfalls = reversed(sorted(queryset, key=attrgetter('timestamp')))
+	rainfalls = reversed(sorted(queryset, key=operator.attrgetter('date', 'time')))
 
 	if request.method == 'POST'and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')
@@ -1757,7 +1757,7 @@ def edit_gravi(request, id):
 @login_required
 def list_gravi(request):
 	queryset = Gravimetric.objects.all()
-	gravis = reversed(sorted(queryset, key=attrgetter('timestamp')))
+	gravis = reversed(sorted(queryset, key=operator.attrgetter('date', 'time')))
 
 	if request.method == 'POST'and 'deleteModal' in request.POST:
 		pk=request.POST.get('deleteModal')

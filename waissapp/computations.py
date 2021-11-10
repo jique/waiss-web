@@ -83,7 +83,7 @@ def index(request):
 
 	mc_list = list(mc_1_sorted)	# for inserting rainfall data on the graph
 	rainfall = Rainfall.objects.all().filter(fieldunit=fieldunit)
-	sorted_rainfall = sorted(rainfall, key=attrgetter('timestamp'))
+	sorted_rainfall = sorted(rainfall, key=operator.attrgetter('date', 'time'))
 
 	rainfall_collection = []
 
@@ -101,7 +101,7 @@ def index(request):
 				break
 
 	gravimetric_data = Gravimetric.objects.all().filter(fieldunit=fieldunit) #for gravimetric data
-	sorted_gravimetric = sorted(gravimetric_data, key=attrgetter('timestamp'))
+	sorted_gravimetric = sorted(gravimetric_data, key=operator.attrgetter('date', 'time'))
 	gravimetric_collection = [] 
 
 	for p in sorted_gravimetric: # for creating list that has the same index of the mc data
@@ -333,7 +333,7 @@ def index(request):
 
 	if len(mc_1) > 0: # getting date from data of sensor 1
 		for mc_obj in mc_1_sorted:
-			mc_date = mc_obj.timestamp.date()
+			mc_date = mc_obj.date.date()
 			crop_dat = ((mc_date - crop_transplanted).days)
 			drz_collection.append(calculateDRZ(crop_dat))
 
