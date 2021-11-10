@@ -122,10 +122,7 @@ def new_system(request):
 
 	if drip != '':
 		shaded_form = PercentShadedForm()
-		if request.method == 'POST' and 'btn_submit' in request.POST:
-			shaded_form = PercentShadedForm(request.POST)
-			if shaded_form.is_valid():
-				shaded_form.save()
+
 	form = WAISSystemsForm(request.POST or None)
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		farm = Farm.objects.get(id=farm)
@@ -159,6 +156,13 @@ def new_system(request):
 				if key == "drip":
 					waiss.drip = Drip.objects.get(id=drip)
 		waiss.save()
+
+		shaded_form = PercentShadedForm(request.POST)
+		if shaded_form.is_valid():
+			instance = shaded_form.save(commit=False)
+			instance.fieldunit = FieldUnit.objects.get(id=fieldunit)
+			instance.date = date_transplanted
+			instance.save()
 		return redirect('/dashboard/')
 
 	ses_farm = "" #blank sessions .text
