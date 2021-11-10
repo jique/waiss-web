@@ -324,8 +324,6 @@ def index(request):
 	crop_dat = 0
 	mc_ave_collection = []
 	Fn_collection = []
-	T_collection = []
-	Q_collection = []
 	drz = ""
 	mci_1 = ""
 	mci_2 = ""
@@ -424,24 +422,18 @@ def index(request):
 				if ea == 50:
 					R = 3.2
 
-				def calculateQ(x):
-					inflow_time = ((net_application_depth * basin_length)/(600.0*ea*unit_discharge))
-					net_opportunity_time = ((net_application_depth - cons_c)/cons_a)**(1.0/cons_b)
-					advanced_time = (net_opportunity_time * R)
-					
-					if inflow_time >= advanced_time:
-						irrigation_period = (inflow_time)
-					else:
-						irrigation_period = (advanced_time)
-					total_volume = irrigation_period * unit_discharge*60*1000
-				return irrigation_period, total_volume
+				inflow_time = ((net_application_depth * basin_length)/(600.0*ea*unit_discharge))
+				net_opportunity_time = ((net_application_depth - cons_c)/cons_a)**(1.0/cons_b)
+				advanced_time = (net_opportunity_time * R)
+				
+				print(inflow_time, advanced_time)
+				if inflow_time >= advanced_time:
+					irrigation_period = (inflow_time)
+				else:
+					irrigation_period = (advanced_time)
+				
+				total_volume = irrigation_period * unit_discharge*60*1000
 
-				for x in Fn_collection:
-					T_collection.append(calculateQ(x).irrigation_period)
-					Q_collection.append(calculateQ(x).total_volume)
-					
-				irrigation_period = calculateQ(x).irrigation_period
-				total_volume = calculateQ(x).total_volume
 		#FURROW
 		if furrow != None:
 			slope = float(furrow.area_slope)

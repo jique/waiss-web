@@ -21,7 +21,7 @@
         {% if system.border is None %}
         {{system.border|default_if_none:"-"}}
         {% else %}
-        <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_border' system.border.id %}>{{system.border|default_if_none:"-"}}</button>
+        <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_border' system.border.id %}">{{system.border}}</button>
         {% endif %}
     </td>
     <td class="align-middle">
