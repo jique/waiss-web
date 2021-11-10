@@ -511,11 +511,13 @@ def new_fieldunit(request):
 		form = FieldUnitForm()
 		selected_fieldunit = ""
 		selected_fieldunit_text = '--choose--'
+		number = ""
 	else:
 		fieldunit_name = FieldUnit.objects.get(id=fieldunit_name)
 		form = FieldUnitForm(instance=fieldunit_name)
 		selected_fieldunit = fieldunit_name
 		selected_fieldunit_text = fieldunit_name
+		number = fieldunit_name.number
 	
 	if request.method == 'POST' and 'loadData' in request.POST:
 		pk=request.POST.get('loadData')
@@ -523,6 +525,7 @@ def new_fieldunit(request):
 		form = FieldUnitForm(instance=id)
 		selected_fieldunit = id
 		selected_fieldunit_text = id
+		number = id.number
 
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = FieldUnitForm(request.POST)
@@ -548,6 +551,7 @@ def new_fieldunit(request):
 		"fieldunit_list": fieldunit_list,
 		"selected_fieldunit": selected_fieldunit,
 		"selected_fieldunit_text": selected_fieldunit_text,
+		"number": number
 	}
 
 	return render(request, 'waissapp/new_fieldunit.html', context)
