@@ -4,7 +4,8 @@
     <td class="align-middle">{{forloop.counter}}</td>
     <td class="align-middle">{{rainfall.fieldunit}}</td>
     <td class="align-middle">{{rainfall.amount}}</td>
-    <td class="align-middle">{{rainfall.timestamp}}</td>
+    <td class="align-middle">{{rainfall.date}}</td>
+    <td class="align-middle">{{rainfall.time}}</td>
     <td class="min">
       <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_rainfall' rainfall.id %}"><i class="fas fa-edit"></i></button>
       <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ rainfall.id }}"><i class="fas fa-trash"></i></button>
