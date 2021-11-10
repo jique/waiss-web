@@ -86,7 +86,7 @@ def index(request):
 
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
 		p_t = p.time.strftime("%H:%M")
-		p_time = p.t
+		p_time = p_t
 		p_date = p.date
 		p_amount = (p.amount)
 		j = len(rainfall_collection)
