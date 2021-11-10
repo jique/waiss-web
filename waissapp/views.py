@@ -1548,7 +1548,7 @@ def add_mc(request):
 @login_required
 def upload_csv(request):
 	prompt = {
-		'order': 'order: sensor_name, timestamp (format: yyyy-mm-d h:m:ss), value'
+		'order': 'order: sensor_name, date (format: yyyy-mm-d), time(format: h:m:ss), value'
 	}
 	if request.method == "GET":
 		return render(request, 'waissapp/upload_csv.html', prompt)
@@ -1564,8 +1564,9 @@ def upload_csv(request):
 	for column in csv.reader(io_string, delimiter=","):
 		_, created = MoistureContent.objects.update_or_create(
 			sensor= Sensor.objects.get(name=(column[0])), # returns error: expecting id but return is sensor_name if Sensor.objects.get(name="") is removed; needed for foreignkeys
-			timestamp=column[1],
-			mc_data=column[2],
+			date=column[1],
+			time=column[2],
+			mc_data=column[3],
 		)
 		return redirect('/dashboard/')
 	context ={}
