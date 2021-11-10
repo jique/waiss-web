@@ -85,7 +85,9 @@ def index(request):
 	rainfall_collection = []
 
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
-		p_t = p.time.strftime("%H:%M")
+		dt = p.time
+		p_t = dt.Date.AddHours(dt.Hour).AddMinutes(dt.Minute)
+		print(p_t)
 		p_time = p_t
 		p_date = p.date
 		p_amount = (p.amount)
