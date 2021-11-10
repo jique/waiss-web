@@ -1568,7 +1568,7 @@ def upload_csv(request):
 			time=column[2],
 			mc_data=column[3],
 		)
-		return redirect('/dashboard/')
+	return redirect('/dashboard/')
 	context ={}
 
 	return render (request, 'waissapp/upload_csv.html', context)
