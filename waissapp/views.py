@@ -517,7 +517,7 @@ def new_fieldunit(request):
 		form = FieldUnitForm(instance=fieldunit_name)
 		selected_fieldunit = fieldunit_name
 		selected_fieldunit_text = fieldunit_name
-		number = fieldunit_name.number
+		number = str(fieldunit_name.number)[3:]
 	
 	if request.method == 'POST' and 'loadData' in request.POST:
 		pk=request.POST.get('loadData')
@@ -525,7 +525,7 @@ def new_fieldunit(request):
 		form = FieldUnitForm(instance=id)
 		selected_fieldunit = id
 		selected_fieldunit_text = id
-		number = id.number
+		number = str(id.number)[3:]
 
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		form = FieldUnitForm(request.POST)
