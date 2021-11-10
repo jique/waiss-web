@@ -176,18 +176,20 @@
                   {% endfor %}
                 </select>
                 {% elif drip_ses %}
-                <label class="mb-0 small">Drip*</label>
-                <select class="select form-control custom-select" name="drip" id="id_drip">
-                  {% if drip_ses %}
-                  <option value="{{drip_ses}}">{{ses_drip}}</option>
-                  {% else %}
-                  <option value="">----------</option>
-                  {% endif %}
-                  {% for f in drip_list %}
-                  <option value="{{f.id}}">{{f.name}}</option>
-                  {% endfor %}
-                </select>
-                {{shaded_form|crispy}}
+                <div class="col">
+                  <label class="mb-0 small">Drip*</label>
+                  <select class="select form-control custom-select" name="drip" id="id_drip">
+                    {% if drip_ses %}
+                    <option value="{{drip_ses}}">{{ses_drip}}</option>
+                    {% else %}
+                    <option value="">----------</option>
+                    {% endif %}
+                    {% for f in drip_list %}
+                    <option value="{{f.id}}">{{f.name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col">{{shaded_form.area_shaded|as_crispy_field}}</div>
                 {% endif %}
               </div>
             </div>
