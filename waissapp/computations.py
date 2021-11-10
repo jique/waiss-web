@@ -523,7 +523,7 @@ def index(request):
 			net_application_depth = net_application_depth * Pw
 			gross_application_depth = net_application_depth*transpiration_ratio/eu
 			print(Pd, Etcrop, bln_ii, transpiration_ratio )
-			if bln_ii == True:
+			if bln_ii == yes:
 				irrigation_interval = float(drip.irrigation_interval)
 			else:
 				Td = Etcrop*(Pd + 0.15*(1 - Pd))
