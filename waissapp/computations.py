@@ -529,11 +529,9 @@ def index(request):
 			total_volume = gross_volume_per_plant
 			intake_family = None
 		# No Irrigation Data #
-		no_irrigation = None
 		if furrow == None and basin == None and border == None and drip==None and sprinkler==None:
 			farm = selected_system.farm
-			farm_area = farm.farm_area
-			no_irrigation = True
+			farm_area = float(farm.farm_area)
 			total_volume = net_application_depth * farm_area * float(0.20) #[Assumption]
 		
 	#FOR DISPLAY
