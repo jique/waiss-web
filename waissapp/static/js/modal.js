@@ -363,6 +363,7 @@ $(document).ready(function(){
 				if(data.form_is_valid){
 					$('.mc-table tbody').html(data.list_mc);
 					$('.modal').modal('hide');
+					location.reload();
 				} else {
 					$('#modal-mc .modal-content').html(data.html_form)
 				}
@@ -648,6 +649,7 @@ $(document).ready(function(){
 				if(data.form_is_valid){
 					$('.gravi-table tbody').html(data.list_gravi);
 					$('.modal').modal('hide');
+					location.reload();
 				} else {
 					$('#modal-gravi .modal-content').html(data.html_form)
 				}
