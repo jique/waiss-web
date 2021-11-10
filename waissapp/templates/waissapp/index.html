@@ -529,7 +529,7 @@
       text: 'Soil Moisture Content'
   },
   xAxis: {
-      categories: [{% for t in mc_time_1 %}"{{t.timestamp|date:'m-d H:i'}}",{% endfor %}],
+      categories: [{% for t in mc_time_1 %}"{{t.date|date:'m:d'}} {{t.time|time:'H:i'}}",{% endfor %}],
       tickmarkPlacement: 'on',
       title: {
           enabled: false

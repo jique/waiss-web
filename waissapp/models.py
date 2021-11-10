@@ -470,7 +470,7 @@ class Gravimetric(models.Model):
     mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="MCv (%)", null=True)
     note = models.CharField(max_length=100, verbose_name="Remarks", null=True, blank=True)
     class Meta:
-        verbose_name_plural = "Rainfall"
+        verbose_name_plural = "Gravimetric MCv(%)"
         get_latest_by = "date"
 class PercentShaded(models.Model):
     fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True)
