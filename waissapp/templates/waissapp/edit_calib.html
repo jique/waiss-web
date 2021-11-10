@@ -9,70 +9,33 @@
 	</div>
 	<div class="modal-body">
         {{form.name|as_crispy_field}}
-        {{form.calib_equation|as_crispy_field}}
-        <div class="collapse" id="collapse_calib_1">
-            <div class="row">
-                <div class="col"><small><b>MC<sub>v</sub> = a * (reading) + b</b></small></div>
-            </div>
-            <div class="row">
-                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
-            </div>
-        </div>
-        <div class="collapse" id="collapse_calib_2">
-            <div class="row">
-                <div class="col"><small><b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></small></div>
-            </div>
-            <div class="row">
-                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_c|as_crispy_field}}</div>
-            </div>
-        </div>
-        <div class="collapse" id="collapse_calib_3">
-            <div class="row">
-                <div class="col"><small><b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></small></div>
-            </div>
-            <div class="row">
-                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
-            </div>
-        </div>
-        <div class="collapse" id="collapse_calib_4">
-            <div class="row">
-                <div class="col"><small><b>MC<sub>v</sub> = a * ln(reading) + b</b></small></div>
-            </div>
-            <div class="row">
-                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
-            </div>
-        </div>
-        <div class="collapse" id="collapse_calib_5">
-            <div class="row">
-                <div class="col"><small><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></small></div>
-            </div>
-            <div class="row">
-                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_c|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_d|as_crispy_field}}</div>
-            </div>
-        </div>
-        <div class="collapse" id="collapse_calib_6">
-            <div class="row">
-                <div class="col"><small><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></small></div>
-            </div>
-            <div class="row">
-                <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_c|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_d|as_crispy_field}}</div>
-                <div class="col-md">{{form.coeff_m|as_crispy_field}}</div>
+        <div class="row">
+            <div class="col-md">
+                <select name="calib_equation" class="select form-control custom-select" required id="id_calib_equation" onchange="test()">
+                    <option value="{{select_value}}">{{select_value}}</option>
+                    <option value="">----------</option>
+                    <option value="linear">Linear</option>
+                    <option value="quadratic">Quadratic</option>
+                    <option value="exponential">Exponential</option>
+                    <option value="logarithmic">Logarithmic</option>
+                    <option value="symmetrical sigmoidal">Symmetrical Sigmoidal</option>
+                    <option value="asymmetrical sigmoidal">Asymmetrical Sigmoidal</option>
+                </select>
             </div>
         </div>
         <div class="row">
-            <div class="col">{{form.date_tested|as_crispy_field}}</div>
-            <div class="col">{{form.tested_by|as_crispy_field}}</div>
+            <div class="col-md"><span id="eqn_form"></span></div>
+        </div>
+        <div class="row">
+            <div class="col-md">{{form.coeff_a|as_crispy_field}}</div>
+            <div class="col-md">{{form.coeff_b|as_crispy_field}}</div>
+            <div class="col-md">{{form.coeff_c|as_crispy_field}}</div>
+            <div class="col-md">{{form.coeff_d|as_crispy_field}}</div>
+            <div class="col-md">{{form.coeff_m|as_crispy_field}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md">{{form.date_tested|as_crispy_field}}</div>
+            <div class="col-md">{{form.tested_by|as_crispy_field}}</div>
         </div>
 	</div>
     <div class="modal-footer">
@@ -80,3 +43,36 @@
         <button type="submit" class="btn btn-info">Save Changes</button>
     </div>
 </form>
+<script src="{% static 'js/showHide.js' %}"></script>
+<script>
+    function test() {
+        var eqn_form = document.getElementById('id_calib_equation');
+        var coeff_c = document.getElementById('id_coeff_c');
+        var coeff_d = document.getElementById('id_coeff_d');
+        var coeff_m = document.getElementById('id_coeff_m');
+
+        if (eqn_form.value == "linear" || eqn_form.value == "logarithmic" || eqn_form.value == "exponential") {
+            coeff_c.disabled = true;
+            coeff_d.disabled = true;
+            coeff_m.disabled = true;
+            coeff_c.value = '';
+            coeff_d.value = '';
+            coeff_m.value = '';
+        } else if (eqn_form.value == "quadratic") {
+            coeff_c.disabled = false;
+            coeff_d.disabled = true;
+            coeff_m.disabled = true;
+            coeff_d.value = '';
+            coeff_m.value = '';
+        } else if (eqn_form.value == "symmetrical sigmoidal") {
+            coeff_c.disabled = false;
+            coeff_d.disabled = false;
+            coeff_m.disabled = true;
+            coeff_m.value = '';
+        } else if (eqn_form.value == "asymmetrical sigmoidal") {
+            coeff_c.disabled = false;
+            coeff_d.disabled = false;
+            coeff_m.disabled = false;
+        }
+    }
+</script>
