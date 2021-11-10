@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from .models import Personnel, Farm, FieldUnit, Sensor, Soil, Crop, CalibrationConstant, WAISSystems, Basin, Furrow, Border, Drip, Sprinkler
-from .forms import WAISSystemsForm
+from .forms import PercentShadedForm, WAISSystemsForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.template.loader import render_to_string
@@ -120,6 +120,12 @@ def new_system(request):
 	drip = request.POST.get('drip')
 	date_transplanted = request.POST.get('date_transplanted')
 
+	if drip != '':
+		shaded_form = PercentShadedForm()
+		if request.method == 'POST' and 'btn_submit' in request.POST:
+			shaded_form = PercentShadedForm(request.POST)
+			if shaded_form.is_valid():
+				shaded_form.save()
 	form = WAISSystemsForm(request.POST or None)
 	if request.method == 'POST' and 'btn_submit' in request.POST:  # data sent by user
 		farm = Farm.objects.get(id=farm)
@@ -207,6 +213,7 @@ def new_system(request):
 		sensor_obj.delete()
 		return redirect('/new_system/')
 
+
 	context = {
 		"form": form,
 		"basin_ses": basin_ses,
@@ -245,5 +252,6 @@ def new_system(request):
 		"sensors_list": sensors_list,
 		"excess": excess,
 		"no_irrigation": no_irrigation,
+		"shaded_form": shaded_form,
 	}
 	return render(request, 'waissapp/new_system.html', context)
