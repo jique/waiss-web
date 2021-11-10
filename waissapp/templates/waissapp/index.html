@@ -305,7 +305,7 @@
               </nav>
             </div>
           </div>
-          <div class="row">
+          <div class="row mt-2">
             <!--Crop Card -->
             <div class="col-xl col-md-6 mb-4">
               <div class="card border-left-primary shadow">
@@ -529,7 +529,7 @@
       text: 'Soil Moisture Content'
   },
   xAxis: {
-      categories: [{% for t in mc_time_1 %}"{{t.date|date:'m:d'}} {{t.time|time:'H:i'}}",{% endfor %}],
+      categories: [{% for t in mc_time_1 %}"{{t.date|date:'m/d'}} {{t.time|time:'H:i'}}",{% endfor %}],
       tickmarkPlacement: 'on',
       title: {
           enabled: false

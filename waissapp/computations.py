@@ -319,7 +319,7 @@ def index(request):
 	if sprinkler != None:
 		irrigation_q = sprinkler.discharge
 	if drip != None:
-		irrigation_q = drip.discharge
+		irrigation_q = drip.ave_discharge
 
 	ea = ""
 	crop_dat = 0
