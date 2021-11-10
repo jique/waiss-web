@@ -55,3 +55,35 @@
 		<button type="submit" class="btn btn-info">Create</button>
 	</div>
 </form>
+<script>
+    function test() {
+        var eqn_form = document.getElementById('id_calib_equation');
+        var coeff_c = document.getElementById('id_coeff_c');
+        var coeff_d = document.getElementById('id_coeff_d');
+        var coeff_m = document.getElementById('id_coeff_m');
+
+        if (eqn_form.value == "linear" || eqn_form.value == "logarithmic" || eqn_form.value == "exponential") {
+            coeff_c.disabled = true;
+            coeff_d.disabled = true;
+            coeff_m.disabled = true;
+            coeff_c.value = '';
+            coeff_d.value = '';
+            coeff_m.value = '';
+        } else if (eqn_form.value == "quadratic") {
+            coeff_c.disabled = false;
+            coeff_d.disabled = true;
+            coeff_m.disabled = true;
+            coeff_d.value = '';
+            coeff_m.value = '';
+        } else if (eqn_form.value == "symmetrical sigmoidal") {
+            coeff_c.disabled = false;
+            coeff_d.disabled = false;
+            coeff_m.disabled = true;
+            coeff_m.value = '';
+        } else if (eqn_form.value == "asymmetrical sigmoidal") {
+            coeff_c.disabled = false;
+            coeff_d.disabled = false;
+            coeff_m.disabled = false;
+        }
+    }
+</script>
