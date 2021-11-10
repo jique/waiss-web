@@ -194,7 +194,7 @@
                     <form class="form-group" method="post">
                       {% csrf_token %}
                       {{shaded_form.area_shaded|as_crispy_field}}
-                      <input type="submit" class="hidden" name="btn_submit">
+                      <input type="hidden" name="btn_submit">
                     </form>
                   </div>
                 </div>
