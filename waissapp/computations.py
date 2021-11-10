@@ -333,7 +333,7 @@ def index(request):
 
 	if len(mc_1) > 0: # getting date from data of sensor 1
 		for mc_obj in mc_1_sorted:
-			mc_date = mc_obj.date.date()
+			mc_date = mc_obj.date
 			crop_dat = ((mc_date - crop_transplanted).days)
 			drz_collection.append(calculateDRZ(crop_dat))
 
