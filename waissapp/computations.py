@@ -85,15 +85,12 @@ def index(request):
 	rainfall_collection = []
 
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
-		dt = p.time
-		p_t = dt.Date.AddHours(dt.Hour).AddMinutes(dt.Minute)
-		print(p_t)
-		p_time = p_t
+		p_time = p.time
 		p_date = p.date
 		p_amount = (p.amount)
 		j = len(rainfall_collection)
 		for i, m in enumerate(mc_list, start=1):
-			m_time = m.time
+			m_time = m.time.strf("%H:%M")
 			m_date = m.date
 			if p_time == m_time and p_date == m_date:
 				z = i-j-1
