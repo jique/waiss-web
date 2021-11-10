@@ -176,29 +176,17 @@
                   {% endfor %}
                 </select>
                 {% elif drip_ses %}
-                <div class="row">
-                  <div class="col">
-                    <label class="mb-0 small">Drip*</label>
-                    <select class="select form-control custom-select" name="drip" id="id_drip">
-                      {% if drip_ses %}
-                      <option value="{{drip_ses}}">{{ses_drip}}</option>
-                      {% else %}
-                      <option value="">----------</option>
-                      {% endif %}
-                      {% for f in drip_list %}
-                      <option value="{{f.id}}">{{f.name}}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                  <div class="col">
-                    <form class="form-group" method="post">
-                      {% csrf_token %}
-                      {{shaded_form.area_shaded|as_crispy_field}}
-                      {{shaded_form.error}}
-                      <input type="hidden" name="btn_submit">
-                    </form>
-                  </div>
-                </div>
+                <label class="mb-0 small">Drip*</label>
+                <select class="select form-control custom-select" name="drip" id="id_drip">
+                  {% if drip_ses %}
+                  <option value="{{drip_ses}}">{{ses_drip}}</option>
+                  {% else %}
+                  <option value="">----------</option>
+                  {% endif %}
+                  {% for f in drip_list %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                </select>
                 {% endif %}
               </div>
             </div>
@@ -209,7 +197,7 @@
             </div>
           </form>
         </div> <!--col-->
-      {% if excess or no_irrigation %}
+      {% if excess or no_irrigation or drip_ses%}
       <div class="col-md-4">
         <small class="text-danger"><b>Warnings/Errors!</b></small><hr>
         <div class="card shadow mb-4">

@@ -314,9 +314,9 @@
                     <div class="col">
                       <div class="mb-0 font-weight-bold text-gray-800">{{crop}}</div>
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Crop</div>
-                      <small>{{crop_dat}} / {{crop_growingperiod}} days<br> <!--crop_dat based on latest mc_reading-->
-                        MAD: {{crop_mad}}%
-                        {% if drip %}| Area Shaded: {{area_shaded}} %{% endif%}
+                      <small>{{crop_dat}} / {{crop_growingperiod}} days {% if drip %}| MAD: {{crop_mad}}%{% endif%}<br> <!--crop_dat based on latest mc_reading-->
+                        {% if Not drip %}MAD: {{crop_mad}}%{% endif%}
+                        {% if drip %}Area Shaded: {{area_shaded}} %  <button class="btn btn-sm show-form" data-url="{% url 'waiss:add_shaded' %}">Update Area Shaded</button>{% endif%}
                       </small>
                     </div>
                   </div>

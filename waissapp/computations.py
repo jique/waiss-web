@@ -496,9 +496,8 @@ def index(request):
 		#DRIP
 		if drip != None:
 			area_shaded = len(PercentShaded.objects.filter(fieldunit=fieldunit))
-			print(area_shaded)
 			if area_shaded == 0:
-				area_shaded = float(20)
+				area_shaded = float(10)
 			else:
 				area_shaded = PercentShaded.objects.filter(fieldunit=fieldunit).latest().area_shaded
 			q = float(drip.ave_discharge)

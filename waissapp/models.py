@@ -473,9 +473,9 @@ class Gravimetric(models.Model):
         verbose_name_plural = "Gravimetric MCv(%)"
         get_latest_by = "date"
 class PercentShaded(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True, blank=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True)
     area_shaded =  models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area Shaded (%)", null=True)
-    date =  models.DateField(verbose_name="Date", null=True, blank=True)
+    date =  models.DateField(verbose_name="Date", null=True)
     class Meta:
         verbose_name_plural = "Percent Area Shaded"
         get_latest_by = "date"

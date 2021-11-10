@@ -256,6 +256,5 @@ def new_system(request):
 		"sensors_list": sensors_list,
 		"excess": excess,
 		"no_irrigation": no_irrigation,
-		"shaded_form": shaded_form,
 	}
 	return render(request, 'waissapp/new_system.html', context)
