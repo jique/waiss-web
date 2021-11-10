@@ -648,8 +648,8 @@ $(document).ready(function(){
 			success: function(data){
 				if(data.form_is_valid){
 					$('.gravi-table tbody').html(data.list_gravi);
-					$('.modal').modal('hide');
 					window.location.reload(true);
+					$('.modal').modal('hide');
 				} else {
 					$('#modal-gravi .modal-content').html(data.html_form)
 				}

@@ -5,9 +5,7 @@ from operator import attrgetter
 import math
 from django.contrib.auth.decorators import login_required
 import datetime
-from datetime import datetime
 import pytz
-import datetime as dt
 import operator
 
 @login_required
@@ -50,8 +48,6 @@ def index(request):
 	sensor_2 = None #for single sensor fieldunit
 	sensor_3 = None
 	
-	#mytime = dt.datetime.strptime('0130','%H%M').time()
-	#mydatetime = dt.datetime.combine(dt.date.today(), mytime)
 	error_msg_no_sensor_data = ""
 	error_msg_excess_sensor_data = ""
 
@@ -88,7 +84,7 @@ def index(request):
 	rainfall_collection = []
 
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
-		p_time = p.time
+		p_time = p.time.strftime("%H:%M")
 		p_date = p.date
 		p_amount = (p.amount)
 		j = len(rainfall_collection)
