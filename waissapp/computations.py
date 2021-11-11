@@ -93,29 +93,29 @@ def index(request):
 		for p in mc_1_sorted:
 			p_time = p.time
 			p_date = p.date
-			p_amount = p.amount
+			p_amount = p.mc_data
 			for m in mc_2_sorted:
 				m_time = m.time
 				m_date = m.date
-				m_amount = m.amount
+				m_amount = m.mc_data
 				if p_time == m_time and p_date == m_date:
 					mc_collection_1.append(p_amount)
 					mc_collection_2.append(m_amount)
 					break
 		mc_list = mc_collection_1
 	if num_sensors == 3:
-		for p in list(mc_1_sorted):
+		for p in mc_1_sorted:
 			p_time = p.time
 			p_date = p.date
-			p_amount = p.amount
+			p_amount = p.mc_data
 			for m in mc_2_sorted:
 				m_time = m.time
 				m_date = m.date
-				m_amount = m.amount
+				m_amount = m.mc_data
 				for s in mc_3_sorted:
 					s_time = s.time
 					s_date = s.date
-					s_amount = s.amount
+					s_amount = s.mc_data
 					if p_time == m_time == s_time and p_date == m_date == s_date:
 						mc_collection_1.append(p_amount)
 						mc_collection_2.append(m_amount)
