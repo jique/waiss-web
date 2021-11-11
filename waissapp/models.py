@@ -22,6 +22,10 @@ class PositiveDecimalField(DecimalField):
     @cached_property
     def validators(self):
         return super().validators + [validate_positive]
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.validators.append(validate_positive)
 
 class Farm(models.Model):
     name = models.CharField(max_length=50, unique="True", verbose_name="Farm Name")
