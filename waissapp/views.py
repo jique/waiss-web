@@ -201,10 +201,7 @@ def edit_calib(request, id):
 		form = CalibForm(request.POST, instance=calib)
 	else:
 		form = CalibForm(instance=calib)
-	context = {
-		'form': form,
-	}
-	return save_all_calib(request, 'waissapp/edit_calib.html', context)
+	return save_all_calib(request, form, 'waissapp/edit_calib.html')
 #END#CALIB_PARAMETERS
 
 #CROP_PARAMETERS
