@@ -93,15 +93,12 @@ def index(request):
 
 	if num_sensors == 1:
 		for p in mc_1_sorted:
-			p_time = p.time
-			p_date = p.date
-			p_amount = p.mc_data
-			mc_raw_1.append(p_amount)
-			mc_list_date.append(p_date)
+			mc_raw_1.append(p.mc_data)
+			mc_list_date.append(p.date)
 		mc_list = mc_raw_1
 	if num_sensors == 2:
 		for p, m in zip(mc_1_sorted, mc_2_sorted):
-			if p.time == m.time and p.date == m.date:
+			if p.date == m.date and p.time == m.time:
 				mc_raw_1.append(p.mc_data)
 				mc_raw_2.append(m.mc_data)
 				mc_list_date.append(p.date)
@@ -109,7 +106,7 @@ def index(request):
 		mc_list = mc_raw_1
 	if num_sensors == 3:
 		for p, m, s in zip(mc_1_sorted, mc_2_sorted, mc_3_sorted):
-			if p.time == m.time == s.time and p.date == m.date == s.date:
+			if p.date == m.date == s.date and p.time == m.time == s.time:
 				mc_raw_1.append(p.mc_data)
 				mc_raw_2.append(m.mc_data)
 				mc_raw_3.append(s.mc_data)
