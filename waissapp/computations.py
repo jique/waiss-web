@@ -104,7 +104,7 @@ def index(request):
 					break
 		mc_list = mc_collection_1
 	if num_sensors == 3:
-		for p in mc_1_sorted:
+		for p in list(mc_1_sorted):
 			p_time = p.time
 			p_date = p.date
 			p_amount = p.amount
@@ -122,7 +122,7 @@ def index(request):
 						mc_collection_3.append(s_amount)
 						break	
 		mc_list = mc_collection_1
-					
+
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
 		p_time = p.time
 		p_date = p.date
