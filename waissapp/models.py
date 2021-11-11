@@ -25,7 +25,7 @@ class PositiveDecimalField(DecimalField):
 
 class Farm(models.Model):
     name = models.CharField(max_length=50, unique="True", verbose_name="Farm Name")
-    farm_area = models.PositiveDecimalField(max_digits=20, decimal_places=2, verbose_name="Farm Area (sq. m)", null=True, validators=[MinValueValidator(Decimal('0.01'))])
+    farm_area = PositiveDecimalField(max_digits=20, decimal_places=2, verbose_name="Farm Area (sq. m)", null=True, validators=[MinValueValidator(Decimal('0.01'))])
     province = models.CharField(max_length=50, null="True")
     municipality = models.CharField(max_length=50, null="True")
     brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True")
