@@ -46,10 +46,17 @@
                     {{ fieldunit_form.name|as_crispy_field }}
                     <div class="row">
                         <div class="col-md">{{ fieldunit_form.usk|as_crispy_field}}</div>
-                        <div class="col-md">
-                            <label class="mb-0 small">Mobile Number (+63)*</label>
-                            <input type="tel" id="id_number" name="number" class="form-control textinput textInput" onkeypress="return isNumber(event)" value="{{number}}">
-                            <b><span class="small text-danger" id="error_number"></span></b>
+                        <div class="row">
+                            <div class="col-md">
+                              <label class="mb-0 small">Mobile Number (+63)*</label>
+                              <div class="row">
+                                <div class="col-1 pt-2"><p>+63</p></div>
+                                <div class="col">
+                                  <input type="tel" id="id_number" name="number" class="form-control textinput textInput" onkeypress="return isNumber(event)">
+                                  <b><span class="small text-danger" id="error_number"></span></b>
+                                </div>
+                              </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
