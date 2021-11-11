@@ -203,6 +203,7 @@ def new_system(request):
 	if drip_ses != None:
 		ses_drip = Drip.objects.get(id=drip_ses)
 
+	initial_name = str(ses_farm) + ":" + str(ses_fieldunit)
 	#to delete and check excess sensors
 	fieldunit = FieldUnit.objects.filter(id=fieldunit_ses) 
 	sensors_list = Sensor.objects.filter(fieldunit__in=fieldunit)
@@ -261,6 +262,7 @@ def new_system(request):
 		"sensors_list": sensors_list,
 		"excess": excess,
 		"no_irrigation": no_irrigation,
-		"error_no_sensor": error_no_sensor
+		"error_no_sensor": error_no_sensor,
+		"initial_name": initial_name
 	}
 	return render(request, 'waissapp/new_system.html', context)

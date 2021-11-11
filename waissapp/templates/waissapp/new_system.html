@@ -30,7 +30,12 @@
             <small><b>Fields with asterisks (*) are required.</b></small>
             <hr>
             <div class="row">
-                <div class="col">{{form.name|as_crispy_field }}</div>
+              <div class="col">
+                  <div id="div_id_name" class="form-group">
+                    <label for="id_name" class="small requiredField">Name<span class="asteriskField">*</span></label>
+                    <div class=""><input type="text" name="name" maxlength="50" class="textinput textInput form-control" required id="id_name">{{initial_name}}</div>
+                  </div>
+              </div>
             </div>
             <div class="row">
               <div class="col">{{form.date_transplanted|as_crispy_field }}</div>
