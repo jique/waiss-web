@@ -48,6 +48,7 @@
               <div class="col-md">{{personnel_form.last_name|as_crispy_field}}</div>
             </div>
             <div class="row">
+              <div class="col-md-1"><label>+63</label></div>
               <div class="col-md">
                 <label class="mb-0 small">Mobile Number (+63)*</label>
                 <input type="tel" id="id_number" name="number" class="form-control textinput textInput" onkeypress="return isNumber(event)">
@@ -88,7 +89,7 @@
     num_str = String(number.value)
     num_first = num_str.charAt(0);
     num_second = num_str.substring(0, 2);
-    if (num_second == '63' && number.value.length != 12) {
+    if (num_second == '63') {
       number.focus();
       error_number.innerText = "Make sure to input a valid number.";
       return false;
