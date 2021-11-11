@@ -197,6 +197,7 @@ def list_calib(request):
 @login_required
 def edit_calib(request, id):
 	calib = get_object_or_404(CalibrationConstant,id=id)
+	calib_eqn = ""
 	if request.method == 'POST':  # data sent by user
 		form = CalibForm(request.POST, instance=calib)
 		calib_eqn = calib.calib_equation
