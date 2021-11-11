@@ -483,9 +483,9 @@
             accessToken: 'pk.eyJ1IjoiamFxbG8iLCJhIjoiY2t2cTVsaHlrNGVudDJ1bnljN3I5ZXRvaCJ9.gq4iSHiGefSJ8qLTwoxtBw'
         }).addTo(mymap);
 
-        var lat_list = {{lat_list}};
-        var long_list = {{long_list}};
-        var f_list = {{f_list|safe}};
+        var lat_list = "{{lat_list}}";
+        var long_list = "{{long_list}}";
+        var f_list = "{{f_list|safe}}";
         for (var i=0; i < lat_list.length; i++) {
             var lat_i = lat_list[i];
             var lng_i = long_list[i];
