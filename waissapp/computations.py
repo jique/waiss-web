@@ -100,7 +100,7 @@ def index(request):
 			mc_list_date.append(p_date)
 		mc_list = mc_raw_1
 	if num_sensors == 2:
-		for p, m in zip(mc_1_sorted, mc_2_sorted):
+		for (p, m) in zip(mc_1_sorted, mc_2_sorted):
 			if p.time == m.time and p.date == m.date:
 				mc_raw_1.append(p.amount)
 				mc_raw_2.append(m.amount)
@@ -108,7 +108,7 @@ def index(request):
 				break
 		mc_list = mc_raw_1
 	if num_sensors == 3:
-		for p, m, s in zip(mc_1_sorted, mc_2_sorted, mc_3_sorted):
+		for (p, m, s) in zip(mc_1_sorted, mc_2_sorted, mc_3_sorted):
 			if p.time == m.time == s.time and p.date == m.date == s.time:
 				mc_raw_1.append(p.amount)
 				mc_raw_2.append(m.amount)
@@ -362,8 +362,7 @@ def index(request):
 	area_shaded = 0
 
 	if len(mc_1) > 0: # getting date from data of sensor 1
-		for mc_obj in mc_list_date:
-			mc_date = mc_obj
+		for mc_date in mc_list_date:
 			crop_dat = ((mc_date - crop_transplanted).days)
 			drz_collection.append(calculateDRZ(crop_dat))
 
