@@ -205,33 +205,33 @@ def index(request):
 
 	if num_sensors == 1: #Calculating MCv(%) from raw data using the calibration constants
 		for mc_obj in mc_list:
-			mc_value = float(mc_obj)
+			mc_value = float(mc_obj.mc_data)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
 		mci_1 = calculateMC(mci_1)
 	if num_sensors == 2:
 		for mc_obj in mc_list:
-			mc_value = float(mc_obj)
+			mc_value = float(mc_obj.mc_data)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
 		for mc_obj in mc_list:
-			mc_value = float(mc_obj)
+			mc_value = float(mc_obj.mc_data)
 			mc_collection_2.append(calculateMC(mc_value))
 		mci_1 = calculateMC(mci_1)
 		mci_2 = calculateMC(mci_2)
 	if num_sensors ==3:
 		for mc_obj in mc_list:
-			mc_value = float(mc_obj)
+			mc_value = float(mc_obj.mc_data)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
 		for mc_obj in mc_list:
-			mc_value = float(mc_obj)
+			mc_value = float(mc_obj.mc_data)
 			mc_collection_2.append(calculateMC(mc_value))
 		for mc_obj in mc_list:
-			mc_value = float(mc_obj)
+			mc_value = float(mc_obj.mc_data)
 			mc_collection_3.append(calculateMC(mc_value))
 		mci_1 = calculateMC(mci_1)
 		mci_2 = calculateMC(mci_2)
