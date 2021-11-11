@@ -647,9 +647,9 @@ def new_sensor(request):
 			for form in formset:
 				data = {
 					'name': form.cleaned_data.get('name'),
-					'fieldunit': form.cleaned_data.get('fieldunit'),
 				}
 				sensors, created = Sensor.objects.get_or_create(**data)
+				sensors.fieldunit= form.cleaned_data.get('fieldunit')
 				sensors.depth = form.cleaned_data.get('depth')
 				sensors.save()
 			sensors_list = Sensor.objects.filter(fieldunit__in=fieldunit)

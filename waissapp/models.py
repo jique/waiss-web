@@ -63,7 +63,7 @@ class FieldUnit(models.Model):
         ordering = ('name',)
 
 class Sensor(models.Model):
-    name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True)
+    name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True, unique=True)
     fieldunit = models.ForeignKey (FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True, blank=True)
     depth = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Depth, m", null=True)
 
@@ -78,7 +78,7 @@ class MoistureContent(models.Model):
     sensor = models.ForeignKey(Sensor, on_delete=models.SET_NULL, null=True)
     time = models.TimeField(verbose_name='Time Measured', null=True)
     date = models.DateField(verbose_name='Date Measured', null=True)
-    mc_data = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Analog Reading", null=True)
+    mc_data = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Analog Reading", null=True, validators=[MinValueValidator(Decimal('0.01'))])
 
     class Meta:
         verbose_name_plural = "9. Moisture Content"
@@ -184,9 +184,9 @@ class CalibrationConstant(models.Model):
 class Crop(models.Model):
     crop = models.CharField(max_length=100, unique=True, null=True, verbose_name="Crop")
     growingperiod = models.PositiveIntegerField(verbose_name="Growing Period, days", null=True, validators=[MinValueValidator(30)])
-    root_ini = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True)
-    drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True)
-    mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True)
+    root_ini = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True, validators=[MinValueValidator(Decimal('0.01'))])
+    drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True, validators=[MinValueValidator(Decimal('0.01'))])
+    mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True, validators=[MinValueValidator(Decimal('0.01'))])
     rooting = [
         ("Borg-Grimes Model", 'Borg-Grimes Model'),
         ("User-Defined", 'User-Defined'),
@@ -199,7 +199,7 @@ class Crop(models.Model):
     ]
     select_drip = models.CharField(choices=yes_no, max_length=3, verbose_name="Are you going to use a drip irrigation system?", null="True")
     peak_Etcrop = models.DecimalField(default=6.00, max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm/day)", null=True, blank=True, validators=[MinValueValidator(1.00), MaxValueValidator(10)])
-    transpiration_ratio = models.DecimalField(default=1.0, max_digits=3, decimal_places=2, verbose_name="Transpiration Ratio", null=True, blank=True, validators=[MinValueValidator(0.1), MaxValueValidator(1)])
+    transpiration_ratio = models.DecimalField(default=1.0, max_digits=3, decimal_places=2, verbose_name="Transpiration Ratio", null=True, blank=True, validators=[MinValueValidator(Decimal('0.01')),  MaxValueValidator(1)])
    
     CHOICES = [
         ("linear", 'linear'),
