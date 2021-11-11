@@ -81,16 +81,16 @@ def index(request):
 	rainfall = Rainfall.objects.all().filter(fieldunit=fieldunit)
 	sorted_rainfall = sorted(rainfall, key=operator.attrgetter('date', 'time'))
 
-	mc_list = mc_1_sorted
-	#mc_raw_1 = [] #lists for the spline graph #makesure same date & time each mc data
-	#mc_raw_2 = []
-	#mc_raw_3 = []
-	#mc_list_date = []
 	mc_collection_1 = [] #lists for the spline graph
 	mc_collection_2 = []
 	mc_collection_3 = []
 	rainfall_collection = []
 
+	#CORRECT BUT TOO SLOW
+	#mc_raw_1 = [] #lists for the spline graph #makesure same date & time each mc data
+	#mc_raw_2 = []
+	#mc_raw_3 = []
+	#mc_list_date = []
 	#for p in mc_1_sorted:
 	#		mc_raw_1.append(p.mc_data)
 	#		mc_list_date.append(p.date)
@@ -352,7 +352,7 @@ def index(request):
 	area_shaded = 0
 
 	if len(mc_1) > 0: # getting date from data of sensor 1
-		for mc_obj in mc_list:
+		for mc_obj in mc_1_sorted:
 			mc_date = mc_obj.date
 			crop_dat = ((mc_date - crop_transplanted).days)
 			drz_collection.append(calculateDRZ(crop_dat))
