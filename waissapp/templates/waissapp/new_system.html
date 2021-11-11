@@ -306,6 +306,7 @@
       return false;
     } else if ("{{error_no_sensor}}" == "True") {
       fieldunit.focus();
+      e_fieldunit.innerText = "Sensors are required. Create atleast one (1) in the Sensors tab."
       return false;
     } else {
       return true;
