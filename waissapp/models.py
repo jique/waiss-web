@@ -402,7 +402,7 @@ class Sprinkler(models.Model):
         return self.name
 
 class WAISSystems(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True, verbose_name="Give your WAISS a name!")
     farm = models.ForeignKey(Farm, on_delete=models.SET_NULL, verbose_name="Farm", null=True)
     farm_manager = models.ForeignKey(Personnel, on_delete=models.SET_NULL, verbose_name="Farm Manager", null=True)
     crop = models.ForeignKey(Crop, on_delete=models.SET_NULL, null=True)
