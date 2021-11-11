@@ -197,11 +197,17 @@
             </div>
           </form>
         </div> <!--col-->
-      {% if excess or no_irrigation%}
+      {% if excess or no_irrigation or error_no_sensor %}
       <div class="col-md-4">
         <small class="text-danger"><b>Warnings/Errors!</b></small><hr>
         <div class="card shadow mb-4">
           <div class="card-body">
+            {% if error_no_sensor %}
+            <small>
+              <span class="text-danger"><i><b>Warning!</b> It seems that you still have not added a sensor for your field unit. <br>
+                <b>Please return to the <kbd class="bg-success"><a class="text-light" href={% url 'waiss:new_sensor' %}>sensor</a></kbd> tab.</b></i></span><br><br>
+            </small>
+            {% endif %}
             {% if excess == True %}<!--SENSOR ERROR-->
             <small>
               <span class="text-danger"><i><b>Error!</b> It seems that you are exceeding the maximum of three (3) sensors per field unit. <br>
@@ -296,6 +302,9 @@
       fieldunit.focus();
       return false;
     } else if ("{{excess}}" == "True") {
+      fieldunit.focus();
+      return false;
+    } else if ("{{error_no_sensor}}" == "True") {
       fieldunit.focus();
       return false;
     } else {

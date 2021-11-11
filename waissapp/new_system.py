@@ -211,6 +211,11 @@ def new_system(request):
 		excess = True
 	else:
 		excess= False
+	if num_sensors == 0:
+		error_no_sensor = True
+	else:
+		error_no_sensor = False
+
 	if request.method == 'POST' and 'delete_sensor' in request.POST:
 		sensor_id = request.POST.get('delete_sensor')
 		sensor_obj = Sensor.objects.get(id=sensor_id)
@@ -256,5 +261,6 @@ def new_system(request):
 		"sensors_list": sensors_list,
 		"excess": excess,
 		"no_irrigation": no_irrigation,
+		"error_no_sensor": error_no_sensor
 	}
 	return render(request, 'waissapp/new_system.html', context)
