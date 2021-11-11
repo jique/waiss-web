@@ -217,7 +217,7 @@ function buildMap(){
             y = mapCenter[1];
         }
         map.panTo({lat:x, lng:y});
-        markCenter.setLatLng({lat:x, lng:y});
+        //markCenter.setLatLng({lat:x, lng:y});
     });
         
     $('body').on('change', 'input[name="long"]', function () {
@@ -230,7 +230,7 @@ function buildMap(){
             y = mapCenter[1];
         }
         map.panTo({lat:x, lng:y});
-        markCenter.setLatLng({lat:x, lng:y});
+        //markCenter.setLatLng({lat:x, lng:y});
     });     
     L.control.mousePosition().addTo(map);
 }
