@@ -184,8 +184,8 @@ class Crop(models.Model):
     crop = models.CharField(max_length=100, unique=True, null=True, verbose_name="Crop")
     growingperiod = models.PositiveIntegerField(verbose_name="Growing Period, days", null=True, validators=[MinValueValidator(30)])
     root_ini = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True)
-    drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True, validators=[MinValueValidator(0.1)])
-    mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True, validators=[MinValueValidator(0.1), MaxValueValidator(1)])
+    drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Depth of Rootzone, m", null=True)
+    mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True)
     rooting = [
         ("Borg-Grimes Model", 'Borg-Grimes Model'),
         ("User-Defined", 'User-Defined'),
@@ -271,7 +271,7 @@ class Furrow(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, default="True")
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True, default="True")
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -279,7 +279,7 @@ class Furrow(models.Model):
         ("sprinkler", 'sprinkler'),
         ("drip", 'drip'),
     ]
-    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="furrow")
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True, default="furrow")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
@@ -301,7 +301,7 @@ class Border(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, default="True")
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True, default="True")
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -309,7 +309,7 @@ class Border(models.Model):
         ("sprinkler", 'sprinkler'),
         ("drip", 'drip'),
     ]
-    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="border")
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True, default="border")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
     mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
@@ -328,7 +328,7 @@ class Drip(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null="True", default="True")
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null="True", blank=True, default="True")
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -336,7 +336,7 @@ class Drip(models.Model):
         ("sprinkler", 'sprinkler'),
         ("drip", 'drip'),
     ]
-    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="drip")
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True, default="drip")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
     bln_single_lateral = models.BooleanField (verbose_name="Is it a single straight lateral?", null=True)
     ave_discharge = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Average Emitter Discharge (l/day)", null=True)
@@ -366,7 +366,7 @@ class Sprinkler(models.Model):
         ("True", 'Yes, I do!'),
         ("False", 'No, I dont.'),
     ]
-    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, default="True")
+    bln_irrigation = models.CharField(choices=yes_no, max_length=6, verbose_name="Do you have an irrigation system?", null=True, blank=True, default="True")
     type_irrig = [
         ("basin", 'basin'),
         ("border", 'border'),
@@ -374,7 +374,7 @@ class Sprinkler(models.Model):
         ("sprinkler", 'sprinkler'),
         ("drip", 'drip'),
     ]
-    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, default="sprinkler")
+    select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True, default="sprinkler")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True,)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
     EFF_CHOICES = [
