@@ -109,7 +109,7 @@ def index(request):
 		mc_list = mc_raw_1
 	if num_sensors == 3:
 		for p, m, s in zip(mc_1_sorted, mc_2_sorted, mc_3_sorted):
-			if p.time == m.time == s.time and p.date == m.date == s.time:
+			if p.time == m.time == s.time and p.date == m.date == s.date:
 				mc_raw_1.append(p.mc_data)
 				mc_raw_2.append(m.mc_data)
 				mc_raw_3.append(s.mc_data)
