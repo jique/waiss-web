@@ -100,39 +100,21 @@ def index(request):
 			mc_list_date.append(p_date)
 		mc_list = mc_raw_1
 	if num_sensors == 2:
-		for p in mc_1_sorted:
-			p_time = p.time
-			p_date = p.date
-			p_amount = p.mc_data
-			for m in mc_2_sorted:
-				m_time = m.time
-				m_date = m.date
-				m_amount = m.mc_data
-				if p_time == m_time and p_date == m_date:
-					mc_raw_1.append(p_amount)
-					mc_raw_2.append(m_amount)
-					mc_list_date.append(p_date)
-					break
+		for p, m in zip(mc_1_sorted, mc_2_sorted):
+			if p.time == m.time and p.date == m.date:
+				mc_raw_1.append(p.amount)
+				mc_raw_2.append(m.amount)
+				mc_list_date.append(p.date)
+				break
 		mc_list = mc_raw_1
 	if num_sensors == 3:
-		for p in mc_1_sorted:
-			p_time = p.time
-			p_date = p.date
-			p_amount = p.mc_data
-			for m in mc_2_sorted:
-				m_time = m.time
-				m_date = m.date
-				m_amount = m.mc_data
-				for s in mc_3_sorted:
-					s_time = s.time
-					s_date = s.date
-					s_amount = s.mc_data
-					if p_time == m_time == s_time and p_date == m_date == s_date:
-						mc_raw_1.append(p_amount)
-						mc_raw_2.append(m_amount)
-						mc_raw_3.append(s_amount)
-						mc_list_date.append(p_date)
-						break	
+		for p, m, s in zip(mc_1_sorted, mc_2_sorted, mc_3_sorted):
+			if p.time == m.time == s.time and p.date == m.date == s.time:
+				mc_raw_1.append(p.amount)
+				mc_raw_2.append(m.amount)
+				mc_raw_3.append(s.amount)
+				mc_list_date.append(p_date)
+				break	
 		mc_list = mc_raw_1
 
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
