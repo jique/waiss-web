@@ -100,20 +100,20 @@ def index(request):
 			mc_list_date.append(p_date)
 		mc_list = mc_raw_1
 	if num_sensors == 2:
-		for (p, m) in zip(mc_1_sorted, mc_2_sorted):
+		for p, m in zip(mc_1_sorted, mc_2_sorted):
 			if p.time == m.time and p.date == m.date:
-				mc_raw_1.append(p.amount)
-				mc_raw_2.append(m.amount)
+				mc_raw_1.append(p.mc_data)
+				mc_raw_2.append(m.mc_data)
 				mc_list_date.append(p.date)
 				break
 		mc_list = mc_raw_1
 	if num_sensors == 3:
-		for (p, m, s) in zip(mc_1_sorted, mc_2_sorted, mc_3_sorted):
+		for p, m, s in zip(mc_1_sorted, mc_2_sorted, mc_3_sorted):
 			if p.time == m.time == s.time and p.date == m.date == s.time:
-				mc_raw_1.append(p.amount)
-				mc_raw_2.append(m.amount)
-				mc_raw_3.append(s.amount)
-				mc_list_date.append(p_date)
+				mc_raw_1.append(p.mc_data)
+				mc_raw_2.append(m.mc_data)
+				mc_raw_3.append(s.mc_data)
+				mc_list_date.append(p.date)
 				break	
 		mc_list = mc_raw_1
 
