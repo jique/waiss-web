@@ -85,13 +85,20 @@ def index(request):
 	mc_raw_1 = [] #lists for the spline graph
 	mc_raw_2 = []
 	mc_raw_3 = []
+	mc_list_date = []
 	mc_collection_1 = [] #lists for the spline graph
 	mc_collection_2 = []
 	mc_collection_3 = []
 	rainfall_collection = []
 
 	if num_sensors == 1:
-		mc_list = list(mc_1_sorted)	# for inserting rainfall data on the graph
+		for p in mc_1_sorted:
+			p_time = p.time
+			p_date = p.date
+			p_amount = p.mc_data
+			mc_raw_1.append(p_amount)
+			mc_list_date.append(p_date)
+		mc_list = mc_raw_1
 	if num_sensors == 2:
 		for p in mc_1_sorted:
 			p_time = p.time
@@ -104,6 +111,7 @@ def index(request):
 				if p_time == m_time and p_date == m_date:
 					mc_raw_1.append(p_amount)
 					mc_raw_2.append(m_amount)
+					mc_list_date.append(p_date)
 					break
 		mc_list = mc_raw_1
 	if num_sensors == 3:
@@ -123,6 +131,7 @@ def index(request):
 						mc_raw_1.append(p_amount)
 						mc_raw_2.append(m_amount)
 						mc_raw_3.append(s_amount)
+						mc_list_date.append(p_date)
 						break	
 		mc_list = mc_raw_1
 
@@ -371,7 +380,7 @@ def index(request):
 	area_shaded = 0
 
 	if len(mc_1) > 0: # getting date from data of sensor 1
-		for mc_obj in mc_list:
+		for mc_obj in mc_list_date:
 			mc_date = mc_obj
 			crop_dat = ((mc_date - crop_transplanted).days)
 			drz_collection.append(calculateDRZ(crop_dat))
