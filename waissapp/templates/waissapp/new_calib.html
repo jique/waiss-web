@@ -24,6 +24,19 @@
         <div class="row">
            
             <div class="col-md-4">
+                <div class="row bg-light pt-2">
+                    <div class="col font-monospace small">
+                        <h6><u>Equation Standard Forms:</u></h6>
+                        <ul style="list-style: none;">
+                            <li>Linear: <b>MC<sub>v</sub> = a * (reading) + b</b></li>
+                            <li>Quadratic: <b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></li>
+                            <li>Exponential: <b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></li>
+                            <li>Logarithmic: <b>MC<sub>v</sub> = a * ln(reading) + b</b></li>
+                            <li>Symmetrical Sigmoidal: <br><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></li>
+                            <li>Asymmetrical Sigmoidal: <br><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></li>
+                        </ul>
+                    </div>
+                </div>
                 {% if calib_list %}
                 <div class="row bg-light">
                     <form method="post" class="form-group col-md">
@@ -38,20 +51,6 @@
                     </form>
                 </div>
                 {% endif %}
-                <br>
-                <div class="row bg-light pt-1">
-                    <div class="col font-monospace small">
-                        <h6><u>Equation Standard Forms:</u></h6>
-                        <ul style="list-style: none;">
-                            <li>Linear: <b>MC<sub>v</sub> = a * (reading) + b</b></li>
-                            <li>Quadratic: <b>MC<sub>v</sub> = a * (reading)<sup>2</sup> + b * (reading) + c</b></li>
-                            <li>Exponential: <b>MC<sub>v</sub> = a * e<sup>b</sup> * (reading)</b></li>
-                            <li>Logarithmic: <b>MC<sub>v</sub> = a * ln(reading) + b</b></li>
-                            <li>Symmetrical Sigmoidal: <br><b>MC<sub>v</sub> = d + (a - d)/(1 + (reading/c)<sup>b</sup>)</b></li>
-                            <li>Asymmetrical Sigmoidal: <br><b>MC<sub>v</sub> = d + (a - d)/((1 + (reading/c)<sup>b</sup>))<sup>m</sup></b></li>
-                        </ul>
-                    </div>
-                </div>
             </div>
             
             <div class="col-md">
