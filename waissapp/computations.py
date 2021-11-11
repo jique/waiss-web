@@ -82,6 +82,9 @@ def index(request):
 	sorted_rainfall = sorted(rainfall, key=operator.attrgetter('date', 'time'))
 
 	#makesure same date & time each mc data
+	mc_raw_1 = [] #lists for the spline graph
+	mc_raw_2 = []
+	mc_raw_3 = []
 	mc_collection_1 = [] #lists for the spline graph
 	mc_collection_2 = []
 	mc_collection_3 = []
@@ -99,10 +102,10 @@ def index(request):
 				m_date = m.date
 				m_amount = m.mc_data
 				if p_time == m_time and p_date == m_date:
-					mc_collection_1.append(p_amount)
-					mc_collection_2.append(m_amount)
+					mc_raw_1.append(p_amount)
+					mc_raw_2.append(m_amount)
 					break
-		mc_list = mc_collection_1
+		mc_list = mc_raw_1
 	if num_sensors == 3:
 		for p in mc_1_sorted:
 			p_time = p.time
@@ -117,11 +120,11 @@ def index(request):
 					s_date = s.date
 					s_amount = s.mc_data
 					if p_time == m_time == s_time and p_date == m_date == s_date:
-						mc_collection_1.append(p_amount)
-						mc_collection_2.append(m_amount)
-						mc_collection_3.append(s_amount)
+						mc_raw_1.append(p_amount)
+						mc_raw_2.append(m_amount)
+						mc_raw_3.append(s_amount)
 						break	
-		mc_list = mc_collection_1
+		mc_list = mc_raw_1
 
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
 		p_time = p.time
@@ -219,34 +222,34 @@ def index(request):
 	series_fc = []
 	series_pwp = []
 
-	if num_sensors == 1:
-		for mc_obj in mc_1_sorted:
+	if num_sensors == 1: #Calculating MCv(%) from raw data using the calibration constants
+		for mc_obj in mc_raw_1:
 			mc_value = float(mc_obj.mc_data)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
 		mci_1 = calculateMC(mci_1)
 	if num_sensors == 2:
-		for mc_obj in mc_1_sorted:
+		for mc_obj in mc_raw_1:
 			mc_value = float(mc_obj.mc_data)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
-		for mc_obj in mc_2_sorted:
+		for mc_obj in mc_raw_2:
 			mc_value = float(mc_obj.mc_data)
 			mc_collection_2.append(calculateMC(mc_value))
 		mci_1 = calculateMC(mci_1)
 		mci_2 = calculateMC(mci_2)
 	if num_sensors ==3:
-		for mc_obj in mc_1_sorted:
+		for mc_obj in mc_raw_1:
 			mc_value = float(mc_obj.mc_data)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
-		for mc_obj in mc_2_sorted:
+		for mc_obj in mc_raw_2:
 			mc_value = float(mc_obj.mc_data)
 			mc_collection_2.append(calculateMC(mc_value))
-		for mc_obj in mc_3_sorted:
+		for mc_obj in mc_raw_3:
 			mc_value = float(mc_obj.mc_data)
 			mc_collection_3.append(calculateMC(mc_value))
 		mci_1 = calculateMC(mci_1)
