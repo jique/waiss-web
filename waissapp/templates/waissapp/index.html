@@ -601,7 +601,7 @@
       lineWidth: 1}
   }, {
     type: 'column',
-    name: 'Rainfall/Irrigation (mm)',
+    name: 'P/Irrig (mm)',
     yAxis: 0,
     data:[{% for x in rainfall %}{{x}},{% endfor %}],
     checkbox: { checked: true },
@@ -612,7 +612,7 @@
 
   }, {
     type: 'scatter',
-    name: 'Gravimetric MCv (%)',
+    name: 'Gravi MCv (%)',
     yAxis: 1,
     data: [{% for x in gravimetric_collection %}{{x}},{% endfor %}],
     checkbox: { checked: true },
