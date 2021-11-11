@@ -83,8 +83,9 @@
     function validateForm(form) {
         num_str = String(number.value)
         num_first = num_str.charAt(0);
+        num_second = num_str.substring(0, 2);
         console.log(num_str, num_first)
-        if  (num_first != '63' && number.value.length != 12) {
+        if  (num_second == '63' && number.value.length != 12) {
             number.focus();
             error_number.innerText = "Make sure to input a valid number.";
             return false;
