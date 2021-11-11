@@ -612,7 +612,7 @@ def new_sensor(request):
 	current_user = request.user
 	fieldunit_ses = request.session.get('fieldunit_ses', None)
 	fieldunit_list = FieldUnit.objects.filter(author=current_user)
-	fieldunit = FieldUnit.objects.filter(id=fieldunit_ses)
+	fieldunit = FieldUnit.objects.get(id=fieldunit_ses)
 	if fieldunit_ses == None:
 		SensorFormSet = modelformset_factory(Sensor, exclude=(), extra=3, can_delete=True)
 		formset = SensorFormSet(queryset=Sensor.objects.none())
