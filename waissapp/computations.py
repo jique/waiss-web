@@ -224,19 +224,19 @@ def index(request):
 
 	if num_sensors == 1: #Calculating MCv(%) from raw data using the calibration constants
 		for mc_obj in mc_raw_1:
-			mc_value = float(mc_obj.mc_data)
+			mc_value = float(mc_obj)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
 		mci_1 = calculateMC(mci_1)
 	if num_sensors == 2:
 		for mc_obj in mc_raw_1:
-			mc_value = float(mc_obj.mc_data)
+			mc_value = float(mc_obj)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
 		for mc_obj in mc_raw_2:
-			mc_value = float(mc_obj.mc_data)
+			mc_value = float(mc_obj)
 			mc_collection_2.append(calculateMC(mc_value))
 		mci_1 = calculateMC(mci_1)
 		mci_2 = calculateMC(mci_2)
@@ -372,7 +372,7 @@ def index(request):
 
 	if len(mc_1) > 0: # getting date from data of sensor 1
 		for mc_obj in mc_list:
-			mc_date = mc_obj.date
+			mc_date = mc_obj
 			crop_dat = ((mc_date - crop_transplanted).days)
 			drz_collection.append(calculateDRZ(crop_dat))
 
