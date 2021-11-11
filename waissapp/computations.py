@@ -97,19 +97,24 @@ def index(request):
 			mc_list_date.append(p.date)
 		mc_list = mc_raw_1
 	if num_sensors == 2:
-		for (p, m) in zip(mc_1_sorted, mc_2_sorted):
-			if p.date == m.date and p.time == m.time:
-				mc_raw_1.append(p.mc_data)
-				mc_raw_2.append(m.mc_data)
-				mc_list_date.append(p.date)
+		for p in mc_1_sorted:
+			for m in mc_2_sorted:
+				if p.time == m.time and p.date == m.date:
+					mc_raw_1.append(p.amount)
+					mc_raw_2.append(m.amount)
+					mc_list_date.append(p.date)
+					break
 		mc_list = mc_raw_1
 	if num_sensors == 3:
-		for (p, m, s) in zip(mc_1_sorted, mc_2_sorted, mc_3_sorted):
-			if (p.date == m.date == s.date) and (p.time == m.time == s.time):
-				mc_raw_1.append(p.mc_data)
-				mc_raw_2.append(m.mc_data)
-				mc_raw_3.append(s.mc_data)
-				mc_list_date.append(p.date)
+		for p in mc_1_sorted:
+			for m in mc_2_sorted:
+				for s in mc_3_sorted:
+					if p.time == m.time == s.time and p.date == m.date == s.date:
+						mc_raw_1.append(p.amount)
+						mc_raw_2.append(m.amount)
+						mc_raw_3.append(s.amount)
+						mc_list_date.append(p.date)
+						break	
 		mc_list = mc_raw_1
 
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
@@ -357,7 +362,8 @@ def index(request):
 	area_shaded = 0
 
 	if len(mc_1) > 0: # getting date from data of sensor 1
-		for mc_date in mc_list_date:
+		for mc_obj in mc_list_date:
+			mc_date = mc_obj
 			crop_dat = ((mc_date - crop_transplanted).days)
 			drz_collection.append(calculateDRZ(crop_dat))
 
