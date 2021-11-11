@@ -242,15 +242,15 @@ def index(request):
 		mci_2 = calculateMC(mci_2)
 	if num_sensors ==3:
 		for mc_obj in mc_raw_1:
-			mc_value = float(mc_obj.mc_data)
+			mc_value = float(mc_obj)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
 		for mc_obj in mc_raw_2:
-			mc_value = float(mc_obj.mc_data)
+			mc_value = float(mc_obj)
 			mc_collection_2.append(calculateMC(mc_value))
 		for mc_obj in mc_raw_3:
-			mc_value = float(mc_obj.mc_data)
+			mc_value = float(mc_obj)
 			mc_collection_3.append(calculateMC(mc_value))
 		mci_1 = calculateMC(mci_1)
 		mci_2 = calculateMC(mci_2)
