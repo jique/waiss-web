@@ -81,55 +81,49 @@ def index(request):
 	rainfall = Rainfall.objects.all().filter(fieldunit=fieldunit)
 	sorted_rainfall = sorted(rainfall, key=operator.attrgetter('date', 'time'))
 
-	#makesure same date & time each mc data
-	mc_raw_1 = [] #lists for the spline graph
-	mc_raw_2 = []
-	mc_raw_3 = []
-	mc_list_date = []
+	mc_list = mc_1_sorted
+	#mc_raw_1 = [] #lists for the spline graph #makesure same date & time each mc data
+	#mc_raw_2 = []
+	#mc_raw_3 = []
+	#mc_list_date = []
 	mc_collection_1 = [] #lists for the spline graph
 	mc_collection_2 = []
 	mc_collection_3 = []
 	rainfall_collection = []
 
-	if num_sensors == 1:
-		for p in mc_1_sorted:
-			mc_raw_1.append(p.mc_data)
-			mc_list_date.append(p.date)
-		mc_list = mc_raw_1
-	if num_sensors == 2:
-		for p in mc_1_sorted:
-			for m in mc_2_sorted:
-				if p.time == m.time and p.date == m.date:
-					mc_raw_1.append(p.mc_data)
-					mc_raw_2.append(m.mc_data)
-					mc_list_date.append(p.date)
-					break
-		mc_list = mc_raw_1
-	if num_sensors == 3:
-		for p in mc_1_sorted:
-			for m in mc_2_sorted:
-				for s in mc_3_sorted:
-					if p.time == m.time == s.time and p.date == m.date == s.date:
-						mc_raw_1.append(p.mc_data)
-						mc_raw_2.append(m.mc_data)
-						mc_raw_3.append(s.mc_data)
-						mc_list_date.append(p.date)
-						break	
-		mc_list = mc_raw_1
+	#for p in mc_1_sorted:
+	#		mc_raw_1.append(p.mc_data)
+	#		mc_list_date.append(p.date)
+	#	mc_list = mc_raw_1
+	#if num_sensors == 2:
+	#	for p in mc_1_sorted:
+	#			if p.time == m.time and p.date == m.date:
+	#				mc_raw_1.append(p.mc_data)
+	#				mc_raw_2.append(m.mc_data)
+	#				mc_list_date.append(p.date)
+	#				break
+	#	mc_list = mc_raw_1
+	#if num_sensors == 3:
+	#	for p in mc_1_sorted:
+	#		for m in mc_2_sorted:
+	#			for s in mc_3_sorted:
+	#				if p.time == m.time == s.time and p.date == m.date == s.date:
+	#					mc_raw_1.append(p.mc_data)
+	#					mc_raw_2.append(m.mc_data)
+	#					mc_raw_3.append(s.mc_data)
+	#					mc_list_date.append(p.date)
+	#					break	
+	#	mc_list = mc_raw_1
 
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
-		p_time = p.time
-		p_date = p.date
-		p_amount = (p.amount)
 		j = len(rainfall_collection)
 		for i, m in enumerate(mc_list, start=1):
 			m_time = m.time.replace(second=0)
-			m_date = m.date
-			if p_time == m_time and p_date == m_date:
+			if p.time == m_time and p.date == m.date:
 				z = i-j-1
 				for x in range(0, z):
 					rainfall_collection.append(0.0)
-				rainfall_collection.append(p_amount)
+				rainfall_collection.append(p.amount)
 				break
 
 	gravimetric_data = Gravimetric.objects.all().filter(fieldunit=fieldunit) #for gravimetric data
@@ -137,18 +131,14 @@ def index(request):
 	gravimetric_collection = [] 
 
 	for p in sorted_gravimetric: # for creating list that has the same index of the mc data
-		p_time = p.time
-		p_date = p.date
-		p_amount = float(p.mc_data)
 		j = len(gravimetric_collection)
 		for i, m in enumerate(mc_list, start=1):
 			m_time = m.time.replace(second=0)
-			m_date = m.date
-			if p_time == m_time and p_date == m_date:
+			if p.time == m_time and p.date == m.date:
 				z = i-j-1
 				for x in range(0, z):
 					gravimetric_collection.append(0.0)
-				gravimetric_collection.append(p_amount)
+				gravimetric_collection.append(p.mc_data)
 				break
 	MC_TO_IRRIGATE = round((((soil_fc - soil_pwp)* crop_mad) + soil_pwp)*100, 2) # threshold mc to initiate irrigation advisory
 	mci_1 = 0
@@ -214,33 +204,33 @@ def index(request):
 	series_pwp = []
 
 	if num_sensors == 1: #Calculating MCv(%) from raw data using the calibration constants
-		for mc_obj in mc_raw_1:
+		for mc_obj in mc_list:
 			mc_value = float(mc_obj)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
 		mci_1 = calculateMC(mci_1)
 	if num_sensors == 2:
-		for mc_obj in mc_raw_1:
+		for mc_obj in mc_list:
 			mc_value = float(mc_obj)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
-		for mc_obj in mc_raw_2:
+		for mc_obj in mc_list:
 			mc_value = float(mc_obj)
 			mc_collection_2.append(calculateMC(mc_value))
 		mci_1 = calculateMC(mci_1)
 		mci_2 = calculateMC(mci_2)
 	if num_sensors ==3:
-		for mc_obj in mc_raw_1:
+		for mc_obj in mc_list:
 			mc_value = float(mc_obj)
 			mc_collection_1.append(calculateMC(mc_value))
 			series_fc.append(round(soil_fc*100, 2))
 			series_pwp.append(round(soil_pwp*100, 2))
-		for mc_obj in mc_raw_2:
+		for mc_obj in mc_list:
 			mc_value = float(mc_obj)
 			mc_collection_2.append(calculateMC(mc_value))
-		for mc_obj in mc_raw_3:
+		for mc_obj in mc_list:
 			mc_value = float(mc_obj)
 			mc_collection_3.append(calculateMC(mc_value))
 		mci_1 = calculateMC(mci_1)
@@ -362,8 +352,8 @@ def index(request):
 	area_shaded = 0
 
 	if len(mc_1) > 0: # getting date from data of sensor 1
-		for mc_obj in mc_list_date:
-			mc_date = mc_obj
+		for mc_obj in mc_list:
+			mc_date = mc_obj.date
 			crop_dat = ((mc_date - crop_transplanted).days)
 			drz_collection.append(calculateDRZ(crop_dat))
 
