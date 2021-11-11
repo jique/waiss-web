@@ -78,12 +78,51 @@ def index(request):
 	else: 
 		error_msg_excess_sensor_data = "Number of sensors is should be between 1 and 3 only. Please recheck your your database and delete the extra sensor."
 
-	mc_list = list(mc_1_sorted)	# for inserting rainfall data on the graph
 	rainfall = Rainfall.objects.all().filter(fieldunit=fieldunit)
 	sorted_rainfall = sorted(rainfall, key=operator.attrgetter('date', 'time'))
 
+	#makesure same date & time each mc data
+	mc_collection_1 = [] #lists for the spline graph
+	mc_collection_2 = []
+	mc_collection_3 = []
 	rainfall_collection = []
 
+	if num_sensors == 1:
+		mc_list = list(mc_1_sorted)	# for inserting rainfall data on the graph
+	if num_sensors == 2:
+		for p in mc_1_sorted:
+			p_time = p.time
+			p_date = p.date
+			p_amount = p.amount
+			for m in mc_2_sorted:
+				m_time = m.time
+				m_date = m.date
+				m_amount = m.amount
+				if p_time == m_time and p_date == m_date:
+					mc_collection_1.append(p_amount)
+					mc_collection_2.append(m_amount)
+					break
+		mc_list = mc_collection_1
+	if num_sensors == 3:
+		for p in mc_1_sorted:
+			p_time = p.time
+			p_date = p.date
+			p_amount = p.amount
+			for m in mc_2_sorted:
+				m_time = m.time
+				m_date = m.date
+				m_amount = m.amount
+				for s in mc_3_sorted:
+					s_time = s.time
+					s_date = s.date
+					s_amount = s.amount
+					if p_time == m_time == s_time and p_date == m_date == s_date:
+						mc_collection_1.append(p_amount)
+						mc_collection_2.append(m_amount)
+						mc_collection_3.append(s_amount)
+						break	
+		mc_list = mc_collection_1
+					
 	for p in sorted_rainfall: # for creating list that has the same index of the mc data
 		p_time = p.time
 		p_date = p.date
@@ -177,9 +216,6 @@ def index(request):
 			mc_return = calib_coeff_d + (calib_coeff_a - calib_coeff_d)/(1.0 + (mc_value/calib_coeff_c)**calib_coeff_b)**calib_coeff_m
 		return round(mc_return, 2)
 
-	mc_collection_1 = [] #lists for the spline graph
-	mc_collection_2 = []
-	mc_collection_3 = []
 	series_fc = []
 	series_pwp = []
 
