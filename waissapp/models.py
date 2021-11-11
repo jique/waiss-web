@@ -4,32 +4,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from decimal import *
 
-from django.db.models import DecimalField
-from django.core.exceptions import ValidationError
-from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as _
-
-def validate_positive(value):
-    if value < 0:
-        raise ValidationError(
-            _("%(value)s is not positive."),
-            params={"value": value}
-        )
-
-class PositiveDecimalField(DecimalField):
-    description = _("Positive decimal number")
-
-    @cached_property
-    def validators(self):
-        return super().validators + [validate_positive]
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.validators.append(validate_positive)
-
 class Farm(models.Model):
     name = models.CharField(max_length=50, unique="True", verbose_name="Farm Name")
-    farm_area = PositiveDecimalField(max_digits=20, decimal_places=2, verbose_name="Farm Area (sq. m)", null=True, validators=[MinValueValidator(Decimal('0.01'))])
+    farm_area = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Farm Area (sq. m)", null=True, validators=[MinValueValidator(Decimal('0.01'))])
     province = models.CharField(max_length=50, null="True")
     municipality = models.CharField(max_length=50, null="True")
     brgy = models.CharField(max_length=50, verbose_name="Barangay", null="True")
@@ -412,7 +389,7 @@ class Sprinkler(models.Model):
         (90, '90'),
         (95, '95'),
     ]
-    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True)
+    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True])
     lateral_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Lateral spacing (m)", null=True)
     sprinkler_spacing = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Sprinkler spacing (m)", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
