@@ -123,13 +123,13 @@
 <script >
 var map = L.map('tracemap');
 var mapCenter = [14.16358, 121.25078];     
-var markCenter = L.marker(mapCenter).addTo(map);  
+//var markCenter = L.marker(mapCenter).addTo(map);  
     
 function buildMap(){ 
     if (!isNaN($('input[name="lat"]').val()) && $('input[name="lat"]').val() != "" && !isNaN($('input[name="long').val()) && $('input[name="long').val() != ""){
         mapCenter = [parseFloat($('input[name="lat"]').val()), parseFloat($('input[name="long').val())];
     }
-    markCenter.setLatLng(mapCenter).addTo(map);
+    //markCenter.setLatLng(mapCenter).addTo(map);
     map.setView(mapCenter, 10);
         
     var mapboxUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ3JtYiIsImEiOiJja3QyZTB1emEwbWpyMm5ueGNsM3p6ZWZxIn0.qosdXRuQF0PUAo2XT48_0g';
@@ -200,6 +200,9 @@ function buildMap(){
         lng = +lng.toFixed(4)
         $('input[name="lat"]').val(lat);
         $('input[name="long"]').val(lng);
+        mouse_pos = [lat, long]
+        L.marker(mouse_pos).addTo(map);  
+
     });
 
         
