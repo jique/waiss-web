@@ -100,8 +100,8 @@ def index(request):
 		for p in mc_1_sorted:
 			for m in mc_2_sorted:
 				if p.time == m.time and p.date == m.date:
-					mc_raw_1.append(p.amount)
-					mc_raw_2.append(m.amount)
+					mc_raw_1.append(p.mc_data)
+					mc_raw_2.append(m.mc_data)
 					mc_list_date.append(p.date)
 					break
 		mc_list = mc_raw_1
@@ -110,9 +110,9 @@ def index(request):
 			for m in mc_2_sorted:
 				for s in mc_3_sorted:
 					if p.time == m.time == s.time and p.date == m.date == s.date:
-						mc_raw_1.append(p.amount)
-						mc_raw_2.append(m.amount)
-						mc_raw_3.append(s.amount)
+						mc_raw_1.append(p.mc_data)
+						mc_raw_2.append(m.mc_data)
+						mc_raw_3.append(s.mc_data)
 						mc_list_date.append(p.date)
 						break	
 		mc_list = mc_raw_1
