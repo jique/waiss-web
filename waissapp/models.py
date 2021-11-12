@@ -184,7 +184,7 @@ class CalibrationConstant(models.Model):
 class Crop(models.Model):
     crop = models.CharField(max_length=100, unique=True, null=True, verbose_name="Crop")
     growingperiod = models.PositiveIntegerField(verbose_name="Growing Period (days)", null=True, validators=[MinValueValidator(30)])
-    root_ini = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True, validators=[MinValueValidator(Decimal('0.01'))], help_text="Zero is direct-seeded. Equal to the maximum rooting depth if plant is mature.")
+    root_ini = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Root Depth during Transplant (m)", null=True, validators=[MinValueValidator(Decimal('0.01'))], help_text="Zero (0) if direct-seeded. Equal to the maximum rooting depth if plant is mature.")
     drz = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Maximum Rooting Depth (m)", null=True, validators=[MinValueValidator(Decimal('0.01'))])
     mad = models.DecimalField(max_digits=3, decimal_places=2, verbose_name="Management Allowable Deficit", null=True, validators=[MinValueValidator(Decimal('0.01'))])
     rooting = [
