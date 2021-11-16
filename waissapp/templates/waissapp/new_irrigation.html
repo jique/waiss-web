@@ -441,7 +441,7 @@
     const q_min = Math.min(...array_q);
     const sum = array_q.reduce(function(a, b) { return a + b; }, 0);
     var n = document.getElementById('id_emitters_per_plant');
-    if (n == '0.00') {
+    if (n.value == '0.00') {
       n.focus();
       return;
     }
