@@ -442,7 +442,7 @@
     const sum = array_q.reduce(function(a, b) { return a + b; }, 0);
     var n = document.getElementById('id_emitters_per_plant').value;
     console.log(n)
-    if (n == '0.00') {
+    if (n == '') {
       n.focus();
       return;
     }
