@@ -445,8 +445,9 @@
     if (n.value == '') {
       n.focus();
     }
-    var avg = (sum / n) || 0;
-    const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n);
+    n_array = len(array_q)
+    var avg = (sum / n_array) || 0;
+    const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n_array);
     var EU_val = (q_min/avg)*(1-1.27*((stdev/avg)/Math.sqrt(n)));
     EU_val = EU_val.toFixed(2);
     $('input[name="EU"]').val(EU_val);
