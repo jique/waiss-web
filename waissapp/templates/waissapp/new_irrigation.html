@@ -379,7 +379,7 @@
                 </div>
                 <p><span id="validateCV" class="small text-danger"></span></p>
                 <div class="row" id="id_div_q">
-                  <div class="col-md-6 small">Please input date here: </div>
+                  <div class="col-md-6 small">Please input data here: </div>
                   <div class="col-md-6"><input type="number" id="id_q" class="form-control form-control-sm numberinput _id_q" step="0.01"></div>
                 </div>
               </div>
@@ -440,7 +440,11 @@
     console.log(array_q);
     const q_min = Math.min(...array_q);
     const sum = array_q.reduce(function(a, b) { return a + b; }, 0);
-    const n = array_q.length;
+    var n = document.getElementById('id_emitters_per_plant');
+    if (n =='') {
+      n.focus();
+      return;
+    }
     var avg = (sum / n) || 0;
     const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n);
     var EU_val = (q_min/avg)*(1-1.27*((stdev/avg)/Math.sqrt(n)));
