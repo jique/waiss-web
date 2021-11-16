@@ -445,7 +445,7 @@
     if (n.value == '') {
       n.focus();
     }
-    n_array = len(array_q)
+    n_array = array_q.length
     var avg = (sum / n_array) || 0;
     const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n_array);
     var EU_val = (q_min/avg)*(1-1.27*((stdev/avg)/Math.sqrt(n)));
