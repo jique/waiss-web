@@ -440,9 +440,9 @@
     console.log(array_q);
     const q_min = Math.min(...array_q);
     const sum = array_q.reduce(function(a, b) { return a + b; }, 0);
-    var n = document.getElementById('id_emitters_per_plant').value;
+    var n = document.getElementById('id_emitters_per_plant');
     console.log(n)
-    if (n == '') {
+    if (n.value == '') {
       n.focus();
       return;
     }
