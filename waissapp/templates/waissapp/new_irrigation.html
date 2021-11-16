@@ -441,14 +441,14 @@
     const q_min = Math.min(...array_q);
     const sum = array_q.reduce(function(a, b) { return a + b; }, 0);
     var n = document.getElementById('id_emitters_per_plant');
-    console.log(n)
-    if (n.value == '') {
+    n_val = n.value
+    if (n_val == '') {
       n.focus();
     }
     n_array = array_q.length
     var avg = (sum / n_array) || 0;
     const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n_array);
-    var EU_val = (q_min/avg)*(1-1.27*((stdev/avg)/Math.sqrt(n)));
+    var EU_val = (q_min/avg)*(1-1.27*((stdev/avg)/Math.sqrt(n_val)));
     EU_val = EU_val.toFixed(2);
     $('input[name="EU"]').val(EU_val);
     avg = (avg*1.44).toFixed(2);
@@ -461,7 +461,7 @@
       validateCV.innerText = "The # of samples is not ideal. It is recommended to add more data."
     }
     
-    console.log(q_min, avg, sum, n, stdev, EU_val);
+    console.log(q_min, avg, sum, n_array, n_val, stdev, EU_val);
   }
 </script>
 {% endblock %}
