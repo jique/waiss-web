@@ -444,7 +444,6 @@
     console.log(n)
     if (n.value == '') {
       n.focus();
-      return;
     }
     var avg = (sum / n) || 0;
     const stdev = Math.sqrt(array_q.map(x => Math.pow(x - avg, 2)).reduce((a, b) => a + b) / n);
