@@ -603,6 +603,9 @@ def index(request):
 	depth_3	= depth_3/1000
 
 	personnel = selected_system.farm_manager
+	last_name = personnel.last_name
+	first_name = personnel.first_name
+	number = personnel.number
 	context = {
 		"today": today,
 		"num_sensors": num_sensors,
@@ -658,6 +661,8 @@ def index(request):
 		"total_volume": total_volume,
 		"area_shaded": area_shaded,
 		"crop_id": crop_id,
-		"personnel": personnel
+		"first_name": first_name,
+		"last_name": last_name,
+		"number": number
 	}
 	return render(request, 'waissapp/index.html', context)
