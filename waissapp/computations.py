@@ -58,21 +58,20 @@ def index(request):
 		mc_1_sorted = sorted(mc_1, key=operator.attrgetter('date', 'time')) # sorting mc analog readings based on inputted datetime
 	if num_sensors == 2:
 		sensors = sorted(Sensor.objects.all().filter(fieldunit=fieldunit), key=attrgetter('depth'))
-		sensor_1 = sensors[:1]  # getting sensors
-		sensor_2 = sensors[1:2]
+		sensor_1 = sensors[0]  # getting sensors
+		sensor_2 = sensors[1]
 		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
 		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2)
 		mc_1_sorted = sorted(mc_1, key=operator.attrgetter('date', 'time')) # sorting mc analog readings based on inputted datetime
 		mc_2_sorted = sorted(mc_2, key=operator.attrgetter('date', 'time'))
 	if num_sensors == 3:
 		sensors = sorted(Sensor.objects.all().filter(fieldunit=fieldunit), key=attrgetter('depth'))
-		sensor_1 = sensors[:1]  # getting sensors
-		sensor_2 = sensors[1:2]
-		sensor_3 = sensors[2:3]
-		print(sensor_1, sensor_2, sensor_3)
-		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1.id) # getting mc analog readings
-		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2.id)
-		mc_3 = MoistureContent.objects.all().filter(sensor=sensor_3.id)
+		sensor_1 = sensors[0]  # getting sensors
+		sensor_2 = sensors[1]
+		sensor_3 = sensors[2]
+		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
+		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2)
+		mc_3 = MoistureContent.objects.all().filter(sensor=sensor_3)
 		mc_1_sorted = sorted(mc_1, key=operator.attrgetter('date', 'time')) # sorting mc analog readings based on inputted datetime
 		mc_2_sorted = sorted(mc_2, key=operator.attrgetter('date', 'time'))
 		mc_3_sorted = sorted(mc_3, key=operator.attrgetter('date', 'time'))
@@ -148,9 +147,9 @@ def index(request):
 	mci_2 = 0
 	mci_3 = 0
 	if len(mc_1) == 0:
-		depth_1 = ""
-		depth_2	= ""
-		depth_3	= ""
+		depth_1 = 0
+		depth_2	= 0
+		depth_3	= 0
 		pass
 	else: # take consideration the no. of sensors in the field unit
 		if num_sensors == 1:
@@ -571,6 +570,9 @@ def index(request):
 	
 	today= datetime.utcnow().replace(tzinfo=pytz.utc)
 
+	depth_1 = 0/1000
+	depth_2	= 0/1000
+	depth_3	= 0/1000
 	context = {
 		"today": today,
 		"num_sensors": num_sensors,
@@ -604,6 +606,9 @@ def index(request):
 		"s1": sensor_1,
 		"s2": sensor_2,
 		"s3": sensor_3,
+		"depth_1": depth_1,
+		"depth_2": depth_2,
+		"depth_3": depth_3,
 		"mc_1": mc_collection_1,
 		"mc_time_1": mc_1_sorted,
 		"mc_2": mc_collection_2,
@@ -617,7 +622,6 @@ def index(request):
 		"MC_TO_IRRIGATE": MC_TO_IRRIGATE,
 		"drz": drz,
 		"mci_1": mci_1,
-		"depth_1": depth_1,
 		"mc_ave": mc_ave,
 		"net_application_depth": net_application_depth,
 		"irrigation_period":irrigation_period,
