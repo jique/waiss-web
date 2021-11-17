@@ -58,18 +58,18 @@ def index(request):
 		mc_1_sorted = sorted(mc_1, key=operator.attrgetter('date', 'time')) # sorting mc analog readings based on inputted datetime
 	if num_sensors == 2:
 		sensors = sorted(Sensor.objects.all().filter(fieldunit=fieldunit), key=attrgetter('depth'))
-		sensor_1 = sensors[0]  # getting sensors
-		sensor_2 = sensors[1]
+		sensor_1 = sensors[:1]  # getting sensors
+		sensor_2 = sensors[1:2]
 		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
 		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2)
 		mc_1_sorted = sorted(mc_1, key=operator.attrgetter('date', 'time')) # sorting mc analog readings based on inputted datetime
 		mc_2_sorted = sorted(mc_2, key=operator.attrgetter('date', 'time'))
 	if num_sensors == 3:
 		sensors = sorted(Sensor.objects.all().filter(fieldunit=fieldunit), key=attrgetter('depth'))
-		sensor_1 = sensors[0]  # getting sensors
-		sensor_2 = sensors[1]
-		sensor_3 = sensors[2]
-		print(sensors, sensor_1, sensor_2, sensor_3)
+		sensor_1 = sensors[:1]  # getting sensors
+		sensor_2 = sensors[1:2]
+		sensor_3 = sensors[2:3]
+		print(sensor_1, sensor_2, sensor_3)
 		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
 		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2)
 		mc_3 = MoistureContent.objects.all().filter(sensor=sensor_3)
@@ -155,19 +155,19 @@ def index(request):
 	else: # take consideration the no. of sensors in the field unit
 		if num_sensors == 1:
 			mci_1 = float(mc_1.latest().mc_data)
-			depth_1 = float(sensor_1.depth)*1000
+			depth_1 = float(sensor_1.get().depth)*1000
 		if num_sensors == 2:
 			mci_1 = float(mc_1.latest().mc_data)
 			mci_2 = float(mc_2.latest().mc_data)
-			depth_1 = float(sensor_1.depth)*1000
-			depth_2 = float(sensor_2.depth)*1000
+			depth_1 = float(sensor_1.get().depth)*1000
+			depth_2 = float(sensor_2.get().depth)*1000
 		if num_sensors == 3:
 			mci_1 = float(mc_1.latest().mc_data)
 			mci_2 = float(mc_2.latest().mc_data)
 			mci_3 = float(mc_3.latest().mc_data)
-			depth_1 = float(sensor_1.depth)*1000
-			depth_2 = float(sensor_2.depth)*1000
-			depth_3 = float(sensor_3.depth)*1000
+			depth_1 = float(sensor_1.get().depth)*1000
+			depth_2 = float(sensor_2.get().depth)*1000
+			depth_3 = float(sensor_3.get().depth)*1000
 	
 	def calculateMC(mc_value): # Convert analog reading to MCv using calibration constants
 		float(mc_value)
