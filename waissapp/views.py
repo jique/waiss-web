@@ -1510,7 +1510,9 @@ def view_msg(request, number):
 		"today": today
 	}
 	return render(request, 'waissapp/view-conversation.html', context)
-
+def today():
+	today= datetime.utcnow().replace(tzinfo=pytz.utc)
+	return today
 #MC Readings
 @login_required
 def new_mc(request):
