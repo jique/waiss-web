@@ -601,6 +601,8 @@ def index(request):
 	depth_1 = depth_1/1000
 	depth_2	= depth_2/1000
 	depth_3	= depth_3/1000
+
+	personnel = selected_system.personnel
 	context = {
 		"today": today,
 		"num_sensors": num_sensors,
@@ -656,5 +658,6 @@ def index(request):
 		"total_volume": total_volume,
 		"area_shaded": area_shaded,
 		"crop_id": crop_id,
+		"personnel": personnel
 	}
 	return render(request, 'waissapp/index.html', context)
