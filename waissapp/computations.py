@@ -570,9 +570,9 @@ def index(request):
 	
 	today= datetime.utcnow().replace(tzinfo=pytz.utc)
 
-	depth_1 = 0/1000
-	depth_2	= 0/1000
-	depth_3	= 0/1000
+	depth_1 = depth_1/1000
+	depth_2	= depth_2/1000
+	depth_3	= depth_3/1000
 	context = {
 		"today": today,
 		"num_sensors": num_sensors,
