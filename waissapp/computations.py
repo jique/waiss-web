@@ -276,6 +276,7 @@ def index(request):
 				Kc_adj = kc_ini + (kc_mid - kc_ini)*(maturity)/(cc_2)
 			else: 
 				Kc_adj =  kc_mid
+			print(Kc, Kc_adj, kc_mid)
 			krz = float((Kc_adj - Kc)/(kc_mid - Kc))
 			drz = float(crop_ro + krz*(crop_drz - crop_ro))*1000 #MM
 		return round(drz)
