@@ -605,7 +605,6 @@ def index(request):
 	personnel = selected_system.farm_manager
 	last_name = personnel.last_name
 	first_name = personnel.first_name
-	number = personnel.number
 	context = {
 		"today": today,
 		"num_sensors": num_sensors,

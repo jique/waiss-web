@@ -16,6 +16,9 @@ import io, csv
 from .decorators import unauthenticated_user
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+import datetime
+from datetime import datetime
+import pytz
 
 @unauthenticated_user
 def register(request):
@@ -1433,6 +1436,7 @@ def edit_sprinkler(request, id):
 #Messages
 @login_required
 def list_msgs(request):
+	today= datetime.utcnow().replace(tzinfo=pytz.utc)
 	current_user = request.user
 	get_fieldunit = Personnel.objects.filter(author=current_user)
 	receivedmsgs = ReceivedMsgs.objects.filter(number__in=get_fieldunit)
@@ -1453,6 +1457,7 @@ def list_msgs(request):
 		"list": get_fieldunit,
 		"joinedlist": final_list,
 		"form": form,
+		"today": today
 	}
 
 	return render(request, 'waissapp/messages.html', context)
@@ -1471,6 +1476,7 @@ def delete_msgs(request, pk): #deleteconversation
 
 @login_required
 def view_msg(request, number):
+	today= datetime.utcnow().replace(tzinfo=pytz.utc)
 	current_user = request.user
 	get_fieldunit = Personnel.objects.filter(author=current_user)
 	receivedmsgs = ReceivedMsgs.objects.filter(number__in=get_fieldunit)
@@ -1501,6 +1507,7 @@ def view_msg(request, number):
 		"form": form,
 		"joined_list": joined_list,
 		"result": result,
+		"today": today
 	}
 	return render(request, 'waissapp/view-conversation.html', context)
 
