@@ -583,7 +583,7 @@ def index(request):
 		if furrow == None and basin == None and border == None and drip==None and sprinkler==None:
 			farm = selected_system.farm
 			farm_area = float(farm.farm_area)
-			total_volume = net_application_depth * farm_area * float(0.20) #[Assumption]
+			total_volume = net_application_depth * farm_area 
 		
 	#FOR DISPLAY
 		net_application_depth = round(net_application_depth, 2)
