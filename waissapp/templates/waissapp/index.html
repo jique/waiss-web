@@ -263,7 +263,7 @@
 
           {% block main_block %}
           <div class="row">
-            <div class="col text-gray-800">
+            <div class="col-md-4 text-gray-800">
               <form method="post">
                 {% csrf_token %}
                 <select name="dashboard_submit" id="selected_system" class="btn btn-secondary btn-sm" onchange="this.form.submit()">
@@ -275,12 +275,12 @@
                 <a href={% url 'waiss:new_farm' %} class="btn btn-sm btn-info"><i class="fas fa-plus-circle" alt="add button" data-toggle="tooltip" data-placement="right" title="Create new WAISS."></i></a>
               </form>
             </div>
-            <div class="col">
+            <div class="col-md">
               <div class="small text-right mt-2">
-                <i>Transplanted last <b>{{crop_transplanted}}.</b> Advisories sent to {{first_name}} {{last_name}} ({{number}}).</i>
+                <i>Transplanted last <b>{{crop_transplanted}}.</b> Advisories sent to {{first_name}} {{last_name}}.</i>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-md-3">
               <nav class="navbar navbar-expand icon-bar">
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -416,7 +416,7 @@
 
           <div class="row">
             <!-- Irrigation Advisory -->
-            <div class="col-3">
+            <div class="col-md-3">
               <div class="card border-left-primary shadow mb-4">
                 <div class="card-body">
                   <div class="text-center">
@@ -455,7 +455,7 @@
               </div>
             </div>
             <!-- Line Chart -->
-            <div class="col-9">
+            <div class="col-md-9">
               <div class="card shadow mb-4">
                 <!-- Card Body -->
                 <div class="card-body">

@@ -663,6 +663,5 @@ def index(request):
 		"crop_id": crop_id,
 		"first_name": first_name,
 		"last_name": last_name,
-		"number": number
 	}
 	return render(request, 'waissapp/index.html', context)
