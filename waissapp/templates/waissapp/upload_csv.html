@@ -14,6 +14,9 @@
             Check format by opening the csv file in a notepad or wordpad. Make sure to use hyphen and not backslash.</small></div>
             <div class="card-body">
                 <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-fluid" src=/static/theme/sample_format.JPG>
+                    </div>
                     <div class="col-md">
                         <form class="form-group" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
@@ -32,9 +35,6 @@
                             {% else %}
                             {% endif %}
                         </form>
-                    </div>
-                    <div class="col-md-4">
-                        <img class="img-fluid" src=/static/theme/sample_format.JPG>
                     </div>
                 </div>
             </div>
