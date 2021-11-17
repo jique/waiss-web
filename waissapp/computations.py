@@ -376,7 +376,7 @@ def index(request):
 		def calculateMC_AVE_2(drz, mc_a, mc_b): # for fieldunit with 2 sensors
 			if drz <= depth_1:
 				mc_ave = mc_a
-			if drz > depth_1:
+			elif drz > depth_1:
 				mc_ave = ((mc_a*depth_1) + (mc_b*(drz-depth_1)))/drz
 			return round(mc_ave, 2)
 
@@ -384,9 +384,9 @@ def index(request):
 			print(drz)
 			if drz <= depth_1:
 				mc_ave = mc_a
-			if drz > depth_1 and drz <= depth_2:
+			elif drz > depth_1 and drz <= depth_2:
 				mc_ave = ((mc_a*depth_1) + (mc_b*(drz-depth_1)))/drz
-			else:
+			elif drz > depth_2:
 				mc_ave = ((mc_a*depth_1) + (mc_b*(depth_2-depth_1)) + (mc_c*(drz-depth_2)))/drz
 			return round(mc_ave, 2)
 		# CALCULATE MCv_AVERAGE #
