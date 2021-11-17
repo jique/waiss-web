@@ -70,9 +70,9 @@ def index(request):
 		sensor_2 = sensors[1:2]
 		sensor_3 = sensors[2:3]
 		print(sensor_1, sensor_2, sensor_3)
-		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1) # getting mc analog readings
-		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2)
-		mc_3 = MoistureContent.objects.all().filter(sensor=sensor_3)
+		mc_1 = MoistureContent.objects.all().filter(sensor=sensor_1.id) # getting mc analog readings
+		mc_2 = MoistureContent.objects.all().filter(sensor=sensor_2.id)
+		mc_3 = MoistureContent.objects.all().filter(sensor=sensor_3.id)
 		mc_1_sorted = sorted(mc_1, key=operator.attrgetter('date', 'time')) # sorting mc analog readings based on inputted datetime
 		mc_2_sorted = sorted(mc_2, key=operator.attrgetter('date', 'time'))
 		mc_3_sorted = sorted(mc_3, key=operator.attrgetter('date', 'time'))
