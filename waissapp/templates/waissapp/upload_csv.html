@@ -17,14 +17,14 @@
                     <div class="col-md-4">
                         <img class="img-fluid" src=/static/theme/sample_format.JPG>
                     </div>
-                    <div class="col-md">
+                    <div class="col-md-4">
                         <form class="form-group" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="custom-file">
                                 <label class="">Upload a File: </label>
                                 <input type="file" name="file">
                             </div>
-                            <input type="submit" value="Upload" class="btn btn-info btn-sm">
+                            <input type="submit" value="Upload" class="btn btn-outline-info btn-block">
         
                             {% if messages %}
                             {% for message in messages %}
