@@ -576,7 +576,7 @@ def index(request):
 				if irrigation_interval <= 1:
 					irrigation_interval = 1
 			gross_volume_per_plant = (gross_application_depth*Sp*So/irrigation_interval) #(L/day)
-			irrigation_period = (gross_volume_per_plant/(Np*q*60))
+			irrigation_period = (gross_volume_per_plant/(Np*q))*24*60
 			total_volume = gross_volume_per_plant
 			intake_family = None
 		# No Irrigation Data #
