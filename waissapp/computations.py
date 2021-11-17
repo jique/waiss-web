@@ -172,9 +172,9 @@ def index(request):
 			sensor_2d = float(sensor_2.get().depth)*1000
 			sensor_3d = float(sensor_3.get().depth)*1000
 			s_list = sorted(list([sensor_1d, sensor_2d, sensor_3d]))
-			depth_1 = float(s_list[:1])
-			depth_2 = float(s_list[1:2])
-			depth_3 = float(s_list[2:3])
+			depth_1 = float(map(s_list[:1]))
+			depth_2 = float(map(s_list[1:2]))
+			depth_3 = float(map(s_list[2:3]))
 			print(depth_1, depth_2, depth_3)
 	
 	def calculateMC(mc_value): # Convert analog reading to MCv using calibration constants
