@@ -534,10 +534,7 @@ def index(request):
 			ea = float(sprinkler.ea)/100
 			q = float(irrigation_q)
 			
-			Etcrop = float(crop.peak_Etcrop)
-			irrigation_interval = round(net_application_depth/Etcrop)
 			gross_application_depth = net_application_depth/ea
-			#if discharge is known
 			application_rate = q*3600/(Sl*Sm) #mm/hr
 			irrigation_period = round((gross_application_depth/application_rate)*60,2) #(min) time of operation
 			total_volume = round(q * irrigation_period * 60)
@@ -579,7 +576,7 @@ def index(request):
 				if irrigation_interval <= 1:
 					irrigation_interval = 1
 			gross_volume_per_plant = (gross_application_depth*Sp*So/irrigation_interval) #(L/day)
-			irrigation_period = (gross_volume_per_plant/(Np*q))*24*60
+			irrigation_period = (gross_volume_per_plant/(Np*q*60))
 			total_volume = gross_volume_per_plant
 			intake_family = None
 		# No Irrigation Data #

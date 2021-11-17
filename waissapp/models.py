@@ -197,7 +197,7 @@ class Crop(models.Model):
         ("yes", 'Yes, I will!'),
         ("no", 'No, I wont.'),
     ]
-    select_drip = models.CharField(choices=yes_no, max_length=3, verbose_name="Are you going to use a drip or sprinkler irrigation system?", null="True")
+    select_drip = models.CharField(choices=yes_no, max_length=3, verbose_name="Are you going to use a drip irrigation system?", null="True")
     peak_Etcrop = models.DecimalField(default=6.00, max_digits=5, decimal_places=2, verbose_name="Peak Evapotranspiration (mm/day)", null=True, blank=True, validators=[MinValueValidator(1.00), MaxValueValidator(10)])
     transpiration_ratio = models.DecimalField(default=1.0, max_digits=3, decimal_places=2, verbose_name="Transpiration Ratio", null=True, blank=True, validators=[MinValueValidator(Decimal('0.01')),  MaxValueValidator(1)])
    

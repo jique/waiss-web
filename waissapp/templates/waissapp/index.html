@@ -622,7 +622,7 @@
     marker: {
       enabled: true}
   }, {
-    name: '{{sensor_1}} ({{depth_1}} m)',
+    name: '{{s1}} ({{depth_1}} m)',
     checkbox: { checked: true },
     yAxis: 1,
     data: [{% for m in mc_1 %}{{m}},{% endfor %}],
@@ -630,7 +630,7 @@
       enabled: false,
       lineWidth: 1}
   }, {
-    name: '{{sensor_2}} ({{depth_2}} m)',
+    name: '{{s2}} ({{depth_2}} m)',
     checkbox: { checked: true },
     yAxis: 1,
     data: [{% for m in mc_2 %}{{m}},{% endfor %}],
@@ -638,7 +638,7 @@
       enabled: false,
       lineWidth: 1}
   }, {
-    name: '{{sensor_3}} ({{depth_3}} m)',
+    name: '{{s3}} ({{depth_3}} m)',
     checkbox: { checked: true },
     yAxis: 1,
     data: [{% for m in mc_3 %}{{m}},{% endfor %}],
