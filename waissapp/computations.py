@@ -200,12 +200,13 @@ def index(request):
 			calib_coeff_d = float(calib.coeff_d)
 			calib_coeff_m = float(calib.coeff_m)
 			mc_return = calib_coeff_d + (calib_coeff_a - calib_coeff_d)/(1.0 + (mc_value/calib_coeff_c)**calib_coeff_b)**calib_coeff_m
-		return round(mc_return, 2)
+		return round(mc_return, 2) # Convert analog reading to MCv using calibration constants
 
 	series_fc = []
 	series_pwp = []
 
-	if num_sensors == 1: #Calculating MCv(%) from raw data using the calibration constants
+	# Calculating MCv(%) from raw data using the calibration constants #
+	if num_sensors == 1: 
 		for mc_obj in mc_1_sorted:
 			mc_value = float(mc_obj.mc_data)
 			mc_collection_1.append(calculateMC(mc_value))
@@ -238,6 +239,7 @@ def index(request):
 		mci_1 = calculateMC(mci_1)
 		mci_2 = calculateMC(mci_2)
 		mci_3 = calculateMC(mci_3)
+	# Calculating MCv(%) from raw data using the calibration constants #
 
 	crop_model = crop.root_growth_model # for computation of the actual depth of rootzone
 	crop_drz = float(crop.drz)
@@ -281,7 +283,7 @@ def index(request):
 			else:
 				krz = float((Kc_adj - Kc)/(kc_mid - Kc))
 			drz = float(crop_ro + krz*(crop_drz - crop_ro))*1000 #MM
-		return round(drz)
+		return round(drz) # GETTING THE CURRENT ROOT DEPTH #
 	
 	drz_collection = []
 
@@ -340,7 +342,6 @@ def index(request):
 		irrigation_q = furrow.discharge
 	if border != None:
 		irrigation_q = border.discharge
-		Qu = float(irrigation_q)
 	if sprinkler != None:
 		irrigation_q = sprinkler.discharge
 	if drip != None:
@@ -367,7 +368,7 @@ def index(request):
 			drz_collection.append(calculateDRZ(crop_dat))
 
 		drz = calculateDRZ(crop_dat)
-
+		# CALCULATE MCv_AVERAGE #
 		def calculateMC_AVE_1(mc_a): # for fieldunit with 1 sensor only
 			mc_ave = mc_a
 			return round(mc_ave, 2)
@@ -375,21 +376,20 @@ def index(request):
 		def calculateMC_AVE_2(drz, mc_a, mc_b): # for fieldunit with 2 sensors
 			if drz <= depth_1:
 				mc_ave = mc_a
-			if drz > depth_1 and drz <= depth_2:
-				mc_ave = ((mc_a*depth_1) + (mc_b*(drz-depth_1)))/(drz)
-			else:
-				mc_ave = ((mc_a*depth_1) + (mc_b*(depth_2-depth_1)))/depth_2
+			if drz > depth_1:
+				mc_ave = ((mc_a*depth_1) + (mc_b*(drz-depth_1)))/drz
 			return round(mc_ave, 2)
 
 		def calculateMC_AVE_3(drz, mc_a, mc_b, mc_c): # for fieldunit with 3 sensors
 			if drz <= depth_1:
 				mc_ave = mc_a
 			if drz > depth_1 and drz <= depth_2:
-				mc_ave = ((mc_a*depth_1) + (mc_b*(drz-depth_1)))/(drz)
+				mc_ave = ((mc_a*depth_1) + (mc_b*(drz-depth_1)))/drz
 			else:
-				mc_ave = ((mc_a*depth_1) + (mc_b*(depth_2-depth_1)) + (mc_c*(depth_3-depth_2)))/(depth_3)
+				mc_ave = ((mc_a*depth_1) + (mc_b*(depth_2-depth_1)) + (mc_c*(drz-depth_2)))/drz
 			return round(mc_ave, 2)
-
+		# CALCULATE MCv_AVERAGE #
+		# MCv_AVERAGE SERIES #
 		if num_sensors == 1:
 			for (drz, mc_a) in zip(drz_collection, mc_collection_1):
 				mc_ave = calculateMC_AVE_1(mc_a)
@@ -402,7 +402,7 @@ def index(request):
 			for (drz, mc_a, mc_b, mc_c) in zip(drz_collection, mc_collection_1, mc_collection_2, mc_collection_3):
 				mc_ave = calculateMC_AVE_3(drz, mc_a, mc_b, mc_c)
 				mc_ave_collection.append(calculateMC_AVE_3(drz, mc_a, mc_b, mc_c))
-
+		# MCv_AVERAGE SERIES #
 		def calculateFn(x, y): #Calculate net application depth (Fn)
 			if y > MC_TO_IRRIGATE:
 				net_application_depth = 0
@@ -448,11 +448,10 @@ def index(request):
 				if ea == 50:
 					R = 3.2
 
-				inflow_time = ((net_application_depth * basin_length)/(600.0*ea*unit_discharge))
 				net_opportunity_time = ((net_application_depth - cons_c)/cons_a)**(1.0/cons_b)
 				advanced_time = (net_opportunity_time * R)
-				
-				print(inflow_time, advanced_time)
+				inflow_time = ((net_application_depth * basin_length)/(600*ea*unit_discharge))
+
 				if inflow_time >= advanced_time:
 					irrigation_period = (inflow_time)
 				else:
@@ -488,19 +487,45 @@ def index(request):
 
 		#BORDER
 		if border != None:
-			So = float(border.area_slope)
-			Fn = float(net_application_depth)
-			n = float(border.mannings_coeff)
-			y = Fn - cons_c
-			if y > 0:
-				Tn = float(((y)/cons_a)**(1/cons_b))
+			if net_application_depth <= 0:
+				irrigation_period = 0
+				total_volume = 0
 			else:
-				Tn = 0.0001 #JUST TO REMOVE FLOAT DIVISION ZERO
-			if So <= 0.004:
-				Tl = ((Qu**float(0.2))*n)/120*(So+((float(0.0094)*n*Qu**float(0.175)/((Tn**float(0.88))*(So**float(0.5))))**float(1.6)))
-			if So > 0.004:
-				Tl = (Qu**0.2)*(n**1.2)/(120*So**1.6)
-			irrigation_period = Tn - Tl
+				unit_discharge =  float(irrigation_q/1000)
+				border_length = float(border.border_length)
+				ea = float(border.ea)
+
+				if ea == 95:
+					R = 0.16
+				if ea == 90:
+					R = 0.28
+				if ea == 85:
+					R =	0.4
+				if ea == 80:
+					R = 0.58
+				if ea == 75:
+					R = 0.8
+				if ea == 70:
+					R = 1.08
+				if ea == 0.65:
+					R = 1.45
+				if ea == 60:
+					R = 1.9
+				if ea == 0.55:
+					R = 2.45
+				if ea == 50:
+					R = 3.2
+
+				net_opportunity_time = ((net_application_depth - cons_c)/cons_a)**(1.0/cons_b)
+				advanced_time = (net_opportunity_time * R)
+				inflow_time = ((net_application_depth * border_length)/(600*ea*unit_discharge))
+
+				if inflow_time >= advanced_time:
+					irrigation_period = (inflow_time)
+				else:
+					irrigation_period = (advanced_time)
+				
+				total_volume = irrigation_period * unit_discharge*60*1000
 
 		#SPRINKLER
 		if sprinkler != None:

@@ -313,8 +313,19 @@ class Border(models.Model):
     select_irrigation = models.CharField(choices=type_irrig, max_length=30, verbose_name="Select Irrigation System Type", null=True, blank=True, default="border")
     name= models.CharField(max_length=30, verbose_name="Name", unique=True, null=True)
     discharge = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Unit Discharge (lps)", null=True)
-    mannings_coeff = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Manning's coefficient", null=True)
-    area_slope = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Slope (m/m)", null=True)
+    EFF_CHOICES = [
+        (50, '50'),
+        (55, '55'),
+        (60, '60'),
+        (70, '70'),
+        (75, '75'),
+        (80, '80'),
+        (85, '85'),
+        (90, '90'),
+        (95, '95'),
+    ]
+    ea = models.DecimalField(choices=EFF_CHOICES, max_digits=5, decimal_places=2, verbose_name="Application Efficiency (%)", null=True)
+    border_length = models.DecimalField(max_digits=20, decimal_places=4, verbose_name="Border Length (m)", null=True)
     timestamp =  models.DateTimeField(verbose_name="Date Created", null=True, auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True)
     personal = models.BooleanField(default=True)

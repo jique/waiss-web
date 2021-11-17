@@ -119,7 +119,7 @@ class BorderInline(admin.TabularInline):
     model = Border
 
 class BorderAdmin(admin.ModelAdmin):
-    list_display =('name', 'discharge', 'area_slope', 'mannings_coeff', 'timestamp', 'author', 'personal', 'timestamp')
+    list_display =('name', 'discharge', 'border_length', 'ea', 'timestamp', 'author', 'personal', 'timestamp')
 
 class FurrowInline(admin.TabularInline):
     model = Furrow

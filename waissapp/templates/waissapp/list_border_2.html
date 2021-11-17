@@ -4,8 +4,8 @@
     <td class="align-middle ">{{forloop.counter}}</td>
     <td class="align-middle">{{border.name}}</td>
     <td class="align-middle ">{{border.discharge}}</td>
-    <td class="align-middle ">{{border.mannings_coeff}}</td>
-    <td class="align-middle ">{{border.area_slope}}</td>
+    <td class="align-middle ">{{border.border_length}}</td>
+    <td class="align-middle ">{{border.ea}}</td>
     <td class="min">
       <button class="btn show-form-update text-info btn-sm" data-url="{% url 'waiss:edit_border' border.id %}"><i class="fas fa-edit"></i></button>
       <button class="btn text-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ border.id }}"><i class="fas fa-trash"></i></button></td>
