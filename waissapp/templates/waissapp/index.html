@@ -359,10 +359,10 @@
                     <div class="col">
                       <div class="mb-0 font-weight-bold text-gray-800">
                         {% if basin %} {{basin}}
-                          {% elif drip %} {{drip}}
-                          {% elif border %} {{border}}
-                          {% elif furrow %} {{furrow}}
-                          {% elif sprinkler %} {{sprinkler}}
+                        {% elif drip %} {{drip}}
+                        {% elif border %} {{border}}
+                        {% elif furrow %} {{furrow}}
+                        {% elif sprinkler %} {{sprinkler}}
                         {% endif %}</div>
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Irrigation System</div>
                         <small>type: 
@@ -427,7 +427,7 @@
                         Irrigate for {{irrigation_period}} mins <br><br>
                         <div class="small">or<br>Volume : {{total_volume}} liter {% if drip != None %}/ plant{% endif %}</div>
                         <div class="small">F<sub>n</sub> : {% if net_application_depth < 0 %} 0 mm {% else %}{{net_application_depth}} mm {% endif %}</div>
-                        {% if basin or border or furrow or drip or sprinkler %}{% else %}<div class="small">**volume computation based on farm area multiplied to the Fn</div>{% endif %}
+                        {% if basin or border or furrow or drip or sprinkler %}<!-- Nothing -->{% else %}<div class="small">**volume computation based on farm area multiplied to the Fn</div>{% endif %}
                         {% endif %}
                         {% if not mc_ave < MC_TO_IRRIGATE and mc_ave != "" %}
                         <br><br>
