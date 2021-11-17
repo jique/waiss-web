@@ -156,15 +156,26 @@ def index(request):
 		if num_sensors == 2:
 			mci_1 = float(mc_1.latest().mc_data)
 			mci_2 = float(mc_2.latest().mc_data)
-			depth_1 = float(sensor_1.get().depth)*1000
-			depth_2 = float(sensor_2.get().depth)*1000
+			sensor_1d = float(sensor_1.get().depth)*1000
+			sensor_2d = float(sensor_2.get().depth)*1000
+			if sensor_1d < sensor_2d:
+				depth_1 = sensor_1d
+				depth_2 = sensor_2d
+			else:
+				depth_1 = sensor_2d
+				depth_2 = sensor_1d
 		if num_sensors == 3:
 			mci_1 = float(mc_1.latest().mc_data)
 			mci_2 = float(mc_2.latest().mc_data)
 			mci_3 = float(mc_3.latest().mc_data)
-			depth_1 = float(sensor_1.get().depth)*1000
-			depth_2 = float(sensor_2.get().depth)*1000
-			depth_3 = float(sensor_3.get().depth)*1000
+			sensor_1d = float(sensor_1.get().depth)*1000
+			sensor_2d = float(sensor_2.get().depth)*1000
+			sensor_3d = float(sensor_3.get().depth)*1000
+			s_list = sorted(list([sensor_1d, sensor_2d, sensor_3d]))
+			depth_1 = s_list[:1]
+			depth_2 = s_list[1:2]
+			depth_3 = s_list[2:3]
+			print(depth_1, depth_2, depth_3)
 	
 	def calculateMC(mc_value): # Convert analog reading to MCv using calibration constants
 		float(mc_value)
@@ -239,25 +250,23 @@ def index(request):
 
 	crop_model = crop.root_growth_model # for computation of the actual depth of rootzone
 	crop_drz = float(crop.drz)
-	if crop.root_ini == None:
-		crop.root_ini = 0
 	crop_ro = float(crop.root_ini)
 
-	def calculateDRZ(crop_dat):
+	def calculateDRZ(crop_dat): # GETTING THE CURRENT ROOT DEPTH #
 		if crop_model == "Borg-Grimes Model": # Borg-Grimes Model
 			sine = 0.5*(math.sin(math.radians(3.03*(crop_dat/crop_growingperiod)-1.47)))
-			drz = round((float(crop_drz - crop_ro)*100*(0.5 + sine))*10, 0) #converted to CM, check for errors later
+			drz = round((float(crop_drz - crop_ro)(0.5 + sine))*1000, 0) #converted to MM, check for errors later
 		if crop_model == "User-Defined": # User-Defined
 			eqnform = crop.eqnform
 			if eqnform == "linear":
 				a = float(crop.root_a)
 				b = float(crop.root_b)
-				drz = a*crop_dat + b
+				drz = a*crop_dat + b #MM
 			if eqnform =="quadratic":
 				a = float(crop.root_a)
 				b = float(crop.root_b)
 				c = float(crop.root_c)
-				drz = a*(crop_dat**b) + b
+				drz = a*(crop_dat**b) + c #MM
 		if crop_model == "Inverse Kc": # Inverse Kc
 			kc_ini = float(crop.kc_ini)
 			kc_mid = float(crop.kc_mid)
@@ -266,12 +275,18 @@ def index(request):
 			cc_2 = float(crop.kc_cc_2)
 			cc_3 = float(crop.kc_cc_3)
 			maturity = float((crop_dat/crop_growingperiod)*100)
-			if maturity <= cc_2:
-				Kc_adj = kc_ini + (kc_mid - kc_ini)*(maturity)/(cc_2)
+			if maturity <= cc_1:
+				Kc = kc_ini
+			if maturity > cc_1 and maturity <= cc_2:
+				Kc = kc_ini + ((kc_mid - kc_ini)/(cc_2-cc_1))*(maturity-cc_1)
 			if maturity > cc_2:
-				Kc_adj = kc_mid
-			krz = float((Kc_adj - kc_ini)/(kc_mid - kc_ini))
-			drz = float(crop_ro + krz*(crop_drz - crop_ro))*1000
+				Kc = kc_mid + ((kc_end - kc_mid)/(100-cc_3))*(maturity-cc_3)
+			if maturity < cc_2:
+				Kc_adj = kc_ini + (kc_mid - kc_ini)*(maturity)/(cc_2)
+			else: 
+				Kc_adj =  kc_mid
+			krz = float((Kc_adj - Kc)/(kc_mid - Kc))
+			drz = float(crop_ro + krz*(crop_drz - crop_ro))*1000 #MM
 		return round(drz)
 	
 	drz_collection = []
