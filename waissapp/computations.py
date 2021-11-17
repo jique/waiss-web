@@ -602,7 +602,7 @@ def index(request):
 	depth_2	= depth_2/1000
 	depth_3	= depth_3/1000
 
-	personnel = selected_system.personnel
+	personnel = selected_system.farm_manager
 	context = {
 		"today": today,
 		"num_sensors": num_sensors,
