@@ -320,7 +320,7 @@
                       <div class="mb-0 font-weight-bold text-gray-800">{{crop}}</div>
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Crop</div>
                       <small>{{crop_dat}} / {{crop_growingperiod}} days {% if drip %}| MAD: {{crop_mad}}%<br> <!--crop_dat based on latest mc_reading-->
-                        {% else %}MAD: {{crop_mad}}%{% endif%}
+                        {% elif basin or border or furrow or sprinkler %}MAD: {{crop_mad}}% {% else %}MAD: {{crop_mad}}%{% endif%}
                         {% if drip %}Area Shaded: {{area_shaded}} %  <button class="btn btn-xs text-primary show-form" data-url="{% url 'waiss:add_shaded' %}"><u>Update</u></button>{% endif%}
                       </small>
                     </div>
