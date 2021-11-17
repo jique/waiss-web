@@ -381,6 +381,7 @@ def index(request):
 			return round(mc_ave, 2)
 
 		def calculateMC_AVE_3(drz, mc_a, mc_b, mc_c): # for fieldunit with 3 sensors
+			print(drz)
 			if drz <= depth_1:
 				mc_ave = mc_a
 			if drz > depth_1 and drz <= depth_2:
