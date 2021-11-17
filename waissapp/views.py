@@ -1,3 +1,4 @@
+from django.forms.widgets import ClearableFileInput
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, PercentShaded, Rainfall, Gravimetric, Basin, Furrow, Border, Drip, Sprinkler
@@ -1478,6 +1479,8 @@ def view_msg(request, number):
 	joined_list = reversed(llist)
 
 	cel_number = Personnel.objects.get(number=number)
+	first_name = cel_number.first_name
+	last_name = cel_number.last_name
 	received = cel_number.receivedmsgs_set.all()
 	sent = cel_number.sentmsgs_set.all()
 	result = sorted(chain(received,sent), key=attrgetter('timestamp'))
@@ -1493,6 +1496,8 @@ def view_msg(request, number):
 	context = {
 		"list": get_fieldunit,
 		"number": number,
+		"first_name": first_name,
+		"last_name": last_name,
 		"form": form,
 		"joined_list": joined_list,
 		"result": result,
