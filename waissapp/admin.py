@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, WAISSystems, PercentShaded, Rainfall, Gravimetric, Basin, Border, Furrow, Drip, Sprinkler
+from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, WAISSystems, PercentShaded, Rainfall, Gravimetric, Basin, Border, Furrow, Drip, Sprinkler, ThingsboardDB
 
 class PersonnelInline(admin.TabularInline):
     model = Personnel
@@ -144,3 +144,11 @@ admin.site.register(Border, BorderAdmin)
 admin.site.register(Furrow, FurrowAdmin)
 admin.site.register(Sprinkler, SprinklerAdmin)
 admin.site.register(Drip, DripAdmin)
+
+class ThingsboardDBInline(admin.TabularInline):
+    model = ThingsboardDB
+
+class ThingsboardDBAdmin(admin.ModelAdmin):
+    list_display = ('sensor_name', 'unix_timestamp', 'analog_readin')
+
+admin.site.register(ThingsboardDB, ThingsboardDBAdmin)
