@@ -1,7 +1,7 @@
 from django.forms.widgets import ClearableFileInput
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
-from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, PercentShaded, Rainfall, Gravimetric, Basin, Furrow, Border, Drip, Sprinkler
+from .models import SentMsgs, ReceivedMsgs, Personnel, Farm, Sensor, MoistureContent, FieldUnit, Soil, Crop, CalibrationConstant, PercentShaded, Rainfall, Gravimetric, Basin, Furrow, Border, Drip, Sprinkler, ThingsboardDB
 from django.forms import modelformset_factory
 from .forms import SentMsgsForm, PersonnelForm, SoilForm, CalibForm, CropForm, FarmForm, FieldUnitForm, SensorForm, MCForm, BasinForm, DripForm, SprinklerForm, FurrowForm, BorderForm, PercentShadedForm, GravimetricForm, RainfallForm, RegistrationForm, UserForm
 from itertools import chain
@@ -1598,7 +1598,9 @@ def list_mc(request, name):
 	sensor_instance = Sensor.objects.get(name=name)
 	get_mc = MoistureContent.objects.filter(sensor=sensor_instance)
 	mcs = reversed(sorted(get_mc, key=operator.attrgetter('date', 'time')))
-
+	#lagyan try kung yung sensor name ay nasa thingsboard
+	telemetry = ThingsboardDB.objects.raw('''SELECT entity_id AS sensor_name, ts AS unix_timestamp, long_v AS analog_reading, FROM ts_kv where key in (46, 47, 48) ''')
+	print(telemetry)
 	if request.method == 'POST':
 		pk=request.POST.get('deleteModal')
 		para = MoistureContent.objects.get(id=pk)
