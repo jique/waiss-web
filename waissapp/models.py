@@ -86,6 +86,11 @@ class MoistureContent(models.Model):
     def __str__(self):
         return str(self.sensor)
 
+class ThingsboardDB(models.Model):
+    sensor_name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True)
+    unix_timestamp = models.BigIntegerField(null=True)
+    analog_reading = models.BigIntegerField(null=True)
+
 class Soil(models.Model):
     soiltype = models.CharField(max_length=30, verbose_name="Soil", unique=True)
     fc = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Field Capacity (% vol)", null=True, validators=[MinValueValidator(1), MaxValueValidator(60)])
