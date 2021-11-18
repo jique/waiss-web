@@ -1599,7 +1599,7 @@ def list_mc(request, name):
 	get_mc = MoistureContent.objects.filter(sensor=sensor_instance)
 	mcs = reversed(sorted(get_mc, key=operator.attrgetter('date', 'time')))
 	#lagyan try kung yung sensor name ay nasa thingsboard
-	telemetry = ThingsboardDB.objects.raw('''SELECT entity_id AS sensor_name, ts AS unix_timestamp, long_v AS analog_reading, FROM ts_kv where key in (46, 47, 48) ''')
+	telemetry = ThingsboardDB.objects.raw('''SELECT entity_id AS sensor_name, ts AS unix_timestamp, long_v AS analog_reading FROM ts_kv where key in (46, 47, 48) ''')
 	for t in telemetry:
 		print(t)
 	if request.method == 'POST':
