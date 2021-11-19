@@ -149,6 +149,6 @@ class ThingsboardDBInline(admin.TabularInline):
     model = ThingsboardDB
 
 class ThingsboardDBAdmin(admin.ModelAdmin):
-    list_display = ('sensor_name', 'unix_timestamp', 'analog_reading')
+    list_display = ('key', 'ts', 'long_v')
 
 admin.site.register(ThingsboardDB, ThingsboardDBAdmin)

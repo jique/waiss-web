@@ -1,16 +1,35 @@
 from django.shortcuts import render, redirect
-from .models import SentMsgs, ReceivedMsgs, Sensor, MoistureContent, WAISSystems, PercentShaded, Rainfall, Gravimetric
+from .models import SentMsgs, ReceivedMsgs, Sensor, MoistureContent, Soil, WAISSystems, PercentShaded, Rainfall, Gravimetric, ThingsboardDB
 from itertools import chain
 from operator import attrgetter
 import math
 from django.contrib.auth.decorators import login_required
 import datetime
-from datetime import datetime
+from datetime import date, datetime
 import pytz
 import operator
 
 @login_required
 def index(request):
+	##Telemetry Data##
+	#ThingsboardDB.objects.raw('''SELECT str_v AS sensor_name, ts AS unix_timestamp, long_v AS analog_reading FROM ts_kv where key in (46, 47, 48) ''')
+	#telemetry = ThingsboardDB.objects.all()
+		
+	#for t in telemetry:
+		#ts = (t.ts)/1000 #convert unix to date & time separately
+		#date = datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d')
+		#time = datetime.utcfromtimestamp(ts).strftime('%H:%M:')
+		#if t.key == 46: # DI KO ALAM SANG FILED NAKA STORE ANG "A0", "A1", "A2" that's why i'm doing this
+		#	sensor_name = "A0"
+		#elif t.key == 47:
+		#	sensor_name = "A1"
+		#elif t.key == 48:
+		#	sensor_name = "A2"
+		#sensor_id = Sensor.objects.get(name=sensor_name)
+		#mc_instance = MoistureContent(sensor=sensor_id, time=time, date=date, mc_data=t.long_v)
+		#mc_instance.save()
+	##Telemetry Data##
+
 	receivedmsgs = ReceivedMsgs.objects.all() #for message center
 	sentmsgs = SentMsgs.objects.all()
 	msgs_list = sorted(chain(receivedmsgs, sentmsgs), key=attrgetter('timestamp'))
