@@ -87,7 +87,7 @@ class MoistureContent(models.Model):
         return str(self.sensor)
 
 class ThingsboardDB(models.Model):
-    key = models.IntegerField(max_length=30, null=True)
+    key = models.IntegerField(null=True)
     ts = models.BigIntegerField(null=True)
     long_v = models.BigIntegerField(null=True)
 
