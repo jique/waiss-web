@@ -26,7 +26,7 @@ SECRET_KEY = 'hw(n^1pl(6(%e9$&(fz+q0v-&)1k%&=w-e)dw2)1)5d7&swp+m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["10.0.93.165","172.16.5.112","127.0.0.1"]
+ALLOWED_HOSTS = ["10.0.93.165","172.16.5.110","127.0.0.1", "192.168.0.24"]
 
 # Application definition
 

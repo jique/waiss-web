@@ -25,9 +25,12 @@ def index(request):
 		#	sensor_name = "A1"
 		#elif t.key == 48:
 		#	sensor_name = "A2"
-		#sensor_id = Sensor.objects.get(name=sensor_name)
-		#mc_instance = MoistureContent(sensor=sensor_id, time=time, date=date, mc_data=t.long_v)
-		#mc_instance.save()
+		#sensor = Sensor.objects.get(name=sensor_name)
+		#saved_telemetry = MoistureContent.objects.filter(name=sensor)
+		#for s in saved_telemetry: #to prevent duplication everytime loaded?
+		#	if s.date != date and s.time != time:
+		#		mc_instance = MoistureContent(sensor=sensor, time=time, date=date, mc_data=t.long_v)
+		#		mc_instance.save()
 	##Telemetry Data##
 
 	receivedmsgs = ReceivedMsgs.objects.all() #for message center
