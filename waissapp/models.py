@@ -64,7 +64,7 @@ class FieldUnit(models.Model):
 
 class Sensor(models.Model):
     name = models.CharField(max_length=30, verbose_name="Sensor Name", null=True)
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True, blank=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
     depth = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Depth, m", null=True)
 
     def __str__(self):
@@ -75,7 +75,7 @@ class Sensor(models.Model):
         ordering = ('name',)
 
 class MoistureContent(models.Model):
-    sensor = models.ForeignKey(Sensor, on_delete=models.SET_NULL, null=True)
+    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, null=True)
     time = models.TimeField(verbose_name='Time Measured', null=True)
     date = models.DateField(verbose_name='Date Measured', null=True)
     mc_data = models.DecimalField(max_digits=5, decimal_places=0, verbose_name="Analog Reading", null=True, validators=[MinValueValidator(Decimal('0.01'))])
@@ -472,7 +472,7 @@ class SentMsgs(models.Model):
         return str(self.number)
 
 class Rainfall(models.Model):
-    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True, blank=True)
+    fieldunit = models.ForeignKey (FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True, blank=True)
     time = models.TimeField(verbose_name='Time Measured', null=True)
     date = models.DateField(verbose_name='Date Measured', null=True)
     amount = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Rainfall (mm)", null=True)
@@ -481,7 +481,7 @@ class Rainfall(models.Model):
         get_latest_by = "date"
 
 class Gravimetric(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True)
     time = models.TimeField(verbose_name='Time Measured', null=True)
     date = models.DateField(verbose_name='Date Measured', null=True)
     mc_data = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="MCv (%)", null=True)
@@ -490,7 +490,7 @@ class Gravimetric(models.Model):
         verbose_name_plural = "Gravimetric MCv(%)"
         get_latest_by = "date"
 class PercentShaded(models.Model):
-    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.SET_NULL, verbose_name="Field Unit", null=True)
+    fieldunit = models.ForeignKey(FieldUnit, on_delete=models.CASCADE, verbose_name="Field Unit", null=True)
     area_shaded =  models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Area Shaded (%)", null=True)
     date =  models.DateField(verbose_name="Date", null=True)
     class Meta:
